@@ -1,0 +1,41 @@
+.main
+  & > .controls
+    width 100%
+    height 57px
+    display block
+    margin 0 auto
+    padding 4px 0
+    border-bottom 1px solid black
+
+  & > .mr-switcher
+    padding-bottom 1px
+  & > .type-switcher
+    padding-top 1px
+
+  .mr-switcher, .type-switcher
+    margin 0 auto
+    text-align center
+    line-height 1
+
+    & > button
+      border 0
+      box-shadow none
+      background transparent
+      text-transform uppercase
+      font-family font-header
+      color text-inactive
+
+    & > button.active
+      color black
+
+  .mr-switcher_item
+    font-size 120%
+    padding 0 10px
+
+  .type-switcher_item
+    padding 0 10px
+    font-size 90%
+
+  .mr-switcher_divider
+    font-size 120%
+    border-left 1px solid text-inactive

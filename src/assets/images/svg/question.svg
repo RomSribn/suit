@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="595.3" height="841.9" viewBox="0 0 595.3 841.9">
+    <style type="text/css">
+        .st0{fill-rule:evenodd;clip-rule:evenodd;stroke:#FEFEFE;stroke-width:8.5033;stroke-miterlimit:22.9256;}
+        .st1{fill:#FEFEFE;} .st2{font-family:&apos;ArialMT&apos;;} .st3{font-size:156.371px;}
+    </style>
+    <font horiz-adv-x="2048">
+        <font-face font-family="ArialMT" units-per-em="2048" underline-position="-217" underline-thickness="150"/>
+        <glyph unicode="?" horiz-adv-x="1139"
+               d="M472 361c-1 24-1 42-1 54 0 71 10 132 30 183 15 39 38 78 71 117 24 29 67 71 130 126 62 55 102 98 121 131s28 68 28 107c0 70-27 132-82 185s-122 79-201 79c-77 0-141-24-192-72s-85-123-101-225l-185 22c17 137 66 241 149 314 82 73 191 109 326 109 143 0 258-39 343-117s128-172 128-283c0-64-15-123-45-177s-89-120-176-197c-59-52-97-90-115-115s-31-53-40-85-14-84-15-156m-184-361v205h205v-205z"/>
+    </font>
+    <path class="st0"
+          d="M297.9 330.1c43.4 0 78.6 35.2 78.6 78.6 0 43.4-35.2 78.6-78.6 78.6-43.4 0-78.6-35.2-78.6-78.6 0-43.4 35.2-78.6 78.6-78.6z"/>
+    <text transform="translate(254.809 465.703)" class="st1 st2 st3">?</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='28.3' height='28.3' viewBox='0 0 28.3 28.3'>
+    <path className='st0'
+          d='M2.7 4.1h23c.6 0 1.1.5 1.1 1.1v17.8c0 .6-.5 1.1-1.1 1.1h-23c-.6 0-1.1-.5-1.1-1.1v-17.7c-.1-.6.5-1.2 1.1-1.2z'
+    />
+    <path className='st1' d='M25.9 4.1v2.4l-11.6 11.3-11.6-11.3v-2.4'/>
+    <path className='st0' d='M1.9 23.9l9.1-9.3m15.5 9.3l-9.1-9.3'/>
+</svg>

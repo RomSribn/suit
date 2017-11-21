@@ -1,5 +1,5 @@
 import React from 'react'
-import Search from '/src/components/Main/Customize/Search'
+import Search from 'Components/Main/Customize/Search'
 
 class SearchContainer extends React.Component {
   render () {

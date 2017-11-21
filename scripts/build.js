@@ -35,6 +35,16 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
+
+config.resolve = {
+  alias: {
+    Root: path.resolve('src'),
+    Components: path.resolve('src/components'),
+    Containers: path.resolve('src/containers'),
+    Assets: path.resolve('src/assets'),
+    Actions: path.resolve('src/actions')
+  }
+}
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);

@@ -1,5 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="595.3" height="841.9" viewBox="0 0 595.3 841.9">
-    <style type="text/css">.st0{fill:none;stroke:#EBECEC;stroke-width:4.4417;stroke-miterlimit:22.9256;}</style>
-    <path class="st0"
-          d="M344.8 335.5l61.4 48.6h-61.4v-48.6zM250.8 335.5l-61.4 48.6h61.4v-48.6zM273.6 381.3v-45.2l24.4 22.7-24.4 22.5zm48.7-.2v-45.2l-24.4 22.4 24.4 22.8zm-5.1 118.6l58.3-101.8h-37.6l-20.7 101.8zM277.9 499.7l-58.2-101.8h37.6l20.6 101.8z"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 234 194" style="enable-background:new 0 0 234 194;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#EBECEC;stroke-width:4.4417;stroke-miterlimit:22.9256;}
+</style>
+<path class="st0" d="M163.8,12.5l61.4,48.6h-61.4V12.5z M69.8,12.5L8.4,61.1h61.4L69.8,12.5L69.8,12.5z M92.6,58.3V13.1L117,35.8
+	L92.6,58.3z M141.3,58.1V12.9l-24.4,22.4L141.3,58.1L141.3,58.1z M136.2,176.7l58.3-101.8h-37.6L136.2,176.7L136.2,176.7z
+	 M96.9,176.7L38.7,74.9h37.6L96.9,176.7z"/>
 </svg>

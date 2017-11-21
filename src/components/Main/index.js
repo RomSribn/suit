@@ -2,17 +2,16 @@ import React from 'react'
 //Components
 import Switch from './Switch'
 import Customize from './Customize'
-import Dummy from '../../containers/Main/Dummy'
+import Dummy from './Dummy'
 
 const Main = (props) => {
 
   return (
     <section className="main">
-      <Switch/>
+      <Switch />
       <div className="container">
-        {/*<Dummy />*/}
-        <div className="man"></div>
-        <Customize/>
+        <Dummy />
+        <Customize />
       </div>
     </section>
   )

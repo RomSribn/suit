@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomizeListItem from "./CustomizeListItem/";
+import CustomizeListItem from "./CustomizeListItem"
 
 const CustomizeList = (props) => {
   return (

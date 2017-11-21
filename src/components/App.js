@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header'
 import Main from './Main'
 
-const App = ({isAuth, ...props}) => {
+const App = ({...props}) => {
 
   return (
     <div className="application">
@@ -10,6 +10,6 @@ const App = ({isAuth, ...props}) => {
       <Main/>
     </div>
   )
-}
+};
 
 export default App

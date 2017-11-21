@@ -1,7 +1,7 @@
 import React from 'react'
-import Logotype from '../../assets/images/svg/logo.svg'
-import Pocket from '../../assets/images/svg/pocket.svg'
-import Arrow from '../../assets/images/svg/left-arrow.svg'
+import Logotype from 'Assets/images/svg/logo.svg'
+import LogotypeNText from 'Assets/images/svg/logowithtext.svg'
+import Cart from 'Assets/images/svg/cart.svg'
 
 const Header = () => {
   return (
@@ -10,31 +10,31 @@ const Header = () => {
 
         <div className="logotype">
           <a className="logotype-content">
-            <img src="http://via.placeholder.com/52x59" alt="Логотип" height="100%"/>
-            <span>Мой костюм</span>
+            <img src={LogotypeNText} alt="Логотип"/>
+            {/*<span>Мой костюм</span>*/}
           </a>
         </div>
 
         <nav className="nav">
           <ul className="list">
-            <li className="list-item">Пиджак</li>
-            <li className="list-item">Брюки</li>
-            <li className="list-item">Сорочка</li>
-            <li className="list-item">Галстук</li>
-            <li className="list-item">Жилет</li>
-            <li className="list-item">Пальто</li>
-            <li className="list-item">Куртка</li>
-            <li className="list-item">Обувь</li>
+            <li className="list-item"><a className="list-item_content">Пиджак</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </nav>
 
-        <div className="controls">
-          <a className="enter">Войти</a>
-          <button className="lang">
-            ru
-            {/*<img src={Arrow} alt="arrow"/>*/}
-          </button>
-          <img className="cart" src={Pocket} alt="Cart" height="100%"/>
+        <div className="user">
+          <a className="user_enter">Войти</a>
+          <button className="user_lang">ru</button>
+          <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/></a>
         </div>
 
       </div>

@@ -142,7 +142,7 @@ const Header = () => {
               onMouseOver={(event)=>{event.currentTarget.classList.add('active')}}
               onMouseLeave={(event)=>{event.currentTarget.classList.remove('active')}}>
               <span>ru</span>
-              <i className="fa fa-angle-up"></i>
+              <i className="fa fa-angle-down"></i>
               <div className="dropdown">
                 <ul className="dropdown__list">
                   <li className="dropdown__list-item"><a className="dropdown__list-item_content">ru</a></li>

@@ -32,7 +32,107 @@ const Header = () => {
                 </ul>
               </div>
             </li>
-            
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Брюки</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Сорочка</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Галстук</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Жилет</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Пальто</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Куртка</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+            <li className="list-item"
+                onMouseOver={(event) => {event.currentTarget.classList.add('active')}}
+                onMouseLeave={(event) => {event.currentTarget.classList.remove('active')}}>
+              <a className="list-item_content">Обувь</a>
+              <div className="dropdown">
+                <ul className="dropdown__list">
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                  <li className="dropdown__list-item"><a className="dropdown__list-item_content">Lorem ipsum</a></li>
+                </ul>
+              </div>
+            </li>
+
+
+
           </ul>
         </nav>
 

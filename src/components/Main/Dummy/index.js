@@ -31,7 +31,6 @@ const Dummy = props => {
     >
       {imgs}
       <div className="wearing">
-        <img src="http://194.87.239.90/fabric/images/3D/trousers/fabric_ref/30C8025/model/P06/1600x1600/1.png" alt="dummy wear"/>
       </div>
     </div>
   );

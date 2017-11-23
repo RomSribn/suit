@@ -7,7 +7,7 @@ const CustomizeControls = (props) => {
   return (
     <div className="controls">
       <div className="circle left"><img src={LeftArrow} alt=""/></div>
-      <div className="circle save"><img src={Save} alt=""/></div>
+      <div className="circle center"><img src={Save} alt=""/></div>
       <div className="circle right"><img src={RightArrow} alt=""/></div>
     </div>
   )

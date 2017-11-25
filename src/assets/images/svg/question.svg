@@ -4,10 +4,14 @@
 	 viewBox="0 0 173 175" style="enable-background:new 0 0 173 175;" xml:space="preserve">
 <style type="text/css">
 	.st0{stroke:#FEFEFE;stroke-width:8.5033;stroke-miterlimit:22.9256;}
-	.st1{fill:#FEFEFE;}
-	.st2{font-family:'ArialMT';}
-	.st3{font-size:156.371px;}
+	.st1{enable-background:new;}
+	.st2{fill:#FEFEFE;}
 </style>
-<path class="st0" d="M85.9,8.1c43.4,0,78.6,35.2,78.6,78.6s-35.2,78.6-78.6,78.6S7.3,130.1,7.3,86.7S42.5,8.1,85.9,8.1z"/>
-<text transform="matrix(1 0 0 1 42.809 143.703)" class="st1 st2 st3">?</text>
+<!-- <path class="st0" d="M86.3,8.2c43.4,0,78.6,35.2,78.6,78.6s-35.2,78.6-78.6,78.6S7.7,130.2,7.7,86.8S42.9,8.2,86.3,8.2z"/> -->
+<g class="st1">
+	<path class="st2" d="M85,30.2c19.4,0,32.5,11.6,32.5,28.8c0,15-8.9,22.5-18.8,31.7c-7.4,6.9-9.3,11.2-9.8,18.7
+		c-0.1,2,0,6.8-4.8,6.8l0,0c-4.8,0-4.6-5.2-4.5-7.3c1-13.4,5.6-17.1,17.6-29.1c6.9-6.9,9.9-13,9.9-20.2c0-12.4-9.1-20.8-22.4-20.8
+		c-15.2,0-22.3,9.8-24.2,21.6c-0.3,2.2-0.9,6.8-5.3,6.7l0,0c-4.8-0.5-4.6-4.9-4.3-7.2C53.4,43,64.4,30.2,85,30.2z"/>
+</g>
+<circle class="st2" cx="84.2" cy="132.5" r="6.2"/>
 </svg>

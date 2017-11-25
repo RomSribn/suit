@@ -3,9 +3,9 @@
 <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 172.3 168" style="enable-background:new 0 0 172.3 168;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#000000;stroke-width:8.5033;stroke-miterlimit:22.9256;}
+	<!-- .st0{fill:none;stroke:#ffffff;stroke-width:8.5033;stroke-miterlimit:22.9256;} -->
 	.st1{fill:none;stroke:#000000;stroke-width:8.5032;stroke-miterlimit:22.9256;}
 </style>
-<path class="st0" d="M87.9,6.1c43.4,0,78.6,35.2,78.6,78.6s-35.2,78.6-78.6,78.6S9.3,128.1,9.3,84.7S44.5,6.1,87.9,6.1z"/>
+<!-- <path class="st0" d="M87.9,6.1c43.4,0,78.6,35.2,78.6,78.6s-35.2,78.6-78.6,78.6S9.3,128.1,9.3,84.7S44.5,6.1,87.9,6.1z"/> -->
 <path class="st1" d="M57.3,53.5l63.5,63.4 M57.3,116.9l63.5-63.4"/>
 </svg>

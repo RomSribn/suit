@@ -3,6 +3,7 @@ import React from 'react'
 import Switch from './Switch'
 import Customize from './Customize'
 import Dummy from '../../containers/Main/Dummy'
+import Controls from '../../components/Main/Controls'
 
 import Question from 'Assets/images/svg/question.svg'
 import Show from 'Assets/images/svg/show.svg'
@@ -16,11 +17,15 @@ const Main = (props) => {
       <div className="container">
         <div className="dummy-container">
           <Dummy />
-          <div className="controls">
-            <div className="circle left"><img src={Question} alt=""/></div>
-            <div className="circle center"><img src={Show} alt=""/></div>
-            <div className="circle right"><img src={More} alt=""/></div>
-          </div>
+          <Controls
+            color="black"
+            leftIcon={Question}
+            leftText={'Подсказка'}
+            centerIcon={Show}
+            centerText={'Показать'}
+            rightIcon={More}
+            rightText={'Подробнее'}
+            />
         </div>
         <Customize />
       </div>

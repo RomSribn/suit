@@ -2,12 +2,15 @@ import React from 'react'
 import CustomizeList from './CustomizeList'
 import OrderData from './CustomizeOrderData'
 import Search from './Search'
-import CustomizeControls from './CustomizeControls'
+import Controls from '../Controls'
+
+import LeftArrow from 'Assets/images/svg/left-arrow.svg'
+import RightArrow from 'Assets/images/svg/right-arrow.svg'
+import Save from 'Assets/images/svg/save.svg'
 
 const Customize = () => {
   return (
-    <div className="customize"
-         style={{background: "url('https://www.pixelstalk.net/wp-content/uploads/2016/10/Cloth-Wallpapers-HD.jpg'"}}>
+    <div className="customize">
       <div className="customize__controls">
 
         <OrderData/>
@@ -19,7 +22,14 @@ const Customize = () => {
           <CustomizeList/>
         </div>
 
-        <CustomizeControls />
+        <Controls
+          color='white'
+          leftIcon={LeftArrow}
+          leftText={'Назад'}
+          centerIcon={Save}
+          centerText={'Сохранить'}
+          rightIcon={RightArrow}
+          rightText={'Вперед'}/>
 
       </div>
     </div>

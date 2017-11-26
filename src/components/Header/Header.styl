@@ -3,7 +3,7 @@
     font-family font-header
   & > .header
     position relative
-    height 59px
+    height 57px
     width 100%
     background-color black
     color white
@@ -66,6 +66,10 @@
           display block
     .nav
       height 100%
+      transition all .3s ease-out
+      &--active
+        margin-left 100px
+        opacity 0
       .list
         position relative
         height 100%

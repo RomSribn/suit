@@ -1,13 +1,15 @@
 .application
-  *:not(.fa)
+  & > header *:not(.fa)
     font-family font-header
   & > .header
     position relative
-    height 59px
+    height 57px
     width 100%
     background-color black
     color white
     line-height 1
+    z-index 10
+    background-color black-transparent
     .container
       position relative
       height 100%
@@ -42,6 +44,7 @@
       color gray
       &_enter, &_lang, &_cart
         cursor pointer
+        user-select none
       &_lang
         position relative
         border 0
@@ -66,6 +69,14 @@
           display block
     .nav
       height 100%
+      transition all .3s ease-out
+      transform translateX(25px)
+      opacity 0
+      &--active
+        transform translateX(0)
+        opacity 1
+        .user > .user_enter
+          visibility hidden
       .list
         position relative
         height 100%

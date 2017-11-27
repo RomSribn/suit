@@ -1,0 +1,101 @@
+div.login-container
+  height calc(100% - 57px)
+  width 100%
+  position absolute
+  background-color rgba(255,255,255,0.95)
+  z-index 1000
+  display flex
+  align-items center
+  justify-content center
+  section.login
+    box-shadow 0 0 100px 0 black
+    position relative
+    width 988px
+    height 480px
+    background url('https://pp.userapi.com/c834400/v834400579/3b45b/Qyg4hrop6uo.jpg') no-repeat center
+    background-size cover
+    padding 76px 49px 0
+    color white
+    font-family font-default
+    button.exit
+      position absolute
+      top 13px
+      right 15px
+      box-shadow none
+      background-color transparent
+      color white
+      font-size 100%
+      line-height 1
+      border 1px solid white
+      height 25px
+      width 25px
+      border-radius 100%
+    div.left-side
+      width 50%
+      padding 0 42px
+      h2.title
+        font-family font-default
+        font-weight bold
+        padding 16px 0
+        font-size 200%
+        letter-spacing 2px
+      p.additional-info
+        font-family font-default
+        font-weight 700
+        margin 16px 0
+        font-size 85%
+        line-height 1.5
+      .login_input
+        width 100%
+        border 0
+        border-radius 25px
+        background-color white
+        padding 13px 25px
+        font-family font-bold
+        font-size 85%
+        margin 8px 0
+        color gray-for-placeholder - 20%
+        &::placeholder
+          color gray-for-placeholder
+        &:focus
+          outline none
+      input.login_input
+        background-color white
+      button.login_input
+        background-color lightgray
+        margin 20px 0
+
+      .row
+        display flex
+        justify-content space-between
+        align-items center
+        align-content center
+        margin 8px 0
+        .remember
+          display flex
+          align-items center
+          cursor pointer
+          .checkbox
+            display inline-block
+            width 16px
+            height 16px
+            border-radius 3px
+            background-color white
+            margin-right 10px
+            .check
+              visibility hidden
+              background red
+              height 50%
+              width 50%
+              margin 4px auto
+            &--checked
+              .check
+                visibility visible
+
+        label.cb-text, .forgot
+          padding-top 2px
+          color gray - 40%
+          font-family font-bold
+          font-size 90%
+
+

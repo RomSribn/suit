@@ -14,7 +14,7 @@ const Main = (props) => {
 
   return (
     <section className="main">
-      <Login />
+      {/*<Login />*/}
       <Switch />
       <div className="container">
         <div className="dummy-container">

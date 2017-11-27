@@ -1,5 +1,5 @@
 .main
-  height calc(100% - 57px - 59px);
+  height calc(100% - (57px * 2));
   width 100%
   .container
     display flex
@@ -12,7 +12,6 @@
   justify-content flex-start
   height 100%
   width 50vw
-  height 100%
   position relative
   align-items center
   background url("http://www.fudgegraphics.com/downloads/fabric/fudgegraphics-creased-fabric-10.jpg")
@@ -25,41 +24,88 @@
     width 276px
     padding 0 27px
     background-blend-mode multiply
-    background-color rgba(255,255,255,0.75)
+    background-color rgba(255, 255, 255, 0.75)
     .search
       width 100%
       height 30px
       margin 10px 0 30px 0
 
-  @import "Search/Search.styl"
-  @import "CustomizeOrderData/OrderData.styl"
+@import "Search/Search.styl"
+@import "CustomizeOrderData/OrderData.styl"
 
 .list-container
   display flex
   position relative
   height 70%
   padding 0 4px
-  .list
-    overflow auto
-    width 100%
-    height 100%
+  &--hidden
+    display none
 
-    &_item
-      display flex
-      flex-flow row nowrap
-      align-items center
-      cursor pointer
-      .name
-        font-family font-default
-        font-size 80%
+.list
+  overflow auto
+  width 100%
+  height 100%
 
-      .indicator
-        position relative
-        display flex
-        height 8px
-        width 8px
-        border 1px solid black
-        border-radius 100%
-        margin-right 5px
-    .checked > .indicator
+.list-container > .list > .list_item
+  & > .list
+    padding 7px 0
+  &:not(:last-child)
+    margin-bottom 10px
+
+.list_item
+  display block
+  & > .list
+    display none
+  &--opened
+    & > .list
+      display block
+    .list_header
+      transition all .3s
+      color black
+      .list__header_icons
+        .fa-angle-double-up
+          transform rotate(180deg)
+
+.radio
+  display flex
+  flex-flow row nowrap
+  align-items center
+  margin 0 !important
+  &--checked
+    .radio_indicator
       background-color black
+  .radio_indicator
+    position relative
+    display flex
+    height 8px
+    width 8px
+    border 1px solid black
+    border-radius 100%
+    margin-right 5px
+  .radio_name
+    font-family font-default
+    font-size 90%
+
+.list_header
+  width 100%
+  display flex
+  flex-flow row nowrap
+  justify-content space-between
+  align-items center
+  color gray
+
+.list__header_heading
+  font-size 85%
+  font-family font-bold
+  text-transform uppercase
+  line-height 1
+
+.list__header_icons
+  font-size 110%
+  display flex
+  flex-flow row nowrap
+  justify-content space-between
+
+.list__header_icons .fa
+  margin 0 5px
+  cursor pointer

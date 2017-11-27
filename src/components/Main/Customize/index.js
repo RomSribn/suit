@@ -2,7 +2,7 @@ import React from 'react'
 import CustomizeList from './CustomizeList'
 import OrderData from './CustomizeOrderData'
 import Search from './Search'
-import Controls from '../Controls'
+import Controls from '../../../containers/Main/Controls'
 
 import LeftArrow from 'Assets/images/svg/left-arrow.svg'
 import RightArrow from 'Assets/images/svg/right-arrow.svg'

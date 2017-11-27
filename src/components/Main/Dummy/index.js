@@ -18,13 +18,14 @@ const Dummy = props => {
   }
   return (
     <div
-      className="man"
+      className="dummy"
       onMouseLeave={props.onMouseLeave}
       onMouseMove={props.onMouseMove}
       onMouseUp={props.onMouseUp}
       onMouseDown={props.onMouseDown}
       onWheelCapture={props.onWheelCapture}
       style={{
+        position: 'relaive',
         transformOrigin: `50% ${props.imageYOffset}px`,
         transform: `scale(${props.scaleCoefficient}) `
       }}

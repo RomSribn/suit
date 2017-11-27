@@ -1,5 +1,5 @@
 import React from 'react'
-import Logotype from 'Assets/images/svg/logo.svg'
+// import Logotype from 'Assets/images/svg/logo.svg'
 import LogotypeNText from 'Assets/images/svg/logowithtext.svg'
 import Cart from 'Assets/images/svg/cart.svg'
 

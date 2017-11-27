@@ -144,7 +144,7 @@ class DummyContainer extends Component {
 
 DummyContainer.defaultProps = {
   scaleCoefficient: 1,
-  maxScale: 3,
+  maxScale: 5,
   scaleRate: 0.001,
   speed: 100,
   imageCount: 89

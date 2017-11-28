@@ -30,7 +30,7 @@ class Header extends Component {
     })
     const { app, user } = this.props
     const { lang } = app
-    console.log(user)
+    
     return (
       <header className="header">
         <div className="container">

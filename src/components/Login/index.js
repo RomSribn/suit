@@ -13,7 +13,6 @@ class Login extends Component {
 
   componentWillMount() {
     if(this.props.user.isAuth) {
-      console.log('fired')
       this.props.history.push('/')
     }
   }
@@ -21,7 +20,6 @@ class Login extends Component {
   onCheckboxClickHandle (e) {
     this.setState({isRemember: !this.state.isRemember})
     e.currentTarget.querySelector('.checkbox').classList.toggle('checkbox--checked')
-    console.log(e.currentTarget)
   }
 
   handleLogin(e) {
@@ -34,7 +32,6 @@ class Login extends Component {
 
 
   render() {
-    console.log(' in login', this.props)
     const { user } = this.props
     return <div className="login-container">
       <section className="login">

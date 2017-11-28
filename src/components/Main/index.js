@@ -13,7 +13,6 @@ import More from 'Assets/images/svg/more.svg'
 const Main = (props) => {
   return (
     <section className="main">
-
       <Switch />
       <div className="container">
         <div className="dummy-container">

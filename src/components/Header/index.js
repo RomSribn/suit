@@ -1,60 +1,82 @@
-import React from 'react'
-// import Logotype from 'Assets/images/svg/logo.svg'
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
+import { observable } from 'mobx'
+import cx from 'classnames'
+import { Link } from 'react-router-dom'
+
+import locale from './locale'
+
 import LogotypeNText from 'Assets/images/svg/logowithtext.svg'
 import Cart from 'Assets/images/svg/cart.svg'
 
-function toggleLanguageSelect(e) {
-  e.preventDefault();
-  let target = document.querySelector('.application>header nav');
-  target.classList.toggle('nav--active')
+
+
+@inject('app', 'user') @observer
+class Header extends Component {
+  @observable isOpened
+
+  showLangs() {
+    this.isOpened = !this.isOpened
+  }
+
+  clicHandle(lang) {
+    this.showLangs()
+    this.props.app.lang = lang
+  }
+
+  render() {
+    const navClass = cx('nav', {
+      'nav--active': this.isOpened
+    })
+    const { app, user } = this.props
+    const { lang } = app
+    console.log(user)
+    return (
+      <header className="header">
+        <div className="container">
+
+          <div className="logotype">
+            <a className="logotype-content">
+              <img src={LogotypeNText} alt="Логотип"/>
+            </a>
+          </div>
+
+          <nav className={navClass}>
+            <ul className="list">
+
+              <li className="list-item" onClick={e => this.clicHandle('ru')}>
+                <p className="list-item_content">Russian</p>
+              </li>
+              <li className="list-item" onClick={e => this.clicHandle('en')}>
+                <p className="list-item_content">English</p>
+              </li>
+              <li className="list-item" onClick={e => this.clicHandle('de')}>
+                <p className="list-item_content">German</p>
+              </li>
+              <li className="list-item" onClick={e => this.clicHandle('fr')}>
+                <p className="list-item_content">French</p>
+              </li>
+              <li className="list-item" onClick={e => this.clicHandle('bg')}>
+                <p className="list-item_content">Bulgarian</p>
+              </li>
+
+            </ul>
+          </nav>
+
+          <div className="user">
+            {!user.isAuth && <Link to="/login" className="user_enter">{locale[lang].enter}</Link>}
+            {user.isAuth && <a onClick={e => user.logout()} className="user_enter">{locale[lang].leave}</a>}
+            <div className="user_lang"
+              onClick={::this.showLangs}>
+              <span>{lang}</span>
+            </div>
+            <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/></a>
+          </div>
+
+        </div>
+      </header>
+    )
+  }
 }
 
-const Header = () => {
-
-  return (
-    <header className="header">
-      <div className="container">
-
-        <div className="logotype">
-          <a className="logotype-content">
-            <img src={LogotypeNText} alt="Логотип"/>
-          </a>
-        </div>
-
-        <nav className="nav">
-          <ul className="list">
-
-            <li className="list-item">
-              <p className="list-item_content">Russian</p>
-            </li>
-            <li className="list-item">
-              <p className="list-item_content">English</p>
-            </li>
-            <li className="list-item">
-              <p className="list-item_content">German</p>
-            </li>
-            <li className="list-item">
-              <p className="list-item_content">French</p>
-            </li>
-            <li className="list-item">
-              <p className="list-item_content">Bulgarian</p>
-            </li>
-
-          </ul>
-        </nav>
-
-        <div className="user">
-          <a className="user_enter">Войти</a>
-            <div className="user_lang"
-              onClick={toggleLanguageSelect}>
-              <span>ru</span>
-            </div>
-          <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/></a>
-        </div>
-
-      </div>
-    </header>
-  )
-};
-
-export default Header;
+export default Header

@@ -12,12 +12,23 @@ import Save from 'Assets/images/svg/save.svg'
 const Customize = () => {
   return (
     <div className="customize">
+
+      <img
+        src="http://www.fudgegraphics.com/downloads/fabric/fudgegraphics-creased-fabric-10.jpg"
+        className="customize__image customize__image--cloth"
+      />
+      <img
+        src="http://via.placeholder.com/375x780"
+        className="customize__image customize__image--wear"
+      />
+
       <div className="customize__controls">
 
         <OrderData/>
         <div className="search">
           <Search/>
         </div>
+
 
         {/* Скрытый блок */}
         <div className="list-container list-container--hidden">

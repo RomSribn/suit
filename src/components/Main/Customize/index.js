@@ -19,7 +19,7 @@ const Customize = () => {
       />
       <img
         src="http://via.placeholder.com/375x780"
-        className="customize__image customize__image--wear"
+        className="customize__image customize__image--wear hidden"
       />
 
       <div className="customize__controls">
@@ -31,12 +31,12 @@ const Customize = () => {
 
 
         {/* Скрытый блок */}
-        <div className="list-container list-container--hidden">
+        <div className="list-container">
           <CustomizeList/>
         </div>
         {/* //////////// */}
 
-        <div className="list-container">
+        <div className="list-container list-container--hidden">
           <CustomizeDesign />
         </div>
 

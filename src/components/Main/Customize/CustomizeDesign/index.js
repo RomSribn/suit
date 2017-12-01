@@ -1,21 +1,41 @@
 import React from 'react'
+import CustomizeDesignListItem from "./CustomizeDesignListItem"
 
-import CustomizeListItem from '../CustomizeList/CustomizeListItem'
+/// Пример использования компонента ///
+//Пример массива данных, передаваемых в <CustomizeDesignListItem />
+let demo_items = [
+  "Name 1",
+  "Name 2",
+  "Name 3",
+  "Name 4"
+]
 
-const CustomizeDesign = () => {
-  //TODO Реакция на нажатие двойной стрелки
+//Пример массива списков в <CustomizeDesign />
+let demo_list = [
+  {
+    heading: 'Heading 1',
+    demo_items
+  },
+  {
+    heading: 'Heading 2',
+    demo_items
+  },
+  {
+    heading: 'Heading 3',
+    demo_items
+  },
+]
+/// Конец примера использования компонента ///
+
+const CustomizeDesign = (props) => {
   return (
     <ul className="list">
-      <li className="list_item list_item--opened">
-        <header className="list_header">
-          <span className="list__header_heading">Название опции</span>
-          <span className="list__header_icons"><i className="fa fa-eye"/><i className="fa fa-angle-double-up"/></span>
-        </header>
-        <ul className="list">
-          <CustomizeListItem itemName={'text'} checked/>
-          <CustomizeListItem itemName={'text'}/>
-        </ul>
-      </li>
+      {
+        // TODO demo_list заменить на props
+        demo_list.map((item, key) => {
+          return <CustomizeDesignListItem heading={item.heading} items={item.demo_items} key={key}/>
+        })
+      }
     </ul>
   )
 }

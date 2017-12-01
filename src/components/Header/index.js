@@ -25,12 +25,15 @@ class Header extends Component {
   }
 
   render() {
-    const navClass = cx('nav', {
+    const langNavClass = cx('nav', {
       'nav--active': this.isOpened
+    })
+    const garmentNavClass = cx('nav', {
+      'nav--active': !this.isOpened
     })
     const { app, user } = this.props
     const { lang } = app
-    
+
     return (
       <header className="header">
         <div className="container">
@@ -41,7 +44,37 @@ class Header extends Component {
             </a>
           </div>
 
-          <nav className={navClass}>
+          <nav className={garmentNavClass}>
+            <ul className="list">
+
+              <li className="list-item">
+                <p className="list-item_content">Пиджак</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Брюки</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Сорочка</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Галстук</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Жилет</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Пальто</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Куртка</p>
+              </li>
+              <li className="list-item">
+                <p className="list-item_content">Обувь</p>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className={langNavClass}>
             <ul className="list">
 
               <li className="list-item" onClick={e => this.clicHandle('ru')}>

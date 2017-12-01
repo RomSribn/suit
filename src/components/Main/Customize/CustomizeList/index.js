@@ -6,6 +6,20 @@ const CustomizeList = (props) => {
     <ul className="list">
       <CustomizeListItem itemName={`lorem`} checked/>
       <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
+      <CustomizeListItem itemName={`lorem`}/>
     </ul>
   )
 };

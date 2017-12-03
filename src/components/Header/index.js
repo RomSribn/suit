@@ -11,7 +11,7 @@ import Cart from 'Assets/images/svg/cart.svg'
 
 
 
-@inject('app', 'user') @observer
+@inject('app', 'user', 'garments') @observer
 class Header extends Component {
   @observable isOpened
 
@@ -31,7 +31,7 @@ class Header extends Component {
     const garmentNavClass = cx('nav', {
       'nav--active': !this.isOpened
     })
-    const { app, user } = this.props
+    const { app, user, garments } = this.props
     const { lang } = app
 
     return (
@@ -50,7 +50,7 @@ class Header extends Component {
               <li className="list-item">
                 <p className="list-item_content">Пиджак</p>
               </li>
-              <li className="list-item">
+              <li className="list-item" onClick={e => garments.setGarment('trousers')}>
                 <p className="list-item_content">Брюки</p>
               </li>
               <li className="list-item">

@@ -1,4 +1,5 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 //Components
 import Switch from './Switch'
 import Customize from './Customize'
@@ -10,10 +11,11 @@ import Question from 'Assets/images/svg/question.svg'
 import Show from 'Assets/images/svg/show.svg'
 import More from 'Assets/images/svg/more.svg'
 
-const Main = (props) => {
+const Main = inject('garments')(observer((props) => {
+  const { garments } = props
   return (
     <section className="main">
-      <Switch />
+      {garments.active && <Switch />}
       <div className="container">
         <div className="dummy-container">
           <Dummy />
@@ -31,6 +33,6 @@ const Main = (props) => {
       </div>
     </section>
   )
-};
+}))
 
 export default Main

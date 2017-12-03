@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { } from 'react'
+import { observer, inject } from 'mobx-react'
 
-const CustomizeListItem = (props) => {
-  return (
-    //TODO Событие onClick на .list_item.radio
-    <li className={`list_item radio${props.checked ? ' radio--checked' : ''}`}>
-      <div className="radio_indicator"/>
-      <div className="radio_name">{props.itemName}</div>
-    </li>
-  )
-};
+const CustomizeListItem = inject('app')(observer(({item, app, ...props}) => {
+  return <li
+    onClick={e => props.setChecked(item.id)}
+    className={`list_item radio${item.checked ? ' radio--checked' : ''}`}>
+    <div className="radio_indicator"/>
+    <div className="radio_name">
+    {item[`title_${app.lang}`] ? item[`title_${app.lang}`] : item.code}
+    </div>
+  </li>
+}))
 
-export default CustomizeListItem;
+export default CustomizeListItem

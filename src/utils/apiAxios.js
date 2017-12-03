@@ -1,22 +1,22 @@
 import axios from 'axios'
-import { logoutForce } from 'Actions/auth'
+import history from '../history'
 
-export function callApi(config, request, onRequestSuccess, onRequestFailure) {
-  return (dispatch, getState) => {
-    dispatch(request())
-    if(!!localStorage.getItem('id_token')) {
-      config.headers = {
-        ...config.headers,
-        'x-auth-token': localStorage.getItem('id_token')
-      }
+export function callApi(config, onRequest, onRequestSuccess, onRequestFailure) {
+  onRequest()
+  if(!!localStorage.getItem('id_token')) {
+    config.headers = {
+      ...config.headers,
+      'x-auth-token': localStorage.getItem('id_token')
     }
-    return axios(config).then(response => {
-      dispatch(onRequestSuccess(response.data))
-    }).catch((error) => {
-      if(error.response.status === 401) {
-        dispatch(logoutForce())
-      }
-      dispatch(onRequestFailure(error))
-    })
   }
+  return axios(config).then(response => {
+    onRequestSuccess(response.data)
+  }).catch((error) => {
+    if(error.response.status === 401) {
+      localStorage.removeItem('AuthUser')
+      localStorage.removeItem('id_token')
+      history.push('/login')
+    }
+    onRequestFailure(error)
+  })
 }

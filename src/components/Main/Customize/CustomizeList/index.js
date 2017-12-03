@@ -1,27 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 import CustomizeListItem from "./CustomizeListItem"
 
-const CustomizeList = (props) => {
-  return (
-    <ul className="list">
-      <CustomizeListItem itemName={`lorem`} checked/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-      <CustomizeListItem itemName={`lorem`}/>
-    </ul>
-  )
-};
+@observer
+class CustomizeList extends Component {
+  setActiveItem(id) {
+    this.props.group.setChecked(id)
+  }
 
-export default CustomizeList;
+  render () {
+    const { group } = this.props
+    return <ul className="list">
+      {group && group.items.map(i =>
+        <CustomizeListItem
+          setChecked={::this.setActiveItem}
+          checked={group.activeItem && group.activeItem.id === i.id}
+          key={i.id}
+          item={i} />
+      )}
+    </ul>
+  }
+
+}
+
+export default CustomizeList

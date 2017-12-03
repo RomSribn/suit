@@ -1,4 +1,8 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
+
+import ActiveFabric from './ActiveFabric'
+import ActiveImg from './ActiveImg'
 import CustomizeList from './CustomizeList'
 import OrderData from './CustomizeOrderData'
 import Search from './Search'
@@ -9,49 +13,46 @@ import LeftArrow from 'Assets/images/svg/left-arrow.svg'
 import RightArrow from 'Assets/images/svg/right-arrow.svg'
 import Save from 'Assets/images/svg/save.svg'
 
-const Customize = () => {
+const Customize = inject('garments')(observer((props) => {
+  const { garments } = props
+
   return (
     <div className="customize">
+      <ActiveFabric garments={garments} />
+      <ActiveImg garments={garments} />
 
-      <img
-        src="http://www.fudgegraphics.com/downloads/fabric/fudgegraphics-creased-fabric-10.jpg"
-        className="customize__image customize__image--cloth"
-      />
-      <img
-        src="http://via.placeholder.com/375x780"
-        className="customize__image customize__image--wear hidden"
-      />
+      {garments.active &&
+        <div className="customize__controls">
 
-      <div className="customize__controls">
+          <OrderData/>
+          <div className="search">
+            <Search/>
+          </div>
 
-        <OrderData/>
-        <div className="search">
-          <Search/>
+
+          <div className="list-container">
+            <CustomizeList group={garments.active.activeGroup} />
+          </div>
+
+
+          {/*<div className="list-container list-container--hidden">
+            <CustomizeDesign />
+          </div>*/}
+
+          <Controls
+            color='white'
+            leftIcon={LeftArrow}
+            leftText={'Назад'}
+            centerIcon={Save}
+            centerText={'Сохранить'}
+            rightIcon={RightArrow}
+            rightText={'Вперед'}/>
+
+
         </div>
-
-
-        {/* Скрытый блок */}
-        <div className="list-container">
-          <CustomizeList/>
-        </div>
-        {/* //////////// */}
-
-        <div className="list-container list-container--hidden">
-          <CustomizeDesign />
-        </div>
-
-        <Controls
-          color='white'
-          leftIcon={LeftArrow}
-          leftText={'Назад'}
-          centerIcon={Save}
-          centerText={'Сохранить'}
-          rightIcon={RightArrow}
-          rightText={'Вперед'}/>
-
-      </div>
+      }
     </div>
   )
-};
+}))
 
 export default Customize;

@@ -52,6 +52,7 @@ class Login extends Component {
           </div>
           <button onClick={::this.handleLogin} className="login_input">Войти в систему</button>
         </div>
+        <div className="text">* autumn 2017 Louis Purple</div>
       </section>
     </div>
   }

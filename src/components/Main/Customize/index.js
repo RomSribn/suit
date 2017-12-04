@@ -46,7 +46,8 @@ const Customize = inject('garments')(observer((props) => {
             centerIcon={Save}
             centerText={'Сохранить'}
             rightIcon={RightArrow}
-            rightText={'Вперед'}/>
+            rightText={'Вперед'}
+          />
 
 
         </div>

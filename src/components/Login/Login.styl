@@ -1,8 +1,8 @@
 div.login-container
   height calc(100% - 57px)
   width 100%
-  position absolute
-  background-color rgba(255,255,255,0.95)
+  position relative
+  background-color white-transparent
   z-index 1000
   display flex
   align-items center
@@ -16,6 +16,14 @@ div.login-container
     padding 76px 49px 0
     color white
     font-family font-default
+    & > div.text
+      font-family font-bold
+      text-align right
+      position absolute
+      bottom 15px
+      right 60px
+      font-size 90%
+      color gray-for-placeholder
     button.exit
       position absolute
       top 13px

@@ -55,7 +55,7 @@
       align-content center
       flex-flow row nowrap
       color gray
-      &_enter, &_lang, &_cart
+      &_enter, &_lang, &_cart, .cross
         cursor pointer
         user-select none
       &_enter:link, &_enter:visited, &_cart:link, &_cart:visited
@@ -81,8 +81,19 @@
           visibility visible
           opacity 1
       &_cart
+        position relative
+        .order_count
+          position absolute
+          left 50%
+          top 50%
+          transform translate(-50%, -50%)
+          font-size 80%
         &-img
           display block
+          position relative
+          top -3px
+      .cross
+        padding 10px
     .nav
       height 100%
       display none

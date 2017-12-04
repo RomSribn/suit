@@ -96,6 +96,7 @@ class Header extends Component {
             </ul>
           </nav>
 
+          {/* До открытия выбора языков выглядит так верстка */}
           <div className="user">
             {!user.isAuth && <Link to="/login" className="user_enter">{locale[lang].enter}</Link>}
             {user.isAuth && <a onClick={e => user.logout()} className="user_enter">{locale[lang].leave}</a>}
@@ -103,8 +104,25 @@ class Header extends Component {
               onClick={::this.showLangs}>
               <span>{lang}</span>
             </div>
-            <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/></a>
+            <div className="cross hidden">
+              <i className="fa fa-times" />
+            </div>
+            <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/><span className="order_count">0</span></a>
           </div>
+
+          {/* После открытия языков выглядит так верстка */}
+          {/*<div className="user">*/}
+            {/*{!user.isAuth && <Link to="/login" className="user_enter invisible">{locale[lang].enter}</Link>} /!* добавил invisible класс *!/*/}
+            {/*{user.isAuth && <a onClick={e => user.logout()} className="user_enter invisible">{locale[lang].leave}</a>} /!* добавил invisible класс *!/*/}
+            {/*<div className="user_lang hidden" /!*добавил hidden класс*!/*/}
+                 {/*onClick={::this.showLangs}>*/}
+              {/*<span>{lang}</span>*/}
+            {/*</div>*/}
+            {/*<div className="cross"> /!* убрал hidden класс *!/*/}
+              {/*<i className="fa fa-times" />*/}
+            {/*</div>*/}
+            {/*<a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/><span className="order_count">0</span></a>*/}
+          {/*</div>*/}
 
         </div>
       </header>

@@ -53,7 +53,6 @@ class group {
   @computed get activeItem() {
     let checked = find(this.items, {checked: true})
     if(checked) {
-      console.log(checked.title_en)
       return checked.title_en ? checked.title_en : checked.code
     }
     return ''

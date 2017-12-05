@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx'
+import { observable } from 'mobx'
 import { find } from 'lodash'
 //import { callApi } from '../../utils/apiAxios'
 //import routes from '../../config/routes'
@@ -14,7 +14,7 @@ class garments {
   setGarment(garmentName) {
     let clickedGarment = find(this.list, {'name': garmentName})
     if(!clickedGarment) {
-      clickedGarment = new garment(garmentName)
+      clickedGarment = new garment(garmentName, this)
     }
     this.list.push(clickedGarment)
     this.active = clickedGarment

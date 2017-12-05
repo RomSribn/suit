@@ -12,8 +12,9 @@ class garment {
   @observable name
   @observable groups = []
 
-  constructor(name, section) {
+  constructor(name, garments) {
     this.name = name
+    this.garments = garments
     this.fetch()
   }
 
@@ -82,9 +83,11 @@ class garment {
     this.activeGroup = groups[0]
   }
 
-  _onError(error) {
+  _onError = (error) => {
     if(error.response.status === 401) {
       user.removeAuth()
+      this.garments.list = observable([])
+      this.garments.active = null
     }
   }
 }

@@ -14,7 +14,7 @@ const MenuItem = inject('app')(observer(({group, garments, app, ...props}) => {
 
 const Switch = inject('garments')(observer((props) => {
   const { garments } = props
-  const section = garments.active.activeGroup.section
+  const section = garments.active.activeGroup ? garments.active.activeGroup.section : null
   return <div className="switcher">
     {!garments.isMore && <div className="mr-switcher">
       <button className="mr-switcher_item active">M</button>

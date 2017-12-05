@@ -1,8 +1,9 @@
-import { observable, action } from 'mobx'
-import { find } from 'lodash'
+import { observable, action, computed } from 'mobx'
+import { find, findIndex } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
 import group from './group'
+import user from '../user'
 
 class garment {
   @observable isFetching
@@ -20,13 +21,37 @@ class garment {
     this.activeGroup = find(this.groups, {section})
   }
 
+  @action setActiveGroup(groupId) {
+    this.activeGroup = find(this.groups, {id: groupId})
+  }
+
+  @action nextGroup() {
+    let index = findIndex(this.groups, {id: this.activeGroup.id})
+    index = index !== (this.groups.length - 1) ? index + 1 : 0
+    this.activeGroup = this.groups[index]
+  }
+
+  @action prevGroup() {
+    let index = findIndex(this.groups, {id: this.activeGroup.id})
+    index = index !== 0 ? index - 1 : this.groups.length - 1
+    this.activeGroup = this.groups[index]
+  }
+
+  @computed get designGroups() {
+    return this.groups.filter(g => g.section === 'design')
+  }
+
+  @computed get fittingGroups() {
+    return this.groups.filter(g => g.section === 'fitting')
+  }
+
   @action fetch() {
     let url = `http://${routes.API_ROOT}/api/garments/${this.name}/subgroups`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,
       this._onSuccess,
-      (error) => this.error
+      this._onError
     )
   }
 
@@ -55,6 +80,12 @@ class garment {
 
     this.groups = groups
     this.activeGroup = groups[0]
+  }
+
+  _onError(error) {
+    if(error.response.status === 401) {
+      user.removeAuth()
+    }
   }
 }
 

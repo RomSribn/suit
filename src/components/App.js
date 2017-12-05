@@ -1,13 +1,11 @@
 import React from 'react'
 import { Provider } from 'mobx-react'
-import { Router, Route } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 
 import stores from '../stores'
 import history from '../history'
 
-import Header from './Header'
-import Main from './Main'
-import Login from './Login'
+import Wrapper from './Wrapper'
 
 if(!!localStorage.getItem('AuthUser')) {
   history.push('/login')
@@ -16,11 +14,7 @@ if(!!localStorage.getItem('AuthUser')) {
 const App = ({...props}) => {
   return <Provider {...stores}>
     <Router history={history}>
-      <div className="application">
-        <Header/>
-        <Route exact path="/" component={Main} />
-        <Route path="/login" component={Login} />
-      </div>
+      <Wrapper />
     </Router>
   </Provider>
 }

@@ -9,6 +9,7 @@ import garment from './garment'
 class garments {
   @observable.shallow list = []
   @observable active = null
+  @observable isMore = false
 
   setGarment(garmentName) {
     let clickedGarment = find(this.list, {'name': garmentName})

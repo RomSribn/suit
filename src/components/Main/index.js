@@ -4,12 +4,10 @@ import { inject, observer } from 'mobx-react'
 import Switch from './Switch'
 import Customize from './Customize'
 import Dummy from 'Containers/Main/Dummy'
-import Controls from 'Containers/Main/Controls'
+import Controls from './Controls'
 
 
-import Question from 'Assets/images/svg/question.svg'
-import Show from 'Assets/images/svg/show.svg'
-import More from 'Assets/images/svg/more.svg'
+
 
 const Main = inject('garments')(observer((props) => {
   const { garments } = props
@@ -19,15 +17,7 @@ const Main = inject('garments')(observer((props) => {
       <div className="container">
         <div className="dummy-container">
           <Dummy />
-          <Controls
-            color="black"
-            leftIcon={Question}
-            leftText={'Подсказка'}
-            centerIcon={Show}
-            centerText={'Показать'}
-            rightIcon={More}
-            rightText={'Подробнее'}
-            />
+          <Controls garments={garments} />
         </div>
         <Customize />
       </div>

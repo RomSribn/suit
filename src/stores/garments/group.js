@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import { find } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
@@ -48,6 +48,15 @@ class group {
       checked.checked = false
     }
     find(this.items, {id: id}).checked = true
+  }
+
+  @computed get activeItem() {
+    let checked = find(this.items, {checked: true})
+    if(checked) {
+      console.log(checked.title_en)
+      return checked.title_en ? checked.title_en : checked.code
+    }
+    return ''
   }
 }
 

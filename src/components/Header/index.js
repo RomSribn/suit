@@ -47,7 +47,7 @@ class Header extends Component {
           <nav className={garmentNavClass}>
             <ul className="list">
 
-              <li className="list-item">
+              <li className="list-item" onClick={e => garments.setGarment('jacket')}>
                 <p className="list-item_content">Пиджак</p>
               </li>
               <li className="list-item" onClick={e => garments.setGarment('trousers')}>

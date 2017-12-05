@@ -1,18 +1,27 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 
-const Switch = inject('garments', 'app')(observer((props) => {
-  const { garments, app } = props
+const MenuItem = inject('app')(observer(({group, garments, app, ...props}) => {
+  const g = group
+  return <div
+    className={`list_item ${g.id === garments.active.activeGroup.id && 'list_item--active'}`}> {/* list_item--active для активного элемента*/}
+    <dt onClick={() => garments.active.setActiveGroup(g.id)} className="list_item-title">
+      {g[`title_${app.lang}`]}
+    </dt>
+    <dd className="list_item-data">{g.activeItem}</dd>
+  </div>
+}))
+
+const Switch = inject('garments')(observer((props) => {
+  const { garments } = props
   const section = garments.active.activeGroup.section
   return <div className="switcher">
-    {/* Скрывать блок M|R (mr-switcher) при выборе секции design*/}
-    <div className="mr-switcher">
-      {/* Активный {.active}*/}
+    {!garments.isMore && <div className="mr-switcher">
       <button className="mr-switcher_item active">M</button>
       <span className="mr-switcher_divider"></span>
       <button className="mr-switcher_item">R</button>
-    </div>
-    <div className="type-switcher">
+    </div>}
+    {!garments.isMore && <div className="type-switcher">
       <button
         onClick={() => garments.active.setActiveSection('fabric')}
         className={`type-switcher_item ${section === 'fabric' ? 'active' : ''}`}>
@@ -28,17 +37,10 @@ const Switch = inject('garments', 'app')(observer((props) => {
         className={`type-switcher_item ${section === 'fitting' ? 'active' : ''}`}>
         Мерки
       </button>
-    </div>
-    {section === 'design' && <dl className="list">
+    </div>}
+    {garments.isMore && <dl className="list">
       {garments.active.groups.map(g => (
-        <div key={g.id} className="list_item"> {/* list_item--active для активного элемента*/}
-          <dt className="list_item-title">
-            {g[`title_${app.lang}`]}
-          </dt>
-          {/* что за данные? */}
-          {/* это текст после двоеточия на макетах, я так понял там разные данные для каждого параметра */}
-          <dd className="list_item-data">данные</dd>
-        </div>
+        <MenuItem key={g.id} group={g} garments={garments} />
       ))}
 
     </dl>}

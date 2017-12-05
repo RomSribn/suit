@@ -6,12 +6,10 @@ import ActiveImg from './ActiveImg'
 import CustomizeList from './CustomizeList'
 import OrderData from './CustomizeOrderData'
 import Search from './Search'
-import Controls from '../../../containers/Main/Controls'
+import Controls from './Controls'
 import CustomizeDesign from './CustomizeDesign'
 
-import LeftArrow from 'Assets/images/svg/left-arrow.svg'
-import RightArrow from 'Assets/images/svg/right-arrow.svg'
-import Save from 'Assets/images/svg/save.svg'
+
 
 const Customize = inject('garments')(observer((props) => {
   const { garments } = props
@@ -39,15 +37,7 @@ const Customize = inject('garments')(observer((props) => {
             <CustomizeDesign />
           </div>*/}
 
-          <Controls
-            color='white'
-            leftIcon={LeftArrow}
-            leftText={'Назад'}
-            centerIcon={Save}
-            centerText={'Сохранить'}
-            rightIcon={RightArrow}
-            rightText={'Вперед'}
-          />
+          <Controls garment={garments.active}/>
 
 
         </div>

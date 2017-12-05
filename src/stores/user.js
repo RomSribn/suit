@@ -1,6 +1,5 @@
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 import axios from 'axios'
-import history from '../history'
 import routes from '../config/routes'
 import { setIdToken, removeIdToken } from '../utils/apiUtils'
 
@@ -19,25 +18,25 @@ class user {
     return this.isAuth
   }
 
-  fetchLogin(username, password) {
+  @action fetchLogin(username, password) {
     let url = `http://${routes.API_ROOT}/api/auth/login`
     this.isFetching = true
     axios.post(url, {
       username,
       password
     }).then(response => {
+      this.isAuth = true
       this.isFetching = false
       this.profile = response.data
       setIdToken(response.data.token)
       localStorage.setItem('AuthUser', JSON.stringify(response.data.user))
-      history.push('/')
     }).catch((error) => {
       this.error = error
     })
 
   }
 
-  logout() {
+  @action logout() {
     let url = `http://${routes.API_ROOT}/api/auth/logout`
     this.isFetching = true
     axios.get(url, {
@@ -50,13 +49,13 @@ class user {
 
   }
 
-  removeAuth() {
+  @action removeAuth() {
     console.log('history logout')
     this.isFetching = false
     this.profile = {}
+    this.isAuth = false
     removeIdToken('')
     localStorage.removeItem('AuthUser')
-    history.push('/login')
   }
 
 }

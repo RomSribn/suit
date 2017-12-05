@@ -1,22 +1,27 @@
-import React from "react";
+import React from "react"
+import { observer } from 'mobx-react'
 
-const Controls = props => {
-  return (
-    <div className={`controls controls--${props.color}`}>
-      <div className="circle left">
-        <img src={props.leftIcon} alt="" />
-        <span className="text">{props.leftText}</span>
-      </div>
-      <div className="circle center">
-        <img src={props.centerIcon} alt="" />
-        <span className="text">{props.centerText}</span>
-      </div>
-      <div className="circle right">
-        <img src={props.rightIcon} alt="" />
-        <span className="text">{props.rightText}</span>
-      </div>
+import Question from 'Assets/images/svg/question.svg'
+import Show from 'Assets/images/svg/show.svg'
+import More from 'Assets/images/svg/more.svg'
+
+const Controls = observer(({garments, ...props}) => {
+  console.log(garments, props)
+  return <div className={`controls controls--black`}>
+    <div className="circle left">
+      <img src={Question} alt="" />
+      <span className="text">Подсказка</span>
     </div>
-  );
-};
+    <div className="circle center">
+      <img src={Show} alt="" />
+      <span className="text">Показать</span>
+    </div>
+    <div className="circle right" onClick={() => garments.isMore = !garments.isMore}>
+      <img src={More} alt="" />
+      <span className="text">Подробнее</span>
+    </div>
+  </div>
+
+})
 
 export default Controls;

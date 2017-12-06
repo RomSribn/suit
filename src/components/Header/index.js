@@ -53,7 +53,7 @@ class Header extends Component {
               <li className="list-item" onClick={e => garments.setGarment('trousers')}>
                 <p className="list-item_content">Брюки</p>
               </li>
-              <li className="list-item">
+              <li className="list-item" onClick={e => garments.setGarment('shirt')}>
                 <p className="list-item_content">Сорочка</p>
               </li>
               <li className="list-item">

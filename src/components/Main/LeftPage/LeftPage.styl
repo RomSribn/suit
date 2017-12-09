@@ -1,0 +1,82 @@
+.left-page
+  position relative
+  display flex
+  flex-flow row wrap
+  align-items flex-start
+  justify-content space-between
+  padding 3vh 4vw
+  overflow auto
+  .lp-block
+    flex-basis 20%
+    display flex
+    flex-flow column nowrap
+    margin-bottom 35px
+    @media screen and (max-width: 1600px)
+      flex-basis 25%
+    @media screen and (max-width: 1366px)
+      flex-basis 30%
+    &_heading
+      font-family font-bold
+      font-size 120%
+      text-transform uppercase
+      color gray - 50%
+      line-height 3
+    & .content__list
+      list-style none
+      & .list__item
+        position relative
+        & .list__item-heading
+          font-family font-bold
+          line-height 2
+          color gray - 30%
+          text-transform uppercase
+          font-size 80%
+          position relative
+          &::before
+            content ''
+            position absolute
+            min-height 4px
+            min-width 4px
+            border-radius 4px
+            top 50%
+            left -8px
+            transform translateY(-50%)
+            background-color gray - 30%
+        & > .list__item-container
+          list-style none
+          color gray - 50%
+          &>.list__item-container_content
+            font-family font-default
+            font-size 80%
+            padding 5px 0
+            color gray - 10%
+            cursor pointer
+            .data-title
+              display inline-block
+              &::after
+                content ':'
+                margin-right 4px
+                margin-left 1px
+            .data-definition
+              display inline-block
+          .active
+            color black
+
+.pagination-container
+  position: absolute
+  right 2vw
+  top 35px
+
+.pagination
+  position fixed
+  list-style none
+  & > .page
+    content: ''
+    height 7px
+    width 7px
+    border-radius 20px
+    background-color gray
+    margin 10px 0
+
+  .active
+    background-color black

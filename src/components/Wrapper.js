@@ -19,7 +19,7 @@ class Wrapper extends Component {
   checkLocation(props) {
     const { user, history, location } = props
     if(!user.isAuth && location.pathname !== '/login') {
-      history.push('/login')
+      //history.push('/login')
     }
     if(user.isAuth && location.pathname === '/login') {
       history.push('/')

@@ -29,6 +29,7 @@ const Customize = inject('garments')(observer((props) => {
 
 
           <div className="list-container">
+             <h2>{garments.active.title_en}</h2>
             <CustomizeList group={garments.active.activeGroup} />
           </div>
 

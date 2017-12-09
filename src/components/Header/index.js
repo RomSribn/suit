@@ -31,6 +31,8 @@ class Header extends Component {
     const garmentNavClass = cx('nav', {
       'nav--active': !this.isOpened
     })
+    const crossClass = cx("cross", {"hidden": !this.isOpened})
+    const cartClass = cx("user_cart", {"hidden": this.isOpened})
     const { app, user, garments } = this.props
     const { lang } = app
 
@@ -98,16 +100,18 @@ class Header extends Component {
 
           {/* До открытия выбора языков выглядит так верстка */}
           <div className="user">
-            {!user.isAuth && <Link to="/login" className="user_enter">{locale[lang].enter}</Link>}
-            {user.isAuth && <a onClick={e => user.logout()} className="user_enter">{locale[lang].leave}</a>}
-            <div className="user_lang"
+            {!user.isAuth && <Link to="/login" className={`user_enter ${this.isOpened && 'invisible'}`}>{locale[lang].enter}</Link>}
+            {user.isAuth && <a onClick={e => user.logout()} className={`user_enter ${this.isOpened && 'invisible'}`}>{locale[lang].leave}</a>}
+            <div className={`user_lang ${this.isOpened && 'hidden'}`}
               onClick={::this.showLangs}>
               <span>{lang}</span>
             </div>
-            <div className="cross hidden">
+            <div className={crossClass} onClick={::this.showLangs}>
               <i className="fa fa-times" />
             </div>
-            <a className="user_cart"><img className="user_cart-img" src={Cart} alt="Cart" height="32"/><span className="order_count">0</span></a>
+            <a className={cartClass}>
+              <img className="user_cart-img" src={Cart} alt="Cart" height="32"/><span className="order_count">0</span>
+            </a>
           </div>
 
           {/* После открытия языков выглядит так верстка */}

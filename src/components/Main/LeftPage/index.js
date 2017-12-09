@@ -1,21 +1,23 @@
 import React from 'react'
 
-let LPBlockItems = [
-  'first lorem ipsum item',
-  'second ipsum item',
-  'third lorem item',
-];
-
 const LPBlockListItem = props => {
   return <li className="list__item">
     <h3 className="list__item-heading">{props.heading}</h3>
-    <ul className="list__item-container">
-      {
-        LPBlockItems.map((item, idx) => {
-          return <li key={idx} className="list__item-container_content">{item}</li>
-        })
-      }
-    </ul>
+    <dl className="list__item-container">
+      {/* .map method here */}
+      <div className="list__item-container_content active"> {/*активный элемент*/}
+        <dt className="data-title">parameter</dt>
+        <dd className="data-definition">value</dd>
+      </div>
+      <div className="list__item-container_content">
+        <dt className="data-title">parameter</dt>
+        <dd className="data-definition">value</dd>
+      </div>
+      <div className="list__item-container_content">
+        <dt className="data-title">parameter</dt>
+        <dd className="data-definition">value</dd>
+      </div>
+    </dl>
   </li>
 };
 
@@ -33,19 +35,21 @@ const LPBlock = props => {
 };
 
 const Pagination = () => {
-  return <ul className="pagination">
-    <li className='page'/>
-    <li className='item active'/>
-    <li className='page'/>
-    <li className='page'/>
-    <li className='page'/>
-  </ul>
+  return <div className="pagination-container">
+    <ul className="pagination">
+      <li className='page'/>
+      <li className='page active'/>
+      <li className='page'/>
+      <li className='page'/>
+      <li className='page'/>
+    </ul>
+  </div>
 };
 
 const LeftPage = () => {
   return <div className='left-page'>
 
-    <Pagination />
+    <Pagination/>
 
     <LPBlock heading={'Jacket'}/>
     <LPBlock heading={'Trousers'}/>

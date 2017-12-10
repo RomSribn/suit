@@ -36,6 +36,7 @@ class group {
   }
 
   _onSuccess = (data) => {
+    //console.log(data)
     this.items = data.map(i => observable({
       ...i,
       checked: false

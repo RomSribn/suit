@@ -17,8 +17,8 @@ const Main = inject('garments')(observer((props) => {
       {garments.active && <Switch />}
       <div className="container">
         <div className="dummy-container">
-          <LeftPage/>
-          {/*<Dummy />*/}
+          {/*<LeftPage/>*/}
+          <Dummy />
           <Controls garments={garments} />
         </div>
         <Customize />

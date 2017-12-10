@@ -63,7 +63,7 @@ class garment {
       groups.push(
         new group({
           props: g,
-          section: i === 0 ? 'fabric' : 'design',
+          section: g.id === 'fabric_ref' ? 'fabric' : 'design',
           subgroup: 'design',
           garment: this.name
         })

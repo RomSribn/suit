@@ -1,10 +1,8 @@
 import React from 'react'
-
-
-
+import Pagination from '../Pagination'
 
 const Controls = () => {
-  return <div className={`controls controls--white`}>
+  return <div className={`controls controls--gray`}>
     <div className="circle left">
       {/*<img src='https://image.flaticon.com/icons/svg/17/17214.svg' alt=""/>*/}
       <span className="text">Где заказ?</span>
@@ -20,13 +18,20 @@ const Controls = () => {
   </div>
 };
 
+const UserMenuBlockItem = (props) => {
+  return <li className={`block_list-item${props.isHeading ? ' list-heading' : ''}`}>
+    {props.text}
+  </li>
+}
+
 const UserMenuBlock = (props) => {
   return <div className="block">
     <h2 className="block_heading">{props.heading}</h2>
     <ul className="block_list">
-      <li className="block_list-item">item</li>
-      <li className="block_list-item">item</li>
-      <li className="block_list-item">item</li>
+      <UserMenuBlockItem isHeading={true} text="item"/>
+      <UserMenuBlockItem text="item"/>
+      <UserMenuBlockItem text="item"/>
+      <UserMenuBlockItem text="item"/>
     </ul>
   </div>
 }
@@ -34,29 +39,14 @@ const UserMenuBlock = (props) => {
 const UserMenu = () => {
   // Toggle class '.user-menu--opened' for open menu
   return <div className="user-menu user-menu--opened">
-    <div className="pagination-container pagination-top-left">
-      <ul className="pagination">
-        <li className='page'/>
-        <li className='page active'/>
-        <li className='page'/>
-        <li className='page'/>
-        <li className='page'/>
-      </ul>
-    </div>
+
+    <Pagination position="left"/>
 
     <UserMenuBlock heading={"Dashboard"}/>
     <UserMenuBlock heading={"Settings"}/>
     <UserMenuBlock heading={"Orders history"}/>
-    <div className="block">
-      <h2 className="block_heading">New order</h2>
-      <ul className="block_list">
-        <li className="block_list-item list-heading">Make to measure</li>
-        <li className="block_list-item">item</li>
-        <li className="block_list-item">item</li>
-      </ul>
-    </div>
 
-    <Controls />
+    <Controls/>
 
   </div>
 }

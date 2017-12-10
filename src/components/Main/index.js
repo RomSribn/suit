@@ -6,6 +6,7 @@ import Customize from './Customize'
 import LeftPage from './LeftPage'
 import Dummy from 'Containers/Main/Dummy'
 import Controls from './Controls'
+import UserMenu from "./UserMenu";
 
 
 
@@ -16,12 +17,15 @@ const Main = inject('garments')(observer((props) => {
     <section className="main">
       {garments.active && <Switch />}
       <div className="container">
-        <div className="dummy-container">
-          <LeftPage/>
-          {/*<Dummy />*/}
+        <div className="left-container">
+          <Dummy />
+          <LeftPage />
           <Controls garments={garments} />
         </div>
-        <Customize />
+        <div className="right-container">
+          <Customize />
+          <UserMenu />
+        </div>
       </div>
     </section>
   )

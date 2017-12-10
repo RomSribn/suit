@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const LPBlockListItem = props => {
   return <li className="list__item">
     <h3 className="list__item-heading">{props.heading}</h3>
@@ -35,7 +36,7 @@ const LPBlock = props => {
 };
 
 const Pagination = () => {
-  return <div className="pagination-container">
+  return <div className="pagination-container pagination-top-right">
     <ul className="pagination">
       <li className='page'/>
       <li className='page active'/>

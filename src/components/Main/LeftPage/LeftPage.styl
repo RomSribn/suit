@@ -1,11 +1,14 @@
 .left-page
-  position relative
+  position absolute
   display flex
   flex-flow row wrap
   align-items flex-start
   justify-content space-between
-  padding 3vh 4vw
+  padding 3vh 2vw 3vw 4vw
   overflow auto
+  background-color white
+  height 100%
+  width 100%
   .lp-block
     flex-basis 20%
     display flex
@@ -63,8 +66,14 @@
             color black
 
 .pagination-container
-  position: absolute
-  right 2vw
+  position absolute
+
+.pagination-top-right
+  right 15px
+  top 35px
+
+.pagination-top-left
+  left 10px
   top 35px
 
 .pagination
@@ -72,8 +81,8 @@
   list-style none
   & > .page
     content: ''
-    height 7px
-    width 7px
+    height 6px
+    width 6px
     border-radius 20px
     background-color gray
     margin 10px 0

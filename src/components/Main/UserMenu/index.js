@@ -1,10 +1,9 @@
-import React from 'react'
-
-
-
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
+import Pagination from '../Pagination'
 
 const Controls = () => {
-  return <div className={`controls controls--white`}>
+  return <div className={`controls controls--gray`}>
     <div className="circle left">
       {/*<img src='https://image.flaticon.com/icons/svg/17/17214.svg' alt=""/>*/}
       <span className="text">Где заказ?</span>
@@ -18,47 +17,65 @@ const Controls = () => {
       <span className="text">В корзину</span>
     </div>
   </div>
-};
-
-const UserMenuBlock = (props) => {
-  return <div className="block">
-    <h2 className="block_heading">{props.heading}</h2>
-    <ul className="block_list">
-      <li className="block_list-item">item</li>
-      <li className="block_list-item">item</li>
-      <li className="block_list-item">item</li>
-    </ul>
-  </div>
 }
 
-const UserMenu = () => {
-  // Toggle class '.user-menu--opened' for open menu
-  return <div className="user-menu user-menu--opened">
-    <div className="pagination-container pagination-top-left">
-      <ul className="pagination">
-        <li className='page'/>
-        <li className='page active'/>
-        <li className='page'/>
-        <li className='page'/>
-        <li className='page'/>
-      </ul>
+@inject('user', 'garments', 'app') @observer
+class UserMenu extends Component {
+  garmentClick(garment) {
+    const { garments, app } = this.props
+    garments.setGarment(garment)
+    app.showUserMenu = false
+  }
+
+  render() {
+    const { user } = this.props
+    // Toggle class '.user-menu--opened' for open menu
+    return <div className="user-menu user-menu--opened">
+
+      <Pagination position="left"/>
+
+      <div className="block">
+        <h2 className="block_heading">Dashboard</h2>
+        <ul className="block_list">
+          <li className="block_list-item">News</li>
+          <li className="block_list-item">Last order</li>
+          <li className="block_list-item">Saved orders</li>
+        </ul>
+      </div>
+      <div className="block">
+        <h2 className="block_heading">Settings</h2>
+        <ul className="block_list">
+          <li className="block_list-item">My profile</li>
+          <li className="block_list-item">Payments</li>
+          <li className="block_list-item">Language</li>
+          <li className="block_list-item" onClick={e => user.logout()}>Sign out</li>
+        </ul>
+      </div>
+      <div className="block">
+        <h2 className="block_heading">Orders history</h2>
+        <ul className="block_list">
+          <li className="block_list-item">Saved</li>
+          <li className="block_list-item">Last month</li>
+          <li className="block_list-item">Last year</li>
+        </ul>
+      </div>
+      <div className="block">
+        <h2 className="block_heading">New order</h2>
+        <ul className="block_list">
+          <li className="block_list-item list-heading">Make to measure</li>
+          <li className="block_list-item" onClick={e => this.garmentClick('jacket')}>Jacket</li>
+          <li className="block_list-item" onClick={e => this.garmentClick('shirt')}>Shirt</li>
+          <li className="block_list-item list-heading">Ready to wear</li>
+          <li className="block_list-item">Shirt</li>
+          <li className="block_list-item">Shoes</li>
+          <li className="block_list-item">Tie</li>
+        </ul>
+      </div>
+
+      <Controls/>
+
     </div>
-
-    <UserMenuBlock heading={"Dashboard"}/>
-    <UserMenuBlock heading={"Settings"}/>
-    <UserMenuBlock heading={"Orders history"}/>
-    <div className="block">
-      <h2 className="block_heading">New order</h2>
-      <ul className="block_list">
-        <li className="block_list-item list-heading">Make to measure</li>
-        <li className="block_list-item">item</li>
-        <li className="block_list-item">item</li>
-      </ul>
-    </div>
-
-    <Controls />
-
-  </div>
+  }
 }
 
 export default UserMenu

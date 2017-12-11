@@ -1,4 +1,4 @@
-.left-page
+.additional-page
   position absolute
   display flex
   flex-flow row wrap
@@ -9,7 +9,7 @@
   background-color white
   height 100%
   width 100%
-  .lp-block
+  .block
     flex-basis 20%
     display flex
     flex-flow column nowrap
@@ -24,11 +24,11 @@
       text-transform uppercase
       color gray - 50%
       line-height 3
-    & .content__list
+    .content__list
       list-style none
-      & .list__item
+      .list__item
         position relative
-        & .list__item-heading
+        .dl-heading
           font-family font-bold
           line-height 2
           color gray - 30%
@@ -45,10 +45,10 @@
             left -8px
             transform translateY(-50%)
             background-color gray - 30%
-        & > .list__item-container
+        .dl-container
           list-style none
           color gray - 50%
-          &>.list__item-container_content
+          .dl_item
             font-family font-default
             font-size 80%
             padding 5px 0

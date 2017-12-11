@@ -101,7 +101,12 @@ class Header extends Component {
           {/* До открытия выбора языков выглядит так верстка */}
           <div className="user">
             {!user.isAuth && <Link to="/login" className={`user_enter ${this.isOpened && 'invisible'}`}>{locale[lang].enter}</Link>}
-            {user.isAuth && <a onClick={e => user.logout()} className={`user_enter ${this.isOpened && 'invisible'}`}>{locale[lang].leave}</a>}
+            {user.isAuth &&
+              <a onClick={e => app.showUserMenu = !app.showUserMenu}
+                 className={`user_enter ${this.isOpened && 'invisible'}`}>
+                {user.profile.username}
+              </a>
+            }
             <div className={`user_lang ${this.isOpened && 'hidden'}`}
               onClick={::this.showLangs}>
               <span>{lang}</span>

@@ -6,18 +6,12 @@ const LPBlockListFitting = inject('app')(observer(({garment, app, ...props}) => 
   return <li className="list__item">
     <h3 className="list__item-heading">Fitting</h3>
     <dl className="list__item-container">
-      <div className="list__item-container_content active">
-        <span className="data-title">parameter</span>:
-        <dd className="data-definition"> value</dd>
-      </div>
-      <div className="list__item-container_content">
-        <dt className="data-title">parameter</dt>
-        <dd className="data-definition">value</dd>
-      </div>
-      <div className="list__item-container_content">
-        <dt className="data-title">parameter</dt>
-        <dd className="data-definition">value</dd>
-      </div>
+      {garment.fittings.map(f => (
+        <div key={f.id} className="list__item-container_content active">
+          <dt className="data-title">{f[`title_${app.lang}`]}</dt>
+          <dd className="data-definition">{f.value}</dd>
+        </div>
+      ))}
     </dl>
   </li>
 }))
@@ -75,7 +69,7 @@ const Pagination = () => {
 };
 
 const LeftPage = ({garments, ...props}) => {
-  return <div className='left-page'>
+  return <div className='additional-page'>
 
     <Pagination/>
     {garments.garmentsWithAcitve.map(g => <LPBlock key={g.name} garment={g}/>)}

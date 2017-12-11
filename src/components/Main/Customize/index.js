@@ -8,6 +8,7 @@ import OrderData from './CustomizeOrderData'
 import Search from './Search'
 import Controls from './Controls'
 import CustomizeDesign from './CustomizeDesign'
+import CustomizeFitting from './CustomizeFitting'
 
 
 
@@ -18,7 +19,9 @@ class Customize extends Component {
       case 'fabric':
         return <CustomizeList group={garments.active.activeGroup} />
       case 'design':
-        return <CustomizeDesign garment={garments.active}/>
+        return <CustomizeDesign garment={garments.active} />
+      case 'fitting':
+        return <CustomizeFitting />
       default:
         return <CustomizeList group={garments.active.activeGroup} />
     }

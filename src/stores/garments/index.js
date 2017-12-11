@@ -10,6 +10,7 @@ class garments {
   @observable.shallow list = []
   @observable active = null
   @observable isMore = false
+  @observable measureBody = false
 
   setGarment(garmentName) {
     let clickedGarment = find(this.list, {'name': garmentName})

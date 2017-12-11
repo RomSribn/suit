@@ -4,6 +4,7 @@ import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
 import group from './group'
 import user from '../user'
+import fitting from './fitting'
 
 class garment {
   @observable isFetching
@@ -11,6 +12,7 @@ class garment {
   @observable activeGroup = false
   @observable name
   @observable groups = []
+  @observable fittings = []
   @observable section = 'fabric'
 
   constructor(name, garments) {
@@ -91,6 +93,7 @@ class garment {
       )
     })
 
+    this.fittings = data.fitting.map(f => new fitting(f)) 
     this.groups = groups
     this.activeGroup = groups[0]
   }

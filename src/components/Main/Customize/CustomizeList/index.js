@@ -18,6 +18,7 @@ class CustomizeList extends Component {
           key={i.id}
           item={i} />
       )}
+      <button className="items-loading">Загрузить еще</button>
     </ul>
   }
 

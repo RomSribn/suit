@@ -1,14 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { find } from 'lodash'
 
 const ActiveImg = observer(({garments, ...props}) => {
   let src = null
   if(garments.active && garments.active.activeGroup
-    && garments.active.activeGroup.section !== 'fabric') {
-    let fabric = find(garments.active.activeGroup.items, {checked: true})
+    && garments.active.section !== 'fabric') {
+    let fabric = garments.active.activeGroup.activeItem
     src = fabric ? fabric.image_url_2d : null
   }
+  console.log(src)
   return src ? <img
     alt=""
     src={src}

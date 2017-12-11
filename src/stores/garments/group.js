@@ -2,31 +2,28 @@ import { observable, action, computed } from 'mobx'
 import { find } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
-
+import item from './item'
 
 
 class group {
   @observable id
   @observable title_en
   @observable title_ru
-  @observable.deep items = []
+  @observable items = []
   @observable section
   @observable garment
-  @observable subgroup
 
-  constructor({props, section, garment, subgroup}) {
-    this.id = props.id
-    this.title_en = props.title_en
-    this.title_ru = props.title_ru
+  constructor({props, section, garment}) {
+    Object.assign(this, props)
+    this.items = props.items.map(i => new item(i))
     this.section = section
     this.garment = garment
-    this.subgroup = subgroup
-    this.fetch(props.id)
+    //this.fetch(props.id)
   }
 
   @action fetch(id) {
     let url = `http://${routes.API_ROOT}/api/garments/${this.garment}/`
-    url += `${this.subgroup ? this.subgroup : this.section}/${this.id}`
+    url += `${this.section}/${this.id}`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,
@@ -52,6 +49,11 @@ class group {
   }
 
   @computed get activeItem() {
+    let checked = find(this.items, {checked: true})
+    return checked || null
+  }
+
+  @computed get activeItemTitle() {
     let checked = find(this.items, {checked: true})
     if(checked) {
       return checked.title_en ? checked.title_en : checked.code

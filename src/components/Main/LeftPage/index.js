@@ -1,14 +1,14 @@
 import React from 'react'
+import { observer, inject } from 'mobx-react'
 
 
-const LPBlockListItem = props => {
+const LPBlockListFitting = inject('app')(observer(({garment, app, ...props}) => {
   return <li className="list__item">
-    <h3 className="list__item-heading">{props.heading}</h3>
+    <h3 className="list__item-heading">Fitting</h3>
     <dl className="list__item-container">
-      {/* .map method here */}
-      <div className="list__item-container_content active"> {/*активный элемент*/}
-        <dt className="data-title">parameter</dt>
-        <dd className="data-definition">value</dd>
+      <div className="list__item-container_content active">
+        <span className="data-title">parameter</span>:
+        <dd className="data-definition"> value</dd>
       </div>
       <div className="list__item-container_content">
         <dt className="data-title">parameter</dt>
@@ -20,20 +20,47 @@ const LPBlockListItem = props => {
       </div>
     </dl>
   </li>
-};
+}))
 
-const LPBlock = props => {
+const LPBlockListDesign = inject('app')(observer(({garment, app, ...props}) => {
+  return <li className="list__item">
+    <h3 className="list__item-heading">Design</h3>
+    <dl className="list__item-container">
+      {
+        garment.designWithActiveItems.map(g =>
+          <div key={g.id} className="list__item-container_content active">
+            <dt className="data-title">{g[`title_${app.lang}`]}</dt>
+            <dd className="data-definition">{g.activeItem[`title_${app.lang}`]}</dd>
+          </div>
+        )
+      }
+    </dl>
+  </li>
+}))
+
+const  LPBlockListFabric = inject('app')(observer(({garment, app, ...props}) => {
+  const fabric = garment.fabric
+  return <li className="list__item">
+    <h3 className="list__item-heading">{fabric[`title_${app.lang}`]}</h3>
+    <dl className="list__item-container">
+      <div className="list__item-container_content active">
+        <span className="data-title">Fabric ref</span>
+        <dd className="data-definition">{fabric.activeItem ? fabric.activeItemTitle : '-'}</dd>
+      </div>
+    </dl>
+  </li>
+}))
+
+const LPBlock = observer(({garment, app, ...props}) => {
   return <div className="lp-block">
-    <h2 className="lp-block_heading">{props.heading}</h2>
+    <h2 className="lp-block_heading">{garment.name}</h2>
     <ul className="content__list">
-      {/* тут .map метод, внизу рыба */}
-      <LPBlockListItem heading={'Fabric'} /*и сюда же передаем элементы принадлежащие Fabric */ />
-      <LPBlockListItem heading={'Design'} /*и сюда же передаем элементы принадлежащие Design */ />
-      <LPBlockListItem heading={'Fittings'} /*и сюда же передаем элементы принадлежащие Fittings */ />
+      {garment.fabric && <LPBlockListFabric garment={garment} />}
+      <LPBlockListDesign garment={garment} />
+      <LPBlockListFitting garment={garment} />
     </ul>
   </div>
-
-};
+})
 
 const Pagination = () => {
   return <div className="pagination-container pagination-top-right">
@@ -47,19 +74,13 @@ const Pagination = () => {
   </div>
 };
 
-const LeftPage = () => {
+const LeftPage = ({garments, ...props}) => {
   return <div className='left-page'>
 
     <Pagination/>
-
-    <LPBlock heading={'Jacket'}/>
-    <LPBlock heading={'Trousers'}/>
-    <LPBlock heading={'Shirt'}/>
-    <LPBlock heading={'Waistcoat'}/>
-    <LPBlock heading={'Coat'}/>
-    <LPBlock heading={'Shoes'}/>
+    {garments.garmentsWithAcitve.map(g => <LPBlock key={g.name} garment={g}/>)}
 
   </div>
 };
 
-export default LeftPage
+export default observer(LeftPage)

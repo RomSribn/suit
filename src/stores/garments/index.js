@@ -1,4 +1,4 @@
-import { observable } from 'mobx'
+import { observable, computed } from 'mobx'
 import { find } from 'lodash'
 //import { callApi } from '../../utils/apiAxios'
 //import routes from '../../config/routes'
@@ -18,6 +18,10 @@ class garments {
     }
     this.list.push(clickedGarment)
     this.active = clickedGarment
+  }
+
+  @computed get garmentsWithAcitve() {
+    return this.list.filter(g => g.groupsWithActiveItems)
   }
 
 }

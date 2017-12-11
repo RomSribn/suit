@@ -11,6 +11,7 @@ class garment {
   @observable activeGroup = false
   @observable name
   @observable groups = []
+  @observable section = 'fabric'
 
   constructor(name, garments) {
     this.name = name
@@ -20,34 +21,50 @@ class garment {
 
   @action setActiveSection(section) {
     this.activeGroup = find(this.groups, {section})
+    this.section = section
   }
 
   @action setActiveGroup(groupId) {
     this.activeGroup = find(this.groups, {id: groupId})
+    this.section = this.activeGroup.section
   }
 
   @action nextGroup() {
     let index = findIndex(this.groups, {id: this.activeGroup.id})
     index = index !== (this.groups.length - 1) ? index + 1 : 0
     this.activeGroup = this.groups[index]
+    this.section = this.activeGroup.section
   }
 
   @action prevGroup() {
     let index = findIndex(this.groups, {id: this.activeGroup.id})
     index = index !== 0 ? index - 1 : this.groups.length - 1
     this.activeGroup = this.groups[index]
+    this.section = this.activeGroup.section
   }
 
   @computed get designGroups() {
     return this.groups.filter(g => g.section === 'design')
   }
 
-  @computed get fittingGroups() {
-    return this.groups.filter(g => g.section === 'fitting')
+  @computed get designWithActiveItems() {
+    return this.groups.filter(g => g.activeItem && g.section === 'design')
   }
 
+  @computed get groupsWithActiveItems() {
+    return this.groups.filter(g => g.activeItem)
+  }
+
+  @computed get fabric() {
+    return this.groups.find(g => g.id === 'fabric_ref')
+  }
+
+  // @computed get fittingGroups() {
+  //   return this.groups.filter(g => g.section === 'fitting')
+  // }
+
   @action fetch() {
-    let url = `http://${routes.API_ROOT}/api/garments/${this.name}/subgroups`
+    let url = `http://${routes.API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,
@@ -59,21 +76,16 @@ class garment {
   _onSuccess = (data) => {
     console.log(data)
     let groups = []
+    groups.push(new group({
+      props: data.fabric_ref,
+      section: 'fabric',
+      garment: this.name
+    }))
     data.design.forEach((g, i) => {
       groups.push(
         new group({
           props: g,
-          section: g.id === 'fabric_ref' ? 'fabric' : 'design',
-          subgroup: 'design',
-          garment: this.name
-        })
-      )
-    })
-    data.fitting.forEach(g => {
-      groups.push(
-        new group({
-          props: g,
-          section: 'fitting',
+          section: 'design',
           garment: this.name
         })
       )

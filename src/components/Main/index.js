@@ -17,20 +17,14 @@ const Main = inject('garments')(observer((props) => {
     <section className="main">
       {garments.active && <Switch />}
       <div className="container">
-<<<<<<< HEAD
-        <div className="dummy-container">
-          {/*<LeftPage/>*/}
-          <Dummy />
-=======
         <div className="left-container">
           <Dummy />
-          <LeftPage />
->>>>>>> 252f7c10a490047b448ae9fe3c75c611d9fcc4b5
+          {garments.isMore && <LeftPage garments={garments} />}
           <Controls garments={garments} />
         </div>
         <div className="right-container">
           <Customize />
-          <UserMenu />
+          {/*<UserMenu />*/}
         </div>
       </div>
     </section>

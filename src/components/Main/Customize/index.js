@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 
 import ActiveFabric from './ActiveFabric'
@@ -11,41 +11,47 @@ import CustomizeDesign from './CustomizeDesign'
 
 
 
-const Customize = inject('garments')(observer((props) => {
-  const { garments } = props
+class Customize extends Component {
+  renderSelectable() {
+    const { garments } = this.props
+    switch(garments.active.section) {
+      case 'fabric':
+        return <CustomizeList group={garments.active.activeGroup} />
+      case 'design':
+        return <CustomizeDesign garment={garments.active}/>
+      default:
+        return <CustomizeList group={garments.active.activeGroup} />
+    }
+  }
 
-  return (
-    <div className="customize">
-      <ActiveFabric garments={garments} />
-      <ActiveImg garments={garments} />
+  render() {
+    const { garments } = this.props
 
-      {garments.active &&
-        <div className="customize__controls">
+    return (
+      <div className="customize">
+        <ActiveFabric garments={garments} />
+        <ActiveImg garments={garments} />
 
-          <OrderData/>
-          <div className="search">
-            <Search/>
+        {garments.active &&
+          <div className="customize__controls">
+
+            <OrderData/>
+            <div className="search">
+              {garments.active && garments.active.section === 'fabric' && <Search/>}
+            </div>
+
+            <div className="list-container">
+              {this.renderSelectable()}
+            </div>
+
+            <Controls garment={garments.active}/>
+
+
           </div>
+        }
+      </div>
+    )
+  }
+}
 
-
-          <div className="list-container">
-             <h2>{garments.active.title_en}</h2>
-            
-            <CustomizeList group={garments.active.activeGroup} />
-          </div>
-
-
-          {/*<div className="list-container list-container--hidden">
-            <CustomizeDesign />
-          </div>*/}
-
-          <Controls garment={garments.active}/>
-
-
-        </div>
-      }
-    </div>
-  )
-}))
-
-export default Customize;
+export default inject('garments', 'app')(observer(Customize))

@@ -8,6 +8,7 @@ import Controls from './Controls'
 import UserMenu from "./UserMenu"
 import MYB from './MeasureYourBody'
 import AdditionalPage from './AdditionalPage'
+import LearnWear from './LearnWear'
 
 
 
@@ -27,6 +28,7 @@ const Main = inject('garments', 'app')(observer((props) => {
         <div className="right-container">
           <Customize />
           {app.showUserMenu && <UserMenu />}
+          {garments.measureBody && <LearnWear />}
         </div>
       </div>
     </section>

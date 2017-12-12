@@ -7,7 +7,7 @@ import Dummy from 'Containers/Main/Dummy'
 import Controls from './Controls'
 import UserMenu from "./UserMenu"
 import MYB from './MeasureYourBody'
-import LeftPage from './LeftPage'
+import AdditionalPage from './AdditionalPage'
 
 
 
@@ -20,7 +20,7 @@ const Main = inject('garments', 'app')(observer((props) => {
         <div className="left-container">
 
           <Dummy />
-          {garments.isMore && <LeftPage garments={garments} />}
+          {garments.isMore && <AdditionalPage garments={garments} />}
           {garments.measureBody && <MYB garment={garments.active}/> }
           <Controls garments={garments} />
         </div>

@@ -1,45 +1,68 @@
 import React from 'react'
+import { observer, inject } from 'mobx-react'
 import Pagination from '../Pagination'
 
-const LPBlockListItem = props => {
+const LPBlockListFitting = inject('app')(observer(({garment, app, ...props}) => {
   return <li className="list__item">
-    <h3 className="dl-heading">{props.heading}</h3>
+    <h3 className="dl-heading">Fitting</h3>
     <dl className="dl-container">
-      {/* .map method here .dl_item */}
-      <div className="dl_item active"> {/*активный элемент*/}
-        <dt className="data-title">parameter</dt>
-        <dd className="data-definition">value</dd>
+      {garment.fittings.map(f => (
+        <div key={f.id} className="dl_item active">
+          <dt className="data-title">{f[`title_${app.lang}`]}</dt>
+          <dd className="data-definition">{f.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </li>
+}))
+
+const LPBlockListDesign = inject('app')(observer(({garment, app, ...props}) => {
+  return <li className="list__item">
+    <h3 className="dl-heading">Design</h3>
+    <dl className="dl-container">
+      {
+        garment.designWithActiveItems.map(g =>
+          <div key={g.id} className="dl_item active">
+            <dt className="data-title">{g[`title_${app.lang}`]}</dt>
+            <dd className="data-definition">{g.activeItem[`title_${app.lang}`]}</dd>
+          </div>
+        )
+      }
+    </dl>
+  </li>
+}))
+
+const  LPBlockListFabric = inject('app')(observer(({garment, app, ...props}) => {
+  const fabric = garment.fabric
+  return <li className="list__item">
+    <h3 className="dl-heading">{fabric[`title_${app.lang}`]}</h3>
+    <dl className="dl-container">
+      <div className="dl_item active">
+        <dt className="data-title">Fabric ref</dt>
+        <dd className="data-definition">{fabric.activeItem ? fabric.activeItemTitle : '-'}</dd>
       </div>
     </dl>
   </li>
-};
+}))
 
-const LPBlock = props => {
+const LPBlock = observer(({garment, app, ...props}) => {
   return <div className="block">
-    <h2 className="block_heading">{props.heading}</h2>
+    <h2 className="block_heading">{garment.name}</h2>
     <ul className="content__list">
-      {/* тут .map метод, внизу рыба */}
-      <LPBlockListItem heading={'Fabric'} /*и сюда же передаем элементы принадлежащие Fabric */ />
-      <LPBlockListItem heading={'Design'} /*и сюда же передаем элементы принадлежащие Design */ />
-      <LPBlockListItem heading={'Fittings'} /*и сюда же передаем элементы принадлежащие Fittings */ />
+      {garment.fabric && <LPBlockListFabric garment={garment} />}
+      <LPBlockListDesign garment={garment} />
+      <LPBlockListFitting garment={garment} />
     </ul>
   </div>
+})
 
-};
-
-const AdditionalPage = () => {
+const AdditionalPage = ({garments, ...props}) => {
   return <div className='additional-page'>
 
     <Pagination position='right'/>
-
-    <LPBlock heading={'Jacket'}/>
-    <LPBlock heading={'Trousers'}/>
-    <LPBlock heading={'Shirt'}/>
-    <LPBlock heading={'Waistcoat'}/>
-    <LPBlock heading={'Coat'}/>
-    <LPBlock heading={'Shoes'}/>
+    {garments.garmentsWithAcitve.map(g => <LPBlock key={g.name} garment={g}/>)}
 
   </div>
 };
 
-export default AdditionalPage
+export default observer(AdditionalPage)

@@ -82,22 +82,28 @@
 .radio
   display flex
   flex-flow row nowrap
-  align-items center
+  align-items flex-start
+  justify-content flex-start
+  align-content center
   margin 0 !important
+  position relative
   &--checked
     .radio_indicator
       background-color black
   .radio_indicator
     position relative
     display flex
-    height 8px
-    width 8px
+    min-height 8px
+    min-width 8px
     border 1px solid black
     border-radius 100%
     margin-right 5px
+    top 4px
   .radio_name
     font-family font-default
     font-size 90%
+    text-align left
+
 
 .list_header
   width 100%

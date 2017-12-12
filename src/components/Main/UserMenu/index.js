@@ -2,18 +2,22 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import Pagination from '../Pagination'
 
+import Settings from 'Assets/images/svg/settings.svg'
+import Phone from 'Assets/images/svg/phone.svg'
+import Cart from 'Assets/images/svg/cart.svg'
+
 const Controls = () => {
   return <div className={`controls controls--gray`}>
     <div className="circle left">
-      {/*<img src='https://image.flaticon.com/icons/svg/17/17214.svg' alt=""/>*/}
+      <img src={Settings} alt=""/>
       <span className="text">Где заказ?</span>
     </div>
     <div className="circle center">
-      {/*<img src='https://png.icons8.com/metro/540/phone.png' alt=""/>*/}
+      <img src={Phone} alt=""/>
       <span className="text">Звонок стилиста</span>
     </div>
     <div className="circle right">
-      {/*<img src='http://icons.iconarchive.com/icons/icons8/ios7/512/Ecommerce-Shopping-Bag-icon.png' alt=""/>*/}
+      <img src={Cart} alt=""/>
       <span className="text">В корзину</span>
     </div>
   </div>

@@ -1,0 +1,62 @@
+@keyframes fadeInFromNone
+  0%
+    display none
+    opacity 0
+  1%
+    display flex
+    opacity 0
+  100%
+    opacity 1 !important
+
+.lw //learn-wear
+  position absolute
+  display flex
+  height 100%
+  width 100%
+  overflow hidden
+  padding 3vh 4vw 3vh 3vw
+  background-color gray-light
+  animation fadeInFromNone .3s
+  z-index 2
+
+  &-container
+    position relative
+    display block
+    height calc(100% + 3vh - 57px)
+    width 100%
+
+    .lw_heading
+      font-size 140%
+      font-family font-default
+      text-transform uppercase
+      line-height 1
+      padding-top 9px
+      margin-bottom 30px
+
+    .lw-content
+      position relative
+      height calc(100% - 61px)
+      display flex
+      flex-flow column nowrap
+      justify-content space-between
+      overflow auto
+      padding-bottom 37px
+
+      &_text
+        font-size 90%
+        line-height 1.85
+        text-align left
+        margin 1.5vh 0
+
+      &_video
+        position relative
+        width 100%
+        height auto
+        border 1px solid black
+        background white
+
+  .controls
+    position absolute
+    left 50%
+    bottom 0
+    transform translateX(-50%)

@@ -3,15 +3,17 @@
   height 100%
   width 100%
   background white
-  padding 3vw 4vw
+  padding 3vh 3vw 57px 4vw
   overflow hidden
 
   ^[0]-container
-    display block
+    display flex
+    flex-direction column
     position relative
     width 100%
-    //min-height calc(100% - 57px)
-    overflow-y auto
+    height 100%
+    overflow hidden
+    padding-bottom 31px
 
     .heading
       font-size 140%
@@ -21,46 +23,43 @@
       padding-top 9px
       margin-bottom 30px
 
-      ^[0]-rows
+    ^[0]-rows
+      display block
+      height 100%
+      flex-flow column nowrap
+      overflow-y auto
+
+      ^[0]-category
         display flex
-        height calc(100% - 61px)
-        //height 100% - .heading
-        flex-flow column nowrap
+        flex-flow row nowrap
         justify-content space-between
+        align-items center
+        align-content center
+        min-height 40px
+        padding 9px 0
 
-        ^[0]-category
+        ^[0]_label
+          font-family font-default
+          font-size 70%
+          text-transform uppercase
+          line-height 1
+
+        ^[0]_input-block
           display flex
-          flex-flow row nowrap
-          justify-content space-between
-          align-items center
-          align-content center
-          &:first-child
-            padding-top 0
-          &:last-child
-            padding-bottom 0
+          border 1px solid gray
+          min-height 40px
 
-          ^[0]_label
-            font-family font-default
+          ^[0]_input
+            border 0
+            box-shadow none
+            outline none
+            padding 0 15px
+            text-align center
+
+          ^[0]_system
             font-size 70%
             text-transform uppercase
+            text-align center
             line-height 1
-
-          ^[0]_input-block
-            display flex
-            border 1px solid gray
-            height 40px
-
-            ^[0]_input
-              border 0
-              box-shadow none
-              outline none
-              padding 0 15px
-              text-align center
-
-            ^[0]_system
-              font-size 70%
-              text-transform uppercase
-              text-align center
-              line-height 1
-              border-left 1px solid gray
-              padding 15px 30px
+            border-left 1px solid gray
+            padding 15px 30px

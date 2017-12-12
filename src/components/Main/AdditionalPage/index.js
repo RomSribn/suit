@@ -7,7 +7,7 @@ const LPBlockListFitting = inject('app')(observer(({garment, app, ...props}) => 
     <h3 className="dl-heading">Fitting</h3>
     <dl className="dl-container">
       {garment.fittings.map(f => (
-        <div key={f.id} className="dl_item active">
+        <div key={f.id} className="dl_item">
           <dt className="data-title">{f[`title_${app.lang}`]}</dt>
           <dd className="data-definition">{f.value}</dd>
         </div>
@@ -22,7 +22,7 @@ const LPBlockListDesign = inject('app')(observer(({garment, app, ...props}) => {
     <dl className="dl-container">
       {
         garment.designWithActiveItems.map(g =>
-          <div key={g.id} className="dl_item active">
+          <div key={g.id} className="dl_item">
             <dt className="data-title">{g[`title_${app.lang}`]}</dt>
             <dd className="data-definition">{g.activeItem[`title_${app.lang}`]}</dd>
           </div>
@@ -37,7 +37,7 @@ const  LPBlockListFabric = inject('app')(observer(({garment, app, ...props}) => 
   return <li className="list__item">
     <h3 className="dl-heading">{fabric[`title_${app.lang}`]}</h3>
     <dl className="dl-container">
-      <div className="dl_item active">
+      <div className="dl_item">
         <dt className="data-title">Fabric ref</dt>
         <dd className="data-definition">{fabric.activeItem ? fabric.activeItemTitle : '-'}</dd>
       </div>

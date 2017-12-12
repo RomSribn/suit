@@ -48,13 +48,14 @@
             background-color gray - 30%
         .dl-container
           list-style none
-          color gray - 50%
+          color gray-for-placeholder + 25%
           .dl_item
             font-family font-default
             font-size 80%
             padding 5px 0
-            color gray - 10%
             cursor pointer
+            &:hover
+              color black
             .data-title
               display inline-block
               &::after

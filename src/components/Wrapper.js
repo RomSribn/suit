@@ -6,7 +6,7 @@ import Header from './Header'
 import Main from './Main'
 import Login from './Login'
 
-@inject('user') @observer
+@inject('user', 'app') @observer
 class Wrapper extends Component {
   componentWillMount() {
     this.checkLocation(this.props)
@@ -27,8 +27,10 @@ class Wrapper extends Component {
   }
 
   render() {
+    const { user, app } = this.props
     return <div className="application" data-auth={this.props.user.isAuth}>
       <Header/>
+      {!user.isAuth && app.showLoginForm && <Login />}
       <Route exact path="/" component={Main} />
       <Route path="/login" component={Login} />
     </div>

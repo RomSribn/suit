@@ -1,40 +1,55 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 
 import LeftArrow from 'Assets/images/svg/left-arrow.svg'
 import RightArrow from 'Assets/images/svg/right-arrow.svg'
 import Save from 'Assets/images/svg/save.svg'
 
-const Controls = () => {
-  return <div className={`controls controls--gray`}>
-    <div className="circle left">
-      <img src={LeftArrow} alt=""/>
-      <span className="text">Где заказ?</span>
+@inject('app', 'user', 'garments') @observer
+class Controls extends Component {
+  saveHandle() {
+    const { app, user, garments } = this.props
+    if(user.isAuth) {
+      garments.sendOrder()
+    } else {
+      app.showLoginForm = true
+    }
+  }
+
+  sendToBasket() {
+    const { app, user, garments } = this.props
+    if(user.isAuth) {
+      garments.sendOrderToSalonAdmin()
+    } else {
+      app.showLoginForm = true
+    }
+  }
+
+  render() {
+    const { app } = this.props
+    return <div className={`controls controls--gray`}>
+      <div className="circle left" onClick={e => app.measureBody = false}>
+        <img src={LeftArrow} alt=""/>
+        <span className="text">Закрыть</span>
+      </div>
+      <div className="circle center" onClick={::this.saveHandle}>
+        <img src={Save} alt=""/>
+        <span className="text">Сохранить</span>
+      </div>
+      <div className="circle right" onClick={::this.sendToBasket}>
+        <img src={RightArrow} alt=""/>
+        <span className="text">В корзину</span>
+      </div>
     </div>
-    <div className="circle center">
-      <img src={Save} alt=""/>
-      <span className="text">Сохранить</span>
-    </div>
-    <div className="circle right">
-      <img src={RightArrow} alt=""/>
-      <span className="text">В корзину</span>
-    </div>
-  </div>
+  }
 }
 
-const LearnWear = () => {
+const LearnWear = ({garments, app}) => {
   return <section className="lw">
     <div className="lw-container">
-      <h2 className="lw_heading">Размер воротника</h2>
+      <h2 className="lw_heading">{garments.active.activeFitting[`title_${app.lang}`]}</h2>
       <div className="lw-content">
-        <p className="lw-content_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dicta dignissimos
-          distinctio doloribus ea
-          exercitationem expedita laboriosam magni necessitatibus nihil tempora velit veritatis vero, voluptate
-          voluptatem. Deserunt porro quis vel voluptate. Asperiores debitis facilis, fuga, iure, magnam neque omnis
-          quasi
-          quibusdam quis sapiente sed sequi soluta ullam vel voluptas voluptates voluptatibus.<br/><br/>At autem blanditiis,
-          dicta
-          doloremque eveniet ipsam iste minus molestiae natus neque nesciunt nulla odio officiis perferendis possimus,
-          praesentium provident quibusdam quis, quod tempore voluptatum.</p>
+        <p className="lw-content_text">{garments.active.activeFitting[`description_${app.lang}`]}</p>
         <video className="lw-content_video" controls preload="metadata">
           <source src="movie.mp4" type="video/mp4"/>
           <source src="movie.webm" type="video/webm"/>
@@ -46,4 +61,4 @@ const LearnWear = () => {
   </section>
 }
 
-export default LearnWear;
+export default inject('garments', 'app')(observer(LearnWear))

@@ -13,10 +13,15 @@ import Cart from 'Assets/images/svg/cart.svg'
 
 @inject('app', 'user', 'garments') @observer
 class Header extends Component {
-  @observable isOpened
+  @observable isOpened = false
 
   showLangs() {
     this.isOpened = !this.isOpened
+  }
+
+  crossClick() {
+    this.props.app.closeAll()
+    this.isOpened = false
   }
 
   clicHandle(lang) {
@@ -24,18 +29,51 @@ class Header extends Component {
     this.props.app.lang = lang
   }
 
+  isShowCross() {
+    const { app } = this.props
+    if(app.isAnyPopup) {
+      return true
+    }
+    if(this.isOpened) {
+      return true
+    }
+    return false
+  }
+
+  isShowLangs() {
+    const { app } = this.props
+    if(app.isAnyPopup) {
+      return false
+    }
+    if(this.isOpened) {
+      return true
+    }
+    return false
+  }
+
+  isShowGarments() {
+    const { app } = this.props
+    if(app.isAnyPopup) {
+      return false
+    }
+    if(this.isOpened) {
+      return false
+    }
+    return true
+  }
+
   render() {
-    const langNavClass = cx('nav', {
-      'nav--active': this.isOpened
-    })
-    const garmentNavClass = cx('nav', {
-      'nav--active': !this.isOpened
-    })
-    const crossClass = cx("cross", {"hidden": !this.isOpened})
-    const cartClass = cx("user_cart", {"hidden": this.isOpened})
     const { app, user, garments } = this.props
     const { lang } = app
 
+    const langNavClass = cx('nav', {
+      'nav--active': this.isShowLangs()
+    })
+    const garmentNavClass = cx('nav', {
+      'nav--active': this.isShowGarments()
+    })
+    const crossClass = cx("cross", {"hidden": !this.isShowCross()})
+    const cartClass = cx("user_cart", {"hidden": this.isOpened || app.isAnyPopup})
     return (
       <header className="header">
         <div className="container">
@@ -100,18 +138,18 @@ class Header extends Component {
 
           {/* До открытия выбора языков выглядит так верстка */}
           <div className="user">
-            {!user.isAuth && <Link to="/login" className={`user_enter ${this.isOpened && 'invisible'}`}>{locale[lang].enter}</Link>}
+            {!user.isAuth && <Link to="/login" className={`user_enter ${!this.isShowGarments() && 'invisible'}`}>{locale[lang].enter}</Link>}
             {user.isAuth &&
               <a onClick={e => app.showUserMenu = !app.showUserMenu}
-                 className={`user_enter ${this.isOpened && 'invisible'}`}>
+                 className={`user_enter ${!this.isShowGarments() && 'invisible'}`}>
                 {user.profile.username}
               </a>
             }
-            <div className={`user_lang ${this.isOpened && 'hidden'}`}
+            <div className={`user_lang ${(this.isOpened || app.isAnyPopup) && 'hidden'}`}
               onClick={::this.showLangs}>
               <span>{lang}</span>
             </div>
-            <div className={crossClass} onClick={::this.showLangs}>
+            <div className={crossClass} onClick={::this.crossClick}>
               <i className="fa fa-times" />
             </div>
             <a className={cartClass}>

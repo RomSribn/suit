@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 
 
-@inject('user') @observer
+@inject('user', 'app') @observer
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -30,12 +30,16 @@ class Login extends Component {
     )
   }
 
+  onExitHandle() {
+    this.props.app.showLoginForm = false
+  }
+
 
   render() {
-    const { user } = this.props
+    const { user, app } = this.props
     return <div className="login-container">
       <section className="login">
-        {/*<button className="exit" onClick={::this.onExitClickHandle}>x</button>*/}
+        {app.showLoginForm && <button className="exit" onClick={::this.onExitHandle}>x</button>}
         <div className="left-side">
           <h2 className="title">Авторизация</h2>
           <p className="additional-info">Если у вас нет логина и пароля, запросите данные

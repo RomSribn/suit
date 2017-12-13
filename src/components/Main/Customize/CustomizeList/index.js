@@ -4,6 +4,7 @@ import CustomizeListItem from "./CustomizeListItem"
 
 @observer
 class CustomizeList extends Component {
+
   setActiveItem(id) {
     this.props.group.setChecked(id)
   }
@@ -18,7 +19,7 @@ class CustomizeList extends Component {
           key={i.id}
           item={i} />
       )}
-      <button className="items-loading">Загрузить еще</button>
+      {group.isMoreData && <button onClick={group.nextPage} className="items-loading">Загрузить еще</button>}
     </ul>
   }
 

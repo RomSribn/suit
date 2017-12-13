@@ -3,6 +3,7 @@ import { find, findIndex } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
 import group from './group'
+import fabricGroup from './fabricGroup'
 import user from '../user'
 import fitting from './fitting'
 
@@ -57,13 +58,40 @@ class garment {
     return this.groups.filter(g => g.activeItem)
   }
 
+  @computed get designToOrder() {
+    const design = {}
+    this.designWithActiveItems.forEach(g => {
+      design[g.id] = g.activeItem.id
+    })
+    return design
+  }
+
   @computed get fabric() {
     return this.groups.find(g => g.id === 'fabric_ref')
   }
 
-  // @computed get fittingGroups() {
-  //   return this.groups.filter(g => g.section === 'fitting')
-  // }
+  @computed get fittingToOrder() {
+    const fitting = {}
+    this.fittings.forEach(f => {
+      if(f.value) {
+        fitting[f.id] = f.value
+      }
+    })
+    return fitting
+  }
+
+  set activeFitting(fitting) {
+    let oldActive = this.fittings.find(f => f.active)
+    if(oldActive) {
+      oldActive.active = false
+    }
+    fitting.active = true
+  }
+
+  @computed get activeFitting() {
+    const fitting =  this.fittings.find(f => f.active)
+    return fitting ? fitting : this.fittings[0]
+  }
 
   @action fetch() {
     let url = `http://${routes.API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
@@ -78,7 +106,7 @@ class garment {
   _onSuccess = (data) => {
     console.log(data)
     let groups = []
-    groups.push(new group({
+    groups.push(new fabricGroup({
       props: data.fabric_ref,
       section: 'fabric',
       garment: this.name
@@ -93,7 +121,7 @@ class garment {
       )
     })
 
-    this.fittings = data.fitting.map(f => new fitting(f)) 
+    this.fittings = data.fitting.map(f => new fitting(f))
     this.groups = groups
     this.activeGroup = groups[0]
   }

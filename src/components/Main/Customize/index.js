@@ -40,7 +40,9 @@ class Customize extends Component {
 
             <OrderData/>
             <div className="search">
-              {garments.active && garments.active.section === 'fabric' && <Search/>}
+              {garments.active && garments.active.section === 'fabric' &&
+                <Search group={garments.active.activeGroup}/>
+              }
             </div>
 
             <div className="list-container">
@@ -57,4 +59,4 @@ class Customize extends Component {
   }
 }
 
-export default inject('garments', 'app')(observer(Customize))
+export default inject('garments', 'app' )(observer(Customize))

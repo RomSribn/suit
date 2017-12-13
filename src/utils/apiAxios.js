@@ -10,7 +10,8 @@ export function callApi(config, onRequest, onRequestSuccess, onRequestFailure) {
     }
   }
   return axios(config).then(response => {
-    onRequestSuccess(response.data)
+    console.log(response)
+    onRequestSuccess(response.data, response.headers)
   }).catch((error) => {
     if(error.response.status === 401) {
       localStorage.removeItem('AuthUser')

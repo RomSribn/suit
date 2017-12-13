@@ -31,6 +31,12 @@ class UserMenu extends Component {
     app.showUserMenu = false
   }
 
+  logoutClick() {
+    const { user, app } = this.props
+    user.logout()
+    app.showUserMenu = false
+  }
+
   render() {
     const { user } = this.props
     // Toggle class '.user-menu--opened' for open menu
@@ -52,7 +58,7 @@ class UserMenu extends Component {
           <li className="block_list-item">My profile</li>
           <li className="block_list-item">Payments</li>
           <li className="block_list-item">Language</li>
-          <li className="block_list-item" onClick={e => user.logout()}>Sign out</li>
+          <li className="block_list-item" onClick={::this.logoutClick}>Sign out</li>
         </ul>
       </div>
       <div className="block">

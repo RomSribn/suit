@@ -10,11 +10,16 @@ class MYBRow extends Component {
   }
 
   render() {
-    const { fitting, app } = this.props
+    const { fitting, app, garment } = this.props
     return <div className="myb-category">
       <label className="myb_label">{fitting[`title_${app.lang}`]}</label>
       <div className="myb_input-block">
-        <input value={fitting.value} type="text" className="myb_input" onChange={::this.changeHandle}/>
+        <input
+          value={fitting.value}
+          type="text"
+          className="myb_input"
+          onChange={::this.changeHandle}
+          onFocus={e => garment.activeFitting = fitting}/>
         <span className="myb_system">см</span>
       </div>
     </div>
@@ -28,7 +33,7 @@ const MYB = observer(({garment, ...props}) => {
       <div className="myb-container">
         <h2 className="heading">Measure your body</h2>
         <div className="myb-rows">
-          {garment.fittings.map((f, i) => <MYBRow key={i} fitting={f} />)}
+          {garment.fittings.map((f, i) => <MYBRow key={i} fitting={f} garment={garment} />)}
         </div>
       </div>
     </section>

@@ -1,21 +1,18 @@
 import { observable, action } from 'mobx'
 import axios from 'axios'
+import app from './app'
 import routes from '../config/routes'
 import { setIdToken, removeIdToken } from '../utils/apiUtils'
 
 class user {
   @observable isAuth
-  @observable.shallow profile = {}
+  @observable profile = {}
   @observable isFetching
   @observable error
 
   constructor(props) {
     this.isAuth = !!localStorage.getItem('AuthUser')
     this.profile = JSON.parse(localStorage.getItem('AuthUser'))
-  }
-
-  get isAuth() {
-    return this.isAuth
   }
 
   @action fetchLogin(username, password) {
@@ -25,9 +22,10 @@ class user {
       username,
       password
     }).then(response => {
+      app.showLoginForm = false
+      this.profile = response.data
       this.isAuth = true
       this.isFetching = false
-      this.profile = response.data
       setIdToken(response.data.token)
       localStorage.setItem('AuthUser', JSON.stringify(response.data.user))
     }).catch((error) => {

@@ -31,7 +31,7 @@ class Wrapper extends Component {
     return <div className="application" data-auth={this.props.user.isAuth}>
       <Header/>
       {!user.isAuth && app.showLoginForm && <Login />}
-      <Route exact path="/" component={Main} />
+      <Route path="/" component={Main} />
       <Route path="/login" component={Login} />
     </div>
   }

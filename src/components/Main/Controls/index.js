@@ -18,7 +18,7 @@ const Controls = inject('app')(observer(({garments, app, ...props}) => {
     </div>
     <div className="circle right" onClick={() => app.isMore = !app.isMore}>
       <img src={More} alt="" />
-      <span className="text">Подробнее</span>
+      <span className="text">{!app.isMore ? 'Подробнее' : 'Закрыть'}</span>
     </div>
   </div>
 

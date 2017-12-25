@@ -42,15 +42,84 @@
       height 30px
       margin 10px 0 calc(20px + 1vh) 0
 
+
 .customize__image
   position absolute
   z-index -1
-.customize__image--cloth
+.customize__image--cloth //контейнер для ткани (на бекграунде правого блока)
   height 100%
-.customize__image--wear
-  left 300px
-  top 40px
-  max-height 81%
+.customize__image--wear //контейнер для трех изображений одежды
+  opacity 1
+  transition all .3s
+  z-index 1
+  background-color white-transparent
+  height 100%
+  width calc(50vw - 276px)
+  left 276px
+  display flex
+  align-items center
+  align-content: center
+  flex-flow column nowrap
+  padding-top 40px
+
+  .about-wear
+    display flex
+    flex-flow column nowrap
+    align-items center
+    width 75%
+    .caption
+      text-transform uppercase
+      font-family font-bold
+      color black
+      font-weight 400
+    .fa-eye
+      color gray-for-placeholder
+      font-size 130%
+      padding 5px
+      cursor pointer
+    .fa-eye--active
+      color black
+    .desc
+      line-height 1.35
+      font-family font-default
+      font-weight 400
+      color black
+      font-size 85%
+
+  .controls
+    position absolute
+    bottom 0
+    height 57px
+
+  //ужас верстальщика
+  .wear-images
+    display flex
+    justify-content space-between
+    align-items center
+    align-content: center
+    flex-flow column nowrap
+    width 75%
+    height 65%
+    margin-bottom 60px
+    .top //верхний блок (большое изображение)
+      display block
+      width 100%
+      height 65%
+      img
+        height 100%
+        width auto
+        margin 0 auto
+        display block //иначе не совпадали размеры дива и изображения
+    .bottom
+      display flex
+      flex-flow row nowrap
+      justify-content space-between
+      height 34%
+      width 100%
+      position relative
+      img
+        height 100%
+        width auto
 
 @import "Search/Search.styl"
 @import "CustomizeOrderData/OrderData.styl"

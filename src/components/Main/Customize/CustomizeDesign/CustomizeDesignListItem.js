@@ -23,11 +23,10 @@ class CustomizeDesignListItem extends Component {
     return <li className={listClass} onClick={::this.clickHandle}>
       <header className="list_header">
         <span className="list__header_heading">{group[`title_${app.lang}`]}</span>
-        <span className="list__header_icons">
-          <i className="fa fa-eye"/> {/* Переключение видимости элемента одежды на манекене */}
-          <i
-            className="fa fa-angle-double-up"/>
-        </span>
+        {/*<span className="list__header_icons">*/}
+          {/*<i className="fa fa-eye"/> /!* Переключение видимости элемента одежды на манекене *!/*/}
+          {/*<i className="fa fa-angle-double-up"/>*/}
+        {/*</span>*/}
       </header>
       <ul className="list">
         {group.items.map(i => <CustomizeListItem

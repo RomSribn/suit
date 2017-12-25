@@ -40,7 +40,7 @@ class Customize extends Component {
 
             <OrderData/>
             <div className="search">
-              {garments.active && garments.active.section === 'fabric' &&
+              {garments.active && (garments.active.section === 'fabric' || garments.active.section === 'design') &&
                 <Search group={garments.active.activeGroup}/>
               }
             </div>

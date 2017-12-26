@@ -9,7 +9,11 @@
   height 100%
   width 100%
   overflow-y auto
-  z-index 2
+  z-index
+  -ms-overflow-style none
+  overflow -moz-scrollbars-none
+  &::-webkit-scrollbar
+    width 0
   .block
     flex-basis 20%
     display flex

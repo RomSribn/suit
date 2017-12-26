@@ -1,0 +1,10 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.78 165.78">
+    <defs>
+        <style>.cls-1{fill:none;stroke:#1d1d1b;stroke-miterlimit:22.93;stroke-width:8.5px;}</style>
+    </defs>
+    <title>ico2-3</title>
+    <!--<path class="cls-1" d="M82.89,4.25A78.64,78.64,0,1,1,4.25,82.89h0A78.64,78.64,0,0,1,82.89,4.25h0Z"/>-->
+    <polygon class="cls-1"
+             points="109.82 51.42 102.82 39.33 63.07 39.33 57.07 51.42 30.2 51.42 30.2 116.52 136 116.52 136 51.42 109.82 51.42"/>
+    <circle class="cls-1" cx="83.1" cy="80.89" r="23.67"/>
+</svg>

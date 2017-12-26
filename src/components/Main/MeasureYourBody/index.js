@@ -19,6 +19,7 @@ class MYBRow extends Component {
           type="text"
           className="myb_input"
           onChange={::this.changeHandle}
+          autoFocus={fitting.active}
           onFocus={e => garment.activeFitting = fitting}/>
         <span className="myb_system">см</span>
       </div>

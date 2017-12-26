@@ -6,9 +6,8 @@ import routes from '../../config/routes'
 import group from './group'
 
 class fabricGroup extends group {
-  @observable offset = 20
-  @observable limit = 20
-  @observable search = ''
+  @observable offset = 50
+  @observable limit = 50
   @observable total = 100
 
   nextPage = () => {
@@ -22,12 +21,11 @@ class fabricGroup extends group {
   set searchField(value) {
     this.offset = 0
     this.search = value
-    if(value && value !== '') {
-      if(!this.searchDeb) {
-        this.searchDeb = _.debounce(this.nextPage, 2000)
-      }
-      this.searchDeb()
+    this.total = 100
+    if(!this.searchDeb) {
+      this.searchDeb = _.debounce(this.nextPage, 2000)
     }
+    this.searchDeb()
   }
 
   @computed get isMoreData() {
@@ -35,6 +33,9 @@ class fabricGroup extends group {
   }
 
   @action fetch(dataParams) {
+    if(!this.isMoreData) {
+      return false
+    }
     let url = `http://${routes.API_ROOT}/api/garments/${this.garment}/fabric_ref`
     url += serialize(dataParams)
     return callApi(
@@ -56,7 +57,7 @@ class fabricGroup extends group {
     if(this.offset === 0) {
       this.items = items
     } else {
-      this.items = items.concat(this.items.slice())
+      this.items = this.items.slice().concat(items)
     }
     this.offset += this.limit
   }

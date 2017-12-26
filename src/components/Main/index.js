@@ -1,5 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
+import Transition from 'react-transition-group/Transition';
 //Components
 import Switch from './Switch'
 import Customize from './Customize'
@@ -14,7 +15,9 @@ const Main = inject('garments', 'app')(observer((props) => {
   const { garments, app } = props
   return (
     <section className="main">
-      {garments.active && !app.isAnyPopup && <Switch />}
+      <Transition in={garments.active && !app.isAnyPopup} timeout={300}>
+        {(state) => (<Switch state={state} />)}
+      </Transition>
       <div className="container">
         <div className="left-container">
 

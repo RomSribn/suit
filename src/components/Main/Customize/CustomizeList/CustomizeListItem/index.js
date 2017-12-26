@@ -7,7 +7,8 @@ const CustomizeListItem = inject('app')(observer(({item, app, ...props}) => {
     className={`list_item radio${item.checked ? ' radio--checked' : ''}`}>
     <div className="radio_indicator"/>
     <div className="radio_name">
-    {item[`title_${app.lang}`] ? item[`title_${app.lang}`] : item.code}
+    {/*item[`title_${app.lang}`] ? item[`title_${app.lang}`] : item.code*/}
+    {item.code ? item.code : item[`title_${app.lang}`]}
     </div>
   </li>
 }))

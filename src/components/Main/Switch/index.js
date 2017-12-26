@@ -1,9 +1,36 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 
-const Switch = inject('garments', 'app')(observer(({garments, app}) => {
-  const section = garments.active.activeGroup ? garments.active.section : null
-  return <div className="switcher">
+const defaultStyle = {
+  display: 'none',
+  minHeight: 0,
+  height: 0,
+  transition: `opacity 300ms ease-in-out`,
+  animation: 'translateY(-57px) 300ms ease-in-out',
+  opacity: 0
+}
+
+const transitionStyles = {
+  entering: {
+    display: 'flex',
+    minHeight: 0,
+    height: 0,
+    opacity: 0
+  },
+  entered:  {
+    display: 'flex',
+    minHeight: 57,
+    height: 57,
+    opacity: 1
+  },
+}
+
+const Switch = inject('garments', 'app')(observer(({garments, app, state}) => {
+  const section = garments.active && garments.active.activeGroup ? garments.active.section : null
+  return <div className="switcher" style ={{
+    ...defaultStyle,
+    ...transitionStyles[state]
+  }}>
     {!app.isMore && <div className="mr-switcher">
       <button className="mr-switcher_item active">M</button>
       <span className="mr-switcher_divider"></span>
@@ -29,4 +56,4 @@ const Switch = inject('garments', 'app')(observer(({garments, app}) => {
   </div>
 }))
 
-export default Switch;
+export default Switch

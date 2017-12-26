@@ -12,6 +12,7 @@ class group {
   @observable items = []
   @observable section
   @observable garment
+  @observable search = ''
 
   constructor({props, section, garment}) {
     Object.assign(this, props)
@@ -19,6 +20,11 @@ class group {
     this.section = section
     this.garment = garment
     //this.fetch(props.id)
+  }
+
+  set searchField(value) {
+    this.offset = 0
+    this.search = value
   }
 
   @action fetch(id) {
@@ -59,6 +65,11 @@ class group {
       return checked.title_en ? checked.title_en : checked.code
     }
     return ''
+  }
+
+  @computed get list() {
+    var mFilter = new RegExp(this.search, "i")
+    return this.items.filter(i => mFilter.test(i.title_en) || mFilter.test(i.title_ru) || mFilter.test(i.code))
   }
 }
 

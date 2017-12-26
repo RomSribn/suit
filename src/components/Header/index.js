@@ -87,13 +87,22 @@ class Header extends Component {
           <nav className={garmentNavClass}>
             <ul className="list">
 
-              <li className="list-item" onClick={e => garments.setGarment('jacket')}>
+              <li
+                className={`list-item
+                            ${garments.active && (garments.active.name === 'jacket') && 'active'}`}
+                onClick={e => garments.setGarment('jacket')}>
                 <p className="list-item_content">Пиджак</p>
               </li>
-              <li className="list-item" onClick={e => garments.setGarment('trousers')}>
+              <li
+                className={`list-item
+                            ${garments.active && (garments.active.name === 'trousers') && 'active'}`}
+                onClick={e => garments.setGarment('trousers')}>
                 <p className="list-item_content">Брюки</p>
               </li>
-              <li className="list-item" onClick={e => garments.setGarment('shirt')}>
+              <li
+                className={`list-item
+                            ${garments.active && (garments.active.name === 'shirt') && 'active'}`} 
+                onClick={e => garments.setGarment('shirt')}>
                 <p className="list-item_content">Сорочка</p>
               </li>
               <li className="list-item">

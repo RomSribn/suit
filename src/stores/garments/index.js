@@ -19,8 +19,8 @@ class garments {
     let clickedGarment = find(this.list, {'name': garmentName})
     if(!clickedGarment) {
       clickedGarment = new garment(garmentName, this)
+      this.list.push(clickedGarment)
     }
-    this.list.push(clickedGarment)
     this.active = clickedGarment
   }
 

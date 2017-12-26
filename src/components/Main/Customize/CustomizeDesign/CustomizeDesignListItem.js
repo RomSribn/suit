@@ -29,7 +29,7 @@ class CustomizeDesignListItem extends Component {
         {/*</span>*/}
       </header>
       <ul className="list">
-        {group.items.map(i => <CustomizeListItem
+        {group.list.map(i => <CustomizeListItem
           setChecked={::this.setActiveItem}
           checked={group.activeItem && group.activeItem.id === i.id}
           item={i}

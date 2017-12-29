@@ -14,6 +14,10 @@ class CustomizeDesignListItem extends Component {
     this.props.group.setChecked(id)
   }
 
+  setHovered(id) {
+    this.props.group.setHovered(id)
+  }
+
   render() {
     const { group, app, garment } = this.props
     const listClass = cx('list_item',
@@ -30,6 +34,7 @@ class CustomizeDesignListItem extends Component {
       </header>
       <ul className="list">
         {group.list.map(i => <CustomizeListItem
+          setHovered={::this.setHovered}
           setChecked={::this.setActiveItem}
           checked={group.activeItem && group.activeItem.id === i.id}
           item={i}

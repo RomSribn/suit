@@ -11,7 +11,8 @@ class CustomizeList extends Component {
 
   onScroll(e) {
     const { group } = this.props
-    if(e.target.scrollTop + e.target.offsetHeight >= e.target.scrollHeight) {
+    //console.log('scroll', e.target.scrollTop, e.target.offsetHeight, e.target.scrollHeight)
+    if(e.target.scrollTop + e.target.offsetHeight + 10 >= e.target.scrollHeight) {
       group.nextPage()
     }
   }
@@ -24,11 +25,16 @@ class CustomizeList extends Component {
     this.props.group.setChecked(id)
   }
 
+  setHovered(id) {
+    this.props.group.setHovered(id)
+  }
+
   render () {
     const { group } = this.props
     return <ul className="list" ref="scroll">
       {group && group.items.map(i =>
         <CustomizeListItem
+          setHovered={::this.setHovered}
           setChecked={::this.setActiveItem}
           checked={group.activeItem && group.activeItem.id === i.id}
           key={i.id}

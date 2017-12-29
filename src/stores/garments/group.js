@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx'
 import { find } from 'lodash'
+import _ from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import routes from '../../config/routes'
 import item from './item'
@@ -13,6 +14,7 @@ class group {
   @observable section
   @observable garment
   @observable search = ''
+  @observable hovered = null
 
   constructor({props, section, garment}) {
     Object.assign(this, props)
@@ -52,6 +54,15 @@ class group {
       checked.checked = false
     }
     find(this.items, {id: id}).checked = true
+  }
+
+  @action setHovered(id) {
+    if(!this.hoveredDeb) {
+      this.hoveredDeb = _.debounce(() => {
+        this.hovered = find(this.items, {id: id})
+      }, 2000)
+    }
+    this.hoveredDeb()
   }
 
   @computed get activeItem() {

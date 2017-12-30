@@ -48,11 +48,11 @@ class Login extends Component {
           <input ref="name" type="text" className="login_input" placeholder="Логин"/>
           <input ref="pass" type="password" className="login_input" placeholder="Пароль"/>
           <div className="row">
-            {/*<div className="remember" onClick={::this.onCheckboxClickHandle}>
+            <div className="remember" onClick={::this.onCheckboxClickHandle}>
               <div className="checkbox"><div className="check"></div></div>
               <label className="cb-text">Запомнить меня</label>
-            </div>*/}
-            {/*<a className="link forgot" href="#">Забыли пароль?</a>*/}
+            </div>
+            <a className="link forgot" href="#">Забыли пароль?</a>
           </div>
           <button onClick={::this.handleLogin} className="login_input">Войти в систему</button>
         </div>

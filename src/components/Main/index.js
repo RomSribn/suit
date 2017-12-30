@@ -10,6 +10,8 @@ import UserMenu from "./UserMenu"
 import MYB from './MeasureYourBody'
 import AdditionalPage from './AdditionalPage'
 import LearnWear from './LearnWear'
+import SettingsMeasures from './UserMenu/Settings/Measures'
+import UserInfo from './UserInfo'
 
 const Main = inject('garments', 'app')(observer((props) => {
   const { garments, app } = props
@@ -20,14 +22,15 @@ const Main = inject('garments', 'app')(observer((props) => {
       </Transition>
       <div className="container">
         <div className="left-container">
-
           <Dummy />
           {app.isMore && <AdditionalPage garments={garments} />}
           {app.measureBody && <MYB garment={garments.active}/> }
+          {true && <UserInfo/>}
           <Controls garments={garments} />
         </div>
         <div className="right-container">
           <Customize />
+          {app.measureBody && <SettingsMeasures garment={garments.active}/>}
           {app.showUserMenu && <UserMenu />}
           {app.measureBody && <LearnWear />}
         </div>

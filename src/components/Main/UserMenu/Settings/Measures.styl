@@ -1,0 +1,44 @@
+.measures
+  display block
+  height 100%
+  width 100%
+  background gray-light
+  padding 3vh 3vw 57px 4vw
+  overflow hidden
+
+  ^[0]-container
+    display flex
+    flex-direction column
+    position relative
+    width 100%
+    height 100%
+    overflow hidden
+    padding-bottom 31px
+
+  ^[0]_nav
+    display flex
+    flex-flow row wrap
+    align-items center
+    & > .heading:not(:first-child)
+      margin-left 45px
+
+    .heading
+      text-transform uppercase
+      line-height 1
+      font-family font-bold
+      font-size 120%
+      color gray
+      padding 19px 0
+      white-space nowrap
+
+      &-highlighted
+        color gray - 50%
+
+  .controls
+    position absolute
+    left 50%
+    bottom 0
+    transform translateX(-50%)
+
+  .myb-input
+    background gray-light

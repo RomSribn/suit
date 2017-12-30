@@ -68,10 +68,12 @@ div.login-container
         &:focus
           outline none
       input.login_input
-        background-color white
+        border 2px solid gray-for-placeholder
+        background-color transparent
       button.login_input
         background-color lightgray
         margin 20px 0
+        cursor pointer
 
       .row
         display flex
@@ -87,18 +89,20 @@ div.login-container
             display inline-block
             width 16px
             height 16px
+            border 2px solid gray-for-placeholder
             border-radius 3px
-            background-color white
+            background-color transparent
             margin-right 10px
             .check
               visibility hidden
-              background red
-              height 50%
-              width 50%
-              margin 4px auto
+              background gray-for-placeholder
+              height 100%
+              width 100%
             &--checked
+              background-color gray-for-placeholder
               .check
                 visibility visible
+
 
         label.cb-text, .forgot
           padding-top 2px

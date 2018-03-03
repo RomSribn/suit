@@ -13,6 +13,8 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+const common = require('./webpack.config.common');
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -88,7 +90,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: common.extensions,
     alias: {
       // '@': path.resolve(__dirname, '../src'),
       // 'Components': path.join(__dirname, '/src/components'),
@@ -113,6 +115,15 @@ module.exports = {
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
+
+      // First, run the linter.
+      // It's important to do this before Typescript runs.
+      {
+        test: /\.(ts|tsx)$/,
+        loader: require.resolve('tslint-loader'),
+        enforce: 'pre',
+        include: paths.appSrc,
+      },
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
@@ -145,6 +156,12 @@ module.exports = {
               limit: 10000,
               name: 'static/media/[name].[hash:8].[ext]',
             },
+          },
+          //Compile .tsx?
+          {
+            test: /\.(ts|tsx)$/,
+            include: paths.appSrc,
+            loader: require.resolve('ts-loader')
           },
           // Process JS with Babel.
           {

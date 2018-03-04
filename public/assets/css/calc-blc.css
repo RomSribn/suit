@@ -1,0 +1,34 @@
+.calc-blc{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: flex-end;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.calc-blc__col-name{
+    font-size: 9px;
+    color: #000;
+    text-transform: uppercase;
+    line-height: .9;
+    margin-bottom: .5333rem;
+}
+.calc-blc__col--date .calc-blc__col-name{padding-left: 1.0666rem;}
+.calc-blc__slash,
+.calc-blc__col-val{
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #000;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: .8;
+}
+.calc-blc__col--summ .calc-blc__col-val{color: #046b71;}
+@media only screen and (max-width : 1210px){
+    .calc-blc__col-name{
+        font-size: 8px;
+        margin-bottom: .5rem;
+    }
+}
+

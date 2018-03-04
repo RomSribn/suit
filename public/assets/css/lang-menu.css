@@ -1,0 +1,27 @@
+.lang-menu{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 1rem;
+    color: #d4d4d4;
+}
+.lang-menu__link{
+    color: #d4d4d4;
+    margin-left: 2.6666rem;
+}
+.lang-menu__link.active{
+    color: #fff;
+    font-weight: 400;
+}
+.lang-menu__line{
+    display: block;
+    height: 1px;
+    width: 2rem;
+    margin: 0 .6rem;
+    background: #d4d4d4;
+}

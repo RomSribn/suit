@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import axios from 'axios'
 import app from './app'
-import routes from '../config/routes'
+import { API_ROOT } from '../config/routes'
 import { setIdToken, removeIdToken } from '../utils/apiUtils'
 
 class user {
@@ -16,7 +16,7 @@ class user {
   }
 
   @action fetchLogin(username, password) {
-    let url = `http://${routes.API_ROOT}/api/auth/login`
+    let url = `http://${API_ROOT}/api/auth/login`
     this.isFetching = true
     axios.post(url, {
       username,
@@ -35,7 +35,7 @@ class user {
   }
 
   @action logout() {
-    let url = `http://${routes.API_ROOT}/api/auth/logout`
+    let url = `http://${API_ROOT}/api/auth/logout`
     this.isFetching = true
     axios.get(url, {
       headers: {'x-auth-token': localStorage.getItem('id_token') }

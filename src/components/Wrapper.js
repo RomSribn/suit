@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Route, withRouter } from 'react-router-dom'
 
-import Header from './Header'
-import Main from './Main'
+// import Header from './Header'
+import { Main } from '../pages/Main'
 import Login from './Login'
 
 @inject('user', 'app') @observer
@@ -19,7 +19,7 @@ class Wrapper extends Component {
   checkLocation(props) {
     const { user, history, location } = props
     if(!user.isAuth && location.pathname !== '/login') {
-      //history.push('/login')
+      // history.push('/login')
     }
     if(user.isAuth && location.pathname === '/login') {
       history.push('/')
@@ -28,8 +28,8 @@ class Wrapper extends Component {
 
   render() {
     const { user, app } = this.props
-    return <div className="application" data-auth={this.props.user.isAuth}>
-      <Header/>
+    return <div className="application" style={{ backgroundColor: 'black'}} >
+      {/* <Header/> */}
       {!user.isAuth && app.showLoginForm && <Login />}
       <Route path="/" component={Main} />
       <Route path="/login" component={Login} />

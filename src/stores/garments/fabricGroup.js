@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx'
 import _ from 'lodash'
 import { callApi } from '../../utils/apiAxios'
 import serialize from '../../utils/serialize'
-import routes from '../../config/routes'
+import { API_ROOT } from '../../config/routes'
 import group from './group'
 
 class fabricGroup extends group {
@@ -36,7 +36,7 @@ class fabricGroup extends group {
     if(!this.isMoreData) {
       return false
     }
-    let url = `http://${routes.API_ROOT}/api/garments/${this.garment}/fabric_ref`
+    let url = `http://${API_ROOT}/api/garments/${this.garment}/fabric_ref`
     url += serialize(dataParams)
     return callApi(
       {method: 'get', url},

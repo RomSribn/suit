@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx'
 import { find, findIndex } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
-import routes from '../../config/routes'
+import { API_ROOT } from '../../config/routes'
 import group from './group'
 import fabricGroup from './fabricGroup'
 import user from '../user'
@@ -94,7 +94,7 @@ class garment {
   }
 
   @action fetch() {
-    let url = `http://${routes.API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
+    let url = `http://${API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,

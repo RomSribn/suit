@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx'
 import { find } from 'lodash'
 import _ from 'lodash'
 import { callApi } from '../../utils/apiAxios'
-import routes from '../../config/routes'
+import {  API_ROOT } from '../../config/routes'
 import item from './item'
 
 
@@ -30,7 +30,7 @@ class group {
   }
 
   @action fetch(id) {
-    let url = `http://${routes.API_ROOT}/api/garments/${this.garment}/`
+    let url = `http://${API_ROOT}/api/garments/${this.garment}/`
     url += `${this.section}/${this.id}`
     return callApi(
       {method: 'get', url},

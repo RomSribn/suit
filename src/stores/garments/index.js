@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx'
 import { find } from 'lodash'
 import { callApi } from '../../utils/apiAxios'
-import routes from '../../config/routes'
+import { API_ROOT } from '../../config/routes'
 import garment from './garment'
 
 
@@ -53,7 +53,7 @@ class garments {
     if(this.orderId) {
       return
     }
-    let url = `http://${routes.API_ROOT}/api/orders`
+    let url = `http://${API_ROOT}/api/orders`
     if(this.orderId) {
       url += `/${this.orderId}/version`
     }
@@ -80,7 +80,7 @@ class garments {
   }
 
   @action pushToSalonAdmin() {
-    let url = `http://${routes.API_ROOT}/api/orders/${this.orderId}/pushToSalonAdmin`
+    let url = `http://${API_ROOT}/api/orders/${this.orderId}/pushToSalonAdmin`
     return callApi(
       {method: 'POST', url},
       () => this.isFetching = true,

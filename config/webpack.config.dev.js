@@ -187,16 +187,21 @@ module.exports = {
           {
             test: /\.styl$/,
             use: [
-              require.resolve("style-loader"),
+              {
+                loader: require.resolve("style-loader"),
+                options: { sourceMap: true },
+              },
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  sourceMap: true ,
                 },
               },
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
+                  sourceMap: true,
                   // Necessary for external CSS imports to work
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
@@ -230,11 +235,13 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  sourceMap: true,
                 },
               },
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
+                  sourceMap: true,
                   // Necessary for external CSS imports to work
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',

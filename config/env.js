@@ -77,6 +77,7 @@ function getClientEnvironment(publicUrl) {
         
         // custom environments ariables
         API_ROOT: process.env.CLOTHES_API || undefined,
+        STATIC_IMAGES: `${publicUrl}/assets/img/`,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

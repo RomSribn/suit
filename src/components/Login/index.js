@@ -52,7 +52,10 @@ class Login extends Component {
               <div className="checkbox"><div className="check"></div></div>
               <label className="cb-text">Запомнить меня</label>
             </div>
-            <a className="link forgot" href="#">Забыли пароль?</a>
+            {
+              // eslint-disable-next-line jsx-a11y/href-no-hash
+              <a className="link forgot" href="#">Забыли пароль?</a>
+            }
           </div>
           <button onClick={::this.handleLogin} className="login_input">Войти в систему</button>
         </div>

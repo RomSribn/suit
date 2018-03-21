@@ -29,8 +29,9 @@ class group {
     this.search = value
   }
 
-  @action fetch(id) {
-    let url = `http://${API_ROOT}/api/garments/${this.garment}/`
+  @action
+  fetch(id) {
+    let url = `${API_ROOT}/api/garments/${this.garment}/`
     url += `${this.section}/${this.id}`
     return callApi(
       {method: 'get', url},

@@ -94,7 +94,7 @@ class garment {
   }
 
   @action fetch() {
-    let url = `http://${API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
+    let url = `${API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,

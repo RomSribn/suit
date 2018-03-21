@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { routes } from '../../config/routes';
+import { navigationRoutes as routes } from '../../config/routes';
 import { Navigation as NavigationComponent } from './component';
 
 // tslint:disable-next-line no-any
@@ -15,7 +15,7 @@ interface Props extends RouteComponentProps<void> {
         lang: app.lang,
         // TODO: check in runtime
         backgroundColor:
-            nextProps.location.pathname === routes.index
+            nextProps.location.pathname !== routes.order
                 ? 'white'
                 : 'black',
         ...nextProps,

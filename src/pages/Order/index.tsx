@@ -7,10 +7,8 @@ import { MainSection } from './SectionMain';
 import { DemoSection } from './SectionDemo';
 import { makeRoutes } from './routes';
 
+
 class Order extends React.PureComponent<any>{ //tslint:disable-line
-    componentWillMount() {
-            this.props.resetOrderPath();
-    }
     render() {
         const {
             match,

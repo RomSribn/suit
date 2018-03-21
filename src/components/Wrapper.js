@@ -19,6 +19,10 @@ class Wrapper extends Component {
       return <Redirect to={commonRoutes.login} />
     }    
     return (<Common>
+        <Route path={routes.order} exact={true} render={() => {
+          this.props.app.resetOrderPath();
+          return null;
+        }}/>
         <Switch>
           <Route path={commonRoutes.login} component={Login} />          
           <Route exact={true} path={routes.index}>
@@ -26,7 +30,7 @@ class Wrapper extends Component {
           </Route>
           <Route
             path={routes.order}
-            render={(props) => <Order {...props } resetOrderPath={this.props.app.resetOrderPath}/>}
+            render={(props) => <Order {...props }/>}
           />
           <Route component={() => <div>Page not found</div>} />
         </Switch>

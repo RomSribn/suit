@@ -77,6 +77,8 @@ function getClientEnvironment(publicUrl) {
         
         // custom environments ariables
         API_ROOT: process.env.CLOTHES_API || undefined,
+        STATIC: `${publicUrl}/assets/`,
+        STATIC_VIDEOS: `${publicUrl}/assets/video/`,
         STATIC_IMAGES: `${publicUrl}/assets/img/`,
       }
     );

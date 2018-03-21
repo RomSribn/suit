@@ -7,11 +7,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const common = require('./webpack.config.common');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -29,7 +29,7 @@ const env = getClientEnvironment(publicUrl);
 module.exports = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
@@ -54,14 +54,12 @@ module.exports = {
     // changing JS code would still trigger a refresh.
   ],
   output: {
-    // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: paths.appBuild,
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle[hash].js',
+    filename: 'static/js/bundle.js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
@@ -85,12 +83,20 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: common.extensions,
+    extensions: [
+      '.mjs',
+      '.web.ts',
+      '.ts',
+      '.web.tsx',
+      '.tsx',
+      '.web.js',
+      '.js',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+    ],
     alias: {
-      '@': path.resolve(__dirname, '../src'),
-      'Components': path.join(__dirname, '../src/components'),
-      'Containers': path.join(__dirname, '../src/containers'),
-      'Assets': path.join(__dirname, '../src/assets'),
+      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -102,6 +108,7 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
     ],
   },
   module: {
@@ -111,38 +118,11 @@ module.exports = {
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
 
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        loader: require.resolve('tslint-loader'),
-        enforce: 'pre',
-        include: paths.appSrc,
-      },
-      {
-        test: /\.js$/,
         loader: require.resolve('source-map-loader'),
         enforce: 'pre',
         include: paths.appSrc,
-      },
-      {
-        test: /\.tsx?$/,
-        loader: 'react-hot-loader/webpack',
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -160,30 +140,30 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Compile .tsx?
-          {
-            test: /\.(ts|tsx)$/,
-            include: paths.appSrc,
-            loader: require.resolve('ts-loader'),
-          },
-          // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true,
+              
+              compact: true,
             },
           },
-          // "postcss" loader applies autoprefixer to our CSS.
-          // "css" loader resolves paths in CSS and adds assets as dependencies.
-          // "style" loader turns CSS into JS modules that inject <style> tags.
-          // In production, we use a plugin to extract that CSS to a file, but
-          // in development "style" loader enables hot editing of CSS.
+
+          // Compile .tsx?
+          {
+            test: /\.(ts|tsx)$/,
+            include: paths.appSrc,
+            use: [
+              {
+                loader: require.resolve('ts-loader'),
+                options: {
+                  // disable type checker - we will use it in fork plugin
+                  transpileOnly: true,
+                },
+              },
+            ],
+          },
           {
             test: /\.styl$/,
             use: [
@@ -227,6 +207,11 @@ module.exports = {
               },
             ]
           },
+          // "postcss" loader applies autoprefixer to our CSS.
+          // "css" loader resolves paths in CSS and adds assets as dependencies.
+          // "style" loader turns CSS into JS modules that inject <style> tags.
+          // In production, we use a plugin to extract that CSS to a file, but
+          // in development "style" loader enables hot editing of CSS.
           {
             test: /\.(css|pcss)$/,
             use: [
@@ -265,7 +250,7 @@ module.exports = {
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
-          // This loader don't uses a "test" so it will catch all modules
+          // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
           {
             // Exclude `js` files to keep "css" loader working as it injects
@@ -317,6 +302,13 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // Perform type checking and linting in a separate process to speed up compilation
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      watch: paths.appSrc,
+      tsconfig: paths.appTsConfig,
+      tslint: paths.appTsLint,
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

@@ -44,9 +44,9 @@
     width: 9.5333rem;
     height: 100%;
     padding: 2.5rem 0 2.5rem 2.5rem;
-    -webkit-transition: .35s ease;
+    /* -webkit-transition: .35s ease;
     -o-transition: .35s ease;
-    transition: .35s ease;    
+    transition: .35s ease;     */
 }
 .content--white,
 .navbar--white{background: rgba(255, 255, 255,.85);}

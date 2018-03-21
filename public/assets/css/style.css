@@ -22,3 +22,143 @@
 @import "rotate.css" screen;
 
 
+.zero-max-height {
+  overflow: hidden;
+  max-height: 0 !important;
+}
+
+
+.flip-fade-leave {
+  /* opacity: 1; */
+  transform: rotateX(0);
+}
+.flip-fade-leave.flip-fade-leave-active {
+  /* opacity: 0; */
+  transform: rotateX(90deg);    
+  transition: transform .3s ease-in;
+}
+
+.flip-fade-enter {
+  /* opacity: 0; */
+  transform: rotateX(-90deg);        
+  position: absolute;    
+}
+.flip-fade-enter.flip-fade-enter-active {
+  /* opacity: 1; */
+  transform: rotateX(0);        
+  transition: transform .3s ease-in;
+}
+
+
+.fade-in-leave {
+  /* position: absolute; */
+  opacity: 1;     
+  transition: opacity .3s ease-in;
+}
+
+.fade-in-leave.fade-in-leave-active {
+  /* opacity: 0; */ 
+  opacity: 0;
+  /* transition: opacity .3s ease-in; */
+}
+
+.fade-in-enter {
+  /* opacity: 0; */
+  opacity: 0;     
+  transition: opacity .3s ease-in; 
+}
+.fade-in-enter.fade-in-enter-active {
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+
+
+/* transition with absolute position */
+.fade-in-absolute-leave {
+  /* position: absolute; */
+  opacity: 1;     
+  transition: opacity .3s ease-in;
+}
+
+.fade-in-absolute-leave.fade-in-absolute-leave-active {
+  opacity: 0;
+  /* transition: opacity .3s ease-in; */
+}
+
+.fade-in-absolute-enter {
+  position: absolute;  
+  opacity: 0;     
+  transition: opacity .3s ease-in; 
+}
+.fade-in-absolute-enter.fade-in-absolute-enter-active {
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+/* transition with absolute position */
+
+.catalog__item-decoration .fade-in-absolute-enter {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-fade-in-leave {
+  opacity: 1;     
+  transition: opacity .3s ease-in;
+}
+
+.page-fade-in-leave.page-fade-in-leave-active {
+  opacity: 0;     
+  transition: opacity .3s ease-in;
+}
+
+.page-fade-in-enter {
+  opacity: 0;     
+  transition: opacity .3s ease-in; 
+}
+.page-fade-in-enter.page-fade-in-enter-active {
+  opacity: 1;     
+  transition: opacity .3s ease-in;
+}
+
+.page-fade-in-leave:before {
+  content: '';
+  position: absolute;
+  display: block;
+  z-index: 99999999;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+
+
+/* 
+  height-fade-in animations
+*/
+.height-fade-in-leave {
+  max-height: 2rem;
+  overflow: hidden;
+  opacity: 1;  
+  transition:  all .3s ease-in;
+}
+
+.height-fade-in-leave.height-fade-in-leave-active {
+  max-height: 0;
+  opacity: 0;
+  transition:  all .3s ease-in;
+}
+
+.height-fade-in-enter {
+  opacity: 0;
+  transition: all .3s; 
+}
+.height-fade-in-enter.height-fade-in-enter-active {
+  opacity: 1;
+  transition: all .3s;
+}
+
+/* 
+  height-fade-in animations
+*/

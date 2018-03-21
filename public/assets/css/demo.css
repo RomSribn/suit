@@ -4,7 +4,7 @@
     width: 100%;
     height: 100%;
 }
-.maniken img{
+.maniken img.active{
     display: block;
     position: absolute;
     top: 50%;

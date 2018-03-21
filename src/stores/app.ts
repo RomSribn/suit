@@ -14,8 +14,15 @@ const makeLocale: MakeLocale<Locale> = () => ({
     order: 'заказать',
   },
 });
-
 const loc = makeLocale();
+
+const makeInitionalOrderPath = (lang: string) => [{
+  value: loc[lang].index,
+  link: '/',
+}, {
+  value: loc[lang].order,
+  link: '/order',
+}];
 
 class App {
   @observable lang: string;
@@ -27,13 +34,7 @@ class App {
 
   constructor(lang: string) {
     this.lang = lang || 'en';
-    this.orderPath.push({
-        value: loc[lang].index,
-        link: '/',
-      }, {
-        value: loc[lang].order,
-        link: '/order',
-      });
+    this.orderPath.push(...makeInitionalOrderPath(lang));
   }
 
   // @action closeAll() {
@@ -54,6 +55,18 @@ class App {
   @action
   popOrderPathItem = () => {
     this.orderPath.pop();
+  }
+  @action
+  cutOrderPath = (value: string) => {
+    const valueIndex = this.orderPath.findIndex(el => el.value === value);
+    if (valueIndex > -1) {
+      this.orderPath.splice(valueIndex + 1);
+    }
+  }
+
+  @action
+  resetOrderPath = () => {
+    this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
   }
 
 }

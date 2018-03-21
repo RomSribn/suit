@@ -1,3 +1,4 @@
+import { routesTranslations } from '../../config/routes';
 interface Locale {
     navigation: {
         order: string;
@@ -13,29 +14,11 @@ interface Locale {
 }
 const makeLocale: MakeLocale<Locale> = () => ({
     en: {
-       navigation: {
-        order: 'order',
-        panel: 'panel',
-        clientele: 'clients',
-        orders: 'order list',
-        calendar: 'calendar',
-        tasks: 'tasks',
-        analytics: 'analytics',
-        settings: 'settings',
-       },
+       navigation: routesTranslations.en,
         hideShow: 'Hide/show element',
     },
     ru: {
-        navigation: {
-            order: 'заказать',
-            panel: 'панель',
-            clientele: 'клиенты',
-            orders: 'заказы',
-            calendar: 'календарь',
-            tasks: 'задачи',
-            analytics: 'аналтика',
-            settings: 'настройки',
-        },
+        navigation: routesTranslations.ru,
         hideShow: 'Скрыть/показать элемент',
     },
 });

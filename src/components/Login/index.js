@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import './Login.styl';
+import { Redirect } from 'react-router';
 
 
 @inject('user', 'app') @observer
@@ -37,6 +39,9 @@ class Login extends Component {
 
   render() {
     const { user, app } = this.props
+    if (user.isAuth) {
+      return <Redirect to="/" />
+    }
     return <div className="login-container">
       <section className="login">
         {app.showLoginForm && <button className="exit" onClick={::this.onExitHandle}>x</button>}

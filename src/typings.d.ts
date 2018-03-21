@@ -59,7 +59,12 @@ interface Garment {
 interface Garments {
     [key: string]: Garment;
 }
-
+interface ImageLoadState {
+    load: {
+        error: string | null,
+        success: string | null;
+    },
+}
 interface GalleryStoreItem {
     id: string;
     title_en: string;

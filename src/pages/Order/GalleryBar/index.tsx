@@ -9,7 +9,46 @@ interface P {
     onMouseEnter(): void;
     onMouseLeave(): void;
 }
-class GalleryItem extends React.PureComponent<P> {
+interface S extends ImageLoadState {
+    
+}
+class GalleryItem extends React.PureComponent<P, S > {
+    constructor(props: P) {
+        super(props);
+        this.state = {
+            load: {
+                error: null,
+                success: null,
+            }
+        };
+    }
+    componentDidMount() {
+        try {
+            const { item: { image_url_2d, id} } = this.props;
+            const imageUrl =
+                API_ROOT +
+                `${image_url_2d![0]}` +
+                `${id}` + '.' +
+                `${image_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
+            const image = new Image();
+            image.src = imageUrl;
+            image.onload = () => {
+                this.setState({
+                    load: {
+                        ...this.state.load,
+                        success: imageUrl,
+                    },
+                });
+            };
+        } catch (e) {
+            this.setState({
+                load: {
+                    ...this.state.load,
+                    error: e,
+                },
+            });
+        }
+    }
     render() {
         const {
             onClick,
@@ -28,6 +67,9 @@ class GalleryItem extends React.PureComponent<P> {
                     `${image_url_2d[0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`
                 : process.env.STATIC_IMAGES + 'colors/material.jpg'
             : process.env.STATIC_IMAGES + 'colors/material.jpg';
+        if (!this.state.load.success) {
+            return null;
+        }
         return (
             <div
                 onClick={onClick}

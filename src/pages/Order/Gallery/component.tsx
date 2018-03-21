@@ -5,7 +5,7 @@ import { GalleryBar } from '../GalleryBar';
 
 // TODO import API_ROOT from the common config
 const API_ROOT = 'http://194.87.239.90';
-interface GalleryState {
+interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;
 }
@@ -21,7 +21,44 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         this.state = {
             activeElementIndex: 0,
             previewElementIndex: 0,    
+            load: {
+                success: null,
+                error: null,
+            },
         };
+    }
+    componentDidMount() {
+        try {
+            const item = this.props.items[
+                this.state.previewElementIndex === -1
+                    ? this.state.activeElementIndex
+                    : this.state.previewElementIndex
+            ];
+            const { image_url_2d, id } = item;
+            const imageUrl =
+                API_ROOT +
+                `${image_url_2d![0]}` +
+                `${id}` + '.' +
+                `${image_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
+            const image = new Image();
+            image.src = imageUrl;
+            image.onload = () => {
+                this.setState({
+                    load: {
+                        ...this.state.load,
+                        success: imageUrl,
+                    },
+                });
+            };
+        } catch (e) {
+            this.setState({
+                load: {
+                    ...this.state.load,
+                    error: e,
+                },
+            });
+        }
+
     }
     setActiveElementIndex = (i: number, action: string = 'click') => () => {
         if (action === 'click') {
@@ -68,11 +105,12 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix">
                         <div className="gallery__img" style={Gallery.galleryImageStyle}>
-                            {   image &&
-                                <img
+                            {   this.state.load.success
+                                ? <img
                                     src={image}
                                     alt="gallery image"
                                 />
+                                : null
                             }
                         </div>
                         <GalleryBar

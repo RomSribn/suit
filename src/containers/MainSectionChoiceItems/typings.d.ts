@@ -1,8 +1,5 @@
 interface ChoiceItemsProps {
     items: SubgroupChoiceItem[],
     basicRoute: string;
-}
-
-interface ChoiceItemsContainerProps  extends ChoiceItemsProps{
-
+    pushOrderPathItem?(item: OrderPathItem): void;
 }

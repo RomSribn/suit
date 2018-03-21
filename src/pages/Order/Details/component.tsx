@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChoiceItems } from '../../../components/MainSectionChoiceItems';
+import { ChoiceItems } from '../../../containers/MainSectionChoiceItems';
 
 class Main extends React.PureComponent<DetailsProps> {
     static defaultProps = {

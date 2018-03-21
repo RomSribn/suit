@@ -7,7 +7,13 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
     static defaultProps = {
         items: [],
         basicRoute: '/',
+        pushOrderPathitem: () => undefined,
     };
+    onClick = (item: OrderPathItem) => () => {
+        const { pushOrderPathItem } = this.props;
+        pushOrderPathItem!(item);
+    }
+
     render() {
         const {
             items,
@@ -23,6 +29,9 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             (item: SubgroupChoiceItem) => (
                     <Link
                         to={`${basicRoute}/${item.link}`}
+                        onClick={this.onClick({
+                            value: item.linkName,
+                            link: `${basicRoute}/${item.link}`})}
                         key={item.id}
                         style={{
                             marginBottom: '1.333rem',

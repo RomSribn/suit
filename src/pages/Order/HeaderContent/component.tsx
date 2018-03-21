@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../config/routes';
-// import { ORDER_PATH_PARTS } from '../../../config/constants';
+import { loc } from './loc';
 
 type MakePath = (orderPath: OrderPath, f: (link: string) => void) => React.ReactNode[];
 const makePath: MakePath = (path, f) => {
@@ -45,6 +45,7 @@ class HeaderContent extends React.PureComponent<HeaderContentProps> {
             path,
             orderPath,
             cutOrderPath,
+            lang,
         } = this.props;
         const currentSectionName = orderPath![orderPath!.length - 1].value;
         return (
@@ -53,7 +54,7 @@ class HeaderContent extends React.PureComponent<HeaderContentProps> {
             style={path === routes.order ? HeaderContent.indexStyle : HeaderContent.style}
         >
             <h1 className="main__header-title">
-                <span>заказать</span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;{currentSectionName}
+                <span>{loc[lang!].order}</span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;{currentSectionName}
             </h1>
             <nav className="breadcrumbs">
                 {makePath(orderPath!, cutOrderPath!)}

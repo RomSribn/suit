@@ -1,16 +1,13 @@
 type Loc = {
-    value: string;
-    link: string;
+    order: string;
 };
 
 const loc: MakeLocale<Loc> = {
     en: {
-        value: '',
-        link: '',
+        order: 'order',
     },
     ru: {
-        value: '',
-        link: '',
+        order: 'заказать',
     },
 };
 

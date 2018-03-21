@@ -14,7 +14,6 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 
-const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
@@ -78,8 +77,8 @@ choosePort(HOST, DEFAULT_PORT)
       openBrowser(urls.localUrlForBrowser);
     });
 
-    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
-      process.on(sig, function () {
+    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
+      process.on(sig, function() {
         devServer.close();
         process.exit();
       });

@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import Dummy from 'Components/Main/Dummy'
-import _ from 'lodash'
+import React, {Component} from 'react';
+import Dummy from '../../components/Dummy';
+import _ from 'lodash';
 
 const imgToRight = (current, imageCount) => {
   return current === 1 ? imageCount : (current - 1) % imageCount
@@ -19,6 +19,7 @@ class DummyContainer extends Component {
      scaleCoefficient: props.scaleCoefficient,
      imageYOffset: 0,
    }
+   this._onMouseMove = _.throttle(this._onMouseMove, 100);
  }
 
  startAnimation() {
@@ -42,7 +43,7 @@ class DummyContainer extends Component {
    this.animateInterval = undefined
  }
 
- onMouseDown(e) {
+ onMouseDown = (e) => {
    e.preventDefault()
    this.setState({mouseDown: true})
    this.setState({
@@ -52,14 +53,18 @@ class DummyContainer extends Component {
    this.stopAnimation(e)
  }
 
- onMouseUp(e) {
+ onMouseUp = (e) => {
    this.setState({
      mouseDown: false,
    })
    //this.startAnimation(e)
  }
 
- onMouseMove(e) {
+ onMouseMove = (e) => {
+   e.persist();
+   this._onMouseMove(e);
+ }
+  _onMouseMove = (e) => {
    if(this.state.mouseDown) {
      let rotateNumber = (this.state.lastPos - e.nativeEvent.offsetX)/2
      if(rotateNumber > 0) {
@@ -98,13 +103,13 @@ class DummyContainer extends Component {
    })
  }
 
- onMouseLeave() {
+ onMouseLeave = () => {
    this.setState({
      mouseDown: false,
    })
  }
 
- onWheel(e) {
+ onWheel = (e) => {
    e.stopPropagation()
    const roundedCoefficient = Math.round(this.state.scaleCoefficient * 10) / 10
    if ((roundedCoefficient === 1.0 && e.deltaY > 0) || (roundedCoefficient >= this.props.maxScale && e.deltaY < 0)) {
@@ -137,11 +142,11 @@ class DummyContainer extends Component {
       img={this.state.img}
       imageYOffset={this.state.imageYOffset}
       scaleCoefficient={this.state.scaleCoefficient}
-      onMouseLeave={::this.onMouseLeave}
-      onMouseMove={::this.onMouseMove}
-      onMouseUp={::this.onMouseUp}
-      onMouseDown={::this.onMouseDown}
-      onWheelCapture={::this.onWheel} />
+      onMouseLeave={this.onMouseLeave}
+      onMouseMove={this.onMouseMove}
+      onMouseUp={this.onMouseUp}
+      onMouseDown={this.onMouseDown}
+      onWheelCapture={this.onWheel} />
   }
 }
 
@@ -149,7 +154,7 @@ DummyContainer.defaultProps = {
     scaleCoefficient: 1,
     maxScale: 3,
     scaleRate: 0.001,
-    speed: 100,
+    speed: 1000,
     imageCount: 89
 }
 

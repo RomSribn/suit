@@ -1,39 +1,30 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 
-// import Header from './Header'
-import { Main } from '../pages/Main'
+import { navigationRoutes as routes, routes as commonRoutes } from '../config/routes';
+import { Common } from '../containers/Common';
+import { Order } from '../pages/Order'
 import Login from './Login'
 
 @inject('user', 'app') @observer
 class Wrapper extends Component {
-  componentWillMount() {
-    this.checkLocation(this.props)
-  }
-
-  componentWillUpdate(nextProps) {
-    this.checkLocation(nextProps)
-  }
-
-  checkLocation(props) {
-    const { user, history, location } = props
-    if(!user.isAuth && location.pathname !== '/login') {
-      // history.push('/login')
-    }
-    if(user.isAuth && location.pathname === '/login') {
-      history.push('/')
-    }
-  }
 
   render() {
-    const { user, app } = this.props
-    return <div className="application" style={{ backgroundColor: 'black'}} >
-      {/* <Header/> */}
-      {!user.isAuth && app.showLoginForm && <Login />}
-      <Route path="/" component={Main} />
-      <Route path="/login" component={Login} />
-    </div>
+    const authorized = !!localStorage.getItem('AuthUser');
+    if (!authorized && window.location.pathname !== commonRoutes.login) {
+      return <Redirect to={commonRoutes.login} />
+    }    
+    return (<Common>
+        <Switch>
+          <Route path={commonRoutes.login} component={Login} />          
+          <Route exact={true} path={routes.index}>
+            <Redirect to={routes.order} />
+          </Route>
+          <Route path={routes.order} component={Order} />
+          <Route component={() => <div>Page not found</div>} />
+        </Switch>
+    </Common>)
   }
 }
 

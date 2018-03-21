@@ -1,7 +1,24 @@
-export const API_ROOT = process.env.API_ROOT;
+const trim = (s: string, c: string): string => {
+  if (c === ']') { c = '\\]'; }
+  if (c === '\\') { c = '\\\\'; }
+  return s.replace(new RegExp(
+    '^[' + c + ']+|[' + c + ']+$', 'g'
+  ), '');
+};
 
-type MakeRoutes = () => Routes;
-const makeRoutes: MakeRoutes = () => ({
+const _API_ROOT = trim(process.env.API_ROOT || '', '/');
+export const API_ROOT =
+  _API_ROOT.indexOf('https://') === 0
+    ? _API_ROOT
+    : _API_ROOT.indexOf('http://') === 0
+      ? _API_ROOT
+      : `http://${_API_ROOT}`;
+
+export const services = {
+  garments: 'api/garments',
+};
+type MakeNavigationRoutes = () => NavigationRoutes;
+const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
   order: '/order',
   panel: '/panel',
@@ -12,8 +29,40 @@ const makeRoutes: MakeRoutes = () => ({
   analytics: '/analytics',
   settings: '/settings',
 });
-const routes = makeRoutes();
+const navigationRoutes = makeNavigationRoutes();
+
+const routesTranslations = {
+  en: {
+    order: 'order',
+    panel: 'panel',
+    clientele: 'clients',
+    orders: 'order list',
+    calendar: 'calendar',
+    tasks: 'tasks',
+    analytics: 'analytics',
+    settings: 'settings',
+  },
+  ru: {
+    order: 'заказать',
+    panel: 'панель',
+    clientele: 'клиенты',
+    orders: 'заказы',
+    calendar: 'календарь',
+    tasks: 'задачи',
+    analytics: 'аналтика',
+    settings: 'настройки',
+  },
+};
+
+const routes = {
+  details: `/details`,
+  order: '/order',
+  login: '/login',  
+  index: '/',
+};
 
 export {
+  navigationRoutes,
+  routesTranslations,
   routes,
 };

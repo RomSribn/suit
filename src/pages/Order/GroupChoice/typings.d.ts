@@ -1,0 +1,3 @@
+interface GroupChoiceProps {
+    match?: Match;
+}

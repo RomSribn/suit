@@ -1,0 +1,3 @@
+interface DemoSectionProps extends OrderSectionInterface{
+
+}

@@ -47,9 +47,14 @@ class App {
     this.orderPath[0].value = loc[lang].index;
     this.orderPath[1].value = loc[lang].order;
   }
-  // @computed get isAnyPopup() {
-  //   return this.showUserMenu || this.isMore || this.measureBody || this.showLoginForm
-  // }
+  @action
+  pushOrderPathItem = (item: OrderPathItem) => {
+    this.orderPath.push(item);
+  }
+  @action
+  popOrderPathItem = () => {
+    this.orderPath.pop();
+  }
 
 }
 const app = new App('ru');

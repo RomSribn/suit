@@ -4,6 +4,7 @@ interface Locale {
         second: string;
     };
     submit: string;
+    pathItemValue: string;
 }
 
 const makeLocale: MakeLocale<Locale> = () => ({
@@ -13,6 +14,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
             second: 'It will let you set every garment up'
         },
         submit: 'submit',
+        pathItemValue: 'garment',
     },
     ru: {
         choiceText: {
@@ -20,6 +22,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
             second: 'Это позволит вам настроить каждую часть изделия.',
         },
         submit: 'принять',
+        pathItemValue: 'предмет',
     },
 });
 

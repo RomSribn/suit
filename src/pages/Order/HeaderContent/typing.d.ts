@@ -1,5 +1,6 @@
 interface HeaderContentProps {
     path: string;
     lang?: string;
-    orderPath?: OrderPath;    
+    orderPath?: OrderPath;   
+    cutOrderPath?(value: string): void; 
 }

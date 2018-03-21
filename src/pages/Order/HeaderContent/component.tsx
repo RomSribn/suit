@@ -1,13 +1,23 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../config/routes';
+// import { ORDER_PATH_PARTS } from '../../../config/constants';
 
-type MakePath = (orderPath: OrderPath) => React.ReactNode[];
-const makePath: MakePath = (path) => {
+type MakePath = (orderPath: OrderPath, f: (link: string) => void) => React.ReactNode[];
+const makePath: MakePath = (path, f) => {
     const className = '';
-    return path.map(item => (
-        item.link
-            ? <Link className={className} key={item.link + item.value} to={item.link || ''}>{item.value} / </Link>
+    return path.map((item, i) => (
+        i === path.length - 1
+            ? null
+            : item.link
+            ? (
+                <Link
+                    onClick={() => { f(item.value); }}
+                    className={className}
+                    key={item.link + item.value}
+                    to={item.link || ''}
+                >{item.value} / 
+                </Link>)
             : <span className={className} key={item.link + item.value}>{item.value}/</span>
     ));
 }; 
@@ -16,6 +26,7 @@ class HeaderContent extends React.PureComponent<HeaderContentProps> {
     static defaultProps = {
         lang: 'en',
         orderPath: [],
+        cutOrderPath: (value: string) => undefined,
     };
     static indexStyle = {
         position: 'relative' as 'relative',
@@ -33,21 +44,19 @@ class HeaderContent extends React.PureComponent<HeaderContentProps> {
         const {
             path,
             orderPath,
+            cutOrderPath,
         } = this.props;
+        const currentSectionName = orderPath![orderPath!.length - 1].value;
         return (
         <div
             className="main__header-content"
             style={path === routes.order ? HeaderContent.indexStyle : HeaderContent.style}
         >
             <h1 className="main__header-title">
-                <span>заказать</span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;сорочка
+                <span>заказать</span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;{currentSectionName}
             </h1>
             <nav className="breadcrumbs">
-                {makePath(orderPath!)}
-                {/* <Link to={routes.index}>Главная</Link> /
-                <Link to={routes.order}>Заказать</Link> /
-                <Link to={`${routes.order}${routes.details}`}>Предмет</Link> / */}
-                <span>Сорочка</span>
+                {makePath(orderPath!, cutOrderPath!)}
             </nav>
         </div>);
     }

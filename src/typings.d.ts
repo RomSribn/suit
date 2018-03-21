@@ -27,7 +27,10 @@ interface Location {
     pathname: string;
 }
 
-type MakeLocale<Locale> = () => {
+type MakeLocale<Locale> = (() => {
+    en: Locale,
+    ru: Locale,
+}) | {
     en: Locale,
     ru: Locale,
 }

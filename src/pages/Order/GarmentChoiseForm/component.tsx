@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import * as classNames from 'classnames';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../../config/constants';
-import { loc } from './loc';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
+import { makeRoutes } from '../routes';
+import { loc } from './loc';
 
 type MakeCatalogItems = (
     g: Garments,
@@ -56,6 +57,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         garments: {},
         fetchGarments: () => undefined,
         toggleGarment: () => () => {}, // tslint:disable-line
+        pushOrderPathitem: () => undefined,
     };
     constructor(props: GarmentChoiceFormProps) {
         super(props);
@@ -94,12 +96,18 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         const {
             activeGarments,
             makeOrder,
+            pushOrderPathitem,
+            lang,
             // orderStore,
         } = this.props;
         if (!activeGarments!.length) {
             e.preventDefault();
         } else {
             makeOrder!(activeGarments!);
+            pushOrderPathitem!({
+                value: loc[lang!].pathItemValue,
+                link: makeRoutes().details,
+            });
         }
     }
     activate = (garment: string) => {

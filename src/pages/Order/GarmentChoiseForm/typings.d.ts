@@ -9,4 +9,5 @@ interface GarmentChoiceFormProps {
     routes: OrderRoutes;
     path?: string;
     makeOrder?(garments: string[]): void;
+    pushOrderPathitem?(item: OrderPathItem): void;
 }

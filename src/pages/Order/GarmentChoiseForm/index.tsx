@@ -5,6 +5,7 @@ import { GarmentChoise as GarmentChoiseComponent } from './component';
 @inject(({app, garments: { garments }, routing, order}) => {
     return {
         lang: app.lang,
+        pushOrderPathitem: app.pushOrderPathItem,
         garments: garments.garmentsList,
         fetchGarments: garments.fetchGarmentsList,    
         toggleGarment: (garment: string) => (action: string) => {
@@ -29,6 +30,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             fetchGarments,
             routes,
             makeOrder,
+            pushOrderPathitem,
         } = this.props;
         return (
             <GarmentChoiseComponent
@@ -42,6 +44,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
                 path={path}
                 makeOrder={makeOrder}
                 isIndexPage={path === routes.index}
+                pushOrderPathitem={pushOrderPathitem}
             />
         );
     }

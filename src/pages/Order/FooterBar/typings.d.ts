@@ -1,4 +1,5 @@
 interface FooterBarProps {
-    goBack?: () => void;
-    lang?: string; 
+    lang?: string;
+    popOrderPathitem?(): void;
+    backLink?: string;
 }

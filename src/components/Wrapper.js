@@ -7,7 +7,10 @@ import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
 import Login from './Login'
 
-@inject('user', 'app') @observer
+@inject(({user, app}) => ({
+  user,
+  app,
+})) @observer
 class Wrapper extends Component {
 
   render() {
@@ -21,7 +24,10 @@ class Wrapper extends Component {
           <Route exact={true} path={routes.index}>
             <Redirect to={routes.order} />
           </Route>
-          <Route path={routes.order} component={Order} />
+          <Route
+            path={routes.order}
+            render={(props) => <Order {...props } resetOrderPath={this.props.app.resetOrderPath}/>}
+          />
           <Route component={() => <div>Page not found</div>} />
         </Switch>
     </Common>)

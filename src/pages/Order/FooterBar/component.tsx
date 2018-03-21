@@ -1,20 +1,31 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { loc } from './loc';
 
 class FooterBar extends React.PureComponent<FooterBarProps> {
     static defaultProps = {
         goBack: () => undefined,
+        popOrderPathitem: () => undefined,
         lang: 'en',
+        backLink: '',
     };
+    onBackClick = () => {
+        const {
+            popOrderPathitem,
+        } = this.props;
+        popOrderPathitem!();
+    }
     render() {
         const {
-            goBack,
             lang,
+            backLink,
         } = this.props;
         return (
-            <div className="footer-btn-bar" onClick={goBack}>
-                <div
+            <div className="footer-btn-bar">
+                <Link
+                    to={backLink!}
                     className="footer-btn-bar__white"
+                    onClick={this.onBackClick}
                     style={{
                         cursor: 'pointer',
                     }}
@@ -34,7 +45,7 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                             />
                         </svg>
                     </div>
-                </div>
+                </Link>
                 <button className="btn footer-btn-bar__black-btn">{loc[lang!].add}
                 </button>
             </div>

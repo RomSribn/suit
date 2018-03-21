@@ -5,6 +5,7 @@ import { HeaderContent as Component } from './component';
 @inject(({ app, routing }, props: HeaderContentProps) => {
     return {
         lang: app.lang,
+        cutOrderPath: app.cutOrderPath,
         orderPath: app.orderPath,
     };
 })
@@ -14,13 +15,15 @@ class HeaderContent extends React.Component<HeaderContentProps> {
         const {
             path,
             lang,
-            orderPath,         
+            orderPath,
+            cutOrderPath,         
         } = this.props;
         return (
         <Component
             path={path}
             lang={lang}
-            orderPath={orderPath}            
+            orderPath={orderPath}
+            cutOrderPath={cutOrderPath}
         />
         );
     }

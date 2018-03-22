@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
 import { Paralax } from './OrderDecorationBlocks';
@@ -13,16 +13,25 @@ class Order extends React.PureComponent<any>{ //tslint:disable-line
         const {
             match,
             location,
+            order,
          } = this.props;
         const routes = makeRoutes(match.url);
         const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
         const isIndexPage = routes.index === location.pathname;
+        if (
+            !isIndexPage &&
+            location.pathname !== routes.details &&
+            match.path === routes.index &&
+            !Object.keys(order).length) {
+            return <Redirect to={routes.index} />;
+        }
         return (
             <ReactCSSTransitionGroup
                 transitionName="page-fade-in"
                 transitionEnterTimeout={TRANSITION_DUARAION}
                 transitionLeaveTimeout={TRANSITION_DUARAION}
             >
+                <Route path={routes.index} />
                 <div className="content" key={isIndexPage.toString()}>
                     <MainSection
                         routes={routes}

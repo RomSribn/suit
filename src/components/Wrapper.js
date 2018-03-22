@@ -7,9 +7,10 @@ import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
 import Login from './Login'
 
-@inject(({user, app}) => ({
+@inject(({user, app, order}) => ({
   user,
   app,
+  order: order.order,
 })) @observer
 class Wrapper extends Component {
 
@@ -30,7 +31,9 @@ class Wrapper extends Component {
           </Route>
           <Route
             path={routes.order}
-            render={(props) => <Order {...props }/>}
+            render={(props) => {
+              return <Order {...props } order={this.props.order}/>;
+            }}
           />
           <Route component={() => <div>Page not found</div>} />
         </Switch>

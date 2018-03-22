@@ -1,3 +1,7 @@
 interface GroupChoiceProps {
-    match?: Match;
+    match: Match;
+    choiceItem: OrderPathItem,
+    popOrderPathitem(): void;
+    backLink: string;
+    order: Order;
 }

@@ -5,5 +5,8 @@ interface SubgroupChoiceProps {
     fetchGarments?(): void;
     match: Match;
     path?: string;
-    order?: Order; 
+    order?: Order;
+    choiceItem?: OrderPathItem,
+    popOrderPathitem?(): void;
+    backLink?: string;
 }

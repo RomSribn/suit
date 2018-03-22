@@ -1,22 +1,28 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
-    constructor(props: GroupChoiceProps) {
-        super(props);
-        this.state = {
-
-        };
+    backClick = () => {
+        this.props.popOrderPathitem();
     }
     render() {
         const {
+            match: {params: { garment, subgroup, group }},
+            order,
+            backLink,
+            choiceItem,
         } = this.props;
+        let choiceItemValue = '';
+        try {
+            choiceItemValue = order[garment][0][subgroup][group];
+        } catch (_) {
+            choiceItemValue = 'fail';
+        }
         return (
-            <div>
-                <div className="custom">
-                    <span className="custom__name">ткань:</span>
-                    <span className="custom__status">Redo France Mantadore 1194</span>
-                </div>
-            </div>
+                <Link to={backLink} onClick={this.backClick} className="custom custom--open">
+                    <span className="custom__name">{choiceItem.value}:</span>
+                    <span className="custom__status">{choiceItemValue}</span>
+                </Link>
         );
     }
 }

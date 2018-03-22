@@ -17,10 +17,12 @@
     margin-bottom: 0;
 }
 .custom{
+    display: block;
     padding: .9333rem 4rem .8666rem 1.3333rem;
     margin-bottom: 1.3333rem;
     height: 2.9333rem;
     background: #eceeee;
+    color: black;
     position: relative;
     cursor: pointer;
 }

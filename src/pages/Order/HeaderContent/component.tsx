@@ -48,13 +48,18 @@ class HeaderContent extends React.PureComponent<HeaderContentProps> {
             lang,
         } = this.props;
         const currentSectionName = orderPath![orderPath!.length - 1].value;
+        const isOrderPage = currentSectionName === loc[lang!].order;
         return (
         <div
             className="main__header-content"
             style={path === routes.order ? HeaderContent.indexStyle : HeaderContent.style}
         >
             <h1 className="main__header-title">
-                <span>{loc[lang!].order}</span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;{currentSectionName}
+                <span style={isOrderPage ? { color: 'white' } : {}}>{loc[lang!].order}</span>
+                { !isOrderPage &&
+                    <span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;</span>
+                }
+                {isOrderPage ? '' : currentSectionName}
             </h1>
             <nav className="breadcrumbs">
                 {makePath(orderPath!, cutOrderPath!)}

@@ -3,8 +3,9 @@ import { inject, observer } from 'mobx-react';
 import { FooterBar as Component } from './component';
 import { trim } from '../../../config/routes';
 
-@inject(({ routing, app }, nextProps) => ({
+@inject(({ routing, app, order }, nextProps) => ({
     lang: app.lang,
+    orderStore: order,
     popOrderPathitem: app.popOrderPathItem,
     backLink:
         '/' + trim(
@@ -28,12 +29,14 @@ class FooterBar extends React.Component<FooterBarProps> {
             lang,
             backLink,
             popOrderPathitem,
+            orderStore,
         } = this.props;
         return (
-            <Component
+            <Component 
                 lang={lang}
                 backLink={backLink}
                 popOrderPathitem={popOrderPathitem}
+                orderStore={orderStore}
             />
         );
     }

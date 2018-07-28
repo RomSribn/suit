@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Dummy from '../../components/Dummy';
+import { Dummy } from '../../components/Dummy';
 import _ from 'lodash';
 
 const imgToRight = (current, imageCount) => {
@@ -69,6 +69,7 @@ class DummyContainer extends Component {
      let rotateNumber = (this.state.lastPos - e.nativeEvent.offsetX)/2
      if(rotateNumber > 0) {
        this.rotateLeft(Math.floor(rotateNumber))
+       
      } else {
        this.rotateRight(Math.floor(Math.abs(rotateNumber)))
      }
@@ -111,6 +112,7 @@ class DummyContainer extends Component {
 
  onWheel = (e) => {
    e.stopPropagation()
+   e.preventDefault()
    const roundedCoefficient = Math.round(this.state.scaleCoefficient * 10) / 10
    if ((roundedCoefficient === 1.0 && e.deltaY > 0) || (roundedCoefficient >= this.props.maxScale && e.deltaY < 0)) {
      return

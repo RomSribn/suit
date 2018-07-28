@@ -1,11 +1,12 @@
 .preloader{
-    position: fixed;
+    /* position: fixed; */
+    position: absolute;
     top: 0;
-    left: 0;
+    /* left: 0; */
     z-index: 9999;
     width: 100%;
     height: 100%;
-    background: #969696;
+    background: #000;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;
@@ -16,19 +17,43 @@
     display: flex;
     -ms-align-items: center;
     align-items: center;
-    justify-content: center;  
-    padding-top: 11rem;
+    justify-content: center; 
 }
-.preloader:before{
-    content: '';
-    display: block;
-    width: 10rem;
-    height: 10rem;
+.preloader__progbar{
+    width: 100px;
+    height: 2px;
+    background: #9cabac;
+    position: relative;
+}
+.preloader__progline{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -5rem 0 0 -5rem;
-    background: url(../img/logo-black.svg) center center no-repeat;
-    -webkit-background-size: contain;
-    background-size: contain;
+    top: 0;
+    left: 0;
+    background: #fff;
+    /* -webkit-transition: .35s ease-in;
+    -o-transition: .35s ease-in;
+    transition: .35s ease-in; */
+    height: 2px;    
 }
+.preloader__progline.loaded{
+    -webkit-animation: loading 1.9s ease both;
+    -o-animation: loading 1.9s ease both;
+    animation: loading 1.9s ease both;
+}
+@-webkit-keyframes loading {
+    from { width: 0; }
+    to { width: 100%; }
+}
+@-o-keyframes loading {
+    from { width: 0; }
+    to { width: 100%; }
+}
+@-moz-keyframes loading {
+    from { width: 0; }
+    to { width: 100%; }
+}
+@keyframes loading {
+    from { width: 0; }
+    to { width: 100%; }
+}
+

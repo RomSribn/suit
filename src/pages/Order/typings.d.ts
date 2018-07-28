@@ -9,6 +9,7 @@ interface OrderSectionInterface {
 
 interface HeaderBarProps {
     userName?: string;
+    showChopcard?: boolean;
 }
 
 interface HeaderProps extends HeaderBarProps {

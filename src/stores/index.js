@@ -3,6 +3,7 @@ import { routingStore as routing} from './routingStore';
 import user from './user'
 import * as garments from './garments';
 import { order } from './order';
+import { filterStore } from './filterStore';
 
 export default {
   app,
@@ -10,4 +11,5 @@ export default {
   garments,
   routing,
   order,
+  filterStore,
 }

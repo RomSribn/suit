@@ -14,6 +14,10 @@ interface Routes {
     details: string;
 }
 
+
+/**
+ * Описываем что-то с бэка
+ */
 interface Match {
     params: {
         [key: string]: string;
@@ -27,13 +31,15 @@ interface Location {
     pathname: string;
 }
 
-type MakeLocale<Locale> = (() => {
-    en: Locale,
-    ru: Locale,
-}) | {
+
+type Translations <Locale> = {
     en: Locale,
     ru: Locale,
 }
+
+type MakeLocale<Locale> = 
+    Translations<Locale> |
+    (() => Translations<Locale>)
 
 interface OrderPathItem {
     value: string;
@@ -52,7 +58,7 @@ interface GarmentLocale {
 }
 interface Garment {
     code: string;
-    iamge: string;
+    image: string;
     titles?: MakeLocale<GarmentLocale>;
   }
   
@@ -87,48 +93,55 @@ interface Stores {
     routing: any;
   }
 
+  type OrderItem = {
+    fabric_ref : {
+        fabric: string;
+        [key: string] : any;
+    
+    };
+    design : {
+        // collars: string;
+        [key: string] : any;
+    };
+    [key: string] : any;
+}
 
 interface Order {
-    shirt: {
-        fabric_ref : {
-            fabric: string;
-            [key: string] : any;
-        
-        };
-        design : {
-            collars: string;
-            [key: string] : any;
-        };
-        [key: string] : any;
-    }[],
-    jacket: {
-        fabric_ref : {
-            fabric: string;
-            [key: string] : any;            
-        };
-        design : {
-            model: string;
-            [key: string] : any;            
-        };
-        [key: string] : any;        
-    }[],
-    trousers: {
-        fabric_ref : {
-            fabric: string;
-               [key: string] : any;            
-        };
-        design : {
-            model: string;
-            [key: string] : any;            
-        };
-    }[],
+    shirt: OrderItem[],
+    jacket: OrderItem[],
+    trousers: OrderItem[],
+}
+type FilterItemProps = {
+    name: string,
+    type?: string;
+    label: string;
+    value: string;
+};
+type FilterGroup = {
+    name: string;
+    filters: FilterItemProps[];
 }
 
 declare class OrderStore {
     order: Order;
     isFetching: boolean;
+    activeElement: GalleryStoreItem | null;
+    previewElement: ActivePreviewElement | null;
     error: object | null;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order): void;
     fetchInitialOrder(garments: string[]): void;
 }
+
+declare class GalleryStore {
+    garment: string;
+    subGroup: string;
+    group: string;
+}
+
+type ActivePreviewElement = {
+    garment: string;
+    group: string;
+    subGroup: string;
+    value: string;
+} | null;

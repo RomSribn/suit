@@ -9,6 +9,15 @@ import { makeRoutes } from './routes';
 
 
 class Order extends React.PureComponent<any>{ //tslint:disable-line
+    componentWillMount() {
+        for (let i = 0; i < 90; i++) {
+            const dummyImage = new Image();
+            dummyImage.src = `http://194.87.239.90/fabric/images/3D/mannequin/1600x1600/${i}.png`;
+            dummyImage.onloadeddata = (...args: any[]) => { // tslint:disable-line
+                console.log(args); // tslint:disable-line
+            };
+        }
+    }
     render() {
         const {
             match,

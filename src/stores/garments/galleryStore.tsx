@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import { API_ROOT } from '../../config/routes';
 import { callApi } from '../../utils/apiAxios';
 
-class GalleryStore {
+class GalleryStore implements GalleryStore {
     garment: string;
     subGroup: string;
     group: string;

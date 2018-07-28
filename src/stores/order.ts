@@ -39,12 +39,18 @@ const initialOrder = {
 class OrderStore implements OrderStore {
     @observable order: Order = {} as Order;
     @observable activeElement: GalleryStoreItem | null = null;
+    @observable previewElement: ActivePreviewElement | null = null;
     @observable isFetching = false;
     @observable error: object | null = null;
 
     @action
     setGarmentValue(garment: string, value: any) { // tslint:disable-line
         this.order[garment] = value;
+    }
+    @action
+    setPreviewElement = (value: ActivePreviewElement ) => {
+        // debugger // tslint:disable-line        
+        this.previewElement = value;
     }
     @action
     setOrder (_o: Order) {

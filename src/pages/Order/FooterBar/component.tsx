@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { SaveButton } from './SaveButton';
 import { loc } from './loc';
 
 class FooterBar extends React.PureComponent<FooterBarProps> {
@@ -46,8 +47,7 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                         </svg>
                     </div>
                 </Link>
-                <button className="btn footer-btn-bar__black-btn">{loc[lang!].add}
-                </button>
+                <SaveButton>{loc[lang!].add}</SaveButton>
             </div>
         );
     }

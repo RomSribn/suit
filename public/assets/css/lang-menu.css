@@ -6,6 +6,7 @@
     display: flex;
     -ms-align-items: center;
     align-items: center;
+    text-align: right;
     justify-content: flex-end;
     font-size: 1rem;
     color: #d4d4d4;
@@ -13,6 +14,7 @@
 .lang-menu__link{
     color: #d4d4d4;
     margin-left: 2.6666rem;
+    width: 3.63rem;
 }
 .lang-menu__link.active{
     color: #fff;
@@ -24,4 +26,8 @@
     width: 2rem;
     margin: 0 .6rem;
     background: #d4d4d4;
+}
+
+.lang-menu__text {
+    width: 3.82rem;
 }

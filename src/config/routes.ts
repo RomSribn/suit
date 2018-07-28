@@ -57,7 +57,7 @@ const routesTranslations = {
 const routes = {
   details: `/details`,
   order: '/order',
-  login: '/login',  
+  login: '/login',
   index: '/',
 };
 

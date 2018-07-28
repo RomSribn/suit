@@ -139,6 +139,9 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     ['catalog--top-position']: !isIndexPage,
                 },
                 )}
+                style={ !isIndexPage ? {
+                    marginBottom: 0,
+                } : {}}
             >
             
                 <form

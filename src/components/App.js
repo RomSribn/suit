@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'mobx-react'
 import { Router } from 'react-router-dom'
-import DevTools from 'mobx-react-devtools';
+// import DevTools from 'mobx-react-devtools';
 import stores from '../stores'
 import history from '../history'
 
@@ -14,7 +14,7 @@ const App = ({...props}) => {
         <Wrapper />
       </Router>
     </Provider>,
-    process.env.NODE_ENV !== 'production' && <DevTools key="mobx-devtools"/>
+    // process.env.NODE_ENV !== 'production' && <DevTools key="mobx-devtools"/>
   ]);
 }
 

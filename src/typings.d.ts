@@ -93,7 +93,7 @@ interface Stores {
     routing: any;
   }
 
-  type OrderItem = {
+interface OrderItem {
     fabric_ref : {
         fabric: string;
         [key: string] : any;
@@ -107,20 +107,20 @@ interface Stores {
 }
 
 interface Order {
-    shirt: OrderItem[],
-    jacket: OrderItem[],
-    trousers: OrderItem[],
+    [key: string]: OrderItem[],
 }
-type FilterItemProps = {
+
+interface FilterItemProps {
     name: string,
     type?: string;
     label: string;
     value: string;
-};
-type FilterGroup = {
+}
+
+interface FilterGroup {
     name: string;
     filters: FilterItemProps[];
-}
+} 
 
 declare class OrderStore {
     order: Order;

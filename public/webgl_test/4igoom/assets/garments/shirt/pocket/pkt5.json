@@ -1,0 +1,28 @@
+{
+    "model": "shirt/pocket/geometry/pkt5.gltf",
+    "textures": {
+        "normalMap": "shirt/pocket/normal/pkt5.jpg",
+        "aoMap": "shirt/pocket/ao/pkt5.jpg",
+		"normalMap2": "shirt/buttons/normal/standart.jpg",
+        "aoMap2": "shirt/buttons/ao/standart.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "a": "base",
+			"base223": "base",
+			"button": "buttons"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            },
+			"buttons": {
+                "normalMap": "$textures.normalMap2",
+                "aoMap": "$textures.aoMap2",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

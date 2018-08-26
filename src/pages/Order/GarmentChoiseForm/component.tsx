@@ -39,7 +39,7 @@ const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, togg
                         ? garments[garment].titles![lang]
                             ? garments[garment].titles![lang]
                             : garment
-                        : garment
+                        : garments[garment].name
                 }
                 </span>
                 </ReactCSSTransitionGroup>

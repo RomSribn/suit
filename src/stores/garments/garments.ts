@@ -23,7 +23,7 @@ class GarmentsStore {
   fetchGarmentsList = () => {
     callApi({
       method: 'GET',
-      url: `${API_ROOT}/${services.garments}`,
+      url: `${API_ROOT}/${services.garments}?salonId=1`,
     },
     () => this.isFetching = true,
     this.garmentsLoaded,
@@ -32,9 +32,9 @@ class GarmentsStore {
   garmentsLoaded = (data: GarmentsFromServer) => {
     const reduceCallback: GarmentsFromServerToGarmentsObject = (acc, cur) => {
       const {
-        code,
+        id,
       } = cur;
-      acc[code] = cur;
+      acc[id] = cur;
       return acc;      
     };
     this.garmentsList = data.reduce(reduceCallback, {});

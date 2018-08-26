@@ -1,0 +1,13 @@
+{
+    "textures": {
+        "normalMap": { "src": "shirt/buttons/normal/btn1.jpg", "repeat": true }
+    },
+    "settings": {
+        "materials": {
+            "buttons": {
+                "normalMap": "$textures.normalMap",
+                "color": "#434343"
+            }
+        }
+    }
+}

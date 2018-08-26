@@ -1,0 +1,18 @@
+AddEncoding gzip .gz
+
+RewriteEngine On
+RewriteCond %{HTTP:Accept-Encoding} gzip
+
+<FilesMatch "\.(data|mem|dae|glb|gltf|obj|bin)$">
+    ForceType application/octet-stream
+</FilesMatch>
+<FilesMatch "\.js$">
+    ForceType application/javascript
+</FilesMatch>
+<FilesMatch "\.json$">
+    ForceType application/json
+</FilesMatch>
+<FilesMatch "\.(data|mem|dae|glb|gltf|obj|js|bin|json)$">
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [L]
+</FilesMatch>

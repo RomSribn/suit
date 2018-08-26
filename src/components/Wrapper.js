@@ -15,7 +15,8 @@ import Login from './Login'
 class Wrapper extends Component {
 
   render() {
-    const authorized = !!localStorage.getItem('AuthUser');
+    // const authorized = !!localStorage.getItem('AuthUser');
+    const authorized = Boolean(this.props.user.isAuth);
     if (!authorized && window.location.pathname !== commonRoutes.login) {
       return <Redirect to={commonRoutes.login} />
     }    

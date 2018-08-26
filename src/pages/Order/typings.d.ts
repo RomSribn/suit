@@ -22,9 +22,10 @@ interface HeaderContainerProps extends HeaderProps {
 
 interface Subgroup {
     id: string;
-    title_en: string;
-    title_ru: string;
-    title: string;
+    title: {
+        en: string;
+        ru: string;
+    };
     image: string;
     image_url_2d: string[];
     image_url_3d: string[];

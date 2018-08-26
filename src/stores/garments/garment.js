@@ -94,7 +94,8 @@ class garment {
   }
 
   @action fetch() {
-    let url = `${API_ROOT}/api/garments/${this.name}/subgroups?expandFabrics=true&expandDesign=true`
+    // TODO: refactor to the new API response
+    let url = `${API_ROOT}/api/garments/${this.name}/design`
     return callApi(
       {method: 'get', url},
       () => this.isFetching = true,

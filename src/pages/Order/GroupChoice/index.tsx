@@ -18,6 +18,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         } catch (_) {
             choiceItemValue = 'fail';
         }
+    
         return (
                 <Link to={backLink} onClick={this.backClick} className="custom custom--open">
                     <span className="custom__name">{choiceItem.value}:</span>

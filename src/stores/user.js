@@ -12,22 +12,34 @@ class user {
 
   constructor(props) {
     this.isAuth = !!localStorage.getItem('AuthUser')
-    this.profile = JSON.parse(localStorage.getItem('AuthUser'))
+    try {
+      this.profile = JSON.parse(localStorage.getItem('AuthUser'))
+    } catch (_) {
+      this.profile = {}
+    }
+    // this.profile = ''
   }
 
   @action fetchLogin(username, password) {
     let url = `${API_ROOT}/api/auth/login`
     this.isFetching = true
     axios.post(url, {
-      username,
+      login: username,
       password
     }).then(response => {
       app.showLoginForm = false
       this.profile = response.data
       this.isFetching = false
-      setIdToken(response.data.token)
-      localStorage.setItem('AuthUser', JSON.stringify(response.data.user))
-      this.isAuth = true      
+      if (response.data.user || response.data.token) {
+        setIdToken(response.data.token)
+        localStorage.setItem('AuthUser', JSON.stringify(response.data.user || username))
+        this.isAuth = true
+      } else {
+        throw new Error({
+          code: 403,
+          message: 'unathorized'
+        });
+      }
     }).catch((error) => {
       this.error = error
     })

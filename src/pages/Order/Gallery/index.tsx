@@ -35,6 +35,31 @@ class Gallery extends React.Component<GalleryContainerProps> {
             setPreviewElement,
             match: { params: { group } },
         } = this.props;
+
+        const res = (
+            group === 'fitting'
+            ? (
+                <Fitting 
+                    key={galleryStore.items.toString()}
+                    lang={lang}
+                    items={[...galleryStore.items]}
+                />
+            )
+            : (
+                <Component
+                    key={galleryStore.items.toString()}
+                    order={order}
+                    lang={lang}
+                    setActiveOrderItem={setActiveOrderItem}
+                    setPreviewElement={setPreviewElement}
+                    items={galleryStore.items}
+                    galleryStore={galleryStore}
+                    group={group}
+                />
+            )
+        );
+        console.log(res);  // tslint:disable-line
+
         return (
                 group === 'fitting'
                 ? (

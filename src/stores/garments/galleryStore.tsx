@@ -34,7 +34,15 @@ class GalleryStore implements GalleryStore {
         );
     }
     _fetchSucceed = (items: GalleryStoreItems) => {
-        this.items.push(...items);
+        debugger // tslint:disable-line
+        this.items.push(
+            ...items
+            .filter(i => Boolean(i.img_url_2d))
+            .map(i => ({
+                ...i,
+                img_url_2d: 'http://194.87.239.90' + i.img_url_2d!.replace('/html', '')
+            }))
+        );
         this.isfetching = false;
     }
     _fetchError = (e: Error) => {

@@ -1,0 +1,22 @@
+{
+    "model": "shirt/collar/geometry/clr1.gltf",
+    "textures": {
+        "normalMap": "shirt/collar/normal/clr1.jpg",
+        "aoMap": "shirt/collar/ao/clr1.jpg",
+        "seamMap": "shirt/collar/seam/clr1.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "Untitled_1": "base",
+            "Untitled_0": "buttons"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "seamMap": "$textures.seamMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
 // TODO import API_ROOT from the common config
-const API_ROOT = 'http://194.87.239.90';
+// const API_ROOT = 'http://194.87.239.90';
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;
@@ -33,12 +33,12 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     ? this.state.activeElementIndex
                     : this.state.previewElementIndex
             ];
-            const { image_url_2d, id } = item;
-            const imageUrl =
-                API_ROOT +
-                `${image_url_2d![0]}` +
-                `${id}` + '.' +
-                `${image_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
+            const { img_url_2d: imageUrl } = item;
+            // const imageUrl = API_ROOT + (img_url_2d || '').replace('/html', '');
+                // API_ROOT +
+                // `${img_url_2d![0]}` +
+                // `${id}` + '.' +
+                // `${img_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
             const image = new Image();
             image.src = imageUrl;
             image.onload = () => {
@@ -108,12 +108,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     }
     render() {
         const {
-            items: _items,
+            items,
             lang,
             group,
         } = this.props;
-        const items = _items
-            .filter(i => i.image_url_2d && i.image_url_2d[0]);
+
         if (!items.length) {
             this.state.load.error = 'empty';
             this.state.load.success = null;
@@ -124,20 +123,13 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 ? this.state.activeElementIndex
                 : this.state.previewElementIndex
         ];
-        const title = item[`title_${lang}`];
-        const description = item[`description_${lang}`];
+        const title = item.title[lang];
+        const description = item.description[lang];
         const {
             code,
             price,
-            image_url_2d,
-            id,
+            img_url_2d: image
         } = item;
-        const image = image_url_2d
-            ?   `${API_ROOT}` +
-                `${image_url_2d[0]}` +
-                `${id}` + '.' +
-                `${image_url_2d[0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`
-            : undefined;
         return (
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
                 <div className="gallery__prev-blc">
@@ -177,12 +169,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__footer">
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                        <div className="gallery__footer--articul">₽{price || 99} / {code || 'code'}</div>
+                        <div className="gallery__footer--articul">₽{price.ru || 99} / {code || 'code'}</div>
                     </div>
                     <div className="gallery__footer--txt">
                        {    description ||
-                            `Redo 1194 ткань произведена во Франции.
-                            в провинции Цифрон. Плотность, плетение s120 во Франции.`
+                            'deafult description text'
                        }
                     </div>
                 </div>

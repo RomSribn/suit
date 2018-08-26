@@ -1,0 +1,23 @@
+{
+    "model": "shirt/fronts/geometry/frt12.gltf",
+    "textures": {
+        "normalMap": "shirt/fronts/normal/frt12.jpg",
+        "aoMap": "shirt/fronts/ao/frt12.jpg",
+		"normalMap2": "shirt/fronts/normal/button.jpg",
+        "aoMap2": "shirt/fronts/ao/button.jpg"
+    },
+    "settings": {
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            },
+			"button": {
+                "normalMap": "$textures.normalMap2",
+                "aoMap": "$textures.aoMap2",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

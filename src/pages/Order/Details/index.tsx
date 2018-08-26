@@ -25,8 +25,8 @@ class Main extends React.Component<DetailsContainerProps> {
                 linkName: garments[g].titles
                             ? garments[g].titles![lang!]
                                 ? garments[g].titles![lang!]
-                                : garments[g].code
-                            : garments[g].code,
+                                : garments[g].name
+                            : garments[g].name,
             }));
         return (
             <Component

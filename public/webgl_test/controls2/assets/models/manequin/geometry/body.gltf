@@ -1,0 +1,204 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5123,
+            "count" : 25176,
+            "max" : [
+                4677
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 4678,
+            "max" : [
+                28.19219207763672,
+                95.9835433959961,
+                11.711114883422852
+            ],
+            "min" : [
+                -28.72753143310547,
+                76.52642059326172,
+                1.5500686168670654
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 4678,
+            "max" : [
+                0.9983214735984802,
+                0.9981383681297302,
+                0.99945068359375
+            ],
+            "min" : [
+                -0.99993896484375,
+                -0.9985961318016052,
+                -0.999053955078125
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 4678,
+            "max" : [
+                0.999826192855835,
+                0.998828113079071,
+                0.999163806438446,
+                1.0
+            ],
+            "min" : [
+                -0.9906818270683289,
+                -0.9997639060020447,
+                -0.9998884201049805,
+                -1.0
+            ],
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 4678,
+            "max" : [
+                0.9911199808120728,
+                0.6491099894046783
+            ],
+            "min" : [
+                0.008870000019669533,
+                0.0071700215339660645
+            ],
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 4678,
+            "max" : [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min" : [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type" : "VEC4"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 50352,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 56136,
+            "byteOffset" : 50352,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 56136,
+            "byteOffset" : 106488,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 74848,
+            "byteOffset" : 162624,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 37424,
+            "byteOffset" : 237472,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 74848,
+            "byteOffset" : 274896,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 349744,
+            "uri" : "body.bin"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "body",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6000000089406967,
+                    0.6000000089406967,
+                    0.6000000089406967,
+                    1.0
+                ],
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Untitled",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "COLOR_0" : 5,
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TANGENT" : 3,
+                        "TEXCOORD_0" : 4
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "body",
+            "rotation" : [
+                -2.1855694143368964e-08,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale" : [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+            ]
+        }
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ]
+}

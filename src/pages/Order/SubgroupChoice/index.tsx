@@ -24,9 +24,10 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     if (item.id === 'fitting') {
         status = null;
     }
+    
     return {
         link: `${subgroup}/${item.id}`,
-        linkName: item[`title_${lang}`],
+        linkName: item.title[lang],
         id: item.id,
         status,
     };
@@ -74,7 +75,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     lang!,
                     order!,
                     garment
-                )),                
+                )),
                 ...$store.design.map((v: Subgroup) => filterFields(
                     v,
                     'design',

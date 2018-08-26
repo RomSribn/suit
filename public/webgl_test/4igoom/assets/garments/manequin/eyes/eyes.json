@@ -1,0 +1,25 @@
+{
+    "model": "manequin/geometry/eyes.gltf",
+    "textures": {
+        "normalMap": "manequin/normal/eyes.jpg",
+        "specularMap": "manequin/specular/eyes.jpg",
+		"aoMap": "manequin/ao/eyes.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "base": "eyes"
+        },
+        "materials": {
+            "eyes": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+				"specularMap": "$textures.specularMap",
+                "diffuse": "#5f5f5f",
+				"specular": "#111111",
+				"shininess": 1,
+				"aoMapIntensity": 0.6,
+				"normalScale": [1.5, 1.5]
+            }
+        }
+    }
+}

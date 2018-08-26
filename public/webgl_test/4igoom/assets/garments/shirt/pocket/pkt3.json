@@ -1,0 +1,19 @@
+{
+    "model": "shirt/pocket/geometry/pkt3.gltf",
+    "textures": {
+        "normalMap": "shirt/pocket/normal/pkt3.jpg",
+        "aoMap": "shirt/pocket/ao/pkt3.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "base": "base"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

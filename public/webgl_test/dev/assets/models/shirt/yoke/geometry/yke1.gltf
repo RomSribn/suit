@@ -1,0 +1,200 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5121,
+            "count" : 717,
+            "max" : [
+                220
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 221,
+            "max" : [
+                21.0361328125,
+                156.7245635986328,
+                -4.50349760055542
+            ],
+            "min" : [
+                -21.145580291748047,
+                143.56204223632812,
+                -15.368203163146973
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 221,
+            "max" : [
+                0.999267578125,
+                0.9795221090316772,
+                0.9998779296875
+            ],
+            "min" : [
+                -0.9922788143157959,
+                -0.8647419810295105,
+                -0.9322794079780579
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 221,
+            "max" : [
+                0.5440620183944702,
+                0.9999427795410156,
+                0.905994713306427,
+                1.0
+            ],
+            "min" : [
+                -0.556891918182373,
+                -0.984740674495697,
+                -0.979486882686615,
+                1.0
+            ],
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 221,
+            "max" : [
+                0.8733184337615967,
+                0.9862446309998631
+            ],
+            "min" : [
+                0.3067709803581238,
+                0.008125245571136475
+            ],
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 221,
+            "max" : [
+                0.5450556874275208,
+                0.7566629946231842
+            ],
+            "min" : [
+                0.017855262383818626,
+                0.03566765785217285
+            ],
+            "type" : "VEC2"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 717,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 2652,
+            "byteOffset" : 720,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 2652,
+            "byteOffset" : 3372,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 3536,
+            "byteOffset" : 6024,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1768,
+            "byteOffset" : 9560,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1768,
+            "byteOffset" : 11328,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 13096,
+            "uri" : "yke1.bin"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "03 - Default",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.2101960928767337,
+                    0.2101960928767337,
+                    0.2101960928767337,
+                    1.0
+                ],
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Untitled",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TANGENT" : 3,
+                        "TEXCOORD_0" : 4,
+                        "TEXCOORD_1" : 5
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "yke1",
+            "rotation" : [
+                -2.1855694143368964e-08,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale" : [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+            ]
+        }
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ]
+}

@@ -106,7 +106,6 @@ const makeImages: MakeImages = (imageProperties, context, sourceCommon) => {
             }
         };
     }
-debugger // tslint:disable-line
     return (i, previewElement) => {
         if (previewElement &&
             previewElement.garment === garment &&
@@ -269,3 +268,4 @@ Dummy.loadedCache = {};
 export {
     Dummy,
 };
+ 

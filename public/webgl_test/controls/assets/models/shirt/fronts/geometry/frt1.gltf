@@ -1,0 +1,191 @@
+{
+    "asset": {
+        "version": "2.0",
+        "generator": "babylon.js glTF exporter for 3ds max 2015 v1.2.16",
+        "copyright": "2017 (c) BabylonJS"
+    },
+    "extensionsUsed": [
+        "KHR_lights",
+        "KHR_texture_transform"
+    ],
+    "scene": 0,
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ],
+            "extensions": {
+                "KHR_lights": {
+                    "light": 0
+                }
+            }
+        }
+    ],
+    "nodes": [
+        {
+            "mesh": 0,
+            "translation": [
+                0.0,
+                0.0,
+                -3.81469727E-06
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "name": "a"
+        }
+    ],
+    "meshes": [
+        {
+            "primitives": [
+                {
+                    "attributes": {
+                        "POSITION": 1,
+                        "TANGENT": 2,
+                        "NORMAL": 3,
+                        "TEXCOORD_0": 4,
+                        "TEXCOORD_1": 5
+                    },
+                    "indices": 0,
+                    "mode": 4,
+                    "material": 0
+                }
+            ],
+            "name": "a"
+        }
+    ],
+    "accessors": [
+        {
+            "bufferView": 0,
+            "componentType": 5123,
+            "count": 4341,
+            "type": "SCALAR",
+            "name": "accessorIndices"
+        },
+        {
+            "bufferView": 1,
+            "componentType": 5126,
+            "count": 4341,
+            "max": [
+                20.8246117,
+                154.646332,
+                12.4822311
+            ],
+            "min": [
+                -20.8607788,
+                105.27356,
+                -6.86675
+            ],
+            "type": "VEC3",
+            "name": "accessorPositions"
+        },
+        {
+            "bufferView": 2,
+            "componentType": 5126,
+            "count": 4341,
+            "type": "VEC4",
+            "name": "accessorTangents"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 52092,
+            "componentType": 5126,
+            "count": 4341,
+            "type": "VEC3",
+            "name": "accessorNormals"
+        },
+        {
+            "bufferView": 3,
+            "componentType": 5126,
+            "count": 4341,
+            "type": "VEC2",
+            "name": "accessorUVs"
+        },
+        {
+            "bufferView": 3,
+            "byteOffset": 34728,
+            "componentType": 5126,
+            "count": 4341,
+            "type": "VEC2",
+            "name": "accessorUV2s"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteLength": 8684,
+            "name": "bufferViewScalar"
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 8684,
+            "byteLength": 104184,
+            "byteStride": 12,
+            "name": "bufferViewFloatVec3"
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 112868,
+            "byteLength": 69456,
+            "byteStride": 16,
+            "name": "bufferViewFloatVec4"
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 182324,
+            "byteLength": 69456,
+            "byteStride": 8,
+            "name": "bufferViewFloatVec2"
+        }
+    ],
+    "buffers": [
+        {
+            "uri": "frt1.bin",
+            "byteLength": 251780
+        }
+    ],
+    "materials": [
+        {
+            "emissiveFactor": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "alphaMode": "OPAQUE",
+            "name": "14 - Default"
+        }
+    ],
+    "textures": [
+    ],
+    "samplers": [
+        {
+            "magFilter": 9729,
+            "minFilter": 9987,
+            "wrapS": 10497,
+            "wrapT": 10497
+        }
+    ],
+    "extensions": {
+        "KHR_lights": {
+            "lights": [
+                {
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "intensity": 1.0,
+                    "type": "ambient"
+                }
+            ]
+        }
+    }
+}

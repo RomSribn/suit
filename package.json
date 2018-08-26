@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
+    "@types/lodash": "^4.14.116",
     "@types/react": "^16.0.40",
     "@types/react-addons-css-transition-group": "^15.0.4",
     "@types/react-dom": "^16.0.4",
@@ -94,6 +95,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "clothes-widget-3d": "git+ssh://git@bitbucket.org/haha29/widget3d.git#master",
     "expect": "^22.4.0",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",

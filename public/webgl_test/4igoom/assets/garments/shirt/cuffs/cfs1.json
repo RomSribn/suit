@@ -1,0 +1,20 @@
+{
+    "model": "shirt/cuffs/geometry/cfs1.gltf",
+    "textures": {
+        "normalMap": "shirt/cuffs/normal/cfs1.jpg",
+        "aoMap": "shirt/cuffs/ao/cfs1.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "Untitled_1": "base",
+            "Untitled_0": "buttons"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

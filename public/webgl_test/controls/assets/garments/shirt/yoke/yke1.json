@@ -1,0 +1,19 @@
+{
+    "model": "shirt/yoke/geometry/yke1.gltf",
+    "textures": {
+        "normalMap": "shirt/yoke/normal/yke1.jpg",
+        "aoMap": "shirt/yoke/ao/yke1.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "yke1": "base"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

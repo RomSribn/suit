@@ -1,0 +1,14 @@
+{
+    "textures": {
+    "normalMap": "shirt/buttons/normal/standart1.jpg",
+    "aoMap": "shirt/buttons/ao/standart1.jpg"	
+    },
+    "settings": {
+        "materials": {
+            "buttons": {
+                "normalMap": "$textures.normalMap",
+                "color": "#434343"
+            }
+        }
+    }
+}

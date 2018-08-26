@@ -1,0 +1,26 @@
+{
+    "textures": {
+        "map": { "src": "shirt/fabric/diffuse/fab1.jpg", "repeat": true },
+        "bumpMap": { "src": "shirt/fabric/second_bump/fab1.jpg", "repeat": true },
+        "specularMap": { "src": "shirt/fabric/specular/fab1.jpg", "repeat": true },
+        "rampMap": "shirt/fabric/falloff/cotton.jpg"
+    },
+    "settings": {
+        "materials": {
+            "base": {
+                "map": "$textures.map",
+                "rampMap": "$textures.rampMap",
+                "bumpMap": "$textures.bumpMap",
+                "specularMap": "$textures.specularMap",
+                "diffuse": "#727272",
+                "specular": "#111111",
+                "shininess": 1,
+                "aoMapIntensity": 0.8,
+                "diffuseUVRepeat": 55,
+                "otherUVRepeat": 200,
+                "bumpScale": 0.1,
+                "normalScale": [1.5, 1.5]
+            }
+        }
+    }
+}

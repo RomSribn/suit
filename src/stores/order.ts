@@ -1,5 +1,8 @@
 import { observable, action } from 'mobx';
+import * as _ from 'lodash';
 import { ERRORS_CODES } from '../config/constants';
+// import { callApi } from '../utils/apiAxios';
+// import { services } from '../config/routes';
 
 const initialOrder = {
     versions: [{
@@ -7,7 +10,7 @@ const initialOrder = {
         content: {
             shirt: [{
                 fabric_ref : {
-                    fabric: '1191',
+                    fabric: '1001',
                     },
                     design : {
                         collars: 'br',
@@ -68,13 +71,33 @@ class OrderStore implements OrderStore {
                 code: ERRORS_CODES.VALUES_NEEDED,
             };
         } else {
-            this.isFetching = true;
+        //     callApi({
+        //         method: 'get',
+        //         url: services.garmentsDefaults
+        //     }, () => this.isFetching = true,
+        //     this._onSuccess,
+        //     this._onError
+        // );
+        
             setTimeout(() => {
                 this.order = initialOrder.versions[0].content;
                 this.isFetching = false;
                 this.error = null;
             }, 1000);
         }
+    }
+
+    _onSuccess = (data: any) => { // tslint:disable-line
+        debugger // tslint:disable-line
+        this.order = _.groupBy(data, 'garmentId');
+        this.isFetching = false;
+        this.error = null;
+    }
+
+    _onError = (e: Error) => {
+        debugger // tslint:disable-line
+        this.error = e;
+        this.isFetching = false;
     }
 }
 

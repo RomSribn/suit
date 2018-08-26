@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 // TODO import API_ROOT from the common config
-const API_ROOT = 'http://194.87.239.90';
+// const API_ROOT = 'http://194.87.239.90';
 
 interface P {
     item: GalleryStoreItem;
@@ -26,12 +26,7 @@ class GalleryItem extends React.PureComponent<P, S > {
     }
     componentDidMount() {
         try {
-            const { item: { image_url_2d, id}, incremetLoadedCount } = this.props;
-            const imageUrl =
-                API_ROOT +
-                `${image_url_2d![0]}` +
-                `${id}` + '.' +
-                `${image_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
+            const { item: { img_url_2d: imageUrl }, incremetLoadedCount } = this.props;
             const image = new Image();
             image.src = imageUrl;
             image.onload = () => {
@@ -64,17 +59,17 @@ class GalleryItem extends React.PureComponent<P, S > {
             active,
         } = this.props;
         const {
-            image_url_2d,
+            img_url_2d: image,
             id,
         } = this.props.item;
-        const image = image_url_2d
-            ? image_url_2d[0]
-                ?   `${API_ROOT}` +
-                    `${image_url_2d[0]}` +
-                    `${id}` + '.' +
-                    `${image_url_2d[0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`
-                : process.env.STATIC_IMAGES + 'colors/material.jpg'
-            : process.env.STATIC_IMAGES + 'colors/material.jpg';
+        // const image = img_url_2d
+        //     ? img_url_2d[0]
+        //         ?   `${API_ROOT}` +
+        //             `${img_url_2d[0]}` +
+        //             `${id}` + '.' +
+        //             `${img_url_2d[0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`
+        //         : process.env.STATIC_IMAGES + 'colors/material.jpg'
+        //     : process.env.STATIC_IMAGES + 'colors/material.jpg';
         if (!this.state.load.success) {
             return null;
         }

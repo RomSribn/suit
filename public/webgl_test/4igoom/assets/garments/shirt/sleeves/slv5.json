@@ -1,0 +1,19 @@
+{
+    "model": "shirt/sleeves/geometry/slv5.gltf",
+    "textures": {
+        "normalMap": "shirt/sleeves/normal/slv5.jpg",
+        "aoMap": "shirt/sleeves/ao/slv5.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "base": "base"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

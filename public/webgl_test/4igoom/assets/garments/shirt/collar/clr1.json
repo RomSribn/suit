@@ -1,0 +1,28 @@
+{
+    "model": "shirt/collar/geometry/clr1.gltf",
+    "textures": {
+        "normalMap": "shirt/collar/normal/clr1.jpg",
+        "seamMap": "shirt/collar/seam/clr1.jpg",
+        "aoMap": "shirt/collar/ao/clr1.jpg",
+		"normalMap2": "shirt/buttons/normal/standart.jpg",
+        "aoMap2": "shirt/buttons/ao/standart.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "button": "buttons"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "seamMap": "$textures.seamMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            },
+			"buttons": {
+                "normalMap": "$textures.normalMap2",
+                "aoMap": "$textures.aoMap2",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

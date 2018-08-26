@@ -1,0 +1,17 @@
+{
+    "model": "manequin/geometry/body.gltf",
+    "textures": {
+        "normalMap": "manequin/normal/body.jpg",
+        "specularMap": "manequin/specular/body.jpg"
+    },
+    "settings": {
+        "materials": {
+            "body": {
+                "type": "MeshPhongMaterial",
+                "specularMap": "$textures.specularMap",
+                "normalMap": "$textures.normalMap",
+                "color": "#484848"
+            }
+        }
+    }
+}

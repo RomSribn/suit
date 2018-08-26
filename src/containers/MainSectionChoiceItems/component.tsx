@@ -54,7 +54,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         )}
         </ReactCSSTransitionGroup>
         );
-        
+
     }
 }
 

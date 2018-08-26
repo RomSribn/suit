@@ -1,0 +1,17 @@
+{
+    "model": "manequin/geometry/head.gltf",
+    "textures": {
+        "normalMap": "manequin/normal/head.jpg",
+        "specularMap": "manequin/specular/head.jpg"
+    },
+    "settings": {
+        "materials": {
+            "head": {
+                "type": "MeshPhongMaterial",
+                "specularMap": "$textures.specularMap",
+                "normalMap": "$textures.normalMap",
+                "color": "#484848"
+            }
+        }
+    }
+}

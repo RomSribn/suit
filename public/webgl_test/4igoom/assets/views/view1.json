@@ -1,0 +1,212 @@
+{
+    "name": "Plan",
+    "model": "plan",
+    "models": [
+        {
+            "object3d": "shirt/fronts/geometry/frt10.gltf",
+            "textures": {
+                "map": { "src": "shirt/fabric/diffuse/1246.jpg", "repeat": true },
+                "bumpMap": { "src": "shirt/fabric/second_bump/1246.jpg", "repeat": true },
+                "specularMap": { "src": "shirt/fabric/specular/1246.jpg", "repeat": true },
+                "rampMap": "shirt/fabric/falloff/1.jpg",
+
+                "normalMap": "shirt/fronts/normal/frt10.jpg",
+                "aoMap": "shirt/fronts/ao/frt10.jpg",
+
+                "buttonsNormalMap": { "src": "shirt/buttons/normal/btn1.jpg", "repeat": true }
+            },
+            "settings": {
+                "base": {
+                    "map": "$textures.map",
+                    "rampMap": "$textures.rampMap",
+                    "bumpMap": "$textures.bumpMap",
+                    "specularMap": "$textures.specularMap",
+
+                    "normalMap": "$textures.normalMap",
+                    "aoMap": "$textures.aoMap",
+                    "diffuse": "#727272",
+                    "specular": "#111111",
+                    "shininess": 1,
+                    "aoMapIntensity": 0.8,
+                    "diffuseUVRepeat": 55,
+                    "otherUVRepeat": 200,
+                    "bumpScale": 0.1,
+                    "normalScale": [1.5, 1.5]
+                },
+                "_buttom": {
+                    "type": "MeshPhongMaterial",
+                    "normalMap": "$textures.buttonsNormalMap",
+                    "color": "#434343"
+                }
+            }
+        },
+        {
+            "object3d": "shirt/back/geometry/bck1.gltf",
+            "textures": {
+                "map": { "src": "shirt/fabric/diffuse/1246.jpg", "repeat": true },
+                "rampMap": "shirt/fabric/falloff/1.jpg",
+                "bumpMap": { "src": "shirt/fabric/second_bump/1246.jpg", "repeat": true },
+                "specularMap": { "src": "shirt/fabric/specular/1246.jpg", "repeat": true },
+
+                "normalMap": "shirt/back/normal/bck1.jpg",
+                "aoMap": "shirt/back/ao/bck1.jpg"
+            },
+            "settings": {
+                "base": {
+                    "map": "$textures.map",
+                    "rampMap": "$textures.rampMap",
+                    "bumpMap": "$textures.bumpMap",
+                    "specularMap": "$textures.specularMap",
+
+                    "normalMap": "$textures.normalMap",
+                    "aoMap": "$textures.aoMap",
+                    "diffuse": "#727272",
+                    "specular": "#111111",
+                    "shininess": 1,
+                    "aoMapIntensity": 0.8,
+                    "diffuseUVRepeat": 55,
+                    "otherUVRepeat": 200,
+                    "bumpScale": 0.1,
+                    "normalScale": [1.5, 1.5]
+                }
+            }
+        },
+        {
+            "object3d": "shirt/collars/geometry/clr1.gltf",
+            "textures": {
+                "map": { "src": "shirt/fabric/diffuse/1246.jpg", "repeat": true },
+                "rampMap": "shirt/fabric/falloff/1.jpg",
+                "bumpMap": { "src": "shirt/fabric/second_bump/1246.jpg", "repeat": true },
+                "specularMap": { "src": "shirt/fabric/specular/1246.jpg", "repeat": true },
+
+                "normalMap": "shirt/collars/normal/clr1.jpg",
+                "aoMap": "shirt/collars/ao/clr1.jpg",
+
+                "buttonsNormalMap": { "src": "shirt/buttons/normal/btn1.jpg", "repeat": true }
+            },
+            "settings": {
+                "Untitled_1": {
+                    "map": "$textures.map",
+                    "rampMap": "$textures.rampMap",
+                    "bumpMap": "$textures.bumpMap",
+                    "specularMap": "$textures.specularMap",
+
+                    "normalMap": "$textures.normalMap",
+                    "aoMap": "$textures.aoMap",
+                    "diffuse": "#727272",
+                    "specular": "#111111",
+                    "shininess": 1,
+                    "aoMapIntensity": 0.8,
+                    "diffuseUVRepeat": 55,
+                    "otherUVRepeat": 200,
+                    "bumpScale": 0.1,
+                    "normalScale": [1.5, 1.5]
+                },
+                "Untitled_0": {
+                    "type": "MeshPhongMaterial",
+                    "normalMap": "$textures.buttonsNormalMap",
+                    "color": "#434343"
+                }
+            }
+        },
+        {
+            "object3d": "shirt/sleeves/geometry/slv1.gltf",
+            "textures": {
+                "map": { "src": "shirt/fabric/diffuse/1246.jpg", "repeat": true },
+                "rampMap": "shirt/fabric/falloff/1.jpg",
+                "bumpMap": { "src": "shirt/fabric/second_bump/1246.jpg", "repeat": true },
+                "specularMap": { "src": "shirt/fabric/specular/1246.jpg", "repeat": true },
+
+                "normalMap": "shirt/sleeves/normal/slv1.jpg",
+                "aoMap": "shirt/sleeves/ao/slv1.jpg",
+
+                "buttonsNormalMap": { "src": "shirt/buttons/normal/btn1.jpg", "repeat": true }
+            },
+            "settings": {
+                "Untitled_1": {
+                    "map": "$textures.map",
+                    "rampMap": "$textures.rampMap",
+                    "bumpMap": "$textures.bumpMap",
+                    "specularMap": "$textures.specularMap",
+
+                    "normalMap": "$textures.normalMap",
+                    "aoMap": "$textures.aoMap",
+                    "diffuse": "#727272",
+                    "specular": "#111111",
+                    "shininess": 1,
+                    "aoMapIntensity": 0.8,
+                    "diffuseUVRepeat": 55,
+                    "otherUVRepeat": 200,
+                    "bumpScale": 0.1,
+                    "normalScale": [1.5, 1.5]
+                },
+                "Untitled_0": {
+                    "type": "MeshPhongMaterial",
+                    "normalMap": "$textures.buttonsNormalMap",
+                    "color": "#434343"
+                }
+            }
+        },
+        {
+            "object3d": "shirt/yoke/geometry/yke1.gltf",
+            "textures": {
+                "map": { "src": "shirt/fabric/diffuse/1246.jpg", "repeat": true },
+                "rampMap": "shirt/fabric/falloff/1.jpg",
+                "bumpMap": { "src": "shirt/fabric/second_bump/1246.jpg", "repeat": true },
+                "specularMap": { "src": "shirt/fabric/specular/1246.jpg", "repeat": true },
+
+                "normalMap": "shirt/yoke/normal/yke1.jpg",
+                "aoMap": "shirt/yoke/ao/yke1.jpg"
+            },
+            "settings": {
+                "yke1": {
+                    "map": "$textures.map",
+                    "rampMap": "$textures.rampMap",
+                    "bumpMap": "$textures.bumpMap",
+                    "specularMap": "$textures.specularMap",
+
+                    "normalMap": "$textures.normalMap",
+                    "aoMap": "$textures.aoMap",
+                    "diffuse": "#727272",
+                    "specular": "#111111",
+                    "shininess": 1,
+                    "aoMapIntensity": 0.8,
+                    "diffuseUVRepeat": 55,
+                    "otherUVRepeat": 200,
+                    "bumpScale": 0.1,
+                    "normalScale": [1.5, 1.5]
+                }
+            }
+        },
+        {
+            "object3d": "manequin/geometry/body.gltf",
+            "textures": {
+                "normalMap": "manequin/normal/body.jpg",
+                "specularMap": "manequin/specular/body.jpg"
+            },
+            "settings": {
+                "body": {
+                    "type": "MeshPhongMaterial",
+                    "specularMap": "$textures.specularMap",
+                    "normalMap": "$textures.normalMap",
+                    "color": "#484848"
+                }
+            }
+        },
+        {
+            "object3d": "manequin/geometry/head.gltf",
+            "textures": {
+                "normalMap": "manequin/normal/head.jpg",
+                "specularMap": "manequin/specular/head.jpg"
+            },
+            "settings": {
+                "head": {
+                    "type": "MeshPhongMaterial",
+                    "specularMap": "$textures.specularMap",
+                    "normalMap": "$textures.normalMap",
+                    "color": "#484848"
+                }
+            }
+        }
+    ]
+}

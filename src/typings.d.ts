@@ -57,9 +57,12 @@ interface GarmentLocale {
     name: string;
 }
 interface Garment {
-    code: string;
-    image: string;
+    // code: string;
+    // image: string;
     titles?: MakeLocale<GarmentLocale>;
+    // name?: string;
+    id: string;
+    name: string;
   }
   
 interface Garments {
@@ -73,15 +76,24 @@ interface ImageLoadState {
 }
 interface GalleryStoreItem {
     id: string;
-    title_en: string;
-    title_ru: string;
-    title: string;
+    title: {
+        en: string;
+        ru: string;
+    };
+    description: {
+        en: string;
+        ru: string;
+    };
     image: string | null;
-    image_url_2d: string[] | null;
+    img_url_2d: string;
     image_url_3d: string | null;
     price_category: string | null;
     code: string;
-    price: string;
+    price: {
+        ru: number;
+        en: number;
+        eu: number;
+    };
     defaultItem: boolean;
     fabric_code: string;
 }

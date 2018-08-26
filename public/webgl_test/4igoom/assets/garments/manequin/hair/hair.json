@@ -1,0 +1,23 @@
+{
+    "model": "manequin/geometry/hair.gltf",
+    "textures": {
+		"normalMap": "manequin/normal/hair.jpg",
+		"aoMap": "manequin/ao/hair.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "base": "hair"
+        },
+        "materials": {
+			"hair": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#595959",
+				"specular": "#111111",
+				"shininess": 1,
+				"aoMapIntensity": 0.1,
+				"normalScale": [20, 20]
+            }
+        }
+    }
+}

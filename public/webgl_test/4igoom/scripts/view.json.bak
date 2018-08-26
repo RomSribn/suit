@@ -1,0 +1,18 @@
+[
+    { "id": "frt12", "group": "shirt", "subgroup": "front"},
+    { "id": "bck8",  "group": "shirt", "subgroup": "back"},
+    { "id": "clr1",  "group": "shirt", "subgroup": "collar"},
+    { "id": "slv1",  "group": "shirt", "subgroup": "sleeves"},
+
+    { "id": "yke2",  "group": "shirt", "subgroup": "yoke"},
+    { "id": "fab1",  "group": "shirt", "subgroup": "fabric"},
+	{ "id": "cfs1",  "group": "shirt", "subgroup": "cuffs"},
+	{ "id": "pkt1",  "group": "shirt", "subgroup": "pocket"},
+
+    { "id": "body",  "group": "manequin", "subgroup": "body"},
+	{ "id": "eyes",  "group": "manequin", "subgroup": "eyes"},
+	{ "id": "shoes",  "group": "manequin", "subgroup": "shoes"},
+	
+	{ "id": "trousers",  "group": "manequin", "subgroup": "trousers"},
+    { "id": "head",  "group": "manequin", "subgroup": "head"}
+]

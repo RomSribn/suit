@@ -1,0 +1,19 @@
+{
+    "model": "shirt/back/geometry/bck8.gltf",
+    "textures": {
+        "normalMap": "shirt/back/normal/bck8.jpg",
+        "aoMap": "shirt/back/ao/bck8.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "a": "base"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

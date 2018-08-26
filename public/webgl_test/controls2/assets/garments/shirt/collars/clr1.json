@@ -1,0 +1,20 @@
+{
+    "model": "shirt/collars/geometry/clr1.gltf",
+    "textures": {
+        "normalMap": "shirt/collars/normal/clr1.jpg",
+        "aoMap": "shirt/collars/ao/clr1.jpg"
+    },
+    "settings": {
+        "materialMap": {
+            "Untitled_1": "base",
+            "Untitled_0": "buttons"
+        },
+        "materials": {
+            "base": {
+                "normalMap": "$textures.normalMap",
+                "aoMap": "$textures.aoMap",
+                "diffuse": "#727272"
+            }
+        }
+    }
+}

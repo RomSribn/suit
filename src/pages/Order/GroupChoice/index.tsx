@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import * as _ from 'lodash';
 
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
     backClick = () => {
@@ -11,14 +12,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             order,
             backLink,
             choiceItem,
+            lang
         } = this.props;
-        let choiceItemValue = '';
-        try {
-            choiceItemValue = order[garment][0][subgroup][group];
-        } catch (_) {
-            choiceItemValue = 'fail';
-        }
-    
+        // TODO: add translation
+        const choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, 'не выбрано');
         return (
                 <Link to={backLink} onClick={this.backClick} className="custom custom--open">
                     <span className="custom__name">{choiceItem.value}:</span>

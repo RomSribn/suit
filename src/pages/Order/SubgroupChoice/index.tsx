@@ -15,20 +15,26 @@ type FilterFields = (
 const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     let status;
     try {
-        status = order[garment][order[garment].length - 1][subgroup][item.id];
-        status = !!status ? status : loc[lang].noStatus;
+        status = order[garment][order[garment].length - 1][subgroup][item.subsection_our_code].title[lang];
+        status = Boolean(status) ? status : loc[lang].noStatus;
 
     } catch (_) {
         status = loc[lang].noStatus;
     }
-    if (item.id === 'fitting') {
+    if (item.subsection_our_code === 'fitting') {
         status = null;
+        return {
+            link: `${subgroup}/${item.subsection_our_code}`,
+            linkName: item.title[lang],
+            id: item.id,
+            status,
+        };
     }
-    
+
     return {
-        link: `${subgroup}/${item.id}`,
+        link: `${subgroup}/${item.subsection_our_code}`,
         linkName: item.title[lang],
-        id: item.id,
+        id: item.subsection_our_code,
         status,
     };
 };
@@ -103,6 +109,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                                 popOrderPathitem={popOrderPathitem!}
                                 backLink={backLink!}
                                 choiceItem={choiceItem!}
+                                lang={lang!}
                                 order={order!}
                             />
                         );

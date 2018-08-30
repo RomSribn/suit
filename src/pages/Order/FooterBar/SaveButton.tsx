@@ -30,7 +30,9 @@ class SaveButton extends React.Component<P> {
                 GROUP,
                 SUBGROUP } = ORDER_PATH_PARTS;
             const newValue = orderStore!.order;
-            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]] = orderStore!.activeElement!.id;
+            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]] = {};
+            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]].our_code = orderStore!.activeElement!.our_code;
+            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]].title = orderStore!.activeElement!.title;
             orderStore!.setOrder(newValue);
         } catch (_) {
             const {} = _;

@@ -6,8 +6,6 @@ class Main extends React.PureComponent<DetailsProps> {
         activeGarments: [],
     };
     render() {
-        // tslint:disable-next-line
-        // debugger
         const {
             activeGarments,
         } = this.props;

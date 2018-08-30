@@ -10,7 +10,6 @@ class Subgroups {
     @observable error = {};
 
     @computed get subgroups(): Subgroup[] {
-        // debugger //tslint:disable-line
         return !!this.data
             ? [ ...this.data.fabric_ref, ...this.data.design, ...this.data.fitting, ]
             : [];

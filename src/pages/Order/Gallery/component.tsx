@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 // import { loc } from './loc';
-// import { API_ROOT } from '../../../config/routes';
+import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
@@ -15,7 +15,7 @@ interface GalleryState extends ImageLoadState {
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     constructor(props: GalleryProps) {
         super(props);
-        const activeIndex = props.items.findIndex(i => i.id === ( props.order!.activeElement || {})['id']); // tslint:disable-line
+        const activeIndex = props.items.findIndex(i => i.our_code === ( props.order!.activeElement || {})['id']); // tslint:disable-line
         this.state = {
             activeElementIndex: activeIndex === -1 ? 0 : activeIndex,
             previewElementIndex: 0,    
@@ -26,6 +26,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             mouseOverElement: false,
         };
     }
+    componentWillMount() {
+        this.props.filterStore.loadFilters(services.shirtFilters);
+    }
     componentDidMount() {
         try {
             const item = this.props.items[
@@ -34,11 +37,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     : this.state.previewElementIndex
             ];
             const { img_url_2d: imageUrl } = item;
-            // const imageUrl = API_ROOT + (img_url_2d || '').replace('/html', '');
-                // API_ROOT +
-                // `${img_url_2d![0]}` +
-                // `${id}` + '.' +
-                // `${img_url_2d![0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`;
             const image = new Image();
             image.src = imageUrl;
             image.onload = () => {
@@ -87,7 +85,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     garment: this.props.galleryStore.garment,
                     group: this.props.galleryStore.group,
                     subGroup: this.props.galleryStore.subGroup,
-                    value: this.props.items[i].id,
+                    value: this.props.items[i].our_code,
                 });
             } else {
                 this.props.setPreviewElement(null);
@@ -98,7 +96,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         this.setState({
             mouseOverElement: true,
         });
-        // debugger // tslint:disable-line
     }
     mouseLeaveElement = () => {
         this.setState({
@@ -126,7 +123,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         const title = item.title[lang];
         const description = item.description[lang];
         const {
-            code,
+            our_code: code,
             price,
             img_url_2d: image
         } = item;
@@ -134,7 +131,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        {group === 'model' && <Controll />}
+                        {group === 'fabric' && <Controll />}
                         { !this.state.load.success && !this.state.load.error
                         ? <div
                             className="preloader"
@@ -169,7 +166,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__footer">
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                        <div className="gallery__footer--articul">₽{price.ru || 99} / {code || 'code'}</div>
+                        <div className="gallery__footer--articul">₽{price.ru} / {code || 'code'}</div>
                     </div>
                     <div className="gallery__footer--txt">
                        {    description ||

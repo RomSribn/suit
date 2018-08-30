@@ -16,6 +16,7 @@ export const API_ROOT =
 
 export const services = {
   garments: 'api/garments',
+  shirtFilters: `${API_ROOT}/api/garments/shirt/filters/fabric`,
   garmentsDefaults: `${API_ROOT}/api/garments/defaults`
 };
 type MakeNavigationRoutes = () => NavigationRoutes;

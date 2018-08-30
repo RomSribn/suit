@@ -74,26 +74,43 @@ interface ImageLoadState {
         success: string | null;
     },
 }
+
+interface ServerFilter {
+    name: string;
+    id: number;
+    title: Translations<string>;
+    value: string;
+    valueTitle: Translations<string>;
+  }
+
+type ServerFilters = Record<string, ServerFilter[]>;
+
+interface FilterValue {
+    id: number;
+    valueTitle: Translations<string>;
+    value: string;
+}
+interface Filter {
+    name: string;
+    title: Translations<string>;
+    values: FilterValue[];
+}
+
+type Filters = Record<string, Filter>;
+
+type UserFilters = Record<string, string[]>;
+
 interface GalleryStoreItem {
-    id: string;
-    title: {
-        en: string;
-        ru: string;
-    };
-    description: {
-        en: string;
-        ru: string;
-    };
+    our_code: string;
+    title: Translations<string>;
+    description: Translations<string>;
+    is_input: boolean;
     image: string | null;
     img_url_2d: string;
     image_url_3d: string | null;
     price_category: string | null;
     code: string;
-    price: {
-        ru: number;
-        en: number;
-        eu: number;
-    };
+    price: Translations<number>;
     defaultItem: boolean;
     fabric_code: string;
 }
@@ -105,15 +122,20 @@ interface Stores {
     routing: any;
   }
 
+interface OrderItemInfo {
+    our_code: string;
+    title: string;
+}
+
 interface OrderItem {
     fabric_ref : {
-        fabric: string;
+        fabric: OrderItemInfo;
         [key: string] : any;
     
     };
     design : {
         // collars: string;
-        [key: string] : any;
+        [key: string] : OrderItemInfo;
     };
     [key: string] : any;
 }
@@ -121,18 +143,18 @@ interface OrderItem {
 interface Order {
     [key: string]: OrderItem[],
 }
-
-interface FilterItemProps {
-    name: string,
-    type?: string;
-    label: string;
-    value: string;
-}
-
-interface FilterGroup {
-    name: string;
-    filters: FilterItemProps[];
-} 
+// // TODO: remove
+// interface FilterItemProps {
+//     name: string,
+//     type?: string;
+//     label: string;
+//     value: string;
+// }
+// TODO: remove
+// interface FilterGroup {
+//     name: string;
+//     filters: FilterItemProps[];
+// } 
 
 declare class OrderStore {
     order: Order;

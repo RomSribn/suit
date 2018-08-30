@@ -51,7 +51,7 @@ class FittingItem extends React.PureComponent<Props, State> {
                     { valid: this.state.valid }
                 )}
             >
-                <span className="size__name">{item[`title_${lang}`]}</span>
+                <span className="size__name">{item.title[lang]}</span>
                 <input
                     className="size__input"
                     type="text"
@@ -76,7 +76,7 @@ class Fitting extends React.PureComponent<FittingProps> {
         const { items, lang } = this.props;
         return (
             <div className="sizes__wrap sizes">
-            {items.map(i => <FittingItem item={i} key={i.id} lang={lang} />)}
+            {items.map(i => <FittingItem item={i} key={i.our_code} lang={lang} />)}
             </div>);
     }
 }

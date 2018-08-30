@@ -4,4 +4,5 @@ interface GroupChoiceProps {
     popOrderPathitem(): void;
     backLink: string;
     order: Order;
+    lang: string;
 }

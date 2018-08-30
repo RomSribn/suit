@@ -2,47 +2,83 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 
 class FilterItem extends React.PureComponent<FilterItemProps> {
-    static defaultProps = {
+    static defaultProps: DefaultFilterItemProps = {
         type: 'checkbox',
+        lang: 'ru',
+        addFilter: () => null,
+        removeFilter: () => null,
     };
+
+    onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {
+            value,
+            addFilter,
+            removeFilter
+        } = this.props;
+
+        if (e.target.checked) {
+            addFilter(value);
+        } else {
+            removeFilter(value);
+        }
+    }
+
     render() {
         const {
-            name,
+            valueTitle,
+            lang,
             type,
-            label,
-            value,
+            value
         } = this.props;
         return (
             <label className="filter__label">
-                <input type={type} value={value} name={name} />
-                <span className="filter__label-name">{label}</span>
+                <input
+                    type={type!}
+                    value={value}
+                    name={name}
+                    onChange={this.onChange}
+                />
+                <span className="filter__label-name">{valueTitle[lang!]}</span>
             </label>
         );
     }
 }
-const makeFilterGroup = (group: FilterGroup) => {
+const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string) => {
     const {
-        name,
-        filters,
+        title,
+        values,
     } = group;
+
     return (
         <div className="filter__group">
-            <div className="filter__groupheader">{name}:</div>
+            <div className="filter__groupheader">{title[lang]}:</div>
             <div className="filter__checkgroup">
-                {filters.map(f => <FilterItem key={f.name + f.value} {...f} />)}
+                {values.map(value => (
+                    <FilterItem
+                        lang={lang}
+                        key={title[lang] + value.value}
+                        addFilter={filterStore.addUserFilter(group.name)}
+                        removeFilter={filterStore.removeUserFilter(group.name)}
+                        {...value}
+                    />
+                ))}
             </div>
         </div>
     );
 };
-class Filter extends React.PureComponent<FilterProps> {
+class FilterComponent extends React.PureComponent<FilterProps> {
     public static defaultProps: DefaultFilterProps = {
-        filterGroups: [],
+        filters: {},
         isOpen: false,
+        lang: 'ru'
     };
+ 
     render() {
         const {
-            filterGroups,
+            filters,
             isOpen,
+            lang,
+            filterStore
         } = this.props;
         return (
             <div
@@ -52,7 +88,7 @@ class Filter extends React.PureComponent<FilterProps> {
                 )}
             >
                 <div className="filter__wrap">
-                {filterGroups.map(fg => makeFilterGroup(fg))}
+                {Object.keys(filters || {}).map(key => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
             </div>
         );
@@ -60,5 +96,5 @@ class Filter extends React.PureComponent<FilterProps> {
 }
 
 export {
-    Filter,
+    FilterComponent,
 };

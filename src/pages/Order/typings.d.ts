@@ -22,6 +22,7 @@ interface HeaderContainerProps extends HeaderProps {
 
 interface Subgroup {
     id: string;
+    subsection_our_code: string;
     title: {
         en: string;
         ru: string;

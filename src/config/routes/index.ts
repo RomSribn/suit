@@ -1,4 +1,4 @@
-import  { navigationRoutes, services, routes } from './routes';
+import  { navigationRoutes, services, routes } from './_routes';
 import { routesTranslations } from './loc';
 
 export const trim = (s: string, c: string): string => {

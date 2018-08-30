@@ -36,7 +36,7 @@ class MainSection extends React.Component<MainSectionProps> {
                             : 'center',
                     }}
                 >
-                    <Filter />                
+                    <Filter />
                     <GarmentChoise
                         catalogFormClassName={classnames({ 'zero-max-height': !detailsDeep })}
                         routes={routes}

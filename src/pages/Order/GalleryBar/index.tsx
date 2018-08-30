@@ -60,16 +60,8 @@ class GalleryItem extends React.PureComponent<P, S > {
         } = this.props;
         const {
             img_url_2d: image,
-            id,
+            our_code: id,
         } = this.props.item;
-        // const image = img_url_2d
-        //     ? img_url_2d[0]
-        //         ?   `${API_ROOT}` +
-        //             `${img_url_2d[0]}` +
-        //             `${id}` + '.' +
-        //             `${img_url_2d[0].split('/')[5] === 'fabric' ? 'png' : 'svg'}`
-        //         : process.env.STATIC_IMAGES + 'colors/material.jpg'
-        //     : process.env.STATIC_IMAGES + 'colors/material.jpg';
         if (!this.state.load.success) {
             return null;
         }
@@ -117,7 +109,7 @@ const makeGalleryItems: makeGalleryItems = (
 ) => items.map((item, i) => {
     return (
         <GalleryItem
-            key={item.fabric_code + item.id}
+            key={item.fabric_code + item.our_code}
             item={item}
             onClick={setActiveElementIndex(i)}
             onMouseEnter={() => {

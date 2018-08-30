@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import { Gallery as Component } from './component';
 import { Fitting } from '../Fitting/component';
 
-@inject(({app, garments: { GalleryStore }, order}, nextProps: GalleryContainerProps) => {
+@inject(({app, garments: { GalleryStore }, order, filterStore}, nextProps: GalleryContainerProps) => {
     const {
         garment,
         group,
@@ -18,6 +18,7 @@ import { Fitting } from '../Fitting/component';
         lang: app.lang,
         order,
         galleryStore: new GalleryStore(garment, subgroup, group),
+        filterStore: filterStore,
         ...nextProps,
     };
 })
@@ -34,6 +35,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
             setActiveOrderItem,
             setPreviewElement,
             match: { params: { group } },
+            filterStore
         } = this.props;
 
         const res = (
@@ -55,6 +57,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
                     items={galleryStore.items}
                     galleryStore={galleryStore}
                     group={group}
+                    filterStore={filterStore}
                 />
             )
         );
@@ -79,6 +82,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
                         items={galleryStore.items}
                         galleryStore={galleryStore}
                         group={group}
+                        filterStore={filterStore}                    
                     />
                 )
         );

@@ -7,6 +7,7 @@ class GalleryStore implements GalleryStore {
     subGroup: string;
     group: string;
     items = observable<GalleryStoreItem>([]);
+    @observable filters = {} as ServerFilters;
     @observable isfetching = false;
     @observable error = {};
 
@@ -24,26 +25,43 @@ class GalleryStore implements GalleryStore {
         const group = this.group === 'fabric_ref'
             ? ''
             : this.group;
-        callApi({
-            url: `${API_ROOT}/api/garments/${this.garment}/${this.subGroup}/${group}`,
-            method: 'GET',
-        },
-        () => this.isfetching = true,
-        this._fetchSucceed,
-        this._fetchError,
-        );
+        Promise.all([
+            callApi({
+                url: `${API_ROOT}/api/garments/${this.garment}/${this.subGroup}/${group}`,
+                method: 'GET',
+            },
+            () => this.isfetching = true,
+            // TODO: remove after api added isInput field
+            this._fetchSucceed(group === 'fitting'),
+            this._fetchError,
+            ),
+            // TODO: remove this shit
+            callApi({
+                url: `${API_ROOT}/api/garments/shirt/filters/fabric`,
+                method: 'GET',
+            },
+            this._filtersLoaded,
+            this._fetchError)
+        ]).then(() => this.isfetching = false);
+
     }
-    _fetchSucceed = (items: GalleryStoreItems) => {
-        debugger // tslint:disable-line
+    _filtersLoaded = (filters: ServerFilters) => {
+        this.filters = filters;
+    }
+    _fetchSucceed = (isFitting: boolean) => (items: GalleryStoreItems) => {
+
         this.items.push(
             ...items
-            .filter(i => Boolean(i.img_url_2d))
-            .map(i => ({
-                ...i,
-                img_url_2d: 'http://194.87.239.90' + i.img_url_2d!.replace('/html', '')
-            }))
+            .filter(i => Boolean(i.img_url_2d || i.is_input || isFitting))
+            .map(i => {
+                return i.is_input || isFitting ?
+                    i :
+                    {
+                        ...i,
+                        img_url_2d: 'http://194.87.239.90' + i.img_url_2d!.replace('/html', '')
+                    };
+            })
         );
-        this.isfetching = false;
     }
     _fetchError = (e: Error) => {
         this.error = e;

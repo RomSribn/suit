@@ -1,7 +1,8 @@
 interface GalleryProps {
     lang: string;
     items: GalleryStoreItems,
-    galleryStore: any;    
+    galleryStore: any;
+    filterStore: any;
     order: OrderStore;
     setActiveOrderItem(item: GalleryStoreItem): void;
     setPreviewElement(el: ActivePreviewElement | null): void;

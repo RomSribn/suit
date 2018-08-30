@@ -4,7 +4,7 @@ import { Header as Component } from './component';
 
 @inject(({ user, routing }, nextProps: HeaderContainerProps) => {
     return {
-        userName: user.profile.username,
+        userName: user.profile,
         path: routing.location!.pathname,
         ...nextProps,
     };

@@ -1,43 +1,8 @@
 import { observable, action } from 'mobx';
 import * as _ from 'lodash';
 import { ERRORS_CODES } from '../config/constants';
-// import { callApi } from '../utils/apiAxios';
-// import { services } from '../config/routes';
-
-const initialOrder = {
-    versions: [{
-        uuid: null,
-        content: {
-            shirt: [{
-                fabric_ref : {
-                    fabric: '1001',
-                    },
-                    design : {
-                        collars: 'br',
-                    }
-            }],
-            jacket: [{
-                fabric_ref : {
-                    fabric: '486.895/19',
-                },
-                design : {
-                    model: 'gt16',
-                }
-            }],
-            trousers: [{
-                fabric_ref : {
-                    fabric: '486.895/19',
-                    },
-                    design : {
-                    model: '2P10 SLIM',
-                    }
-            }],
-
-        },
-        dateCreated: null,
-        dateUpdated: null,
-    }]
-};
+import { callApi } from '../utils/apiAxios';
+import { services } from '../config/routes';
 
 class OrderStore implements OrderStore {
     @observable order: Order = {} as Order;
@@ -52,7 +17,6 @@ class OrderStore implements OrderStore {
     }
     @action
     setPreviewElement = (value: ActivePreviewElement ) => {
-        // debugger // tslint:disable-line        
         this.previewElement = value;
     }
     @action
@@ -71,31 +35,40 @@ class OrderStore implements OrderStore {
                 code: ERRORS_CODES.VALUES_NEEDED,
             };
         } else {
-        //     callApi({
-        //         method: 'get',
-        //         url: services.garmentsDefaults
-        //     }, () => this.isFetching = true,
-        //     this._onSuccess,
-        //     this._onError
-        // );
-        
-            setTimeout(() => {
-                this.order = initialOrder.versions[0].content;
-                this.isFetching = false;
-                this.error = null;
-            }, 1000);
+            callApi({
+                method: 'get',
+                url: services.garmentsDefaults
+            }, () => this.isFetching = true,
+            this._onSuccess,
+            this._onError
+        );
         }
     }
 
     _onSuccess = (data: any) => { // tslint:disable-line
-        debugger // tslint:disable-line
-        this.order = _.groupBy(data, 'garmentId');
+        const tmp = _.groupBy(data.filter((g:any) => g.garmentId !== 'manequin'), 'garmentId'); // tslint:disable-line
+        this.order = Object.keys(tmp).reduce((acc, cur) => {
+          const x = {
+            design: {},
+            fabric_ref: {}
+          };
+          tmp[cur].forEach((_cur) => {
+            if (_cur.subsectionOurCode !== 'fabric') {
+                _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
+                _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
+            } else {
+              _.set(x, 'fabric_ref.fabric.our_code', _.get(_cur, 'ourCode'));
+              _.set(x, 'fabric_ref.fabric.title', _.get(_cur, 'title'));
+            }
+          });
+          acc[cur] = [x];
+          return acc;
+        }, {});
         this.isFetching = false;
         this.error = null;
     }
 
     _onError = (e: Error) => {
-        debugger // tslint:disable-line
         this.error = e;
         this.isFetching = false;
     }

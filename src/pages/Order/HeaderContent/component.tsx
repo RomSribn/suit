@@ -22,7 +22,7 @@ const makePath: MakePath = (path, f) => {
     ));
 }; 
 
-class HeaderContent extends React.PureComponent<HeaderContentProps> {
+class HeaderContent extends React.Component<HeaderContentProps> {
     static defaultProps = {
         lang: 'en',
         orderPath: [],

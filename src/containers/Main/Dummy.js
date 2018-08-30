@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import { observer, inject } from 'mobx-react';
 import Widget3D from 'clothes-widget-3d';
+import { Redirect } from 'react-router';
 import _ from 'lodash';
-import { debug } from 'util';
 
 class Widget extends PureComponent {
   componentDidMount() {
@@ -11,6 +11,9 @@ class Widget extends PureComponent {
       apiPath: 'http://194.87.239.90:8081/api/',
       assetsPath: 'http://194.87.239.90/assets/models/',
       salonId: 1,
+      onClickAsset: (...args) => {
+        this.props.onClickAsset(...args);
+      }
       }
     );
     try {
@@ -53,6 +56,12 @@ const GROUPS = ['design', 'fabric_ref', 'fitting']
 }))
 @observer
 export default class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      subgroup: null
+    };
+  }
   render() {
     const params = Object.values(this.props.order).reduce((acc, cur) => {
       GROUPS.forEach(group => {
@@ -62,20 +71,33 @@ export default class App extends PureComponent {
       })
       return acc;
     }, []);
-
-    return (<Widget
-      selected='slv1'
-      assets={[
-        ...params,
-        { 'id': 'head', 'static': true },
-        { 'id': 'body', 'static': true },
-        { 'id': 'trousers', 'static': true }
-      ]}
-      onClickAsset={this.handleClickAsset}
-    />);
+    const { subgroup } = this.state;
+    return (<React.Fragment>
+      {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
+      <Widget
+        selected='slv1'
+        assets={[
+          ...params,
+          { 'id': 'head', 'static': true },
+          { 'id': 'body', 'static': true },
+          { 'id': 'trousers', 'static': true }
+        ]}
+        onClickAsset={this.handleClickAsset}
+    />
+    </React.Fragment>);
   }
 
-  handleClickAsset = ({ id, group, subgroup }) => {
-    console.log('asset was clicked:', id, group, subgroup);
+  handleClickAsset = ({ id }) => {
+    const subgroup =
+      _.findKey(
+          this.props.order.shirt[0].design,
+          ['our_code', id]
+      );
+    console.log('asset was clicked:', id, 'from', subgroup);    
+    if (id !== this.state.subgroup) {
+      this.setState({
+        subgroup
+      })
+    }
   };
 }

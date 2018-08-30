@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "*": ["types/*"]
+  },
     "experimentalDecorators": true,
     "outDir": "build/dist",
     "module": "esnext",

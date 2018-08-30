@@ -3,7 +3,7 @@ interface GalleryProps {
     items: GalleryStoreItems,
     galleryStore: any;
     filterStore: any;
-    order: OrderStore;
+    order: IOrderStore;
     setActiveOrderItem(item: GalleryStoreItem): void;
     setPreviewElement(el: ActivePreviewElement | null): void;
     group: string,

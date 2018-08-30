@@ -24,8 +24,8 @@ import { Fitting } from '../Fitting/component';
 })
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
-    shouldComponentUpdate() {
-        return false;
+    shouldComponentUpdate(nextProps: GalleryContainerProps) {
+        return this.props.match.params.group !== nextProps.match.params.group;
     }
     render() {
         const {

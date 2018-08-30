@@ -5,8 +5,6 @@ import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
-// TODO import API_ROOT from the common config
-// const API_ROOT = 'http://194.87.239.90';
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;

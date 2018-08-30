@@ -4,7 +4,36 @@ import { ERRORS_CODES } from '../config/constants';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
-class OrderStore implements OrderStore {
+type PrepareOrder = (order: Order) => ServerOrder;
+const prepareOrder: PrepareOrder = (order) => {
+    const customer = {
+        id: 1,
+        name: 'white'
+    };
+    const items: ServerItem[] =
+        _.values(order)
+        .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
+            _.values(garment[0].design).forEach(item => {
+                acc.push({
+                    design: {
+                        ourCode: item.our_code
+                    }
+                });
+            });
+            return acc;
+    }, []);
+    return {
+        customer,
+        items,
+        statusId: 1,
+        mainFabric: {
+            ourCode: 'fab1'
+        }
+    };
+};
+
+class OrderStore implements IOrderStore {
+    @observable orderInfo: OrderInfo | null = null;
     @observable order: Order = {} as Order;
     @observable activeElement: GalleryStoreItem | null = null;
     @observable previewElement: ActivePreviewElement | null = null;
@@ -40,9 +69,24 @@ class OrderStore implements OrderStore {
                 url: services.garmentsDefaults
             }, () => this.isFetching = true,
             this._onSuccess,
-            this._onError
-        );
+            this._onError)
+            .then(this._updateOrderInfo);
         }
+    }
+
+    _updateOrderInfo = () => {
+        const {orderInfo} = this;
+        const method = orderInfo ? 'PUT' : 'POST';
+        const id = orderInfo ? `/${orderInfo.orderId}` : '';
+        callApi({
+            url: services.orders + id,
+            method,
+            data: prepareOrder(this.order),
+        },
+        () => null,
+        (info: OrderInfo) => { this.orderInfo = info; },
+        this._onError
+    );
     }
 
     _onSuccess = (data: any) => { // tslint:disable-line
@@ -67,15 +111,14 @@ class OrderStore implements OrderStore {
         this.isFetching = false;
         this.error = null;
     }
-
     _onError = (e: Error) => {
         this.error = e;
         this.isFetching = false;
     }
 }
 
-const order: OrderStore = new OrderStore();
+const orderInstanse: OrderStore = new OrderStore();
 
 export {
-    order,
+    orderInstanse as order,
 };

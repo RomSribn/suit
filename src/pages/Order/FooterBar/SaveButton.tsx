@@ -6,7 +6,7 @@ import { ORDER_PATH_PARTS } from '../../../config/constants';
 
 type P = {
     lang?: string;
-    orderStore?: OrderStore;
+    orderStore?: IOrderStore;
     path?: string;
 };
 

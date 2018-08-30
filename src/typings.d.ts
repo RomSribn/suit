@@ -122,50 +122,6 @@ interface Stores {
     routing: any;
   }
 
-interface OrderItemInfo {
-    our_code: string;
-    title: string;
-}
-
-interface OrderItem {
-    fabric_ref : {
-        fabric: OrderItemInfo;
-        [key: string] : any;
-    
-    };
-    design : {
-        // collars: string;
-        [key: string] : OrderItemInfo;
-    };
-    [key: string] : any;
-}
-
-interface Order {
-    [key: string]: OrderItem[],
-}
-// // TODO: remove
-// interface FilterItemProps {
-//     name: string,
-//     type?: string;
-//     label: string;
-//     value: string;
-// }
-// TODO: remove
-// interface FilterGroup {
-//     name: string;
-//     filters: FilterItemProps[];
-// } 
-
-declare class OrderStore {
-    order: Order;
-    isFetching: boolean;
-    activeElement: GalleryStoreItem | null;
-    previewElement: ActivePreviewElement | null;
-    error: object | null;
-    setGarmentValue(garment: string, value: any): void;
-    setOrder (_o: Order): void;
-    fetchInitialOrder(garments: string[]): void;
-}
 
 declare class GalleryStore {
     garment: string;

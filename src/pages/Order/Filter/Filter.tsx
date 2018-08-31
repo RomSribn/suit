@@ -53,10 +53,10 @@ const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string)
         <div className="filter__group">
             <div className="filter__groupheader">{title[lang]}:</div>
             <div className="filter__checkgroup">
-                {values.map(value => (
+                {values.map((value, index) => (
                     <FilterItem
                         lang={lang}
-                        key={title[lang] + value.value}
+                        key={title[lang] + value.value + index}
                         addFilter={filterStore.addUserFilter(group.name)}
                         removeFilter={filterStore.removeUserFilter(group.name)}
                         {...value}
@@ -88,7 +88,8 @@ class FilterComponent extends React.PureComponent<FilterProps> {
                 )}
             >
                 <div className="filter__wrap">
-                {Object.keys(filters || {}).map(key => makeFilterGroup(filters[key], filterStore!, lang))}
+                {Object.keys(filters || {})
+                .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
             </div>
         );

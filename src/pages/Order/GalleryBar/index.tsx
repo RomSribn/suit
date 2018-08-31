@@ -1,7 +1,5 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-// TODO import API_ROOT from the common config
-// const API_ROOT = 'http://194.87.239.90';
 
 interface P {
     item: GalleryStoreItem;
@@ -98,6 +96,8 @@ type makeGalleryItems = (
     mouseEnter: (link: string) => void,
     mouseLeave: () => void,
 ) => React.ReactNode[];
+
+const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 const makeGalleryItems: makeGalleryItems = (
     items,
     setActiveElementIndex,
@@ -106,24 +106,35 @@ const makeGalleryItems: makeGalleryItems = (
     isMouseOverElement,
     mouseEnter,
     mouseLeave,
-) => items.map((item, i) => {
-    return (
-        <GalleryItem
-            key={item.fabric_code + item.our_code}
-            item={item}
-            onClick={setActiveElementIndex(i)}
-            onMouseEnter={() => {
-                setActiveElementIndex(i, 'enter')();
-                mouseEnter(item.image_url_3d!);
-            }}
-            onMouseLeave={(): void => {
-                setActiveElementIndex(-1, 'leave')();
-                mouseLeave();
-            }}
-            active={i === activeElementIndex && !isMouseOverElement}
-            incremetLoadedCount={incremetLoadedCount}
-        />);
-});
+) => {
+    const cache = items.reduce((acc: string[], item): string[] => {
+        acc.push(item.our_code);
+        return acc;
+    }, []).join('');
+    if (galleryItemsCache[cache]) {
+        return galleryItemsCache[cache];
+    }
+    const result = items.map((item, i) => {
+        return (
+            <GalleryItem
+                key={item.fabric_code + item.our_code}
+                item={item}
+                onClick={setActiveElementIndex(i)}
+                onMouseEnter={() => {
+                    setActiveElementIndex(i, 'enter')();
+                    mouseEnter(item.image_url_3d!);
+                }}
+                onMouseLeave={(): void => {
+                    setActiveElementIndex(-1, 'leave')();
+                    mouseLeave();
+                }}
+                active={i === activeElementIndex && !isMouseOverElement}
+                incremetLoadedCount={incremetLoadedCount}
+            />);
+    });
+    galleryItemsCache[cache] = result;
+    return result;
+};
 
 type State = {
     allLoaded: false;

@@ -30,7 +30,10 @@ class SaveButton extends React.Component<P> {
                     garment,
                     group,
                     subgroup } = match.params;
-                const newValue = orderStore!.order;
+                let newValue = orderStore!.order;
+                if (!newValue) {
+                    newValue = {};
+                }
                 newValue[garment][0][group][subgroup] = {};
                 newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
                 newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;

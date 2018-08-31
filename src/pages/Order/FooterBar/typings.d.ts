@@ -3,4 +3,5 @@ interface FooterBarProps {
     orderStore?: Order;
     popOrderPathitem?(): void;
     backLink?: string;
+    hasOrder?: boolean;
 }

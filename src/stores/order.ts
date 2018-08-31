@@ -38,8 +38,16 @@ class OrderStore implements IOrderStore {
     @observable order: Order = {} as Order;
     @observable activeElement: GalleryStoreItem | null = null;
     @observable previewElement: ActivePreviewElement | null = null;
+    @observable hiddenElements = observable.array<string>();
     @observable isFetching = false;
     @observable error: object | null = null;
+
+    @action
+    toggleHiddenElement = (element: string) => {
+      if (!this.hiddenElements.remove(element)) {
+        this.hiddenElements.push(element);
+      }
+    }
 
     @action
     setGarmentValue(garment: string, value: any) { // tslint:disable-line
@@ -70,8 +78,7 @@ class OrderStore implements IOrderStore {
                 url: services.garmentsDefaults
             }, () => this.isFetching = true,
             this._onSuccess,
-            this._onError)
-            .then(this.saveOrder);
+            this._onError);
         }
     }
     @action

@@ -4,7 +4,7 @@ import { loc } from './loc';
 class OrderInfo extends React.PureComponent<OrderInfoProps> {
     static defaultProps: OrderInfoProps = {
         lang: 'en',
-        deliveryDate: '--',
+        deliveryDate: '00.00.0000',
         price: ''
     };
     render() {

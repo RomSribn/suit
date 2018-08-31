@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
 
 import { navigationRoutes as routes } from '../../config/routes';
@@ -25,28 +26,6 @@ const Header = (props: HeaderProps) => {
     </div>
     );
 };
-
-interface FooterProps {
-    lang: string;
-}
-class Footer extends React.PureComponent<FooterProps> {
-    render() {
-        const {
-            lang,
-        } = this.props;
-        return (
-            <div className="panel__footer">
-                <div className="tools">
-                    <button
-                        className="btn tools__item tools__item--view"
-                        title={loc[lang].hideShow}
-                    />
-                    <button className="btn tools__item tools__item--3d" title="3d">3d</button>
-                </div>
-            </div>
-        );
-    }
-}
 
 interface NavigationItemProps {
     linkName: string;
@@ -155,7 +134,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                     </ul>
                 </nav>
             </div>
-            <Footer lang={lang} />
+            <Footer lang={lang}/>
         </div>);
     }
 }

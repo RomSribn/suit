@@ -1,6 +1,7 @@
 interface IOrderStore {
     orderInfo: OrderInfo | null;
     defaultValues: Order | null;
+    hiddenElements: string[];    
     order: Order;
     isFetching: boolean;
     activeElement: GalleryStoreItem | null;
@@ -9,6 +10,7 @@ interface IOrderStore {
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order): void;
     saveOrder(): void;
+    toggleHiddenElement(element: string): void;
     fetchInitialOrder(garments: string[]): void;
 }
 

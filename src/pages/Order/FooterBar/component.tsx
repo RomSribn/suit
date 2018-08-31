@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
+import { FadeIn } from '../../../containers/Transitions';
 import { SaveButton } from './SaveButton';
 import { loc } from './loc';
 
@@ -21,6 +22,7 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
         const {
             lang,
             backLink,
+            hasOrder
         } = this.props;
         return (
             <div className="footer-btn-bar">
@@ -56,7 +58,9 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                         }}
                     />
                     <Route path="/order/details/">
-                        <SaveButton>{loc[lang!].save}</SaveButton>
+                        <FadeIn>
+                            <SaveButton>{Boolean(hasOrder!) ? loc[lang!].save : loc[lang!].create}</SaveButton>
+                        </FadeIn>
                     </Route>
                 </Switch>
             </div>

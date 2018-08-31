@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as classNames from 'classnames';
-import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { TRANSITION_DUARAION } from '../../../config/constants';
+import { FadeIn } from '../../../containers/Transitions';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
 import { makeRoutes } from '../routes';
@@ -28,21 +27,17 @@ const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, togg
                 />
 
                 <span className="catalog__item-decoration">
-                <ReactCSSTransitionGroup
-                    transitionName="fade-in-absolute"
-                    transitionEnterTimeout={TRANSITION_DUARAION}
-                    transitionLeaveTimeout={TRANSITION_DUARAION}
-                >
-                <span key={lang}>
-                {
-                    garments[garment].titles
-                        ? garments[garment].titles![lang]
+                <FadeIn>
+                    <span key={lang}>
+                    {
+                        garments[garment].titles
                             ? garments[garment].titles![lang]
-                            : garment
-                        : garments[garment].name
-                }
+                                ? garments[garment].titles![lang]
+                                : garment
+                            : garments[garment].name
+                    }
                 </span>
-                </ReactCSSTransitionGroup>
+                </FadeIn>
                 </span>
                 
             </label>
@@ -164,11 +159,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     </div>
                     {   isIndexPage &&
                         <div className="catalog__submit-bar">
-                            <ReactCSSTransitionGroup
-                                transitionName="fade-in-absolute"
-                                transitionEnterTimeout={TRANSITION_DUARAION}
-                                transitionLeaveTimeout={TRANSITION_DUARAION}
-                            >
+                            <FadeIn>
                                 <Link
                                     to="/order/details"
                                     key={lang}
@@ -196,7 +187,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                         </svg>
                                     </div>
                                 </Link>
-                            </ReactCSSTransitionGroup>
+                            </FadeIn>
                         </div>
                     }
                 </form>

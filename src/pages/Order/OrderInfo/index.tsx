@@ -18,7 +18,7 @@ class OrderInfo extends React.Component<COrderInfoProps> {
         const orderInfo = order!.orderInfo;
         const deliveryDate = orderInfo ?
             moment().add(orderInfo.deliveryDays, 'days').format('DD.MM.YYYY') :
-            '--';
+            '00.00.0000';
         const price = orderInfo ? orderInfo.price[lang!] : '0';
         return (
             <Component

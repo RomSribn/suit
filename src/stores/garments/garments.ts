@@ -23,7 +23,7 @@ class GarmentsStore {
   fetchGarmentsList = () => {
     callApi({
       method: 'GET',
-      url: `${API_ROOT}/${services.garments}?salonId=1`,
+      url: `${API_ROOT}/${services.garments}`,
     },
     () => this.isFetching = true,
     this.garmentsLoaded,

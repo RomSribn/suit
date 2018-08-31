@@ -1,52 +1,56 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
-import { loc } from './loc';
-import { trim } from '../../../config/routes';
-import { ORDER_PATH_PARTS } from '../../../config/constants';
 
 type P = {
-    lang?: string;
     orderStore?: IOrderStore;
-    path?: string;
+    match?: {
+        params: {
+            garment: string;
+            group: string;
+            subgroup: string;
+        }
+    };
+    children?: React.ReactElement<any> // tslint:disable-line no-any
 };
 
 @inject(({app, order, routing}) => ({
-    lang: app.lang,
     orderStore: order,
-    activeOrderItem: order.activeElement,
-    path: trim(routing.location.pathname, '/'),
+    activeOrderItem: order.activeElement
 }))
 @observer
 class SaveButton extends React.Component<P> {
     onClick = () => {
         const {
-            orderStore,
-            path,
+            orderStore
         } = this.props;
         try {
-            const match = path!.split('/');
-            const {
-                GARMENT,
-                GROUP,
-                SUBGROUP } = ORDER_PATH_PARTS;
-            const newValue = orderStore!.order;
-            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]] = {};
-            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]].our_code = orderStore!.activeElement!.our_code;
-            newValue[match[GARMENT]][0][match[GROUP]][match[SUBGROUP]].title = orderStore!.activeElement!.title;
-            orderStore!.setOrder(newValue);
+            if (this.props.match) {
+                const { match } = this.props;
+                const {
+                    garment,
+                    group,
+                    subgroup } = match.params;
+                const newValue = orderStore!.order;
+                newValue[garment][0][group][subgroup] = {};
+                newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
+                newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+                orderStore!.setOrder(newValue);
+            } else {
+                orderStore!.saveOrder();
+            }
         } catch (_) {
             const {} = _;
         }
     }
     render() {
         const {
-            lang,
+            children
         } = this.props;
         return (
             <button
                 onClick={this.onClick}
                 className="btn footer-btn-bar__black-btn"
-            >{loc[lang!].add}
+            >{children}
             </button>
         );
     }

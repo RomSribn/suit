@@ -1,5 +1,6 @@
 interface IOrderStore {
     orderInfo: OrderInfo | null;
+    defaultValues: Order | null;
     order: Order;
     isFetching: boolean;
     activeElement: GalleryStoreItem | null;
@@ -7,6 +8,7 @@ interface IOrderStore {
     error: object | null;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order): void;
+    saveOrder(): void;
     fetchInitialOrder(garments: string[]): void;
 }
 
@@ -22,6 +24,7 @@ interface OrderInfo {
 
 interface OrderItemInfo {
     our_code: string;
+    is_subclear: boolean;
     title: string;
 }
 

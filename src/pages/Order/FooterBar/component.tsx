@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
 import { SaveButton } from './SaveButton';
 import { loc } from './loc';
 
@@ -47,7 +48,17 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                         </svg>
                     </div>
                 </Link>
-                <SaveButton>{loc[lang!].add}</SaveButton>
+                <Switch>
+                    <Route
+                        path="/order/details/:garment/:group/:subgroup"
+                        component={(...props: any[]) => { // tslint:disable-line
+                            return <SaveButton {...props[0]}>{loc[lang!].add}</SaveButton>;
+                        }}
+                    />
+                    <Route path="/order/details/">
+                        <SaveButton>{loc[lang!].save}</SaveButton>
+                    </Route>
+                </Switch>
             </div>
         );
     }

@@ -27,13 +27,14 @@ const prepareOrder: PrepareOrder = (order) => {
         items,
         statusId: 1,
         mainFabric: {
-            ourCode: 'fab1'
+            ourCode: order.shirt[0].fabric_ref.fabric.our_code
         }
     };
 };
 
 class OrderStore implements IOrderStore {
     @observable orderInfo: OrderInfo | null = null;
+    @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
     @observable activeElement: GalleryStoreItem | null = null;
     @observable previewElement: ActivePreviewElement | null = null;
@@ -70,11 +71,11 @@ class OrderStore implements IOrderStore {
             }, () => this.isFetching = true,
             this._onSuccess,
             this._onError)
-            .then(this._updateOrderInfo);
+            .then(this.saveOrder);
         }
     }
-
-    _updateOrderInfo = () => {
+    @action
+    saveOrder = () => {
         const {orderInfo} = this;
         const method = orderInfo ? 'PUT' : 'POST';
         const id = orderInfo ? `/${orderInfo.orderId}` : '';
@@ -91,23 +92,25 @@ class OrderStore implements IOrderStore {
 
     _onSuccess = (data: any) => { // tslint:disable-line
         const tmp = _.groupBy(data.filter((g:any) => g.garmentId !== 'manequin'), 'garmentId'); // tslint:disable-line
-        this.order = Object.keys(tmp).reduce((acc, cur) => {
-          const x = {
-            design: {},
-            fabric_ref: {}
-          };
-          tmp[cur].forEach((_cur) => {
-            if (_cur.subsectionOurCode !== 'fabric') {
-                _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
-                _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
-            } else {
-              _.set(x, 'fabric_ref.fabric.our_code', _.get(_cur, 'ourCode'));
-              _.set(x, 'fabric_ref.fabric.title', _.get(_cur, 'title'));
-            }
-          });
-          acc[cur] = [x];
-          return acc;
-        }, {});
+        const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
+            const x = {
+              design: {},
+              fabric_ref: {}
+            };
+            tmp[cur].forEach((_cur) => {
+              if (_cur.subsectionOurCode !== 'fabric') {
+                  _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
+                  _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
+              } else {
+                _.set(x, 'fabric_ref.fabric.our_code', _.get(_cur, 'ourCode'));
+                _.set(x, 'fabric_ref.fabric.title', _.get(_cur, 'title'));
+              }
+            });
+            acc[cur] = [x];
+            return acc;
+          }, {});
+        this.order = defaultOrder;
+        this.defaultValues = defaultOrder;
         this.isFetching = false;
         this.error = null;
     }

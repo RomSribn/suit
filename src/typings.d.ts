@@ -57,10 +57,7 @@ interface GarmentLocale {
     name: string;
 }
 interface Garment {
-    // code: string;
-    // image: string;
     titles?: MakeLocale<GarmentLocale>;
-    // name?: string;
     id: string;
     name: string;
   }
@@ -121,7 +118,6 @@ interface Stores {
     app: AppStore;
     routing: any;
   }
-
 
 declare class GalleryStore {
     garment: string;

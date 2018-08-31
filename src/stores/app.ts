@@ -28,20 +28,12 @@ class App {
   @observable lang: string;
   @observable showUserMenu = false;
   orderPath = observable.array<OrderPathItem>([]);
-  // @observable isMore = false
-  // @observable measureBody = false
-  // @observable showLoginForm = false
 
   constructor(lang: string) {
     this.lang = lang || 'en';
     this.orderPath.push(...makeInitionalOrderPath(lang));
   }
 
-  // @action closeAll() {
-  //   this.showUserMenu = false
-  //   this.isMore = false
-  //   this.measureBody = false
-  // }
   @action
   setLang = (lang: string) => {
     this.lang = lang;

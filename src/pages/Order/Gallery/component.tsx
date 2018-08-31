@@ -29,6 +29,14 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     }
     componentDidMount() {
         try {
+            if (this.props.items.length) {
+                this.setActiveElementIndex(
+                    this.state.activeElementIndex &&
+                    this.state.activeElementIndex > -1 ?
+                    this.state.activeElementIndex :
+                    0)
+                    ();
+            }
             const item = this.props.items[
                 this.state.previewElementIndex === -1
                     ? this.state.activeElementIndex
@@ -78,7 +86,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 previewElementIndex: i,
             });
             if (action === 'enter') {
-                // this.mouseEnterElement(this.props.items[i].id);
                 this.props.setPreviewElement({
                     garment: this.props.galleryStore.garment,
                     group: this.props.galleryStore.group,

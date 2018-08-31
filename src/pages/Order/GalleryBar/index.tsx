@@ -213,11 +213,6 @@ class GalleryBar extends React.PureComponent<GalleryBarProps, State> {
                 <div
                     className="gallery__bar-cont"
                     id="js-bar-container"
-                    // style={ { 
-                    //     display: 'flex',
-                    //     flexWrap: 'wrap',
-                    //     position: 'relative',
-                    // } }
                 >
                 {makeGalleryItems(
                     items,

@@ -52,7 +52,7 @@ class Widget extends PureComponent {
 const GROUPS = ['design', 'fabric_ref', 'fitting']
 
 @inject(({order }) => ({
-  order: order.order
+  orderStore: order,
 }))
 @observer
 export default class App extends PureComponent {
@@ -63,7 +63,8 @@ export default class App extends PureComponent {
     };
   }
   render() {
-    const params = Object.values(this.props.order).reduce((acc, cur) => {
+    const { orderStore } = this.props;
+    const params = Object.values(orderStore.order).reduce((acc, cur) => {
       GROUPS.forEach(group => {
         Object.values(cur[0][group] || {}).forEach(val => {
           acc.push(val.our_code)
@@ -75,7 +76,7 @@ export default class App extends PureComponent {
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
       <Widget
-        selected='slv1'
+        selected={orderStore.activeElement && orderStore.activeElement.our_code}
         assets={[
           ...params,
           { 'id': 'head', 'static': true },
@@ -90,10 +91,9 @@ export default class App extends PureComponent {
   handleClickAsset = ({ id }) => {
     const subgroup =
       _.findKey(
-          this.props.order.shirt[0].design,
+          this.props.orderStore.order.shirt[0].design,
           ['our_code', id]
       );
-    console.log('asset was clicked:', id, 'from', subgroup);    
     if (id !== this.state.subgroup) {
       this.setState({
         subgroup

@@ -2,13 +2,16 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { ChoiceItems as Component } from './component';
 
-@inject(( { app } ) => ({
+@inject(( { app, order } ) => ({
     pushOrderPathItem: app.pushOrderPathItem,
+    orderStore: order
 }))
 @observer
 class ChoiceItems extends React.Component<ChoiceItemsProps> {
     render() {
-        const { pushOrderPathItem } = this.props;
+        const {
+            pushOrderPathItem
+        } = this.props;
         return (
             <Component
                 {...this.props}

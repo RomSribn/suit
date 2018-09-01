@@ -23,18 +23,13 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     }
     if (item.subsection_our_code === 'fitting') {
         status = null;
-        return {
-            link: `${subgroup}/${item.subsection_our_code}`,
-            linkName: item.title[lang],
-            id: item.id,
-            status,
-        };
     }
 
     return {
         link: `${subgroup}/${item.subsection_our_code}`,
         linkName: item.title[lang],
         id: item.subsection_our_code,
+        isSubclear: item.is_subclear,
         status,
     };
 };

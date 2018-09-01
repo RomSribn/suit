@@ -4,6 +4,7 @@ interface IOrderStore {
     hiddenElements: string[];    
     order: Order;
     isFetching: boolean;
+    clearElement: (garment: string, element: string) => void;
     activeElement: GalleryStoreItem | null;
     previewElement: ActivePreviewElement | null;
     error: object | null;

@@ -48,6 +48,12 @@ class OrderStore implements IOrderStore {
         this.hiddenElements.push(element);
       }
     }
+    @action
+    clearElement = (garment: string, element: string) => {
+        const newValue = this.order;
+        const group = element === 'fabric' ? 'fabric_ref' : 'design';
+        newValue[garment][0][group][element] = _.get(this, `defaultValues.${garment}[0]${group}.${element}`);
+    }
 
     @action
     setGarmentValue(garment: string, value: any) { // tslint:disable-line

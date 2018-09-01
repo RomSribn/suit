@@ -18,8 +18,11 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, 'не выбрано');
         return (
                 <Link to={backLink} onClick={this.backClick} className="custom custom--open">
-                    <span className="custom__name">{choiceItem.value}:</span>
-                    <span className="custom__status">{choiceItemValue}</span>
+                    <span className="custom__content">
+                        <span className="custom__name">{choiceItem.value}:</span>
+                        <span className="custom__status">{choiceItemValue}</span>
+                    </span>
+                    <span className="custom__control"/>
                 </Link>
         );
     }

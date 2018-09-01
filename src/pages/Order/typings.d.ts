@@ -23,6 +23,7 @@ interface HeaderContainerProps extends HeaderProps {
 interface Subgroup {
     id: string;
     subsection_our_code: string;
+    is_subclear?: boolean | null,
     title: {
         en: string;
         ru: string;
@@ -47,8 +48,9 @@ interface SubgroupsI {
 }
 
 interface SubgroupChoiceItem {
+    isSubclear?: boolean | null;
     link: string;
     status?: string;
     linkName: string;
-    id?: string;
+    id: string;
 }

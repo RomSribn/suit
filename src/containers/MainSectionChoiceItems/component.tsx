@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {  Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
@@ -12,6 +13,11 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
     onClick = (item: OrderPathItem) => () => {
         const { pushOrderPathItem } = this.props;
         pushOrderPathItem!(item);
+    }
+    clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
+        e.preventDefault();
+        const orderStore = this.props.orderStore!;
+        orderStore.clearElement(garment, element);
     }
 
     render() {
@@ -39,15 +45,34 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                         }}
                     >
                     <div className="custom">
-                        <span
-                            className="custom__name"
-                            style={{
-                                color: 'black',
-                            }}
-                        >
-                            {item.linkName} {!!item.status && ':'}
+                        <span className="custom__content">
+                            <span
+                                className="custom__name"
+                                style={{
+                                    color: 'black',
+                                }}
+                            >
+                                {item.linkName} {!!item.status && ':'}
+                            </span>
+                            <span className="custom__status">{item.status}</span>
                         </span>
-                        <span className="custom__status">{item.status}</span>
+                        <span title="clear" className="custom__control">
+                            <Switch>
+                                <Route
+                                    exact={true}
+                                    path="/order/details"
+                                />
+                                <Route
+                                    path="/order/details/:garment"
+                                    component={(...args: any[]) => { // tslint:disable-line no-any
+                                        const garment = args[0].match.params.garment;
+                                        return item.isSubclear !== null ?
+                                        <span onClick={this.clearClick(garment, item.id!)}>clear</span> :
+                                        null;
+                                    }}
+                                />
+                            </Switch>
+                        </span>
                     </div>
                     </Link>
                 )

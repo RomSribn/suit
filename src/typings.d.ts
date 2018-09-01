@@ -58,6 +58,7 @@ interface GarmentLocale {
 }
 interface Garment {
     titles?: MakeLocale<GarmentLocale>;
+    isSubclear?: boolean;
     id: string;
     name: string;
   }

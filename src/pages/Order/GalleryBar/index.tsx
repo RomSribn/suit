@@ -1,9 +1,11 @@
 import * as React from 'react';
+import * as _ from 'lodash';
+import { inject, observer } from 'mobx-react';
 import * as classnames from 'classnames';
 
 interface P {
     item: GalleryStoreItem;
-    active: boolean;    
+    orderStore?: IOrderStore;
     onClick(): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
@@ -12,6 +14,13 @@ interface P {
 interface S extends ImageLoadState {
 
 }
+
+// TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
+@inject(({ order }) => ({
+        orderStore: order
+    })
+)
+@observer
 class GalleryItem extends React.PureComponent<P, S > {
     constructor(props: P) {
         super(props);
@@ -53,8 +62,7 @@ class GalleryItem extends React.PureComponent<P, S > {
         const {
             onClick,
             onMouseEnter,
-            onMouseLeave,
-            active,
+            onMouseLeave
         } = this.props;
         const {
             img_url_2d: image,
@@ -63,6 +71,8 @@ class GalleryItem extends React.PureComponent<P, S > {
         if (!this.state.load.success) {
             return null;
         }
+        const orderStore = this.props.orderStore!;
+        const active = _.get(orderStore, 'activeElement.our_code', '') === id;
         return (
             <div
                 onClick={onClick}
@@ -128,7 +138,6 @@ const makeGalleryItems: makeGalleryItems = (
                     setActiveElementIndex(-1, 'leave')();
                     mouseLeave();
                 }}
-                active={i === activeElementIndex && !isMouseOverElement}
                 incremetLoadedCount={incremetLoadedCount}
             />);
     });
@@ -140,7 +149,7 @@ type State = {
     allLoaded: false;
     loadingProgress: number;
 };
-class GalleryBar extends React.PureComponent<GalleryBarProps, State> {
+class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
     intervalID: number;
     static sizing() {

@@ -72,6 +72,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
 
     }
     setActiveElementIndex = (i: number, action: string = 'click', link = '' ) => () => {
+        const elementInfo = {
+            garment: this.props.galleryStore.garment,
+            group: this.props.galleryStore.group,
+            subGroup: this.props.galleryStore.subGroup
+        };
         if (action === 'click') {
             this.setState({
                 activeElementIndex: i,
@@ -80,17 +85,18 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 setActiveOrderItem,
                 items,
             } = this.props;
-            setActiveOrderItem(items[i]);
+            setActiveOrderItem({
+                ...items[i],
+                elementInfo
+            });
         } else {
             this.setState({
                 previewElementIndex: i,
             });
             if (action === 'enter') {
                 this.props.setPreviewElement({
-                    garment: this.props.galleryStore.garment,
-                    group: this.props.galleryStore.group,
-                    subGroup: this.props.galleryStore.subGroup,
-                    value: this.props.items[i].our_code,
+                    ...elementInfo,
+                    value: this.props.items[i].our_code
                 });
             } else {
                 this.props.setPreviewElement(null);

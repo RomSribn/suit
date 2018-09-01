@@ -50,7 +50,7 @@ class Widget extends PureComponent {
 }
 
 const GROUPS = ['design', 'fabric_ref', 'fitting']
-
+let prevInfo = {};
 @inject(({order }) => ({
   orderStore: order,
 }))
@@ -59,8 +59,12 @@ export default class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      elementChanged: false,
       subgroup: null
     };
+  }
+  componentDidMount = () => {
+    prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo');
   }
   render() {
     const { orderStore } = this.props;
@@ -73,10 +77,28 @@ export default class App extends PureComponent {
       return acc;
     }, []);
     const { subgroup } = this.state;
+    const activeElement = orderStore.activeElement || {};
+    let selected = '';
+    if (
+      activeElement.elementInfo &&
+      prevInfo.garment === activeElement.elementInfo.garment &&
+      prevInfo.group === activeElement.elementInfo.group &&
+      prevInfo.subGroup === activeElement.elementInfo.subGroup
+    ) {
+      selected = prevInfo.code;
+    } else {
+      selected = activeElement.our_code;
+      prevInfo = {
+        code: activeElement.our_code,
+        garment: _.get(activeElement, 'elementInfo.garment', ''),
+        group: _.get(activeElement, 'elementInfo.group', ''),
+        subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
+      };
+    }
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
       <Widget
-        selected={orderStore.activeElement && orderStore.activeElement.our_code}
+        selected={selected}
         assets={[
           ...params,
           { 'id': 'head', 'static': true },

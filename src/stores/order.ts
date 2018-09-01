@@ -68,7 +68,7 @@ class OrderStore implements IOrderStore {
         this.order = {..._o};
     }
     @action
-    setActiveItem = (item: GalleryStoreItem | null) => {
+    setActiveItem = (item: GalleryStoreItem | null) => { // tslint:disable-line
         this.activeElement = item;
     }
     @action

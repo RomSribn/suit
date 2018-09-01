@@ -111,6 +111,11 @@ interface GalleryStoreItem {
     price: Translations<number>;
     defaultItem: boolean;
     fabric_code: string;
+    elementInfo: {
+        garment: string;
+        group: string;
+        subGroup: string;
+    }
 }
 
 type GalleryStoreItems = GalleryStoreItem[];

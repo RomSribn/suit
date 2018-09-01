@@ -26,7 +26,7 @@ class Widget extends PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.assets !== this.props.assets) {
-      this.widget3d.update(this.props.assets).then(this.handleUpdated)
+      this.widget3d.update(this.props.assets).then(this.handleUpdated);
     }
 
     if (prevProps.selected !== this.props.selected) {
@@ -39,7 +39,7 @@ class Widget extends PureComponent {
       <div
         className="widget3d"
         ref={(node) => this.widgetContainer = node}
-        style={{ margin: 'auto', width: '100%', height: '90%' }}
+        style={{ position: 'absolute', width: '400%', height: '100%', left: '-150%' }}
       />
       );
   }

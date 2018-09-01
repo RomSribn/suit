@@ -28,11 +28,16 @@ class user {
       password
     }).then(response => {
       app.showLoginForm = false
-      this.profile = response.data
+      this.profile = {
+        user: username,
+        ...response.data
+      }
       this.isFetching = false
       if (response.data.user || response.data.token) {
         setIdToken(response.data.token)
-        localStorage.setItem('AuthUser', JSON.stringify(response.data.user || username))
+        localStorage.setItem('AuthUser', JSON.stringify(this.profile || {
+          user: username
+        }))
         this.isAuth = true
       } else {
         throw new Error({

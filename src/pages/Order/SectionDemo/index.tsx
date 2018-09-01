@@ -9,7 +9,7 @@ const DemoSection = (props: DemoSectionProps) => {
         routes,
     } = props;
     return (
-    <div className="demo">
+    <div className="demo" >
         <Switch>
             <Route path={routes.details} component={DemoDummy}/>
             <Route path={routes.index} component={Demo}/>

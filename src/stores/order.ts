@@ -104,7 +104,7 @@ class OrderStore implements IOrderStore {
     }
 
     _onSuccess = (data: any) => { // tslint:disable-line
-        const tmp = _.groupBy(data.filter((g:any) => g.garmentId !== 'manequin'), 'garmentId'); // tslint:disable-line
+        const tmp = _.groupBy(data, 'garmentId'); // tslint:disable-line
         const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
             const x = {
               design: {},

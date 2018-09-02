@@ -1,8 +1,5 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-// import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-// import * as classnames from 'classnames';
-// import { TRANSITION_DUARAION } from '../../../config/constants';
 import { Gallery as Component } from './component';
 import { Fitting } from '../Fitting/component';
 
@@ -26,6 +23,9 @@ import { Fitting } from '../Fitting/component';
 class Gallery extends React.Component<GalleryContainerProps> {
     shouldComponentUpdate(nextProps: GalleryContainerProps) {
         return this.props.match.params.group !== nextProps.match.params.group;
+    }
+    componentWillUnmount() {
+        this.props.setActiveOrderItem(null);
     }
     render() {
         const {

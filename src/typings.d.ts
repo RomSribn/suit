@@ -113,7 +113,7 @@ interface GalleryStoreItem {
     fabric_code: string;
     elementInfo: {
         garment: string;
-        group: string;
+        group: 'fitting' | 'design' | 'fabric_ref';
         subGroup: string;
     }
 }

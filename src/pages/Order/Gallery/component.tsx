@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
-// import { loc } from './loc';
 import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
@@ -74,8 +73,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     setActiveElementIndex = (i: number, action: string = 'click', link = '' ) => () => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
-            group: this.props.galleryStore.group,
-            subGroup: this.props.galleryStore.subGroup
+            // TODO: разобраться с путаницей наименований
+            group: this.props.galleryStore.subGroup,
+            subGroup: this.props.galleryStore.group
         };
         if (action === 'click') {
             this.setState({

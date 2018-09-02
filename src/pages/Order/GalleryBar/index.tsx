@@ -21,7 +21,7 @@ interface S extends ImageLoadState {
     })
 )
 @observer
-class GalleryItem extends React.PureComponent<P, S > {
+class GalleryItem extends React.Component<P, S > {
     constructor(props: P) {
         super(props);
         this.state = {

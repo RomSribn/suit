@@ -68,16 +68,27 @@ export default class App extends PureComponent {
   }
   render() {
     const { orderStore } = this.props;
-    const params = Object.values(orderStore.order).reduce((acc, cur) => {
+    const activeElement = orderStore.activeElement || {};
+    const params = Object.keys(orderStore.order).reduce((acc, garment) => {
+      const curGarment = orderStore.order[garment];
       GROUPS.forEach(group => {
-        Object.values(cur[0][group] || {}).forEach(val => {
-          acc.push(val.our_code)
+        Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
+          if (
+            activeElement.elementInfo &&
+            activeElement.elementInfo.garment === garment &&
+            activeElement.elementInfo.group === group &&
+            activeElement.elementInfo.subGroup === subgroup
+          ) {
+            acc.push(activeElement.our_code)
+          } else {
+            const subgroupVal = curGarment[0][group][subgroup];
+            acc.push(subgroupVal.our_code)
+          }
         })
       })
       return acc;
     }, []);
     const { subgroup } = this.state;
-    const activeElement = orderStore.activeElement || {};
     let selected = '';
     if (
       activeElement.elementInfo &&
@@ -98,7 +109,7 @@ export default class App extends PureComponent {
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
       <Widget
-        selected={selected}
+        selected={selected || ''}
         assets={[
           ...params,
           { 'id': 'head', 'static': true },

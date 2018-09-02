@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
+import { PopUp } from '../../../containers/Popup';
 
 type P = {
     orderStore?: IOrderStore;
@@ -12,14 +13,29 @@ type P = {
     };
     children?: React.ReactElement<any> // tslint:disable-line no-any
 };
-
+interface State {
+    open: boolean;
+}
 @inject(({app, order, routing}) => ({
     orderStore: order,
     activeOrderItem: order.activeElement
 }))
 @observer
-class SaveButton extends React.Component<P> {
+class SaveButton extends React.Component<P, State> {
+    constructor(props: P) {
+        super(props);
+        this.state = {
+            open: false
+        };
+    }
+    onClose = (e: React.MouseEvent) => {
+        // e.stopPropagation();
+        this.setState({ open: false });
+    }
     onClick = () => {
+        this.setState({ open: true });
+    }
+    onSave = () => {
         const {
             orderStore
         } = this.props;
@@ -50,11 +66,14 @@ class SaveButton extends React.Component<P> {
             children
         } = this.props;
         return (
-            <button
-                onClick={this.onClick}
-                className="btn footer-btn-bar__black-btn"
-            >{children}
-            </button>
+                <React.Fragment key="order save popup">
+                    <button
+                        onClick={this.onClick}
+                        className="btn footer-btn-bar__black-btn"
+                    >{children}
+                    </button>
+                    <PopUp onClose={this.onClose} open={this.state.open}>контент тут</PopUp>
+                </React.Fragment>
         );
     }
 }

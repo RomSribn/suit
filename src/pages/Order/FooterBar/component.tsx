@@ -54,7 +54,7 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                     <Route
                         path="/order/details/:garment/:group/:subgroup"
                         component={(...props: any[]) => { // tslint:disable-line
-                            return <SaveButton {...props[0]}>{loc[lang!].add}</SaveButton>;
+                            return <SaveButton {...props[0]}>{loc[lang!].save}</SaveButton>;
                         }}
                     />
                     <Route path="/order/details/">

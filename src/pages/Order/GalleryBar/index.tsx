@@ -37,12 +37,12 @@ class GalleryItem extends React.Component<P, S > {
             const image = new Image();
             image.src = imageUrl;
             image.onload = () => {
-                this.setState({
-                    load: {
-                        ...this.state.load,
-                        success: imageUrl,
-                    },
-                });
+                // this.setState({
+                //     load: {
+                //         ...this.state.load,
+                //         success: imageUrl,
+                //     },
+                // });
                 incremetLoadedCount();
             };
             image.onerror = () => {
@@ -68,9 +68,9 @@ class GalleryItem extends React.Component<P, S > {
             img_url_2d: image,
             our_code: id,
         } = this.props.item;
-        if (!this.state.load.success) {
-            return null;
-        }
+        // if (!this.state.load.success) {
+        //     return null;
+        // }
         const orderStore = this.props.orderStore!;
         const active = _.get(orderStore, 'activeElement.our_code', '') === id;
         return (

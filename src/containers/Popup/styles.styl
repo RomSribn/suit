@@ -1,0 +1,36 @@
+.popup
+    &__container
+        background rgba(255, 255, 255, 0.85)
+        position fixed
+        z-index 999
+        top 150vh
+        left 0
+        height 100vh
+        width 100vw
+        transition top .3s
+
+        &.open
+            top: 0
+
+    &__close-controll
+        height: 40px
+        width: 40px
+        position: absolute
+        right: 0;
+        transform rotateZ(45deg)
+        cursor pointer
+        
+        &__item
+            display block
+            position absolute
+            height 2px
+            width 100%
+            background black
+
+            &.first
+                top 50%
+                transform translateY(-50%)
+
+            &.second
+                transform rotateZ(90deg) translate(50%)
+

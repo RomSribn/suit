@@ -7,13 +7,13 @@ const makeLocale: MakeLocale<Locale> = () => ({
     en: {
         back: 'back',
         add: 'add',
-        create: 'create',
+        create: 'to fitting',
         save: 'save'
     },
     ru: {
         back: 'назад',
         add: 'добавить',
-        create: 'создать',
+        create: 'на примерку',
         save: 'сохранить'
     },
 });

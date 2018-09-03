@@ -49,7 +49,7 @@
     transition: .35s ease;     */
 }
 .content--white,
-.navbar--white{background: rgba(255, 255, 255,.85);}
+.navbar--white{background: rgba(255, 255, 255,.6);}
 .main{
     position: absolute;
     top: 0;

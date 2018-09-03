@@ -145,7 +145,7 @@
     height: 2.6666rem;
     background: #ebebeb;
     border: 1px solid #eceeee;
-    opacity: .5;
+    opacity: .85;
 }
 .gallery__filter-btn:hover{
     opacity: 1;

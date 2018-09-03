@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import {HeaderBar as Component } from './component';
 
-class HeaderBar extends React.PureComponent<HeaderBarProps> {
+type Props = HeaderProps & {
+    appStore?: IAppStore;
+};
+
+@inject(({ app }) => ({
+    appStore: app
+}))
+@observer
+class HeaderBar extends React.PureComponent<Props> {
     render() {
-        const {
-            userName
-        } = this.props;
+        const { userName } = this.props;
+        const appStore = this.props.appStore!;
         return (
-            <div className="main__bar">
-                <Link to="" className="profile-link">{userName}</Link>
-            </div>);
+            <Component
+                userName={userName!}
+                lang={appStore.lang}
+                setLang={appStore.setLang}
+            />
+        );
     }
 }
 
 export {
-    HeaderBar,
+    HeaderBar
 };

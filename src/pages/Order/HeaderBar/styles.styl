@@ -1,0 +1,18 @@
+.language-controll
+    display: flex
+    align-items: center
+    color: #8a8a8a
+
+    &__item
+        cursor: pointer
+        &:not(:last-child)
+            display: flex
+            align-items: center
+            &:after
+                content: ''
+                margin: 0 5px
+                border-right: 1px solid #8a8a8a
+                height: 1.5rem
+
+        &.active
+            font-weight: 400

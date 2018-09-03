@@ -13,7 +13,7 @@ class Header extends React.PureComponent<HeaderProps> {
         } = this.props;
         return (
             <div className="main__header">
-                <HeaderBar userName={userName} showChopcard={path !== '/order'} />
+                <HeaderBar userName={userName} />
                 <HeaderContent path={path!} />
             </div>);
     }

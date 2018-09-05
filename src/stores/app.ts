@@ -19,11 +19,8 @@ const makeLocale: MakeLocale<Locale> = () => ({
 const loc = makeLocale();
 
 const makeInitionalOrderPath = (lang: string) => [{
-  value: loc[lang].index,
-  link: '/',
-}, {
   value: loc[lang].order,
-  link: '/order',
+  link: '/order/details',
 }, {
   value: loc[lang].garments,
   link: '/order/details',
@@ -42,7 +39,6 @@ class App implements IAppStore {
   @action
   setLang = (lang: string) => {
     this.lang = lang;
-    this.orderPath[0].value = loc[lang].index;
     this.orderPath[1].value = loc[lang].order;
     this.orderPath[2].value = loc[lang].garments;
   }

@@ -1,3 +1,2 @@
 interface FooterProps {
-    routes: OrderRoutes;
 }

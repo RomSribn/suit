@@ -28,7 +28,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             toggleGarment,
             path,
             fetchGarments,
-            routes,
             makeOrder,
             pushOrderPathitem,
         } = this.props;
@@ -39,11 +38,10 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
                 garments={garments}
                 fetchGarments={fetchGarments}
                 activeGarments={activeGarments}
-                routes={routes}
                 toggleGarment={toggleGarment}
                 path={path}
                 makeOrder={makeOrder}
-                isIndexPage={path === routes.index}
+                isIndexPage={false}
                 pushOrderPathitem={pushOrderPathitem}
             />
         );

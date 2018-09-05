@@ -115,7 +115,8 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
             className={classNames(
                 'navbar',
                 {
-                    'navbar--white': backgroundColor === 'white',
+                    // 'navbar--white': backgroundColor === 'white',
+                    'navbar--white': true,
                 }
             )}
         >

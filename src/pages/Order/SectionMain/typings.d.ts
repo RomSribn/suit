@@ -1,4 +1,4 @@
-interface MainSectionProps extends OrderSectionInterface {
+interface MainSectionProps {
     isIndexPage: boolean;
     detailsDeep: boolean;
 }

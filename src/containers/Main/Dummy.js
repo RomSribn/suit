@@ -64,7 +64,7 @@ export default class App extends PureComponent {
     };
   }
   componentDidMount = () => {
-    prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo');
+    prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo', {});
   }
   render() {
     const { orderStore } = this.props;

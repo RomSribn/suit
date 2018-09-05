@@ -8,11 +8,11 @@ import { Main as Details } from '../Details';
 import { Gallery } from '../Gallery';
 import { SubgroupChoice } from '../SubgroupChoice';
 import { Footer } from '../Footer';
+import { routes } from '../routes';
 
 class MainSection extends React.Component<MainSectionProps> {
     render() {
         const {
-            routes,
             isIndexPage,
             detailsDeep,
         } = this.props;
@@ -39,7 +39,6 @@ class MainSection extends React.Component<MainSectionProps> {
                     <Filter />
                     <GarmentChoise
                         catalogFormClassName={classnames({ 'zero-max-height': !detailsDeep })}
-                        routes={routes}
                     />
                     <div
                         className={classnames(
@@ -53,7 +52,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     >
                         <Switch>
                             <Route
-                                path={`${routes.details}/:garment`}
+                                path={`${routes.garment}`}
                                 component={SubgroupChoice}
                             />                        
                             <Route path={routes.details} component={Details} />
@@ -61,12 +60,12 @@ class MainSection extends React.Component<MainSectionProps> {
                     </div>
                     <Switch>
                         <Route
-                            path={`${routes.details}/:garment/:subgroup/:group`}
+                            path={`${routes.subgroupChoice}`}
                             component={Gallery}
                         />
                     </Switch>
                 </div>
-                <Footer routes={routes}/>
+                <Footer />
             </div>);
     }
 }

@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { callApi } from '../../utils/apiAxios';
 import { API_ROOT, services } from '../../config/routes';
 import GarmentStore from './garment';
@@ -14,7 +14,7 @@ type GarmentsFromServerToGarmentsObject = (
 
 class GarmentsStore {
   @observable.shallow garmentsList = {};
-  _activeGarments = observable.array();
+  @observable activeGarments = observable.array();
   @observable active = '';
   @observable isFetching = false;
   @observable error = {};
@@ -35,19 +35,23 @@ class GarmentsStore {
         id,
       } = cur;
       acc[id] = cur;
-      return acc;      
+      return acc; 
     };
-    this.garmentsList = data.reduce(reduceCallback, {});
+    const list = data.reduce(reduceCallback, {});
+    this.garmentsList = list;
     this.isFetching = false;
   }
   @action
   toggleGarment = (garment: string) => (_action: string) => {
+    if (this.activeGarments.length < 2) {
+      return;
+    }
     if (_action === ADD) {
-      if (this._activeGarments.findIndex(el => garment === el ) === -1) {
-        this._activeGarments.push(garment);
+      if (this.activeGarments.findIndex(el => garment === el ) === -1) {
+        this.activeGarments.push(garment);
       }
     } else if ( _action === REMOVE) {
-        this._activeGarments.remove(garment);
+        this.activeGarments.remove(garment);
     } else {
       // tslint:disable-next-line no-console
       console.error(`You have provided ${_action}-action which is not one of
@@ -63,9 +67,9 @@ class GarmentsStore {
     this.active = garment;    
   }
 
-  @computed
-  get activeGarments() {
-    return this._activeGarments;
+  @action
+  setChosenGarments = (garments: string[]) => {
+      this.activeGarments = observable.array(garments);
   }
 }
 

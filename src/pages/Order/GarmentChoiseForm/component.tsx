@@ -61,7 +61,9 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         };
     }
     componentWillMount() {
-        this.props.fetchGarments!();
+        if (!Object.keys(this.props.garments!).length) {
+            this.props.fetchGarments!();
+        }
     }
     componentDidMount() {
         const DOMElemtnt = document.getElementsByClassName('catalog__form')[0];

@@ -23,7 +23,7 @@ export const services = {
 type MakeNavigationRoutes = () => NavigationRoutes;
 const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
-  order: '/order',
+  order: '/order/details',
   panel: '/panel',
   clientele: '/clients',
   orders: '/order_list',

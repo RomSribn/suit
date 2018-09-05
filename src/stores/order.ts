@@ -42,6 +42,8 @@ class OrderStore implements IOrderStore {
     @observable isFetching = false;
     @observable error: object | null = null;
 
+    isEmptyOrder = () => _.isEmpty(this.order);
+
     @action
     toggleHiddenElement = (element: string) => {
       if (!this.hiddenElements.remove(element)) {
@@ -54,7 +56,10 @@ class OrderStore implements IOrderStore {
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
         newValue[garment][0][group][element] = _.get(this, `defaultValues.${garment}[0]${group}.${element}`);
     }
-
+    @action
+    setFitting = (garment: string, fitting: { id: string; value: string}) => {
+        this.order[garment][0].fitting[fitting.id] = fitting.value;
+    }
     @action
     setGarmentValue(garment: string, value: any) { // tslint:disable-line
         this.order[garment] = value;
@@ -72,7 +77,10 @@ class OrderStore implements IOrderStore {
         this.activeElement = item;
     }
     @action
-    fetchInitialOrder = (garments: string[]) => {
+    fetchInitialOrder = (
+        garments: string[],
+        callback?: (...args: any[]) => any // tslint:disable-line no-any
+    ) => {
         this.error = null;        
         if (!garments.length) {
             this.error = {
@@ -83,7 +91,9 @@ class OrderStore implements IOrderStore {
                 method: 'get',
                 url: services.garmentsDefaults
             }, () => this.isFetching = true,
-            this._onSuccess,
+            (data: any) => { // tslint:disable-line no-any
+                this._onSuccess(data, callback);
+            },
             this._onError);
         }
     }
@@ -103,7 +113,7 @@ class OrderStore implements IOrderStore {
     );
     }
 
-    _onSuccess = (data: any) => { // tslint:disable-line
+    _onSuccess = (data: any, callback: any) => { // tslint:disable-line
         const tmp = _.groupBy(data, 'garmentId'); // tslint:disable-line
         const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
             const x = {
@@ -124,6 +134,7 @@ class OrderStore implements IOrderStore {
           }, {});
         this.order = defaultOrder;
         this.defaultValues = defaultOrder;
+        callback(Object.keys(defaultOrder).filter(garment => garment !== 'manequin'));
         this.isFetching = false;
         this.error = null;
     }

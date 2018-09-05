@@ -3,11 +3,9 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import { DemoDummy } from '../DemoDummy';
 import { Demo } from '../OrderDecorationBlocks';
+import { routes } from '../routes';
 
-const DemoSection = (props: DemoSectionProps) => {
-    const {
-        routes,
-    } = props;
+const DemoSection = () => {
     return (
     <div className="demo" >
         <Switch>

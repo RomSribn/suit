@@ -18,7 +18,10 @@ export const services = {
   garments: 'api/garments',
   shirtFilters: `${API_ROOT}/api/garments/shirt/filters/fabric`,
   garmentsDefaults: `${API_ROOT}/api/garments/defaults`,
-  orders: `${API_ROOT}/api/orders`
+  orders: `${API_ROOT}/api/orders`,
+  login: `${API_ROOT}/api/auth/login`,
+  logout: `${API_ROOT}/api/auth/logout`,
+  
 };
 type MakeNavigationRoutes = () => NavigationRoutes;
 const makeNavigationRoutes: MakeNavigationRoutes = () => ({

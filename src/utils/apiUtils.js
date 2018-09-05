@@ -80,9 +80,38 @@ export function callApi(url, config, request, onRequestSuccess, onRequestFailure
 }
 
 export const ID_TOKEN = 'id_token';
-
+const USER_INFO = 'AuthUser';
 export function setIdToken(idToken) {
   localStorage.setItem(ID_TOKEN, idToken);
+}
+
+/**
+ * Устанавливает в localstorage информации о пользователе
+ * 
+ * @param {UserInfo} userInfo
+ */
+export function setUserInfo(userInfo) {
+  setIdToken(userInfo.idToken);
+  localStorage.setItem(USER_INFO, JSON.stringify({
+    user: userInfo.user,
+    token:  userInfo.token,
+    createDate: userInfo.createDate
+  }));
+}
+
+/**
+ * @returns {UserInfo | undefined} - Возвращает информацию о пользователе из localStorage
+ */
+export function getUserInfo() {
+  return JSON.parse(localStorage.getItem(USER_INFO));
+}
+
+/**
+ * Сбрасывает информацию о полтзователе в localStorage
+ */
+export function resetUserInfo () {
+  removeIdToken();
+  localStorage.removeItem(USER_INFO);
 }
 
 export function removeIdToken() {
@@ -117,3 +146,12 @@ export function loadUserProfile() {
     return null;
   }
 }
+
+
+/**
+ * Тип объкта пользовательских данных
+ * @typedef {Object} UserInfo
+ * @property {string} token - Пользовательский токен получаемся от api
+ * @property {string} user - Имя пользователя
+ * @property {Date | string} createDate - Дата создания пользователя. От api string
+ */

@@ -8,12 +8,14 @@ class Order extends React.PureComponent<any> {  //tslint:disable-line
         const {
             location,
          } = this.props;
-        const detailsDeep = !(/\/order\/.*\/.*/i.test(location.pathname));
+        const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
+        const afterGarmentChoice = (/\/order\/.*\/.*/i.test(location.pathname));
         const isIndexPage = false;
 
         return (
         <div className="content" key={isIndexPage.toString()}>
             <MainSection
+                afterGarmentChoice={afterGarmentChoice}
                 isIndexPage={isIndexPage}
                 detailsDeep={detailsDeep}
             />

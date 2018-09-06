@@ -15,6 +15,7 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
+            afterGarmentChoice
         } = this.props;
         return (
             <div
@@ -38,7 +39,7 @@ class MainSection extends React.Component<MainSectionProps> {
                 >
                     <Filter />
                     <GarmentChoise
-                        catalogFormClassName={classnames({ 'zero-max-height': !detailsDeep })}
+                        catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
                     />
                     <div
                         className={classnames(

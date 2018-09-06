@@ -1,22 +1,28 @@
-interface OrderRoutes {
-    index: string;
-    details: string;
-}
+type RoutesNames = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice';
+
+type OrderRoutes = Record<RoutesNames, string>
 
 interface OrderSectionInterface {
     routes: OrderRoutes;
 }
 
-interface HeaderBarProps {
-    userName?: string;
-    showChopcard?: boolean;
+interface HeaderBarDefaultProps {
+    userStore: IUserStore;
+    lang: string;
+    setLang: (lang: string) => void;
 }
 
+type HeaderBarProps = Partial<HeaderBarDefaultProps>;
+
+
 interface HeaderProps extends HeaderBarProps {
+    userStore?: IUserStore;
     path?: string;
+    showChopcard?: string;
 }
 
 interface HeaderContainerProps extends HeaderProps {
+    userStore?: IUserStore;    
     location?: Location;    
 }
 
@@ -24,21 +30,13 @@ interface Subgroup {
     id: string;
     subsection_our_code: string;
     is_subclear?: boolean | null,
+    is_multiple: boolean;
+    is_input: boolean;
+    is_allowOwnFabric: boolean;
     title: {
         en: string;
         ru: string;
     };
-    image: string;
-    image_url_2d: string[];
-    image_url_3d: string[];
-    price_category: string;
-    radio_group: string;
-    searchable: boolean;
-    description_en: string;
-    description_ru: string;
-    exampleUrl: string;
-    sections: string; // [],
-    image_dir: string;
 }
 
 interface SubgroupsI {
@@ -49,6 +47,7 @@ interface SubgroupsI {
 
 interface SubgroupChoiceItem {
     isSubclear?: boolean | null;
+    isInput?: boolean;
     link: string;
     status?: string;
     linkName: string;

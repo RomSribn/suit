@@ -30,6 +30,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
         linkName: item.title[lang],
         id: item.subsection_our_code,
         isSubclear: item.is_subclear,
+        isInput: item.is_input,
         status,
     };
 };

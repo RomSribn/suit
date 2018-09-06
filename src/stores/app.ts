@@ -39,8 +39,8 @@ class App implements IAppStore {
   @action
   setLang = (lang: string) => {
     this.lang = lang;
-    this.orderPath[1].value = loc[lang].order;
-    this.orderPath[2].value = loc[lang].garments;
+    this.orderPath[0].value = loc[lang].order;
+    this.orderPath[1].value = loc[lang].garments;
   }
   @action
   pushOrderPathItem = (item: OrderPathItem) => {

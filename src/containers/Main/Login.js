@@ -4,7 +4,7 @@ import Login from 'Components/Main/Login'
 class LoginContainer extends Component {
   render() {
     return (
-      <Login/>
+      <Login shouldRedirect={true} />
     )
   }
 }

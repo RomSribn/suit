@@ -4,23 +4,19 @@ import { Header as Component } from './component';
 
 @inject(({ user, routing }, nextProps: HeaderContainerProps) => {
     return {
-        userName: user.profile.user,
+        userStore: user,
         path: routing.location!.pathname,
         ...nextProps,
     };
 })
 @observer
-class Header extends React.Component<HeaderContainerProps> {
+class Header extends React.PureComponent<HeaderContainerProps> {
     render() {
         const {
-            userName,
             path,
         } = this.props;
         return (
-            <Component
-                path={path}
-                userName={userName}
-            />
+            <Component path={path} />
         );
     }
 }

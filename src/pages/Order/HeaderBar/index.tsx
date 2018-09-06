@@ -4,19 +4,23 @@ import {HeaderBar as Component } from './component';
 
 type Props = HeaderProps & {
     appStore?: IAppStore;
+    userStore?: IAppStore;
 };
 
-@inject(({ app }) => ({
-    appStore: app
+@inject(({ app, user }) => ({
+    appStore: app,
+    userStore: user,
+    // TODO: Хак чтобы перерендерить нижние компоненты
+    isAuth: user.isAuth
 }))
 @observer
-class HeaderBar extends React.PureComponent<Props> {
+class HeaderBar extends React.Component<Props> {
     render() {
-        const { userName } = this.props;
         const appStore = this.props.appStore!;
+        const userStore = this.props.userStore!;
         return (
             <Component
-                userName={userName!}
+                userStore={userStore}
                 lang={appStore.lang}
                 setLang={appStore.setLang}
             />

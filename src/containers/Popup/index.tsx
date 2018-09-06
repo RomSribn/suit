@@ -3,6 +3,8 @@ import * as ReactDOM from 'react-dom';
 import * as classNames from 'classnames';
 import './styles.styl';
 
+// TODO: Доработать возможность корректно использовать несколько модалок
+
 let containerElement: Element;
 
 interface IncomingProps {
@@ -41,12 +43,8 @@ class PopUp extends React.Component<IncomingProps> {
             containerElement = domNode;
         }
         return ReactDOM.createPortal(
-            <div className={classNames('popup__container', {open: open})}>
-                <div className="popup__close-controll" onClick={onClose}>
-                    <span className="popup__close-controll__item first" />
-                    <span className="popup__close-controll__item second" />                    
-                </div>
-                <div className="popup__content">{children}</div>
+            <div className={classNames('popup__container', {open: open})} onClick={onClose}>
+                <span onClick={(e) => { e.stopPropagation(); }}>{children}</span>
             </div>,
             containerElement
         );

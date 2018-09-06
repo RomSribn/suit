@@ -36,19 +36,23 @@ class UserClass implements IUserStore {
       this.isFetching = false;
       if (response.data.token) {
         const data = response.data;
-        setUserInfo({
+        const userInfo = {
           token: data.token,
           createDate: data.createDate,
           user: userName
-        });
+        };
+        setUserInfo(userInfo);
         this.isAuth = true;
+        return userInfo;
       } else {
         throw new Error('Unathorized');
       }
     }).catch((error) => {
       this.error = error;
+      return {
+        error
+      };
     });
-
   }
 
   @action logout() {

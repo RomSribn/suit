@@ -15,18 +15,13 @@ import Login from './Login'
 class Wrapper extends Component {
 
   render() {
-    // const authorized = !!localStorage.getItem('AuthUser');
-    const authorized = Boolean(this.props.user.isAuth);
-    if (!authorized && window.location.pathname !== commonRoutes.login) {
-      return <Redirect to={commonRoutes.login} />
-    }    
     return (<Common>
         <Route path={routes.order} exact={true} render={() => {
           this.props.app.resetOrderPath();
           return null;
         }}/>
         <Switch>
-          <Route path={commonRoutes.login} component={Login} />          
+          <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
           <Route exact={true} path={routes.index}>
             <Redirect to={routes.order} />
           </Route>

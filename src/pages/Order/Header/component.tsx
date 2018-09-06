@@ -4,16 +4,15 @@ import { HeaderContent } from '../HeaderContent';
 
 class Header extends React.PureComponent<HeaderProps> {
     static defaultProps = {
-        userName: 'defautl username',
+        userName: undefined,
     };
     render() {
         const {
-            userName,
-            path,
+            path
         } = this.props;
         return (
             <div className="main__header">
-                <HeaderBar userName={userName} />
+                <HeaderBar />
                 <HeaderContent path={path!} />
             </div>);
     }

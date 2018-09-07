@@ -5,8 +5,8 @@ const translations: Localization = {
             'Менеджер вам перезвонит, чтобы выбрать дату примерки.',
         placeHolders: {
             name: 'Name',
-            phone: 'phone',
-            email: 'e-mail'
+            phone: 'Phone',
+            email: 'E-mail'
         },
         backText: 'back',
         sendOrder: 'confirm'
@@ -16,9 +16,9 @@ const translations: Localization = {
         infoText: 'Отправьте офомленный заказ и ваши контактные данные.' + 
             'Менеджер вам перезвонит, чтобы выбрать дату примерки.',
         placeHolders: {
-            name: 'фио',
-            phone: 'телефон',
-            email: 'электронный адрес'
+            name: 'ФИО',
+            phone: 'Телефон',
+            email: 'Электронный адрес'
         },
         backText: 'назад',
         sendOrder: 'отправить'

@@ -42,7 +42,7 @@
     -ms-align-items: flex-start;
     align-items: flex-start;
     justify-content: flex-start;   
-    padding: 2.1333rem 0 0 0;
+    padding: calc(2.4rem + 4px) 0 0 0;
 }
 
 .main__bar{
@@ -130,9 +130,13 @@
     text-transform: uppercase;
     line-height: 1;
     margin-bottom: .7333rem;
+
     -webkit-transition: .35s ease;
+    margin-top: 0;
+    
+    /* -webkit-transition: .35s ease;
     -o-transition: .35s ease;
-    transition: .35s ease;    
+    transition: .35s ease; */
 }
 .main__header-title span{color: #8a8a8a;}
 .main__header-title i{

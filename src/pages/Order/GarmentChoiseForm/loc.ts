@@ -14,7 +14,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
             second: 'It will let you set every garment up'
         },
         submit: 'submit',
-        pathItemValue: 'garment',
+        pathItemValue: 'garments',
     },
     ru: {
         choiceText: {
@@ -22,7 +22,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
             second: 'Это позволит вам настроить каждую часть изделия.',
         },
         submit: 'принять',
-        pathItemValue: 'предмет',
+        pathItemValue: 'изделия',
     },
 });
 

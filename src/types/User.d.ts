@@ -1,7 +1,7 @@
 interface User {
-  id: number;
+  id?: number;
   name: string;
-  phone?: string;
+  phone: string;
   email?: string;    
 }
 

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
-import { FadeIn } from '../../../containers/Transitions';
 import { SaveButton } from './SaveButton';
+import { routes } from '../routes';
+import { Button } from '../../../components/Button';
+import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 
-class FooterBar extends React.PureComponent<FooterBarProps> {
+class FooterBar extends React.Component<FooterBarProps> {
     static defaultProps = {
         goBack: () => undefined,
         popOrderPathitem: () => undefined,
@@ -28,36 +30,30 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
             <div className="footer-btn-bar">
                 <Link
                     to={backLink!}
-                    className="footer-btn-bar__white"
                     onClick={this.onBackClick}
                     style={{
                         cursor: 'pointer',
-                    }}
+                }}
                 >
-                    {loc[lang!].back}
-                    <div className="footer-btn-bar__white-frame">
-                        <svg width="100%" height="100%">
-                            <rect
-                                className="footer-btn-bar__white-rect footer-btn-bar__white-rect--1"
-                                width="100%"
-                                height="100%"
-                            />
-                            <rect
-                                className="footer-btn-bar__white-rect footer-btn-bar__white-rect--2"
-                                width="100%"
-                                height="100%"
-                            />
-                        </svg>
-                    </div>
+                    <Button theme="white">
+                        {loc[lang!].back}
+                    </Button>
                 </Link>
                 <Switch>
                     <Route
-                        path="/order/details/:garment/:group/:subgroup"
+                        path={routes.subgroupChoice}
                         component={(...props: any[]) => { // tslint:disable-line
-                            return <SaveButton {...props[0]}>{loc[lang!].save}</SaveButton>;
+                            return (
+                                <Link
+                                    to={`${routes.details}/${props[0].match.params.garment}`}
+                                    onClick={this.onBackClick}
+                                >
+                                    <SaveButton {...props[0]} isUpdate={true}>{loc[lang!].save}</SaveButton>
+                                </Link>
+                            );
                         }}
                     />
-                    <Route path="/order/details/">
+                    <Route path={routes.details}>
                         <FadeIn>
                             <SaveButton>{Boolean(hasOrder!) ? loc[lang!].save : loc[lang!].create}</SaveButton>
                         </FadeIn>

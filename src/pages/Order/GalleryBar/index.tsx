@@ -82,7 +82,7 @@ class GalleryItem extends React.Component<P, S > {
                 style={{
                     maxWidth: '33.3333%',
                     width: '100%',
-                    padding: '0 0 1.2666rem 1.2666rem',
+                    padding: '0 0 1.333rem 1.333rem',
                 }}
             >
                 <div

@@ -11,7 +11,7 @@ interface IOrderStore {
     error: object | null;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order): void;
-    saveOrder(): void;
+    saveOrder(customerInfo: User): Promise<any>;
     toggleHiddenElement(element: string): void;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): void;
 }

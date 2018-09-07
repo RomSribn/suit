@@ -3,7 +3,7 @@
     width: 100%;
     overflow-y: auto;  
     padding-right: 1.6666rem;
-    margin-bottom: 3.4666rem;
+    margin-bottom: calc(2.4rem + 4px);
 }
 .customs--no-scroll{
     overflow: hidden;
@@ -28,6 +28,9 @@
     position: relative;
     cursor: pointer;
 }
+.custom.custom__no-pointer {
+    cursor: default;    
+}
 .custom:last-child{margin-bottom: 0;}
 .custom__name{
     display: inline-block;
@@ -38,8 +41,20 @@
     margin-right: .9333rem;
 }
 .custom__status{
+    display: inline-block;
     font-size: .86666rem;
     color: #8a8a8a;
+}
+
+.custom__status input {
+    height: 100%;
+    width: 60%;
+    border: none;
+    background: none;
+}
+
+.custom__status input:focus {
+    outline-width: 0;
 }
 
 .custom__control:before,

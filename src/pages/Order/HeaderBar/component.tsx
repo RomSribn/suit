@@ -12,6 +12,7 @@ const loginText = {
 };
 
 type State = { showLoginForm: boolean; };
+
 class HeaderBar extends React.Component<HeaderBarDefaultProps, State> {
     constructor(props: HeaderBarDefaultProps) {
         super(props);

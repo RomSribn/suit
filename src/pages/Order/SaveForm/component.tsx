@@ -25,8 +25,8 @@ const InfoBlock = (props: { lang: string }) => {
     const { lang } = props;
     return (
         <div>
-            <div className="header">{loc[lang].header}</div>
-            <div className="text">{loc[lang].infoText}</div>
+            <div className="order-form__header">{loc[lang].header}</div>
+            <div className="order-form__text">{loc[lang].infoText}</div>
         </div>
     );
 };
@@ -50,11 +50,11 @@ class SaveForm extends React.PureComponent<FormProps> {
                 render={({ handleSubmit }) => {
                     return (
                         <div className="order-form__container">
-                            <div className="left-side">
+                            <div className="order-form__content">
                                 <InfoBlock lang={lang} />                        
                                 <form
                                     onSubmit={handleSubmit}
-                                    className="order-from__form"
+                                    className="order-form"
                                 >
                                     {FIELDS.map((field) => (
                                         <Field
@@ -75,7 +75,7 @@ class SaveForm extends React.PureComponent<FormProps> {
                                         </Button>
                                     </div>
                                 </form>
-                                <div className="footnote">* autumn 2017 Louis Purple</div>
+                                <div className="foot-note">* autumn 2017 Louis Purple</div>
                             </div>
                         </div>
                     );

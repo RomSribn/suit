@@ -1,42 +1,33 @@
-.order-form__container
-  position: absolute
-  top: 50%
-  left: 50%
-  width: 68rem
-  height: 33rem
-  -webkit-transform: translate(-50%, -50%)
-  -ms-transform: translate(-50%, -50%)
-  transform: translate(-50%, -50%)
-  z-index: 1000
-  background: url(https://pp.userapi.com/c834400/v834400579/3b45b/Qyg4hrop6uo.jpg) no-repeat center
-  background-size: cover
-  padding: 5.25rem
-  color: #fff
+.order-form
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  
+  &__container
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 68rem
+    height: 33rem
+    transform: translate(-50%, -50%)
+    z-index: 1000
+    background: url(https://pp.userapi.com/c834400/v834400579/3b45b/Qyg4hrop6uo.jpg) no-repeat center
+    background-size: cover
+    padding: 5.25rem
+    color: #fff
 
-  .left-side
+  &__content
     width: 50%
     height: 100%
-    display: -ms-flexbox
-    display: flex
-    -ms-flex-direction: column
-    flex-direction: column
-
-  .header
-    font-size: 1rem
-    font-weight: 500
-    text-transform: uppercase
-    line-height: 1
-
-  .text
-    margin: 1.32rem 0
-    font-size: 0.86666rem
-    line-height: 1.5rem
-    color: #8a8a8a
-
-  .order-from__form
-    flex-grow: 1
     display: flex
     flex-direction: column
+
+    .foot-note
+      text-align: right
+      position: absolute
+      bottom: 1.04rem
+      right: 5.25rem
+      font-size: 90%
 
     .buttons
       display: flex
@@ -44,7 +35,35 @@
       justify-content: space-between
       margin-top: auto
 
-  .order-form__input
+      .button
+        &.white
+            color: #fff
+            margin-left: 2.3333rem
+
+        &.black
+          color: #000
+          background-color: #fff
+          border-color: #fff
+          margin-left: 0
+
+          &:hover
+            color: #fff
+            background-color: #000
+            border-color: #000
+
+  &__header
+    font-size: 1rem
+    font-weight: 500
+    text-transform: uppercase
+    line-height: 1
+
+  &__text
+    margin: 1.32rem 0
+    font-size: 0.86666rem
+    line-height: 1.5rem
+    color: #8a8a8a
+
+  &__input
     width: 100%
     padding: 13px 25px
     font-size: 0.86666rem
@@ -52,40 +71,21 @@
     border: 1px solid #fff
     background-color: transparent
     color: #fff
+
     &::placeholder
       opacity: 1
+
     &:focus
       outline: none
 
-  .button.black
-    color: #000
-    background-color: #fff
-    border-color: #fff
-    margin-left: 0
-    &:hover
-      color: #fff
-      background-color: #000
-      border-color: #000
-
-  .button.white
-    color: #fff
-    margin-left: 2.3333rem
-
   .frame .rect--2
-    stroke: #fff
-
-  .footnote
-    text-align: right
-    position: absolute
-    bottom: 1.04rem
-    right: 5.25rem
-    font-size: 90%
+      stroke: #fff
 
 @media only screen and (max-width: 1240px)
-  .order-form__container
-    padding: 3.25rem
+    .order-form__container
+        padding: 3.25rem
 
 @media only screen and (max-width: 991px)
-  .order-form__container
-    .button-bar.white
-      width: auto;
+    .order-form__container
+        .button-bar.white
+            width: auto;    

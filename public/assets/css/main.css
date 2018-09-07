@@ -42,7 +42,7 @@
     -ms-align-items: center;
     align-items: center;
     justify-content: center;   
-    padding: 2.1333rem 0 0 0;
+    padding: calc(2.4rem + 4px) 0 0 0;
 }
 
 .main__bar{
@@ -120,6 +120,7 @@
     text-transform: uppercase;
     line-height: 1;
     margin-bottom: .7333rem;
+    margin-top: 0;
     /* -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;     */

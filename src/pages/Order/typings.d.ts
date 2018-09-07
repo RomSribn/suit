@@ -1,7 +1,6 @@
 type RoutesNames = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice';
 
 type OrderRoutes = Record<RoutesNames, string>
-
 interface OrderSectionInterface {
     routes: OrderRoutes;
 }

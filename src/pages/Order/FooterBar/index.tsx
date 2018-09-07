@@ -23,7 +23,7 @@ import { trim } from '../../../config/routes';
     ...nextProps,
 }))
 @observer
-class FooterBar extends React.Component<FooterBarProps> {
+class FooterBar extends React.PureComponent<FooterBarProps> {
     render() {
         const {
             lang,

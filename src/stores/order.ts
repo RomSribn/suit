@@ -4,21 +4,21 @@ import { ERRORS_CODES } from '../config/constants';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
-type PrepareOrder = (order: Order) => ServerOrder;
-const prepareOrder: PrepareOrder = (order) => {
-    const customer = {
-        id: 1,
-        name: 'white'
-    };
+const STOP_CODES = ['trousers', 'body', 'shoes', 'eyes', 'head'];
+
+type PrepareOrder = (order: Order, customer: User) => ServerOrder;
+const prepareOrder: PrepareOrder = (order, customer) => {
     const items: ServerItem[] =
         _.values(order)
         .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
             _.values(garment[0].design).forEach(item => {
-                acc.push({
-                    design: {
-                        ourCode: item.our_code
-                    }
-                });
+                if (!STOP_CODES.includes(item.our_code)) {
+                    acc.push({
+                        design: {
+                            ourCode: item.our_code
+                        }
+                    });
+                }
             });
             return acc;
     }, []);
@@ -98,17 +98,20 @@ class OrderStore implements IOrderStore {
         }
     }
     @action
-    saveOrder = () => {
+    saveOrder = (customerInfo: User) => {
         const {orderInfo} = this;
         const method = orderInfo ? 'PUT' : 'POST';
         const id = orderInfo ? `/${orderInfo.orderId}` : '';
-        callApi({
+        return callApi({
             url: services.orders + id,
             method,
-            data: prepareOrder(this.order),
+            data: prepareOrder(this.order, customerInfo),
         },
         () => null,
-        (info: OrderInfo) => { this.orderInfo = info; },
+        (info: OrderInfo) => {
+            this.orderInfo = info;
+            return info;
+        },
         this._onError
     );
     }

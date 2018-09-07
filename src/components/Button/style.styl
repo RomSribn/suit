@@ -1,0 +1,126 @@
+.button
+    display block
+    padding 0
+    outline none
+    border none
+    background none
+    box-shadow none
+    transition background-color .25s, color .25s, opacity .25s
+    cursor pointer
+    border-radius 0
+    white-space nowrap
+
+    &.disabled 
+        cursor default
+        opacity .25
+        user-select none
+
+    &.black
+        width 13.3333rem
+        line-height 2.6666rem
+        border 2px solid #000
+        font-size 1rem
+        font-weight 500
+        line-height 2.4rem
+        text-align center
+        color #fff
+        background-color #000
+        text-transform uppercase
+        overflow hidden
+        margin-left 2.3333rem
+        transition background-color .35s, color .35s, border .35s
+
+        &:hover
+            background #eceeee
+            border-color #eceeee
+            color #000
+
+    &.white
+        position relative
+        display block
+        background transparent
+        padding .5333rem 0
+        width 13.0666rem
+        height 2.4rem
+        font-size 1rem
+        text-transform uppercase
+        text-align left
+        color #000
+        line-height 1.2
+        font-weight 500
+        text-align center
+        
+        &:hover .rect--2
+            stroke-dashoffset -150%
+
+.frame
+    position absolute
+    top -2px
+    left -2px
+    width calc(100% + 4px)
+    height calc(100% + 4px)
+    z-index 2
+
+    .rect
+        position absolute
+        fill none
+        stroke #9eadae
+        stroke-width 3px
+        -webkit-transition all .55s ease-out
+        transition all .55s ease-out
+
+        &--2
+            stroke #000
+            stroke-width 3px
+            stroke-dasharray 75% 120%
+            stroke-dashoffset -75%
+
+        &--1
+            stroke #b7b7b7
+            stroke-width 3px
+
+
+@media only screen and (max-width  1140px)
+    .button
+        &.black
+            width 10.5rem
+            margin-left 1.3333rem
+        &.white
+            width 10.5rem
+
+@media only screen and (max-width  991px)
+    .button-bar
+        &.white 
+            width 2.4rem
+            font-size 0
+            padding 0
+
+            &:after
+                content ''
+                display block
+                border 5px solid transparent
+                border-right-color #b7b7b7
+                position absolute
+                left -8px
+                bottom -6px
+                z-index 2
+                transition all .2s ease-out .45s
+            
+        &:active .rect--2,
+        &:hover .rect--2 
+            stroke-dasharray 170% 250%
+            stroke-dashoffset -130%
+        
+        &:active:after,
+        &:hover:after
+            border-right-color #000
+
+
+    .rect--1 
+        stroke-dasharray 300% 60%
+        stroke-dashoffset 0%
+        
+    .rect--2 
+        stroke-dasharray 180% 250%
+        stroke-dashoffset -70%
+    

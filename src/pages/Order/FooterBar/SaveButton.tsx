@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
+import { SaveForm } from '../SaveForm';
 import { PopUp } from '../../../containers/Popup';
+import { Button } from '../../../components/Button';
 
 type P = {
     orderStore?: IOrderStore;
+    isUpdate?: boolean,
     match?: {
         params: {
             garment: string;
@@ -21,7 +24,7 @@ interface State {
     activeOrderItem: order.activeElement
 }))
 @observer
-class SaveButton extends React.Component<P, State> {
+class SaveButton extends React.PureComponent<P, State> {
     constructor(props: P) {
         super(props);
         this.state = {
@@ -29,13 +32,16 @@ class SaveButton extends React.Component<P, State> {
         };
     }
     onClose = (e: React.MouseEvent) => {
-        // e.stopPropagation();
         this.setState({ open: false });
     }
     onClick = () => {
-        this.setState({ open: true });
+        if (this.props.isUpdate) {
+            this.updateOrder();
+        } else {
+            this.setState({ open: true });        
+        }
     }
-    onSave = () => {
+    updateOrder = () => {
         const {
             orderStore
         } = this.props;
@@ -54,8 +60,6 @@ class SaveButton extends React.Component<P, State> {
                 newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
                 newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
                 orderStore!.setOrder(newValue);
-            } else {
-                orderStore!.saveOrder();
             }
         } catch (_) {
             const {} = _;
@@ -67,12 +71,14 @@ class SaveButton extends React.Component<P, State> {
         } = this.props;
         return (
                 <React.Fragment key="order save popup">
-                    <button
+                    <Button
                         onClick={this.onClick}
-                        className="btn footer-btn-bar__black-btn"
+                        theme="black"
                     >{children}
-                    </button>
-                    <PopUp onClose={this.onClose} open={this.state.open}>контент тут</PopUp>
+                    </Button>
+                    <PopUp onClose={this.onClose} open={this.state.open}>
+                        <SaveForm close={this.onClose}/>
+                    </PopUp>
                 </React.Fragment>
         );
     }

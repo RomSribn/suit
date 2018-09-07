@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
-import { FadeIn } from '../../../containers/Transitions';
-import { Button } from '../../../components/Button';
 import { SaveButton } from './SaveButton';
+import { routes } from '../routes';
+import { Button } from '../../../components/Button';
+import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 
 class FooterBar extends React.Component<FooterBarProps> {
@@ -40,12 +41,19 @@ class FooterBar extends React.Component<FooterBarProps> {
                 </Link>
                 <Switch>
                     <Route
-                        path="/order/details/:garment/:group/:subgroup"
+                        path={routes.subgroupChoice}
                         component={(...props: any[]) => { // tslint:disable-line
-                            return <SaveButton {...props[0]} isUpdate={true}>{loc[lang!].save}</SaveButton>;
+                            return (
+                                <Link
+                                    to={`${routes.details}/${props[0].match.params.garment}`}
+                                    onClick={this.onBackClick}
+                                >
+                                    <SaveButton {...props[0]} isUpdate={true}>{loc[lang!].save}</SaveButton>
+                                </Link>
+                            );
                         }}
                     />
-                    <Route path="/order/details/">
+                    <Route path={routes.details}>
                         <FadeIn>
                             <SaveButton>{Boolean(hasOrder!) ? loc[lang!].save : loc[lang!].create}</SaveButton>
                         </FadeIn>

@@ -50,29 +50,33 @@ class SaveForm extends React.PureComponent<FormProps> {
                 render={({ handleSubmit }) => {
                     return (
                         <div className="order-form__container">
-                            <InfoBlock lang={lang} />                        
-                            <form
-                                onSubmit={handleSubmit}
-                                className=""
-                            >
-                                {FIELDS.map((field) => (
-                                    <Field
-                                        name={field.name}
-                                        required={Boolean(field.required)}
-                                        component={field.component}
-                                        type={field.type}
-                                        placeholder={loc[lang].placeHolders[field.name]}
-                                    />
-                                ))}
-                                <div className="buttons">
-                                    <Button type="submit" theme="white">
-                                        {loc[lang].sendOrder}
-                                    </Button>
-                                    <Button theme="black" type="submit" onClick={this.props.close}>
-                                        {loc[lang].backText}
-                                    </Button>
-                                </div>
-                            </form>
+                            <div className="left-side">
+                                <InfoBlock lang={lang} />                        
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="order-from__form"
+                                >
+                                    {FIELDS.map((field) => (
+                                        <Field
+                                            className="order-form__input"
+                                            name={field.name}
+                                            required={Boolean(field.required)}
+                                            component={field.component}
+                                            type={field.type}
+                                            placeholder={loc[lang].placeHolders[field.name]}
+                                        />
+                                    ))}
+                                    <div className="buttons">
+                                        <Button type="submit" theme="black">
+                                            {loc[lang].sendOrder}
+                                        </Button>
+                                        <Button theme="white" type="submit" onClick={this.props.close}>
+                                            {loc[lang].backText}
+                                        </Button>
+                                    </div>
+                                </form>
+                                <div className="footnote">* autumn 2017 Louis Purple</div>
+                            </div>
                         </div>
                     );
                 }}

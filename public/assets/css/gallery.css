@@ -80,8 +80,7 @@
     height: 100%;
 }
 .gallery__footer{
-    height: 6rem;
-    overflow: scroll;
+    height: 6.9rem; 
     margin-top: 1.3333rem;
     background: #eceeee;
     padding: 1.2rem 1.7333rem .7333rem 1.3333rem;
@@ -110,8 +109,23 @@
     color: #8a8a8a;
 }
 .gallery__footer--txt{
+    overflow: hidden; /*необходим для gallery__footer--txt-clamp*/
     font-size: 1rem;
     line-height: 1.4;
+}
+.gallery__footer--txt-clamp{ 
+    /* обрезаем текст и выставляем троеточие если в блоке больше 2 строк, в firefox без троеточия*/
+	/* альтернативы 
+		https://www.npmjs.com/package/react-clamp-lines 
+		https://www.npmjs.com/package/clamp-js
+	*/
+    overflow:hidden;
+    text-overflow: ellipsis;    
+    display: -webkit-box;    
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    word-wrap:break-word;    
+    max-height:2.8rem; 
 }
 
 .gallery--colors .gallery__item{

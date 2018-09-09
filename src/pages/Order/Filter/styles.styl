@@ -1,0 +1,38 @@
+.filter__label input
+    display none
+.filter__label.color
+    cursor pointer
+    position relative
+    display inline-block
+    margin-right: 0.8rem
+    width calc(25% - 0.8rem)    
+    
+    &-value
+        margin 0
+        padding-top: 100%
+        transition transform .3s
+
+        &:hover
+            transform scale(1.2)
+
+    input
+        &:checked + span
+            display block
+            &:after
+                content ''
+                display block
+                position absolute
+                top 0
+                border 1px solid black
+                width 100%
+                padding-top calc(100% - 2px)
+            
+            &:before
+                content ''
+                display block
+                position absolute
+                top 0
+                border 2px solid white
+                width calc(100% - 2px)
+                padding-top calc(100% - 6px)
+                margin: 1px

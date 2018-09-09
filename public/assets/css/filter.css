@@ -1,11 +1,9 @@
 .filter{
     position: absolute;
     right: 100%;
-    top: 2.1333rem;
+    top: 0;
     bottom: 1.6667rem;
-    height: -webkit-calc(100% - 4.2333rem);
-    height: -moz-calc(100% - 4.2333rem);
-    height: calc(100% - 4.2333rem);
+    height: 100%;
     width: 0;
     background: #eceeee;
     overflow: hidden;
@@ -46,7 +44,7 @@
     display: block;
     margin-bottom: .8rem;
 }
-.filter__label:last-child{margin-bottom: 0;}
+
 .filter__label input{display: none;}
 .filter__label-name{
     display: block;

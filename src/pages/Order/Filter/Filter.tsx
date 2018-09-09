@@ -1,10 +1,14 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 
+import './styles.styl';
+
 class FilterItem extends React.PureComponent<FilterItemProps> {
     static defaultProps: DefaultFilterItemProps = {
         type: 'checkbox',
         lang: 'ru',
+        isColorGroup: false,
+        group: '',
         addFilter: () => null,
         removeFilter: () => null,
     };
@@ -28,17 +32,27 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
             valueTitle,
             lang,
             type,
-            value
+            value,
+            group,
+            isColorGroup
         } = this.props;
         return (
-            <label className="filter__label">
+            <label
+                className={classnames('filter__label', { color: isColorGroup})}
+            >
                 <input
                     type={type!}
                     value={value}
-                    name={name}
+                    name={group}
                     onChange={this.onChange}
                 />
+                { isColorGroup ? 
+                <span
+                    className="filter__label color-value"
+                    style={{ backgroundColor: value}}
+                /> :
                 <span className="filter__label-name">{valueTitle[lang!]}</span>
+                }
             </label>
         );
     }
@@ -58,8 +72,11 @@ const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string)
                         lang={lang}
                         key={title[lang] + value.value + index}
                         addFilter={filterStore.addUserFilter(group.name)}
+                        isColorGroup={group.name.includes('color')}
                         removeFilter={filterStore.removeUserFilter(group.name)}
-                        {...value}
+                        valueTitle={value.valueTitle}
+                        value={value.value}
+                        group={group.name}
                     />
                 ))}
             </div>

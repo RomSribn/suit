@@ -42,7 +42,7 @@
     -ms-align-items: center;
     align-items: center;
     justify-content: center;   
-    padding: calc(2.4rem + 4px) 0 0 0;
+    margin: calc(2.4rem + 4px) 0 0 0;
 }
 
 .main__bar{

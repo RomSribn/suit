@@ -63,7 +63,7 @@ class HeaderBar extends React.Component<HeaderBarDefaultProps, State> {
                 <PopUp
                     open={this.state.showLoginForm}
                     onClose={this.closeForm}
-                ><Login loginCallback={this.closeForm} />
+                ><Login loginCallback={this.closeForm} closeForm={this.closeForm} />
                 </PopUp>
             </div>);
     }

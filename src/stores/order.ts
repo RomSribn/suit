@@ -71,6 +71,7 @@ class OrderStore implements IOrderStore {
     @action
     setOrder (_o: Order) {
         this.order = {..._o};
+        this.updateOrderInfo();
     }
     @action
     setActiveItem = (item: GalleryStoreItem | null) => { // tslint:disable-line
@@ -115,7 +116,25 @@ class OrderStore implements IOrderStore {
         this._onError
     );
     }
-
+    @action
+    updateOrderInfo = (customerInfo?: User) => {
+        const userInfo = customerInfo || {
+            name: '',
+            phone: ''
+        };
+        return callApi({
+            url: services.orderDeliveryInfo,
+            method: 'POST',
+            data: prepareOrder(this.order, userInfo),
+        },
+        () => null,
+        (info: OrderInfo) => {
+            this.orderInfo = info;
+            return info;
+        },
+        this._onError
+    );
+    }
     _onSuccess = (data: any, callback: any) => { // tslint:disable-line
         const tmp = _.groupBy(data, 'garmentId'); // tslint:disable-line
         const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
@@ -135,7 +154,7 @@ class OrderStore implements IOrderStore {
             acc[cur] = [x];
             return acc;
           }, {});
-        this.order = defaultOrder;
+        this.setOrder(defaultOrder);
         this.defaultValues = defaultOrder;
         callback(Object.keys(defaultOrder).filter(garment => garment !== 'manequin'));
         this.isFetching = false;

@@ -19,6 +19,7 @@ export const services = {
   shirtFilters: `${API_ROOT}/api/garments/shirt/filters/fabric`,
   garmentsDefaults: `${API_ROOT}/api/garments/defaults`,
   orders: `${API_ROOT}/api/orders`,
+  orderDeliveryInfo: `${API_ROOT}/api/orders/orderDeliveryInfo`,
   login: `${API_ROOT}/api/auth/login`,
   logout: `${API_ROOT}/api/auth/logout`,
   

@@ -100,10 +100,13 @@ type Filters = Record<string, Filter>;
 type UserFilters = Record<string, string[]>;
 
 interface GalleryStoreItem {
+    prevActiveItem?: string | null;
     our_code: string;
     title: Translations<string>;
     description: Translations<string>;
+    exception: string[];
     is_input: boolean;
+    is_item_clear: boolean;
     image: string | null;
     img_url_2d: string;
     image_url_3d: string | null;

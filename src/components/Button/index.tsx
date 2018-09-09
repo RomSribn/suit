@@ -13,18 +13,11 @@ class Button extends React.PureComponent<ButtonProps> {
             invertTheme,
             style,
             disabled,
-            theme
+            theme,
         } = this.props;
         const whiteTheme = theme === 'white';
         return (
-            <span
-                className={classNames(
-                    'button-bar',
-                    {
-                        white: whiteTheme
-                    }
-                )}
-            >
+            <span className={classNames('button-bar', { white: whiteTheme })}>
                 <button
                     onClick={onClick}
                     type={type}

@@ -105,7 +105,6 @@ class garment {
   }
 
   _onSuccess = (data) => {
-    console.log(data)
     let groups = []
     groups.push(new fabricGroup({
       props: data.fabric_ref,

@@ -16,6 +16,7 @@ class MainSection extends React.Component<MainSectionProps> {
             detailsDeep,
             afterGarmentChoice
         } = this.props;
+
         return (
         <React.Fragment key="order main content">
                 <div

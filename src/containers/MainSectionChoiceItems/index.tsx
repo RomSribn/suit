@@ -10,7 +10,7 @@ import { ChoiceItems as Component } from './component';
 class ChoiceItems extends React.Component<ChoiceItemsProps> {
     render() {
         const {
-            pushOrderPathItem
+            pushOrderPathItem,
         } = this.props;
         return (
             <Component

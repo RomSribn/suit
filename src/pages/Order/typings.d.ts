@@ -12,10 +12,15 @@ interface Subgroup {
     is_multiple: boolean;
     is_input: boolean;
     is_allowOwnFabric: boolean;
+    items: SubgroupItem[]
     title: {
         en: string;
         ru: string;
     };
+}
+
+interface SubgroupItem {
+    our_code: string
 }
 
 interface SubgroupsI {
@@ -31,4 +36,5 @@ interface SubgroupChoiceItem {
     status?: string;
     linkName: string;
     id: string;
+    isHidden?: boolean;
 }

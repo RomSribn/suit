@@ -8,8 +8,9 @@ class Main extends React.PureComponent<DetailsProps> {
     render() {
         const {
             activeGarments,
+            lang
         } = this.props;
-        return (<ChoiceItems items={activeGarments!} basicRoute="/order/details"/>);
+        return (<ChoiceItems lang={lang!} items={activeGarments!} basicRoute="/order/details"/>);
     }
 }
 

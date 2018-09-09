@@ -18,6 +18,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         super(props);
         const activeIndex = props.items.findIndex(i => i.our_code === ( props.order!.activeElement || {})['id']); // tslint:disable-line
         const shownItem = this.shownItem;
+
         this.state = {
             activeElementIndex: activeIndex === -1 ? 0 : activeIndex,
             previewElementIndex: 0,

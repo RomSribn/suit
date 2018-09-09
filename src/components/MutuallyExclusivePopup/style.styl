@@ -1,0 +1,23 @@
+.container
+  width: 55%;
+  height: 120px;
+  position: absolute;
+  top: calc(50% - 120px/2); /* center vertically */
+  left: calc(50% - 55%/2); /* center horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+
+  .popup-text
+    line-height: 1.6rem;
+
+  &-control-panel
+    display: flex;
+    justify-content: space-around;
+    width: 55%;
+
+    .approve-button
+      margin-right: 2.333rem;

@@ -5,18 +5,25 @@ import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
 
-@inject(({app, garments: { GalleryStore }, order, filterStore}, nextProps: GalleryContainerProps) => {
+@inject(({
+    app,
+    garments: { GalleryStore },
+    order,
+    order: { setActiveItem, setPreviewElement, exceptions, isExclusivePopupShowing },
+    filterStore
+}, nextProps: GalleryContainerProps) => {
     const {
         garment,
         group,
         subgroup,
     } = nextProps.match.params;
     return {
-        setActiveOrderItem: order.setActiveItem,
-        setPreviewElement: order.setPreviewElement,
+        setActiveOrderItem: setActiveItem,
+        setPreviewElement: setPreviewElement,
+        isExclusivePopupShowing,
         lang: app.lang,
         order,
-        galleryStore: new GalleryStore(garment, group, subgroup),
+        galleryStore: new GalleryStore(garment, group, subgroup, exceptions),
         filterStore: filterStore,
         ...nextProps,
     };
@@ -24,7 +31,9 @@ import { Fitting } from '../Fitting/component';
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
     componentWillUnmount() {
-        this.props.setActiveOrderItem(null);
+        if (!this.props.isExclusivePopupShowing()) {
+            this.props.setActiveOrderItem(null);
+        }
     }
     render() {
         const orderStore = this.props.order!;

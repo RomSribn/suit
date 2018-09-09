@@ -11,7 +11,8 @@ type FilterFields = (
     subgroup: string,
     lang: string,
     order: Order,
-    garment: string) => SubgroupChoiceItem;
+    garment: string
+) => SubgroupChoiceItem;
 const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     let status;
     try {
@@ -29,7 +30,6 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     if (item.subsection_our_code === 'fitting') {
         status = null;
     }
-
     return {
         link: `${subgroup}/${item.subsection_our_code}`,
         linkName: item.title[lang],
@@ -37,6 +37,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
         isSubclear: item.is_subclear,
         isInput: item.is_input,
         status,
+        subgroupTitle: item.title
     };
 };
 
@@ -47,26 +48,28 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
         garments: {Subgroups},
         order,
         routing:
-        {location : { pathname }} },
-        nextProps: SubgroupChoiceProps) => ({
-    lang: app.lang,
-    SubgroupsStore: new Subgroups(nextProps.match.params.garment),
-    order: order.order,
-    userStore: user,
-    choiceItem: [...app.orderPath].pop(),
-    popOrderPathitem: app.popOrderPathItem,    
-    backLink:
-    '/' + trim(
-        pathname
-        .split('/')
-        .reduce(
-            (acc: string,
-            cur: string,
-            i: number,
-            arr: string[]) => `${acc}/${i === arr.length - 1 ? '' : cur}`, ''),
-            '/'),
-    ...nextProps,
-}))
+        {location: { pathname }} },
+    nextProps: SubgroupChoiceProps) => ({
+        lang: app.lang,
+        SubgroupsStore: new Subgroups(nextProps.match.params.garment),
+        order: order.order,
+        userStore: user,
+        activeExceptions: order.exceptions,
+        setSubgroupTitle: order.setSubgroupTitle,
+        choiceItem: [...app.orderPath].pop(),
+        popOrderPathitem: app.popOrderPathItem,
+        backLink:
+            '/' + trim(
+                pathname
+                    .split('/')
+                    .reduce(
+                        (acc: string,
+                            cur: string,
+                            i: number,
+                            arr: string[]) => `${acc}/${i === arr.length - 1 ? '' : cur}`, ''),
+                '/'),
+        ...nextProps,
+    }))
 @observer
 class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
     render() {
@@ -79,6 +82,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             choiceItem,
             popOrderPathitem,
             backLink,
+            setSubgroupTitle
         } = this.props;
         const $store = SubgroupsStore.data as SubgroupsI;
         const isLogin = this.props.userStore!.isAuth;
@@ -107,7 +111,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     order!,
                     garment
                 )),
-                    ...fittingSection]
+                ...fittingSection]
             : [];
         return (
             <Switch>
@@ -119,6 +123,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                             <GroupChoice
                                 match={_match}
                                 popOrderPathitem={popOrderPathitem!}
+                                setSubgroupTitle={setSubgroupTitle!}
                                 backLink={backLink!}
                                 choiceItem={choiceItem!}
                                 lang={lang!}
@@ -133,7 +138,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 >
                     <Component lang={lang} match={match} data={data} />
                 </Route>
-                <Redirect to={match.url}/>
+                <Redirect to={match.url} />
             </Switch>);
     }
 }

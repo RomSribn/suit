@@ -8,11 +8,13 @@ import { Navigation as NavigationComponent } from './component';
 interface Props extends RouteComponentProps<void> {
     lang?: string;
     backgroundColor?: string;
+    userStore?: IUserStore;
 }
 
-@inject(({app, routing}, nextProps: Props) => {
+@inject(({app, routing, user}, nextProps: Props) => {
     return {
         lang: app.lang,
+        userStore: user,
         // TODO: check in runtime
         backgroundColor:
             nextProps.location.pathname !== routes.order
@@ -31,6 +33,7 @@ class NavigationContainer extends React.Component<Props> {
         return (
             <NavigationComponent
                 lang={lang as string}
+                isLogin={this.props.userStore!.isAuth}
                 backgroundColor={backgroundColor as string}
             />);
     }

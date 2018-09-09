@@ -4,6 +4,8 @@ import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
+import './styles.styl';
+
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;

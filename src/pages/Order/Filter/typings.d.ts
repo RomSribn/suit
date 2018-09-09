@@ -14,6 +14,8 @@ type FilterProps = _FilterProps & DefaultFilterProps;
 interface DefaultFilterItemProps {
     lang?: string;
     type?: string;
+    isColorGroup?: boolean;
+    group: string;
     addFilter: (value: string) => void;
     removeFilter: (value: string) => void;
 }

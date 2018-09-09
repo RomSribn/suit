@@ -84,7 +84,7 @@ interface ServerFilter {
 type ServerFilters = Record<string, ServerFilter[]>;
 
 interface FilterValue {
-    id: number;
+    id?: number;
     valueTitle: Translations<string>;
     value: string;
 }

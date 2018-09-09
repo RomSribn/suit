@@ -1,7 +1,7 @@
 .gallery{
     width: 100%;
     flex-grow: 1;
-    padding: 1.3333rem 0 calc(2.4rem + 4px) 0;
+    padding: 1.3333rem 0 0 0;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;

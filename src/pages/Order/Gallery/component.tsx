@@ -151,7 +151,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        {group === 'fabric' && <Controll />}
+                        {group === 'fabric_ref' && <Controll />}
                         { !this.state.load.success && !this.state.load.error
                         ? <div
                             className="preloader"

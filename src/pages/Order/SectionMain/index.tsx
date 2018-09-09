@@ -35,6 +35,7 @@ class MainSection extends React.Component<MainSectionProps> {
                         justifyContent: !detailsDeep
                             ? 'flex-start'
                             : 'center',
+                        marginBottom: !detailsDeep ? 'calc(2.4rem + 4px)' : '0'
                     }}
                 >
                     <Filter />

@@ -4,18 +4,22 @@ import { Navigation } from '../Navigation';
 
 interface CommonProps {
     children?: React.ReactChildren;
+    userStore?: IUserStore;
 }
-const Common = (props: CommonProps) => {
-    return (
-        <div className="application" >
-            {/* <Paralax /> */}
-            { window.location.pathname !== '/login' &&
-            <Navigation />
-            }
-            {props.children}
-        </div>
-    );
-};
+
+class Common extends React.PureComponent<CommonProps> {
+    render() {
+        return (
+            <div className="application" >
+                {/* <Paralax /> */}
+                { window.location.pathname !== '/login' &&
+                    <Navigation />
+                }
+                {this.props.children}
+            </div>
+        );
+    }
+}
 
 export {
     Common,

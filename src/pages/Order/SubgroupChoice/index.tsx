@@ -36,10 +36,18 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
 };
 
 @inject((
-    { app, garments: {Subgroups}, order, routing: {location : { pathname }} }, nextProps: SubgroupChoiceProps) => ({
+    {
+        app,
+        user,
+        garments: {Subgroups},
+        order,
+        routing:
+        {location : { pathname }} },
+        nextProps: SubgroupChoiceProps) => ({
     lang: app.lang,
     SubgroupsStore: new Subgroups(nextProps.match.params.garment),
     order: order.order,
+    userStore: user,
     choiceItem: [...app.orderPath].pop(),
     popOrderPathitem: app.popOrderPathItem,    
     backLink:
@@ -68,6 +76,15 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             backLink,
         } = this.props;
         const $store = SubgroupsStore.data as SubgroupsI;
+        const isLogin = this.props.userStore!.isAuth;
+        const fittingSection = !isLogin || !$store ? [] :
+            $store.fitting.map((v: Subgroup) => filterFields(
+                v,
+                'fitting',
+                lang!,
+                order!,
+                garment
+            ));
         const data = $store
             ? [
                 // filterFields($store.fabric_ref, 'fabric_ref', lang!),
@@ -85,13 +102,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     order!,
                     garment
                 )),
-                ...$store.fitting.map((v: Subgroup) => filterFields(
-                    v,
-                    'fitting',
-                    lang!,
-                    order!,
-                    garment
-                ))]
+                    ...fittingSection]
             : [];
         return (
             <Switch>

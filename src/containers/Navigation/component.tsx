@@ -78,6 +78,7 @@ const makeNavigationLinks: MakeNavigationLinks = (linkNames, showActiveClassName
 };
 
 interface NavigationProps {
+    isLogin?: boolean;
     lang: string;
     backgroundColor: string;
 }
@@ -109,6 +110,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         const {
             lang,
             backgroundColor,
+            isLogin
         } = this.props;
         return (
         <div
@@ -121,20 +123,22 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
             )}
         >
             <Header backgroundColor={backgroundColor} />
-            <div className="navbar__middle">
-                <nav
-                    className={`main-menu`}
-                    onMouseEnter={this.mouseEnter}
-                    onMouseLeave={this.mouseLeave}
-                >
-                    <ul>
-                        {makeNavigationLinks(
-                            Object.keys(loc[lang].navigation),
-                            this.state.showActiveClassName,
-                            lang)}
-                    </ul>
-                </nav>
-            </div>
+            {isLogin &&
+                <div className="navbar__middle">
+                    <nav
+                        className={`main-menu`}
+                        onMouseEnter={this.mouseEnter}
+                        onMouseLeave={this.mouseLeave}
+                    >
+                        <ul>
+                            {makeNavigationLinks(
+                                Object.keys(loc[lang].navigation),
+                                this.state.showActiveClassName,
+                                lang)}
+                        </ul>
+                    </nav>
+                </div>
+            }
             <Footer lang={lang}/>
         </div>);
     }

@@ -156,6 +156,18 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         try {
             const barWrap = document.getElementById('js-bar-wrap') as HTMLElement,
                 imageWrap = document.getElementById('js-gallery-img') as HTMLElement;
+
+            // для устранения скачков при скролинге в хроме и опере, баг возникает из-за:
+            // barWrap.style.display = 'none';
+            // imageWrap.style.display = 'none';
+            if ((barWrap.scrollHeight) && (barWrap.scrollHeight > barWrap.offsetHeight)) {
+                barWrap.style.overflowY = 'scroll';
+            } else {
+                barWrap.style.overflowY = 'auto';
+            }
+
+            // БАГ: в опере и хроме, если зажать скрол левой кнопкой мыши, 
+            // то с него слетит фокус, из-за display = 'none',   
             barWrap.style.display = 'none';
             imageWrap.style.display = 'none';
             

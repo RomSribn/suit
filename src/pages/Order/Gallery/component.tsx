@@ -132,7 +132,14 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 : this.state.previewElementIndex
         ];
         const title = item.title[lang];
-        const description = item.description[lang];
+        let description = item.description[lang];
+        const descriptionSize = 153;
+        if (description.length > descriptionSize) { 
+        // if ((description) && (description.length > descriptionSize)) {  
+        // если description == null, без проверки "if ((description) &&..." будет ошибка
+        // в TS для description тип string указан, так что скорее всего лишнее
+            description = description.substring(0, descriptionSize).trim() + '...';
+        } 
         const {
             our_code: code,
             price,
@@ -180,9 +187,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                         <div className="gallery__footer--articul">₽{price.ru} / {code || 'code'}</div>
                     </div>
                     <div className="gallery__footer--txt">
-                       {    description ||
-                            'deafult description text'
-                       }
+                        <p className="gallery__footer--txt-clamp">
+                            {    description ||
+                                    'deafult description text'
+                            }
+                        </p>
                     </div>
                 </div>
             </div>

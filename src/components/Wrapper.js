@@ -23,7 +23,7 @@ class Wrapper extends Component {
         <Switch>
           <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
           <Route exact={true} path={routes.index}>
-            <Redirect to={routes.order} />
+            <Redirect to={routes.order + '/shirt'} />
           </Route>
           <Route
             path={routes.order}

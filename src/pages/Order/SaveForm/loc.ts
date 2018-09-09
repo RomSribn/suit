@@ -1,8 +1,8 @@
 const translations: Localization = {
     en: {
         header: 'Fitting enroll',
-        infoText: 'Отправьте офомленный заказ и ваши контактные данные.' + 
-            'Менеджер вам перезвонит, чтобы выбрать дату примерки.',
+        infoText: 'Send your order and your contact details.' + 
+            ' The Manager will call you back to choose the date of fitting.',
         placeHolders: {
             name: 'Name',
             phone: 'Phone',
@@ -13,8 +13,8 @@ const translations: Localization = {
     },
     ru: {
         header: 'запись на примерку',
-        infoText: 'Отправьте офомленный заказ и ваши контактные данные.' + 
-            'Менеджер вам перезвонит, чтобы выбрать дату примерки.',
+        infoText: 'Отправьте оформленный заказ и ваши контактные данные.' + 
+            ' Менеджер вам перезвонит, чтобы выбрать дату примерки.',
         placeHolders: {
             name: 'ФИО',
             phone: 'Телефон',

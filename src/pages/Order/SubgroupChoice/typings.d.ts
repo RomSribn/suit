@@ -9,4 +9,5 @@ interface SubgroupChoiceProps {
     choiceItem?: OrderPathItem,
     popOrderPathitem?(): void;
     backLink?: string;
+    userStore?: IUserStore;
 }

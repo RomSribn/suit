@@ -10,20 +10,31 @@ class Button extends React.PureComponent<ButtonProps> {
             onClick,
             type,
             className,
+            invertTheme,
+            style,
             theme
         } = this.props;
         const whiteTheme = theme === 'white';
         return (
-            <span className={classNames('button-bar', { white: whiteTheme })}>
+            <span
+                className={classNames(
+                    'button-bar',
+                    {
+                        white: whiteTheme
+                    }
+                )}
+            >
                 <button
                     onClick={onClick}
                     type={type}
+                    style={style}
                     className={
                         classNames(
                             className,
                             'button',
                             { black: !whiteTheme },
-                            { white: whiteTheme }                        
+                            { white: whiteTheme },
+                            { invert: invertTheme }
                         )
                     }
                 >{children}

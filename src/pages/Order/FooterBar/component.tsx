@@ -7,6 +7,8 @@ import { Button } from '../../../components/Button';
 import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 
+import './styles.styl';
+
 class FooterBar extends React.Component<FooterBarProps> {
     static defaultProps = {
         goBack: () => undefined,
@@ -35,7 +37,7 @@ class FooterBar extends React.Component<FooterBarProps> {
                         cursor: 'pointer',
                 }}
                 >
-                    <Button theme="white">
+                    <Button theme="white" className="back-button">
                         {loc[lang!].back}
                     </Button>
                 </Link>

@@ -1,4 +1,4 @@
-div.login-container
+.login-container
   position absolute
   top 50%
   left 50%
@@ -7,7 +7,7 @@ div.login-container
   display flex
   align-items center
   justify-content center
-  section.login
+  .login
     position relative
     width 988px
     height 480px
@@ -38,11 +38,13 @@ div.login-container
       width 25px
       border-radius 100%
     div.left-side
+      position relative
       width 50%
       height 100%
       display flex
       flex-direction column
       h2.title
+        color #fafafa
         font-size: 1rem
         font-weight: 500
         text-transform: uppercase
@@ -51,7 +53,7 @@ div.login-container
         margin 1.32rem 0
         font-size .86666rem
         line-height 1.5rem
-        color #8a8a8a
+        color #c2c2c2
         .link
           color: inherit
         .forgot
@@ -100,12 +102,13 @@ div.login-container
               .check
                 visibility visible
 
-      .footer-btn-bar__black-btn
-        margin-left 0
-      .footer-btn-bar__white
-        margin-left 2.3333rem
-      .footer-btn-bar__white-rect--2
-        stroke: #fff
+      .controlls-bar
+        position absolute
+        width 100%
+        bottom 0
+        display flex
+        align-items center
+        justify-content space-between
 
       label.cb-text
         padding-top 2px

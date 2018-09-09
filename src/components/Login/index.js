@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import './Login.styl';
 import { Redirect } from 'react-router';
+import { Button } from '../Button';
+import { loc } from './loc';
+import './Login.styl';
+
 
 
 @inject(({user, app}) => ({
-  app,
+  appStore: app,
   userStore: user
 }))
 @observer
@@ -13,7 +16,8 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isRemember: false
+      isRemember: false,
+      showForgot: false,
     }
   }
 
@@ -24,6 +28,10 @@ class Login extends Component {
 
   handleLogin = (e) => {
     e.preventDefault()
+    if(this.state.showForgot) {
+      this.props.closeForm && this.props.closeForm();
+      return;
+    }
     this.props.userStore.fetchLogin(
       this.refs.name.value,
       this.refs.pass.value
@@ -38,48 +46,86 @@ class Login extends Component {
     })
   }
 
+  forgotClick = (e) => {
+    e.preventDefault();
+    this.setState({ showForgot: true })
+  }
+  backClick = () => {
+    if (this.state.showForgot) {
+      this.setState({showForgot: false})
+    } else {
+      this.props.closeForm && this.props.closeForm()
+    }
+  }
   render() {
-    const { userStore, shouldRedirect } = this.props
+    const {
+      userStore,
+      appStore,
+      shouldRedirect
+    } = this.props
     if (userStore.isAuth && shouldRedirect) {
       return <Redirect to="/" />
     }
+    const lang = appStore.lang;
     return <div className="login-container">
-      <section className="login">
+      <form className="login" onSubmit={this.handleLogin}>
         <div className="left-side">
-          <h2 className="title">Авторизация</h2>
-          <p className="additional-info">Если у вас нет логина и пароля, запросите данные
-            у администратора салона или технической поддержки.
-            {
+          <h2 className="title">{loc[lang].title}</h2>
+          <p className="additional-info">{loc[lang].info}
+            { 
+              !userStore.error ? null :
               // eslint-disable-next-line jsx-a11y/href-no-hash
-              <a className="link forgot" href="#"> Забыли пароль?</a>
-              // Введите ваш электронный адрес. Отправим на него логин и пароль
+              this.state.showForgot ? <span>{loc[lang].forgetPass}</span> :
+              // eslint-disable-next-line jsx-a11y/href-no-hash              
+                <a className="link forgot" href="#" onClick={this.forgotClick}>{loc[lang].forgetPass}</a>
+            }
+            {
+              this.state.showForgot &&
+              // eslint-disable-next-line jsx-a11y/href-no-hash                
+              <span className="link forgot">{loc[lang].forgetText}</span>
             }
           </p>
-          {userStore.error && <p className="additional-info">Неверные логин или пароль, попробуйте еще раз</p>}
-          <input ref="name" type="text" className="login_input" placeholder="Логин"/>
-          <input ref="pass" type="password" className="login_input" placeholder="Пароль"/>
-          <div className="row">
-            <div className="remember" onClick={this.onCheckboxClickHandle}>
-              <div className="checkbox"><div className="check"></div></div>
-              <label className="cb-text">Запомнить меня</label>
-            </div>
-          </div>
-          <div className="footer-btn-bar">
-            <span>
-              <button onClick={this.handleLogin} className="btn footer-btn-bar__black-btn footer-btn-bar__black-btn--invert">Войти</button>
-            </span>
-            <a className="footer-btn-bar__white footer-btn-bar__white--invert" href="#">назад
-              <div className="footer-btn-bar__white-frame">
-                <svg width="100%" height="100%">
-                  <rect className="footer-btn-bar__white-rect footer-btn-bar__white-rect--1" width="100%" height="100%"/>
-                  <rect className="footer-btn-bar__white-rect footer-btn-bar__white-rect--2" width="100%" height="100%"/>
-                </svg>
+          {!this.state.showForgot ?
+            <React.Fragment>
+              <input
+                ref="name"
+                type="text"
+                required={true}
+                className="login_input"
+                placeholder={loc[lang].placeHolders.login}
+               />
+              <input
+                ref="pass"
+                type="password"
+                className="login_input"
+                placeholder={loc[lang].placeHolders.password}
+              />
+              <div className="row">
+                <div className="remember" onClick={this.onCheckboxClickHandle}>
+                  <div className="checkbox"><div className="check" /></div>
+                  <label className="cb-text">{loc[lang].rememberMe}</label>
+                </div>
               </div>
-            </a>
+            </React.Fragment> :
+            <input
+              required={true}
+              className="login_input"
+              type="email"
+              placeholder={loc.en.placeHolders.email}
+            />
+          }
+          <div className="controlls-bar">
+            <Button
+              theme="black"
+              invertTheme={true}
+              type="submit"
+              >{this.state.showForgot ? loc[lang].forgotSend : loc[lang].login}
+              </Button>
+            <Button theme="white" invertTheme={true} onClick={this.backClick}>{loc[lang].back}</Button>
           </div>
         </div>
         <div className="text">* autumn 2017 Louis Purple</div>
-      </section>
+      </form>
     </div>
   }
 

@@ -7,7 +7,7 @@
     -ms-align-items: center;
     align-items: center;
     justify-content: flex-end;
-    margin-top: auto;
+
 }
 
 .footer-btn-bar__white{
@@ -25,9 +25,7 @@
     font-weight: 500;
     text-align: center;
 }
-.footer-btn-bar__white--invert{
-    color: #fff;
-}
+
 
 .footer-btn-bar__white-frame{
     position: absolute;
@@ -80,17 +78,6 @@
     border-color: #eceeee;
     color: #000;
 }
-.footer-btn-bar__black-btn--invert{
-    color: #000;
-    background: #fff;
-    border-color: #fff;
-}
-.footer-btn-bar__black-btn--invert:hover{
-    background: #000;
-    border-color: #000;
-    color: #fff;
-}
-
 
 @media only screen and (max-width : 1140px){
     .footer-btn-bar__black-btn{

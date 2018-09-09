@@ -8,22 +8,24 @@ const makeLocale: MakeLocale<Locale> = () => ({
   en: {
     index: 'main',
     order: 'order',
-    garments: 'garments'
+    garments: 'garments',
+    shirt: 'shirt'
   },
   ru: {
     index: 'главная',
     order: 'заказать',
-    garments: 'изделия'
+    garments: 'изделия',
+    shirt: 'рубашка'
   },
 });
 const loc = makeLocale();
 
 const makeInitionalOrderPath = (lang: string) => [{
   value: loc[lang].order,
-  link: '/order/details',
+  link: '/order/details/shirt',
 }, {
-  value: loc[lang].garments,
-  link: '/order/details',
+  value: loc[lang].shirt,
+  link: '/order/details/shirt',
 }];
 
 class App implements IAppStore {
@@ -40,7 +42,7 @@ class App implements IAppStore {
   setLang = (lang: string) => {
     this.lang = lang;
     this.orderPath[0].value = loc[lang].order;
-    this.orderPath[1].value = loc[lang].garments;
+    this.orderPath[1].value = loc[lang].shirt;
   }
   @action
   pushOrderPathItem = (item: OrderPathItem) => {

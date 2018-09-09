@@ -30,17 +30,25 @@ class FooterBar extends React.Component<FooterBarProps> {
         } = this.props;
         return (
             <div className="footer-btn-bar">
-                <Link
-                    to={backLink!}
-                    onClick={this.onBackClick}
-                    style={{
-                        cursor: 'pointer',
-                }}
-                >
-                    <Button theme="white" className="back-button">
-                        {loc[lang!].back}
-                    </Button>
-                </Link>
+                <Route
+                    path={routes.subgroupChoice}
+                    exact={true}
+                    component={() => {
+                        return (
+                            <Link
+                                to={backLink!}
+                                onClick={this.onBackClick}
+                                style={{
+                                    cursor: 'pointer',
+                            }}
+                            >
+                                <Button theme="white" className="back-button">
+                                    {loc[lang!].back}
+                                </Button>
+                            </Link>
+                        );
+                    }}
+                />
                 <Switch>
                     <Route
                         path={routes.subgroupChoice}

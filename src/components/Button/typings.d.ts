@@ -3,6 +3,7 @@ interface ButtonProps {
     onClick?: (...args: any[]) => any;
     className?: string;
     type?: string;
+    disabled?: boolean;
     style?: object;
     theme?: 'black' | 'white';
     invertTheme?: boolean;

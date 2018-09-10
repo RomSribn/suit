@@ -37,7 +37,6 @@ class FooterBar extends React.PureComponent<FooterBarProps> {
                 backLink={backLink}
                 popOrderPathitem={popOrderPathitem}
                 orderStore={orderStore}
-                hasOrder={Boolean(orderStore!.orderInfo)}
             />
         );
     }

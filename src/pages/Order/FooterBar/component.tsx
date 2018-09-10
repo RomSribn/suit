@@ -25,8 +25,7 @@ class FooterBar extends React.Component<FooterBarProps> {
     render() {
         const {
             lang,
-            backLink,
-            hasOrder
+            backLink
         } = this.props;
         return (
             <div className="footer-btn-bar">
@@ -65,7 +64,7 @@ class FooterBar extends React.Component<FooterBarProps> {
                     />
                     <Route path={routes.details}>
                         <FadeIn>
-                            <SaveButton>{Boolean(hasOrder!) ? loc[lang!].save : loc[lang!].create}</SaveButton>
+                            <SaveButton>{loc[lang!].create}</SaveButton>
                         </FadeIn>
                     </Route>
                 </Switch>

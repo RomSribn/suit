@@ -1,0 +1,28 @@
+.spinner
+    &__wrapper
+        display flex
+        justify-content center
+        align-items center
+        height 100%
+        width 100%
+
+    width 50%
+    height 50%
+
+    .rect
+        position absolute
+        fill none
+        stroke #9eadae
+        stroke-width 5px
+
+        &--2
+            stroke #000
+            stroke-width 5px
+            stroke-dasharray 75% 120%
+            animation: spin 1s infinite
+            animation-timing-function: linear
+
+
+@keyframes spin
+    0%   { stroke-dashoffset: 0 }
+    100% { stroke-dashoffset: -200% }

@@ -3,8 +3,15 @@ import { observer, inject } from 'mobx-react';
 import Widget3D from 'clothes-widget-3d';
 import { Redirect } from 'react-router';
 import _ from 'lodash';
+import { Spinner } from '../../components/Spinner';
 
 class Widget extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSpinner: true,
+    };
+  }
   componentDidMount() {
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
@@ -17,6 +24,9 @@ class Widget extends PureComponent {
       }
     );
     try {
+      this.widget3d.firstUpdate.then(() => {
+        this.setState({ showSpinner: false });
+      });
       this.widget3d.update(this.props.assets)
       .then(this.handleUpdated);
     } catch(err) {
@@ -36,11 +46,14 @@ class Widget extends PureComponent {
 
   render() {
     return (
-      <div
-        className="widget3d"
-        ref={(node) => this.widgetContainer = node}
-        style={{ position: 'absolute', width: '400%', height: '100%', left: '-150%' }}
-      />
+      <React.Fragment key="widget with spinner">
+        {this.state.showSpinner && <Spinner />}
+        <div
+          className="widget3d"
+          ref={(node) => this.widgetContainer = node}
+          style={{ position: 'absolute', width: '400%', height: '100%', left: '-150%' }}
+        />
+      </React.Fragment>
       );
   }
 

@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router';
 import DemoDummy from '../../containers/Main/Dummy';
 import { routes } from '../../config/routes';
 
-const DemoSection = () => {
+const DemoSection = (props: any) => { // tslint:disable-line no-any
     return (
     <div className="demo" >
         <Switch>

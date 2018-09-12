@@ -91,7 +91,7 @@ class OrderStore implements IOrderStore {
             callApi({
                 method: 'get',
                 url: services.garmentsDefaults
-            }, () => this.isFetching = true,
+            }, () => { this.isFetching = true; },
             (data: any) => { // tslint:disable-line no-any
                 this._onSuccess(data, callback);
             },
@@ -108,7 +108,7 @@ class OrderStore implements IOrderStore {
             method,
             data: prepareOrder(this.order, customerInfo),
         },
-        () => null,
+        (): null => null,
         (info: OrderInfo) => {
             this.orderInfo = info;
             return info;
@@ -127,7 +127,7 @@ class OrderStore implements IOrderStore {
             method: 'POST',
             data: prepareOrder(this.order, userInfo),
         },
-        () => null,
+        (): null => null,
         (info: OrderInfo) => {
             this.orderInfo = info;
             return info;

@@ -1,13 +1,14 @@
+
 interface NavigationRoutes {
     index: string;
     order: string;
     panel: string;
     clientele: string;
-    orders: string;
     calendar: string;
     tasks: string;
     analytics: string;
     settings: string;
+    ordersList: string;
 }
 
 interface Routes {

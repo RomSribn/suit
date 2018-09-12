@@ -50,7 +50,7 @@
 .main-menu__link--order:before{background-image: url(../img/menu/white/order.svg);}
 .main-menu__link--panel:before{background-image: url(../img/menu/white/panel.svg);}
 .main-menu__link--clientele:before{background-image: url(../img/menu/white/clientele.svg);}
-.main-menu__link--orders:before{background-image: url(../img/menu/white/orders.svg);}
+.main-menu__link--ordersList:before{background-image: url(../img/menu/white/orders.svg);}
 .main-menu__link--calendar:before{background-image: url(../img/menu/white/calendar.svg);}
 .main-menu__link--tasks:before{background-image: url(../img/menu/white/tasks.svg);}
 .main-menu__link--analytics:before{background-image: url(../img/menu/white/analytics.svg);}

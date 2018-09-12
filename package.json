@@ -94,6 +94,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "dependencies": {
+    "@types/react-table": "^6.7.12",
     "axios": "^0.18.0",
     "clothes-widget-3d": "git+ssh://git@bitbucket.org/haha29/widget3d.git#master",
     "expect": "^22.4.0",
@@ -117,6 +118,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scroll": "^1.7.7",
+    "react-table": "^6.8.6",
     "react-transition-group": "^2.2.1"
   },
   "jest": {

@@ -12,6 +12,7 @@ class Button extends React.PureComponent<ButtonProps> {
             className,
             invertTheme,
             style,
+            disabled,
             theme
         } = this.props;
         const whiteTheme = theme === 'white';
@@ -32,6 +33,7 @@ class Button extends React.PureComponent<ButtonProps> {
                         classNames(
                             className,
                             'button',
+                            { disabled },
                             { black: !whiteTheme },
                             { white: whiteTheme },
                             { invert: invertTheme }

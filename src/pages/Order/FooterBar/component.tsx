@@ -48,6 +48,20 @@ class FooterBar extends React.Component<FooterBarProps> {
                         );
                     }}
                 />
+                <Route
+                    path={routes.garment}
+                    exact={true}
+                    component={() => {
+                        return (
+                            <span
+                            >
+                                <Button theme="white" className="back-button" disabled={true}>
+                                    {loc[lang!].back}
+                                </Button>
+                            </span>
+                        );
+                    }}
+                />
                 <Switch>
                     <Route
                         path={routes.subgroupChoice}

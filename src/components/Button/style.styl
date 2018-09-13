@@ -10,9 +10,9 @@
     border-radius 0
     white-space nowrap
 
-    &.disabled 
+    &.disabled
         cursor default
-        opacity .25
+        opacity .5
         user-select none
 
     &.black
@@ -67,9 +67,9 @@
 
             & .rect--2
                 stroke: white
-        
-        &:hover .rect--2
-            stroke-dashoffset -150%
+    
+    &:not(.disabled).white:hover .rect--2
+            stroke-dashoffset 0
 
 .frame
     position absolute

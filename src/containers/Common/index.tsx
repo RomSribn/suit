@@ -13,6 +13,7 @@ interface CommonProps {
     children?: React.ReactChildren;
     userStore?: IUserStore;
     routingStore?: History;
+    showSpinner?: boolean;
 }
 
 @inject(({ routing }) => ({
@@ -26,7 +27,7 @@ class Common extends React.Component<CommonProps> {
         return (
             <div className="application" >
                 {/* <Paralax /> */}
-                { window.location.pathname !== '/login' &&
+                { window.location.pathname !== '/login' && (!this.props.showSpinner) &&
                     <Navigation />
                 }
                 <div className="content">

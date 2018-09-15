@@ -101,8 +101,8 @@ class OrderStore implements IOrderStore {
     @action
     saveOrder = (customerInfo: User) => {
         const {orderInfo} = this;
-        const method = orderInfo ? 'PUT' : 'POST';
-        const id = orderInfo ? `/${orderInfo.orderId}` : '';
+        const method = orderInfo && orderInfo.orderId ? 'PUT' : 'POST';
+        const id = orderInfo && orderInfo.orderId ? `/${orderInfo.orderId}` : '';
         return callApi({
             url: services.orders + id,
             method,

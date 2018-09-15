@@ -62,7 +62,7 @@ const routesTranslations = {
 };
 
 const routes = {
-  details: `/details`,
+  details: `/order/details`,
   order: '/order',
   login: '/login',
   index: '/',

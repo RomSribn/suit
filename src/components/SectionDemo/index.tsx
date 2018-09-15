@@ -1,16 +1,14 @@
 
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import { DemoDummy } from '../DemoDummy';
-import { Demo } from '../OrderDecorationBlocks';
-import { routes } from '../routes';
+import DemoDummy from '../../containers/Main/Dummy';
+import { routes } from '../../config/routes';
 
 const DemoSection = () => {
     return (
     <div className="demo" >
         <Switch>
             <Route path={routes.details} component={DemoDummy}/>
-            <Route path={routes.index} component={Demo}/>
         </Switch>
     </div>);
 };

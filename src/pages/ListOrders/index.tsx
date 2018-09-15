@@ -1,4 +1,5 @@
 import * as React from 'react';
+// import { Table } from '../../components/Table';
 import { observer, inject } from 'mobx-react';
 
 @inject(({

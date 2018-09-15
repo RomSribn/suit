@@ -25,6 +25,7 @@ class Wrapper extends Component {
         <Switch>
           <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
           <Route exact={true} path={routes.index}>
+            {/* // TODO: убрать это после того, как добавим элементы кроме рубашки */}
             <Redirect to={routes.order + '/shirt'} />
           </Route>
           <Route
@@ -33,10 +34,10 @@ class Wrapper extends Component {
               return <Order {...props } order={this.props.order}/>;
             }}
           />
+          <Route path="/" component={ () => !loggedIn ? <Redirect to="/" /> : null } />          
         </Switch>
 
         {/* // Закрытые страницы  */}
-        <Route path="/" component={ () => !loggedIn ? <Redirect to="/" /> : null } />
         <Switch>
             <Route path={routes.ordersList}><ListOrders /></Route>
         </Switch>

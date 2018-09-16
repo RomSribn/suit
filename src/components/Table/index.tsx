@@ -39,7 +39,16 @@ const filterMethod = (filter: any, row: any) => { // tslint:disable-line
     return row[filter.id].toLocaleLowerCase().includes(filter.value.toLowerCase()); // tslint:disable-line
 };
     
-class Table extends React.PureComponent<TProps> {
+class Table extends React.PureComponent<TProps, { activeOrderId: string | null}> {
+    constructor(props: TProps) {
+        super(props);
+        this.state = {
+            activeOrderId: null
+        };
+    }
+    setActiveOrderId = (id: string) => {
+        this.setState({ activeOrderId: id });
+    }
     render() {
         const lang = this.props.lang;
         const columns = loc[lang].columns;
@@ -51,6 +60,14 @@ class Table extends React.PureComponent<TProps> {
                 sortable={false}   
                 loadingText=""
                 minRows={0}
+                getTrProps={(_: any, rowInfo: any) => { // tslint:disable-line
+                    return {
+                        onClick: () => {
+                            this.setActiveOrderId(rowInfo.row.order);
+                        },
+                        className: classNames({ _active: this.state.activeOrderId === rowInfo.row.order})
+                    };
+                }}
                 columns={[
                     {
                         accessor: 'order',

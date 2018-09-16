@@ -38,11 +38,12 @@
             transition: opacity 0.35s linear;
 
         &-tr-group
-            cursor pointer
-            display flex
-            &:hover {
-                background linear-gradient(to right, #436263,#436263 14px,#eceeee 14px, #eceeee)
-            }
+            .rt-tr
+                cursor pointer
+                display flex
+                &:hover, &._active {
+                    background linear-gradient(to right, #436263,#436263 14px,#eceeee 14px, #eceeee)
+                }
 
             .rt-tr .rt-td
                 display flex

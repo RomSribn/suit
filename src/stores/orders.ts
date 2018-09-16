@@ -3,7 +3,7 @@ import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
 type List = OrderList.ServerData.List;
-type Fetch<T, Data> = (params: T) => Promise<void | Axios.Response<Data>>;
+type Fetch<Data> = () => Promise<void | Axios.Response<Data>>;
 
 class OrdersStore implements OrderList.IOrderStore {
     @observable isFetching = false;
@@ -12,7 +12,7 @@ class OrdersStore implements OrderList.IOrderStore {
     @observable orders = observable.array<OrderList.OrderItem>();
     
     @action
-    fetch: Fetch<string, List> = (token) => {
+    fetch: Fetch<List> = () => {
         this.error = null;
 
         return callApi({

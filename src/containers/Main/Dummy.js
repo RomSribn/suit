@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent, Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import Widget3D from 'clothes-widget-3d';
 import { Redirect } from 'react-router';
@@ -68,7 +68,7 @@ let prevInfo = {};
   orderStore: order,
 }))
 @observer
-export default class App extends PureComponent {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {

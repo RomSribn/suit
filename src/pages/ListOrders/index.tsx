@@ -1,21 +1,30 @@
 import * as React from 'react';
-// import { Table } from '../../components/Table';
+import { Table } from '../../components/Table';
 import { observer, inject } from 'mobx-react';
+import { prepareTableData } from './utils';
 
 @inject(({
-    ordersStore
+    ordersStore,
+    app
 }) => {
     return ({
-        ordersStore
+        ordersStore,
+        appStore: app
     });
 })
 @observer
-class ListOrders extends React.PureComponent<any> { //tslint:disable-line
+class ListOrders extends React.Component<ListOrdersProps> {
     componentDidMount() {
-        this.props.ordersStore.fetch();
+        this.props.ordersStore!.fetch();
     }
     render() {
-        return (<span>fusk</span>);
+        const ordersStore = this.props.ordersStore!;
+        const lang = this.props.appStore!.lang;
+        return (
+        <Table
+            orders={prepareTableData(ordersStore.orders, lang)}
+            lang={lang}
+        />);
     }
 }
 

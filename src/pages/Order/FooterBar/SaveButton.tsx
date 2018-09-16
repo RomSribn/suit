@@ -24,7 +24,7 @@ interface State {
     activeOrderItem: order.activeElement
 }))
 @observer
-class SaveButton extends React.PureComponent<P, State> {
+class SaveButton extends React.Component<P, State> {
     constructor(props: P) {
         super(props);
         this.state = {

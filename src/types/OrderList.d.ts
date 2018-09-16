@@ -37,7 +37,7 @@ declare namespace OrderList {
     
         interface OrderItem {
             customer: User;
-            date: Date;
+            date: string;
             deliveryDays: number;
             garments: {
                 [key in allowedGarment]: {
@@ -75,8 +75,9 @@ declare namespace OrderList {
             totalElements: number;
         }
     }
-    interface IOrderStore {
+    interface IOrderStore<Data = ServerData.List> {
         orders: ServerData.OrderItem[];
+        fetch(): Promise<void | Axios.Response<Data>>;
     }
     type OrderItem = ServerData.OrderItem;
 }

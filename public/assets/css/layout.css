@@ -72,7 +72,7 @@
     flex-direction: column;
     -ms-align-items: flex-start;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start; 
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;

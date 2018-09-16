@@ -15,7 +15,10 @@
             padding-right 0.667rem
             border-bottom 1px solid rgba(149, 161, 177, 0.2)
             color rgba(138, 138, 138, 0.4)
-
+            // Скрывай все дефолтные хедеры от react-table
+            // и рисуем вместо них только фильтры
+            &.-header
+                display none
             .wrapper-dropdown
                 border none
                 background none

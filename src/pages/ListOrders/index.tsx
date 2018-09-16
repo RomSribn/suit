@@ -21,10 +21,13 @@ class ListOrders extends React.Component<ListOrdersProps> {
         const ordersStore = this.props.ordersStore!;
         const lang = this.props.appStore!.lang;
         return (
-        <Table
-            orders={prepareTableData(ordersStore.orders, lang)}
-            lang={lang}
-        />);
+        <div className="main__middle">
+            <Table
+                orders={prepareTableData(ordersStore.orders, lang)}
+                lang={lang}
+            />
+        </div>
+        );
     }
 }
 

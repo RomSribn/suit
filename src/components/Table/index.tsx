@@ -1,6 +1,7 @@
 import * as React from 'react';
 import RTable from 'react-table';
 import * as classNames from 'classnames';
+import  { PanelRow } from './PanelRow';
 import { filterFabric } from './filterFabric';
 import { loc } from './loc';
 import './styles.styl';
@@ -54,6 +55,8 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
         const columns = loc[lang].columns;
         const statuses = loc[lang].statuses;
         return (
+        <React.Fragment key="Orders table fragment">
+            <PanelRow orderId={this.state.activeOrderId} />
             <RTable
                 className="orders"
                 showPagination={false}
@@ -116,6 +119,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
                 ]}
                 data={this.props.orders}
             />
+        </React.Fragment>
         );
     }
 }

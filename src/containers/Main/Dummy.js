@@ -47,7 +47,7 @@ class Widget extends PureComponent {
   render() {
     return (
       <React.Fragment key="widget with spinner">
-        {this.state.showSpinner && <Spinner />}
+        {(this.state.showSpinner || !this.props.paramsSelectedCount) && <Spinner />}
         <div
           className="widget3d"
           ref={(node) => this.widgetContainer = node}
@@ -123,11 +123,9 @@ export default class App extends Component {
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
       <Widget
         selected={selected || ''}
+        paramsSelectedCount={params.length}
         assets={[
-          ...params,
-          { 'id': 'head', 'static': true },
-          { 'id': 'body', 'static': true },
-          { 'id': 'trousers', 'static': true }
+          ...params
         ]}
         onClickAsset={this.handleClickAsset}
     />

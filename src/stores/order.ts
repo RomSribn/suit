@@ -80,6 +80,7 @@ class OrderStore implements IOrderStore {
     @action
     fetchInitialOrder = (
         garments: string[],
+        orderId?: string,
         callback?: (...args: any[]) => any // tslint:disable-line no-any
     ) => {
         this.error = null;        
@@ -135,7 +136,7 @@ class OrderStore implements IOrderStore {
         this._onError
     );
     }
-    _onSuccess = (data: any, callback: any) => { // tslint:disable-line
+    _onSuccess = (data: any, callback?: any) => { // tslint:disable-line
         const tmp = _.groupBy(data, 'garmentId'); // tslint:disable-line
         const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
             const x = {
@@ -156,7 +157,9 @@ class OrderStore implements IOrderStore {
           }, {});
         this.setOrder(defaultOrder);
         this.defaultValues = defaultOrder;
-        callback(Object.keys(defaultOrder).filter(garment => garment !== 'manequin'));
+        if (callback) {
+            callback(Object.keys(defaultOrder).filter(garment => garment !== 'manequin'));
+        }
         this.isFetching = false;
         this.error = null;
     }

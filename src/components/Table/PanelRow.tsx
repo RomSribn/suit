@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { routes } from '../../config/routes';
+
 import './panelRowStyles.css';
 import './panelRowStyles.styl';
 
@@ -61,7 +63,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showcontrols: boolean
                             <Link
                                 className="controls__link controls__link--refresh"
                                 to={{
-                                    pathname: '/order/details',
+                                    pathname: `${routes.details}/shirt`,
                                     search: `order_id=${orderId}`
                                 }}
                                 title=""

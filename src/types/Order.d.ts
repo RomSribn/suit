@@ -14,6 +14,7 @@ interface IOrderStore {
     saveOrder(customerInfo: User): Promise<any>;
     updateOrderInfo(): Promise<any>;
     toggleHiddenElement(element: string): void;
+    fetchOrder(orderId: string): void;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): void;
 }
 

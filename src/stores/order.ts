@@ -6,8 +6,8 @@ import { services } from '../config/routes';
 
 const STOP_CODES = ['trousers', 'body', 'shoes', 'eyes', 'head'];
 
-type PrepareOrder = (order: Order, customer: User) => ServerOrder;
-const prepareOrder: PrepareOrder = (order, customer) => {
+type PrepareOrder = (order: Order, customer?: User) => ServerOrder;
+const prepareOrder: PrepareOrder = (order, customer?) => {
     const items: ServerItem[] =
         _.values(order)
         .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
@@ -73,6 +73,19 @@ class OrderStore implements IOrderStore {
         this.order = {..._o};
         this.updateOrderInfo();
     }
+
+    // TODO: заглушка для рубашки
+    @action
+    setShirtInitials = (initials: string) => {
+        const newOrder = {...this.order};
+        newOrder.shirt[0].design.initials_text = initials;
+        this.order = newOrder;
+    }
+    @action
+    getShirtInitials(): string {
+        return this.order.shirt[0].design.initials_text;
+    }
+
     @action
     setActiveItem = (item: GalleryStoreItem | null) => { // tslint:disable-line
         this.activeElement = item;
@@ -80,8 +93,8 @@ class OrderStore implements IOrderStore {
     @action
     fetchInitialOrder = (
         garments: string[],
-        orderId?: string,
-        callback?: (...args: any[]) => any // tslint:disable-line no-any
+        // orderId?: string,
+        callback?: (...args: any[]) => any // tslint:disable-line no-any 
     ) => {
         this.error = null;        
         if (!garments.length) {
@@ -100,7 +113,7 @@ class OrderStore implements IOrderStore {
         }
     }
     @action
-    saveOrder = (customerInfo: User) => {
+    saveOrder = (customerInfo?: User) => {
         const {orderInfo} = this;
         const method = orderInfo && orderInfo.orderId ? 'PUT' : 'POST';
         const id = orderInfo && orderInfo.orderId ? `/${orderInfo.orderId}` : '';

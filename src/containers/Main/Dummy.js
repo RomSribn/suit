@@ -4,6 +4,9 @@ import Widget3D from 'clothes-widget-3d';
 import { Redirect } from 'react-router';
 import _ from 'lodash';
 import { Spinner } from '../../components/Spinner';
+import { object } from 'prop-types';
+
+const INITIALS = 'initials';
 
 class Widget extends PureComponent {
   constructor(props) {
@@ -65,7 +68,7 @@ class Widget extends PureComponent {
 const GROUPS = ['design', 'fabric_ref', 'fitting']
 let prevInfo = {};
 @inject(({order }) => ({
-  orderStore: order,
+  orderStore: order
 }))
 @observer
 export default class App extends Component {
@@ -82,6 +85,7 @@ export default class App extends Component {
   render() {
     const { orderStore } = this.props;
     const activeElement = orderStore.activeElement || {};
+    const initials = {};
     const params = Object.keys(orderStore.order).reduce((acc, garment) => {
       const curGarment = orderStore.order[garment];
       GROUPS.forEach(group => {
@@ -95,7 +99,25 @@ export default class App extends Component {
             acc.push(activeElement.our_code)
           } else {
             const subgroupVal = curGarment[0][group][subgroup];
-            acc.push(subgroupVal.our_code)
+            if (subgroup.includes(INITIALS)) {
+              if (!initials.text) {
+                initials.text = {};
+              }
+              if(subgroup === `${INITIALS}_text`) {
+                initials.text.value = subgroupVal;
+              }
+              if (subgroup === `${INITIALS}_arrangement`) {
+                initials.id = subgroupVal.our_code;
+              }
+              if (subgroup === `${INITIALS}_color`) {
+                initials.text.color = subgroupVal.our_code;
+              }
+              if (subgroup === `${INITIALS}_style`) {
+                initials.text.font = subgroupVal.our_code;
+              }
+            } else {
+              acc.push(subgroupVal.our_code);
+            }
           }
         })
       })
@@ -118,6 +140,9 @@ export default class App extends Component {
         group: _.get(activeElement, 'elementInfo.group', ''),
         subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
       };
+    }
+    if (!_.isEmpty(initials)) {
+      params.push(initials);
     }
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}

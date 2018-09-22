@@ -15,7 +15,12 @@ type FilterFields = (
 const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     let status;
     try {
-        status = order[garment][order[garment].length - 1][subgroup][item.subsection_our_code].title[lang];
+        const orderVal = order[garment][order[garment].length - 1];
+        if (item.is_input) {
+            status = orderVal[subgroup][item.subsection_our_code];
+        } else {
+            status = orderVal[subgroup][item.subsection_our_code].title[lang];
+        }
         status = Boolean(status) ? status : loc[lang].noStatus;
 
     } catch (_) {

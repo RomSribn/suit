@@ -1,0 +1,14 @@
+.controls
+    &__item
+        position relative
+        &.disabled
+            cursor default
+            background: none
+            &:before
+                content ''
+                display block
+                position absolute
+                height 100%
+                width 100%
+                z-index 9
+                background: rgba(255, 255, 255, 0.8)

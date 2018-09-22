@@ -30,7 +30,7 @@ class GalleryStore implements GalleryStore {
                 url: `${API_ROOT}/api/garments/${this.garment}/${this.subGroup}/${group}`,
                 method: 'GET',
             },
-            () => this.isfetching = true,
+            () => { this.isfetching = true; },
             // TODO: remove after api added isInput field
             this._fetchSucceed(group === 'fitting'),
             this._fetchError,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as classNames from 'classnames';
 import { PopUp } from '../../../containers/Popup';
-import Login from '../../../components/Login';
+import Login from '../../Login';
 
 import './styles.styl';
 
@@ -13,8 +13,8 @@ const loginText = {
 
 type State = { showLoginForm: boolean; };
 
-class HeaderBar extends React.Component<HeaderBarDefaultProps, State> {
-    constructor(props: HeaderBarDefaultProps) {
+class HeaderBar extends React.Component<HeaderBarProps, State> {
+    constructor(props: HeaderBarProps) {
         super(props);
         this.state = {
             showLoginForm: false
@@ -43,7 +43,7 @@ class HeaderBar extends React.Component<HeaderBarDefaultProps, State> {
             userStore,
             lang,
             setLang
-        } = this.props as HeaderBarDefaultProps;
+        } = this.props;
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
         return (
             <div className="main__bar">

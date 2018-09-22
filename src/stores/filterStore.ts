@@ -20,7 +20,7 @@ class FilterStore implements IFilterStore {
     @action
     loadFilters = (url: string) => {
         callApi({ url, method: 'GET'},
-            () => this.isFetching = true,
+            () => { this.isFetching = true; },
             (filters: ServerFilters) => {
                 this.filters = Object.keys(filters).reduce((acc, filterName) => {
                     const title = filters[filterName][0].title;

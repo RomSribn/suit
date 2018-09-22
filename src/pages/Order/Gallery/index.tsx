@@ -23,9 +23,6 @@ import { Fitting } from '../Fitting/component';
 })
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
-    shouldComponentUpdate(nextProps: GalleryContainerProps) {
-        return this.props.match.params.group !== nextProps.match.params.group;
-    }
     componentWillUnmount() {
         this.props.setActiveOrderItem(null);
     }

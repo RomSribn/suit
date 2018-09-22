@@ -5,26 +5,6 @@ interface OrderSectionInterface {
     routes: OrderRoutes;
 }
 
-interface HeaderBarDefaultProps {
-    userStore: IUserStore;
-    lang: string;
-    setLang: (lang: string) => void;
-}
-
-type HeaderBarProps = Partial<HeaderBarDefaultProps>;
-
-
-interface HeaderProps extends HeaderBarProps {
-    userStore?: IUserStore;
-    path?: string;
-    showChopcard?: string;
-}
-
-interface HeaderContainerProps extends HeaderProps {
-    userStore?: IUserStore;    
-    location?: Location;    
-}
-
 interface Subgroup {
     id: string;
     subsection_our_code: string;

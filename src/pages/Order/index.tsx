@@ -2,7 +2,6 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Redirect } from 'react-router';
 import { MainSection } from './SectionMain';
-import { DemoSection } from './SectionDemo';
 import { routes } from './routes';
 
 let wasRendered = false;
@@ -22,14 +21,11 @@ class Order extends React.PureComponent<any> {  //tslint:disable-line
         const isIndexPage = false;
 
         return (
-        <div className="content" key={isIndexPage.toString()}>
             <MainSection
                 afterGarmentChoice={afterGarmentChoice}
                 isIndexPage={isIndexPage}
                 detailsDeep={detailsDeep}
             />
-            <DemoSection />
-        </div>
         );
     }
 }

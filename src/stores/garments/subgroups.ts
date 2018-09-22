@@ -28,8 +28,8 @@ class Subgroups {
                 url: `${API_ROOT}/${services.garments}/${garment}/${subgroup}`,
                 method: 'GET',
              },
-            () => this.isFetching = true,
-            () => null,
+            () => { this.isFetching = true; },
+            (): null => null,
             (e: Error) => {
                 console.log('error', e); // tslint:disable-line
                 this.error = e;

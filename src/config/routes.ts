@@ -30,11 +30,11 @@ const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   order: '/order/details',
   panel: '/panel',
   clientele: '/clients',
-  orders: '/order_list',
   calendar: '/calendar',
   tasks: '/tasks',
   analytics: '/analytics',
   settings: '/settings',
+  ordersList: '/order/list'
 });
 const navigationRoutes = makeNavigationRoutes();
 
@@ -43,7 +43,7 @@ const routesTranslations = {
     order: 'order',
     panel: 'panel',
     clientele: 'clients',
-    orders: 'order list',
+    ordersList: 'order list',
     calendar: 'calendar',
     tasks: 'tasks',
     analytics: 'analytics',
@@ -53,7 +53,7 @@ const routesTranslations = {
     order: 'заказать',
     panel: 'панель',
     clientele: 'клиенты',
-    orders: 'заказы',
+    ordersList: 'заказы',
     calendar: 'календарь',
     tasks: 'задачи',
     analytics: 'аналтика',
@@ -62,7 +62,7 @@ const routesTranslations = {
 };
 
 const routes = {
-  details: `/details`,
+  details: `/order/details`,
   order: '/order',
   login: '/login',
   index: '/',

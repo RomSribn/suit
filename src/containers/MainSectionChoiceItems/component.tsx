@@ -90,16 +90,36 @@ class CustomLink extends React.PureComponent<LinkProps> {
 }
 interface InputProps {
     item: SubgroupChoiceItem;
+    orderStore: IOrderStore;
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
 }
-class CustomInput extends React.PureComponent<InputProps, {text: string}> {
-    constructor(props: InputProps) {
-        super(props);
+class CustomInput extends React.PureComponent<InputProps> {
+    input: React.RefObject<HTMLInputElement>;
+    onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        this.props.orderStore.setShirtInitials(e.target.value || '');
     }
+    save = () => {
+        const {
+            orderStore
+        } = this.props;
+        if (orderStore.orderInfo && orderStore.orderInfo.orderId) {
+            this.props.orderStore.saveOrder();
+        }
+    }
+
     render() {
         return (
             <Common item={this.props.item} clearClick={this.props.clearClick} noCursorPointer={true}>
-                <input type="text" maxLength={8} placeholder="не выбрано" />
+                <input
+                    type="text"
+                    maxLength={8}
+                    placeholder="не выбрано"
+                    value={this.props.orderStore.getShirtInitials()}
+                    onChange={this.onChange}
+                    onBlur={this.save}
+                    ref={this.input}
+                />
             </Common>
         );
     }
@@ -138,6 +158,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                     <CustomInput
                         item={item}
                         clearClick={this.clearClick}
+                        orderStore={this.props.orderStore!}
                     /> :
                     <CustomLink
                         basicRoute={basicRoute}

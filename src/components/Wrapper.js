@@ -5,6 +5,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { navigationRoutes as routes, routes as commonRoutes } from '../config/routes';
 import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
+import { ListOrders } from '../pages/ListOrders';
 import Login from './Login'
 
 @inject(({user, app, order}) => ({
@@ -15,6 +16,7 @@ import Login from './Login'
 class Wrapper extends Component {
 
   render() {
+    const loggedIn = this.props.user.isAuth;
     return (<Common>
         <Route path={routes.order} exact={true} render={() => {
           this.props.app.resetOrderPath();
@@ -23,6 +25,7 @@ class Wrapper extends Component {
         <Switch>
           <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
           <Route exact={true} path={routes.index}>
+            {/* // TODO: убрать это после того, как добавим элементы кроме рубашки */}
             <Redirect to={routes.order + '/shirt'} />
           </Route>
           <Route
@@ -31,7 +34,12 @@ class Wrapper extends Component {
               return <Order {...props } order={this.props.order}/>;
             }}
           />
-          <Route component={() => <div>Page not found</div>} />
+          <Route path="/" component={ () => !loggedIn ? <Redirect to="/" /> : null } />          
+        </Switch>
+
+        {/* // Закрытые страницы  */}
+        <Switch>
+            <Route path={routes.ordersList}><ListOrders /></Route>
         </Switch>
     </Common>)
   }

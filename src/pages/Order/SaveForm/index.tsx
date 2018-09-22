@@ -7,7 +7,7 @@ import { SaveForm as Component } from './component';
     orderStore: order,
 }))
 @observer
-class SaveForm extends React.PureComponent<ContainerProps> {
+class SaveForm extends React.Component<ContainerProps> {
     render() {
         const {
             close,

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import * as classnames from 'classnames';
-import { Header } from '../Header';
 import { Filter } from '../Filter';
 import { GarmentChoise } from '../GarmentChoiseForm';
 import { Main as Details } from '../Details';
@@ -18,17 +17,7 @@ class MainSection extends React.Component<MainSectionProps> {
             afterGarmentChoice
         } = this.props;
         return (
-            <div
-                className={
-                    classnames(
-                        'main',
-                        {
-                            'main--white': !isIndexPage,
-                        },
-                    )
-                }
-            >
-                <Header />
+        <React.Fragment key="order main content">
                 <div
                     className="main__middle"
                     style={{
@@ -68,7 +57,8 @@ class MainSection extends React.Component<MainSectionProps> {
                     </Switch>
                 </div>
                 <Footer />
-            </div>);
+        </React.Fragment>
+        );
     }
 }
 

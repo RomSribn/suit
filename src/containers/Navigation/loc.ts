@@ -4,7 +4,7 @@ interface Locale {
         order: string;
         panel: string;
         clientele: string;
-        orders: string;
+        ordersList: string;
         calendar: string;
         tasks: string;
         analytics: string;

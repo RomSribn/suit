@@ -11,7 +11,7 @@ interface Props {
     orderStore: order
 }))
 @observer
-class ViewControl extends React.PureComponent<Props> {
+class ViewControl extends React.Component<Props> {
      onClick = (element: string) => () => {
          this.props.orderStore!.toggleHiddenElement(element);
      }

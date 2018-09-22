@@ -25,7 +25,7 @@ class GarmentsStore {
       method: 'GET',
       url: `${API_ROOT}/${services.garments}`,
     },
-    () => this.isFetching = true,
+    () => { this.isFetching = true; },
     this.garmentsLoaded,
     (e: Error) => this.error);
   }

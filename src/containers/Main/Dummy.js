@@ -6,8 +6,22 @@ import _ from 'lodash';
 const INITIALS = 'initials';
 
 class Widget extends PureComponent {
-
-  componentDidMount() {
+  state = {
+    showDummy: true,
+  };
+  checkIsActive() {
+    const onBlur = ()  =>  { 
+      this.setState({showDummy: false}); 
+    }; 
+    window.onfocus = () => { 
+        window.onblur.cancel();
+        this.setState({showDummy: true}); 
+        this.renderWidget();
+        // renderWidget is called here, because if not, dummy won't be rendered
+    }; 
+    window.onblur =  _.debounce(onBlur, 1000);
+  }  
+  renderWidget() {
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
       apiPath: 'http://194.87.239.90:8081/api/',
@@ -28,7 +42,14 @@ class Widget extends PureComponent {
       console.log('here', err)
     }
   }
-
+  componentDidMount() {
+    this.checkIsActive();
+    this.renderWidget();
+  }
+  componentWillUnmount() {
+    window.onfocus = undefined;
+    window.onblur = undefined;
+  }
   componentDidUpdate(prevProps) {
     if (prevProps.assets !== this.props.assets) {
       this.widget3d.update(this.props.assets).then(this.handleUpdated);
@@ -40,6 +61,9 @@ class Widget extends PureComponent {
   }
 
   render() {
+    if (!this.state.showDummy) {
+       return null; 
+    }
     return (
         <div
           className="widget3d"

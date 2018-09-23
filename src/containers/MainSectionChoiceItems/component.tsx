@@ -4,20 +4,22 @@ import {  Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
+import { loc } from './loc';
 
 interface CommonProps {
     children?: React.ReactNode;
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
     item: SubgroupChoiceItem;
     noCursorPointer?: boolean;
+    lang: string | undefined;
 }
 const Common = (props: CommonProps) => {
     const {
         item,
         clearClick,
-        noCursorPointer
+        noCursorPointer,
+        lang = 'en'
     } = props;
-
     return (
         <div className={classNames('custom', { 'custom__no-pointer': noCursorPointer})}>
             <span className="custom__content">
@@ -44,7 +46,7 @@ const Common = (props: CommonProps) => {
                         component={(...args: any[]) => { // tslint:disable-line no-any
                             const garment = args[0].match.params.garment;
                             return item.isSubclear !== null ?
-                            <span onClick={clearClick(garment, item.id!)}>clear</span> :
+                                <span onClick={clearClick(garment, item.id!)}>{loc[lang!].clear}</span> :
                             null;
                         }}
                     />
@@ -58,8 +60,9 @@ interface LinkProps {
     item: SubgroupChoiceItem;
     onClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
-    
+
     basicRoute: string;
+    lang?: string;
 }
 class CustomLink extends React.PureComponent<LinkProps> {
     render () {
@@ -67,24 +70,29 @@ class CustomLink extends React.PureComponent<LinkProps> {
             item,
             basicRoute,
             onClick,
-            clearClick
+            clearClick,
+            lang
         } = this.props;
         return (
-        <Link
-            to={`${basicRoute}/${item.link}`}
-            onClick={onClick({
-                value: item.linkName,
-                link: `${basicRoute}/${item.link}`})}
-            key={item.id}
-            style={{
-                marginBottom: '1.333rem',
-                display: 'block',
-            }}
-        >
-            <Common item={item} clearClick={clearClick} >
-                {item.status}
-            </Common>
-        </Link>
+            <Link
+                to={`${basicRoute}/${item.link}`}
+                onClick={onClick({
+                    value: item.linkName,
+                    link: `${basicRoute}/${item.link}`})}
+                key={item.id}
+                style={{
+                    marginBottom: '1.333rem',
+                    display: 'block',
+                }}
+            >
+                <Common
+                    lang={lang}
+                    item={item}
+                    clearClick={clearClick}
+                >
+                    {item.status}
+                </Common>
+            </Link>
         );
     }
 }
@@ -92,6 +100,7 @@ interface InputProps {
     item: SubgroupChoiceItem;
     orderStore: IOrderStore;
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
+    lang?: string;
 }
 class CustomInput extends React.PureComponent<InputProps> {
     input: React.RefObject<HTMLInputElement>;
@@ -109,18 +118,28 @@ class CustomInput extends React.PureComponent<InputProps> {
     }
 
     render() {
+        const {
+            lang,
+            item,
+            clearClick
+        } = this.props;
         return (
-            <Common item={this.props.item} clearClick={this.props.clearClick} noCursorPointer={true}>
-                <input
-                    type="text"
-                    maxLength={8}
-                    placeholder="не выбрано"
-                    value={this.props.orderStore.getShirtInitials()}
-                    onChange={this.onChange}
-                    onBlur={this.save}
-                    ref={this.input}
-                />
-            </Common>
+       <Common
+           item={item}
+           clearClick={clearClick}
+           noCursorPointer={true}
+           lang={lang}
+       >
+           <input
+               type="text"
+               maxLength={8}
+               placeholder="не выбрано"
+               value={this.props.orderStore.getShirtInitials()}
+               onChange={this.onChange}
+               onBlur={this.save}
+               ref={this.input}
+           />
+       </Common>
         );
     }
 }
@@ -145,6 +164,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         const {
             items,
             basicRoute,
+            lang
         } = this.props;
         return (
         <ReactCSSTransitionGroup
@@ -156,11 +176,13 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             (item: SubgroupChoiceItem) => (
                     item.isInput ? 
                     <CustomInput
+                        lang={lang}
                         item={item}
                         clearClick={this.clearClick}
                         orderStore={this.props.orderStore!}
                     /> :
                     <CustomLink
+                        lang={lang}
                         basicRoute={basicRoute}
                         item={item}
                         onClick={this.onClick}

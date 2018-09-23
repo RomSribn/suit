@@ -131,7 +131,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     exact={true}
                     path={match.path}
                 >
-                    <Component match={match} data={data} />
+                    <Component lang={lang} match={match} data={data} />
                 </Route>
                 <Redirect to={match.url}/>
             </Switch>);

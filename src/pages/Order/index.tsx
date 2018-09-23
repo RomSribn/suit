@@ -24,14 +24,11 @@ class Order extends React.PureComponent<any> {  //tslint:disable-line
         const isIndexPage = false;
 
         return (
-            <div className="content" key={isIndexPage.toString()}>
-                <MainSection
-                    afterGarmentChoice={afterGarmentChoice}
-                    isIndexPage={isIndexPage}
-                    detailsDeep={detailsDeep}
-                />
-                <DemoSection onDummyLoad={this.props.onDummyLoad}/>
-            </div>
+            <MainSection
+                afterGarmentChoice={afterGarmentChoice}
+                isIndexPage={isIndexPage}
+                detailsDeep={detailsDeep}
+            />
         );
     }
 }

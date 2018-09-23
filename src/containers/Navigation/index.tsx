@@ -7,7 +7,7 @@ import { Navigation as NavigationComponent } from './component';
 // tslint:disable-next-line no-any
 interface Props extends RouteComponentProps<void> {
     lang?: string;
-    backgroundColor?: string;
+    isOrderPage?: boolean;
     userStore?: IUserStore;
 }
 
@@ -16,10 +16,8 @@ interface Props extends RouteComponentProps<void> {
         lang: app.lang,
         userStore: user,
         // TODO: check in runtime
-        backgroundColor:
-            nextProps.location.pathname !== routes.order
-                ? 'white'
-                : 'black',
+        isOrderPage:
+            nextProps.location.pathname.includes(routes.order),
         ...nextProps,
     };
 })
@@ -28,13 +26,13 @@ class NavigationContainer extends React.Component<Props> {
     render() {
         const {
             lang,
-            backgroundColor,
+            isOrderPage,
         } = this.props;
         return (
             <NavigationComponent
                 lang={lang as string}
                 isLogin={this.props.userStore!.isAuth}
-                backgroundColor={backgroundColor as string}
+                isOrderPage={isOrderPage!}
             />);
     }
 }

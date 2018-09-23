@@ -7,7 +7,6 @@ import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
 import { ListOrders } from '../pages/ListOrders';
 import Login from './Login'
-import { Spinner } from './Spinner';
 
 @inject(({user, app, order}) => ({
   user,
@@ -19,7 +18,7 @@ class Wrapper extends Component {
   hideSpinner = () => this.setState({ showSpinner: false });
   render() {
     const loggedIn = this.props.user.isAuth;
-    return (<Common showSpinner={this.state.showSpinner}>
+    return (<Common showSpinner={this.state.showSpinner} onDummyLoad={this.hideSpinner}>
         <Route path={routes.order} exact={true} render={() => {
           this.props.app.resetOrderPath();
           return null;
@@ -35,8 +34,7 @@ class Wrapper extends Component {
             render={(props) => {
               return (
                 <React.Fragment key="widget with spinner">
-                  {this.state.showSpinner && <Spinner />}
-                  <Order {...props } order={this.props.order} onDummyLoad={this.hideSpinner}/>
+                  <Order {...props } order={this.props.order} />
                 </React.Fragment>
               )
             }}

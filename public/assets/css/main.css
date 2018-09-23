@@ -149,7 +149,10 @@
 .breadcrumbs span,
 .breadcrumbs a:hover{color: #fff;}
 
-.main--white{color: #000;}
+.main--white{
+    color: #000;
+    background: rgba(255, 255, 255, 0.6);
+}
 .main--white .profile-link{
     background-image: url(../img/bar-nav/balck/user.svg);
     color: #000;

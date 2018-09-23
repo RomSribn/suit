@@ -7,6 +7,9 @@ import { routes } from './routes';
 let wasRendered = false;
 
 class Order extends React.PureComponent<any> {  //tslint:disable-line
+    componentWillMount() {
+        wasRendered = false;
+    }
     render() {
         if (!wasRendered) {
             wasRendered = true;

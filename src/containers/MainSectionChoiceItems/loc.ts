@@ -7,7 +7,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
         clear: 'clear'
     },
     ru: {
-        clear: 'отчистить'
+        clear: 'очистить'
     },
 });
 

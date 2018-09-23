@@ -27,7 +27,7 @@ export const services = {
 type MakeNavigationRoutes = () => NavigationRoutes;
 const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
-  order: '/order/details',
+  order: '/order/details/shirt',
   panel: '/panel',
   clientele: '/clients',
   calendar: '/calendar',

@@ -14,10 +14,11 @@ import Login from './Login'
   order: order.order,
 })) @observer
 class Wrapper extends Component {
-
+  state = { showSpinner: true };
+  hideSpinner = () => this.setState({ showSpinner: false });
   render() {
     const loggedIn = this.props.user.isAuth;
-    return (<Common>
+    return (<Common showSpinner={this.state.showSpinner} onDummyLoad={this.hideSpinner}>
         <Route path={routes.order} exact={true} render={() => {
           this.props.app.resetOrderPath();
           return null;
@@ -31,7 +32,11 @@ class Wrapper extends Component {
           <Route
             path={routes.order}
             render={(props) => {
-              return <Order {...props } order={this.props.order}/>;
+              return (
+                <React.Fragment key="widget with spinner">
+                  <Order {...props } order={this.props.order} />
+                </React.Fragment>
+              )
             }}
           />
           <Route path="/" component={ () => !loggedIn ? <Redirect to="/" /> : null } />          

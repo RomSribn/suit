@@ -9,19 +9,15 @@ import { navigationRoutes as routes } from '../../config/routes';
 import { loc } from './loc';
 
 interface HeaderProps {
-    backgroundColor: string;
 }
 const Header = (props: HeaderProps) => {
-    const {
-        backgroundColor,
-    } = props;
     return (
     <div className="navbar__header">
         <Link
             to={routes.index}
             className="navbar__header"
         >
-            <img className="logo" src={process.env.STATIC_IMAGES + `logo-${backgroundColor}.svg`} />
+            <img className="logo" src={process.env.STATIC_IMAGES + `logo-white.svg`} />
         </Link>
     </div>
     );
@@ -80,7 +76,7 @@ const makeNavigationLinks: MakeNavigationLinks = (linkNames, showActiveClassName
 interface NavigationProps {
     isLogin?: boolean;
     lang: string;
-    backgroundColor: string;
+    isOrderPage: boolean;
 }
 interface NavigationState {
     showActiveClassName: boolean;
@@ -109,20 +105,20 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
     render() {
         const {
             lang,
-            backgroundColor,
-            isLogin
+            isLogin,
+            isOrderPage
         } = this.props;
         return (
         <div
             className={classNames(
                 'navbar',
                 {
-                    // 'navbar--white': backgroundColor === 'white',
                     'navbar--white': true,
+                    'navbar--transparent': isOrderPage
                 }
             )}
         >
-            <Header backgroundColor={backgroundColor} />
+            <Header />
             {isLogin &&
                 <div className="navbar__middle">
                     <nav

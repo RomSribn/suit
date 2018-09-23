@@ -6,6 +6,7 @@ import { DemoSection } from '../../components/SectionDemo';
 import { Header } from '../../components/Header';
 import { Navigation } from '../Navigation';
 import { routes } from '../../config/routes';
+import { Spinner } from '../../components/Spinner';
 
 import './styles.styl';
 
@@ -13,6 +14,8 @@ interface CommonProps {
     children?: React.ReactChildren;
     userStore?: IUserStore;
     routingStore?: History;
+    showSpinner?: boolean;
+    onDummyLoad(): void;
 }
 
 @inject(({ routing }) => ({
@@ -23,12 +26,14 @@ class Common extends React.Component<CommonProps> {
     render() {
         const isDetailsPage =
             this.props.routingStore!.location.pathname.includes(routes.details);
+        console.log(this.props.onDummyLoad); // tslint:disable-line
         return (
             <div className="application" >
                 {/* <Paralax /> */}
-                { window.location.pathname !== '/login' &&
+                { window.location.pathname !== '/login' && (!this.props.showSpinner) &&
                     <Navigation />
                 }
+                {this.props.showSpinner && <Spinner />}
                 <div className="content">
                     <div
                         className={classnames(
@@ -41,7 +46,7 @@ class Common extends React.Component<CommonProps> {
                         <Header />
                         {this.props.children}
                     </div>
-                    <DemoSection />
+                    <DemoSection onDummyLoad={this.props.onDummyLoad} />
                 </div>
             </div>
         );

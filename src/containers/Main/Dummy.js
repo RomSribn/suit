@@ -79,31 +79,38 @@ export default class App extends Component {
       const curGarment = orderStore.order[garment];
       GROUPS.forEach(group => {
         Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
+          const subgroupVal = curGarment[0][group][subgroup];
+          if (subgroup.includes(INITIALS)) {
+            if (!initials.text) {
+              initials.text = {};
+            }
+            if(subgroup === `${INITIALS}_text`) {
+              initials.text.value = subgroupVal;
+            }
+            if (subgroup === `${INITIALS}_arrangement`) {
+              initials.id = subgroupVal.our_code;
+            }
+            if (subgroup === `${INITIALS}_color`) {
+              initials.text.color = subgroupVal.our_code;
+            }
+            if (subgroup === `${INITIALS}_style`) {
+              initials.text.font = subgroupVal.our_code;
+            }
+          }
           if (
             activeElement.elementInfo &&
             activeElement.elementInfo.garment === garment &&
             activeElement.elementInfo.group === group &&
             activeElement.elementInfo.subGroup === subgroup
           ) {
-            acc.push(activeElement.our_code)
+            if (subgroup === `${INITIALS}_arrangement`) {
+              initials.id = activeElement.our_code;
+            } else {
+              acc.push(activeElement.our_code)
+            }
           } else {
-            const subgroupVal = curGarment[0][group][subgroup];
-            if (subgroup.includes(INITIALS)) {
-              if (!initials.text) {
-                initials.text = {};
-              }
-              if(subgroup === `${INITIALS}_text`) {
-                initials.text.value = subgroupVal;
-              }
-              if (subgroup === `${INITIALS}_arrangement`) {
-                initials.id = subgroupVal.our_code;
-              }
-              if (subgroup === `${INITIALS}_color`) {
-                initials.text.color = subgroupVal.our_code;
-              }
-              if (subgroup === `${INITIALS}_style`) {
-                initials.text.font = subgroupVal.our_code;
-              }
+            if (_.get(activeElement, 'elementInfo.subgroup', '').includes(INITIALS)) {
+              
             } else {
               acc.push(subgroupVal.our_code);
             }
@@ -129,6 +136,11 @@ export default class App extends Component {
         group: _.get(activeElement, 'elementInfo.group', ''),
         subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
       };
+    }
+    if (activeElement.elementInfo &&
+      activeElement.elementInfo.subGroup && 
+      activeElement.elementInfo.subGroup.includes(INITIALS)) {
+      selected = initials;
     }
     if (!_.isEmpty(initials)) {
       params.push(initials);

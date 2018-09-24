@@ -82,7 +82,7 @@ export default class App extends Component {
           const subgroupVal = curGarment[0][group][subgroup];
           if (subgroup.includes(INITIALS)) {
             if (!initials.text) {
-              initials.text = {};
+              initials.text = { value: ''};
             }
             if(subgroup === `${INITIALS}_text`) {
               initials.text.value = subgroupVal;
@@ -106,12 +106,13 @@ export default class App extends Component {
             if (subgroup === `${INITIALS}_arrangement`) {
               initials.id = activeElement.our_code;
             } else {
-              acc.push(activeElement.our_code)
+              if (!subgroup.includes(INITIALS)) {
+                acc.push(activeElement.our_code)
+              }
             }
           } else {
-            if (_.get(activeElement, 'elementInfo.subgroup', '').includes(INITIALS)) {
-              
-            } else {
+            if (!(_.get(activeElement, 'elementInfo.subgroup', '').includes(INITIALS) ||
+            subgroup.includes(INITIALS))) {
               acc.push(subgroupVal.our_code);
             }
           }
@@ -125,7 +126,8 @@ export default class App extends Component {
       activeElement.elementInfo &&
       prevInfo.garment === activeElement.elementInfo.garment &&
       prevInfo.group === activeElement.elementInfo.group &&
-      prevInfo.subGroup === activeElement.elementInfo.subGroup
+      prevInfo.subGroup === activeElement.elementInfo.subGroup &&
+      !activeElement.elementInfo.subGroup.includes(INITIALS)
     ) {
       selected = prevInfo.code;
     } else {
@@ -142,7 +144,7 @@ export default class App extends Component {
       activeElement.elementInfo.subGroup.includes(INITIALS)) {
       selected = initials;
     }
-    if (!_.isEmpty(initials)) {
+    if (!_.isEmpty(initials) && typeof selected !== initials) {
       params.push(initials);
     }
     return (<React.Fragment>

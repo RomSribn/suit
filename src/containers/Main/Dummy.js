@@ -87,14 +87,17 @@ export default class App extends Component {
             if(subgroup === `${INITIALS}_text`) {
               initials.text.value = subgroupVal;
             }
+            const val = _.get(activeElement , 'elementInfo.subGroup') === subgroup ?
+              activeElement.our_code :
+              subgroupVal.our_code;
             if (subgroup === `${INITIALS}_arrangement`) {
-              initials.id = subgroupVal.our_code;
+              initials.id = val
             }
             if (subgroup === `${INITIALS}_color`) {
-              initials.text.color = subgroupVal.our_code;
+              initials.text.color = val;
             }
             if (subgroup === `${INITIALS}_style`) {
-              initials.text.font = subgroupVal.our_code;
+              initials.text.font = val;
             }
           }
           if (
@@ -111,9 +114,16 @@ export default class App extends Component {
               }
             }
           } else {
-            if (!(_.get(activeElement, 'elementInfo.subgroup', '').includes(INITIALS) ||
-            subgroup.includes(INITIALS))) {
+            if (!subgroup.includes(INITIALS)) {
               acc.push(subgroupVal.our_code);
+            }
+          }
+          // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
+          if (subgroup ===`${INITIALS}_color`) {
+            if (_.get(activeElement, 'elementInfo.subGroup') ===`${INITIALS}_color`) {
+              acc.push(activeElement.our_code);
+            } else {
+              acc.push(subgroupVal.our_code)
             }
           }
         })

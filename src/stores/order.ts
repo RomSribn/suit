@@ -66,7 +66,7 @@ class OrderStore implements IOrderStore {
     }
     @action
     setPreviewElement = (value: ActivePreviewElement ) => {
-        this.previewElement = value;
+        this.previewElement = Object.assign({}, value);
     }
     @action
     setOrder (_o: Order) {
@@ -88,7 +88,7 @@ class OrderStore implements IOrderStore {
 
     @action
     setActiveItem = (item: GalleryStoreItem | null) => { // tslint:disable-line
-        this.activeElement = item;
+        this.activeElement = Object.assign({}, item);
     }
     @action
     fetchInitialOrder = (

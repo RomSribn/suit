@@ -73,9 +73,12 @@ class GalleryItem extends React.Component<P, S > {
         }
         const orderStore = this.props.orderStore!;
         const active = _.get(orderStore, 'activeElement.our_code', '') === id;
+        const click = () => {
+            onClick();
+        };
         return (
             <div
-                onClick={onClick}
+                onClick={click}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
                 className="gallery__item-blc"

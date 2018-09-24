@@ -155,6 +155,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
     intervalID: number;
     isScrolling = false;
+    scrollGallery: HTMLElement;
     static sizing() {
         try {
             const barWrap = document.getElementById('js-bar-wrap') as HTMLElement,
@@ -171,8 +172,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
 
             // БАГ: в опере и хроме, если зажать скрол левой кнопкой мыши, 
             // то с него слетит фокус, из-за display = 'none',   
-            barWrap.style.display = 'none';
-            imageWrap.style.display = 'none';
+            // barWrap.style.display = 'none';
+            // imageWrap.style.display = 'none';
             
             const wrapHeight = document.getElementById('js-gallery-wrap')!.offsetHeight,
                 wrapWidth = document.getElementById('js-gallery-wrap')!.offsetWidth,
@@ -257,13 +258,16 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         const itterStep = 10;
         const heightOfAllItems = (this.state.renderedElementsCount / divider) * wrapHeight;
         // // max height for scrolls
-        if ( heightOfAllItems > containerHeight && !this.isScrolling) {
-            this.setState({ 
-                renderedElementsCount: this.state.renderedElementsCount + itterStep,
-            });
-            // optimize ui rerender
-            this.isScrolling = true;
-            setTimeout(() => this.isScrolling = false, 100);
+        if (heightOfAllItems > containerHeight && !this.isScrolling) {
+            if (this.scrollGallery!.scrollTop + this.scrollGallery!.clientHeight >=
+                this.scrollGallery!.scrollHeight) {
+                    this.setState({ 
+                        renderedElementsCount: this.state.renderedElementsCount + itterStep,
+                    });
+                    // optimize ui rerender
+                    this.isScrolling = true;
+                    setTimeout(() => this.isScrolling = false, 100);
+                }
         }
     }
 
@@ -282,7 +286,12 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         const activeItems =
         renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
         return (
-           <div onScroll={this.handlerItemScrollLoader} className="gallery__bar" id="js-bar-wrap">
+            <div
+                ref={comp => this.scrollGallery = comp!}
+                onScroll={this.handlerItemScrollLoader}
+                className="gallery__bar"
+                id="js-bar-wrap"
+            >
                 <div
                     className="gallery__bar-cont"
                     id="js-bar-container"
@@ -297,7 +306,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                     mouseLeave,
                 )}
                 </div>
-           </div>
+            </div>
         );
     }
 }

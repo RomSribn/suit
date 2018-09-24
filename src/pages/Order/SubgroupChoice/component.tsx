@@ -6,13 +6,15 @@ class SubgroupChoice extends React.PureComponent<SubgroupChoiceProps> {
         const {
             data,
             match,
+            lang
         } = this.props;
 
         return (
-        <ChoiceItems
-            basicRoute={match.url}
-            items={data!}
-        />
+            <ChoiceItems
+                lang={lang}
+                basicRoute={match.url}
+                items={data!}
+            />
         );
     }
 }

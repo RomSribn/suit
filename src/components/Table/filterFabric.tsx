@@ -6,6 +6,7 @@ type filterTypes = 'input' | 'date' | 'select' | 'empty';
 
 interface FilterParams {
     text: string;
+    allStatusesText: string;
     type?: filterTypes;
     selectValeus?: string[];
 }
@@ -14,7 +15,6 @@ function filterFabric(params: FilterParams) { // tslint:disable-line no-any
     return (props: any) => { // tslint:disable-line no-any
         const onChange = props.onChange;
         const baseClass = 'orders__title';
-    
         if (params.type === 'select') {
             const selectValues = params.selectValeus || [];
             const options = selectValues.map(value => ({ value, label: value }));
@@ -23,7 +23,7 @@ function filterFabric(params: FilterParams) { // tslint:disable-line no-any
                     className={classNames(baseClass, baseClass + '--filter')}
                 >
                     <Select
-                        options={[ { value: '', label: 'Все статусы' }, ...options]}
+                        options={[ { value: '', label:  params.allStatusesText}, ...options]}
                         onChange={({ value }: any) => onChange(value)} // tslint:disable-line no-any
                         placeholder={params.text}
                         isClearable={false}

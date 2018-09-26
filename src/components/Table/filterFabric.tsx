@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
+import Select from 'react-select';
 
 type filterTypes = 'input' | 'date' | 'select' | 'empty';
 
 interface FilterParams {
     text: string;
+    allStatusesText: string;
     type?: filterTypes;
     selectValeus?: string[];
 }
@@ -13,24 +15,22 @@ function filterFabric(params: FilterParams) { // tslint:disable-line no-any
     return (props: any) => { // tslint:disable-line no-any
         const onChange = props.onChange;
         const baseClass = 'orders__title';
-        const filter = props.filter;
-    
         if (params.type === 'select') {
             const selectValues = params.selectValeus || [];
+            const options = selectValues.map(value => ({ value, label: value }));
             return (
                 <div
                     className={classNames(baseClass, baseClass + '--filter')}
                 >
-                    <div>
-                        <select
-                            className="wrapper-dropdown"
-                            onChange={event => onChange(event.target.value)}
-                            value={filter ? filter.value : 'all'}
-                        >
-                            <option selected={true} value=""> -- {params.text} -- </option>
-                            {selectValues.map(val => <option key={val} value={val}>{val}</option>)}
-                        </select>
-                    </div>
+                    <Select
+                        options={[ { value: '', label:  params.allStatusesText}, ...options]}
+                        onChange={({ value }: any) => onChange(value)} // tslint:disable-line no-any
+                        placeholder={params.text}
+                        isClearable={false}
+                        isSearchable={false}
+                        className="select-wrapper"
+                        classNamePrefix="react-select"
+                    />
                 </div>
             );
         }

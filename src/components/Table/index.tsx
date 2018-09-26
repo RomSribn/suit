@@ -54,6 +54,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
         const lang = this.props.lang;
         const columns = loc[lang].columns;
         const statuses = loc[lang].statuses;
+        const allStatusesText = loc[lang].statuses.ALL_STATUSES;
         return (
         <React.Fragment key="Orders table fragment">
             <PanelRow orderId={this.state.activeOrderId} />
@@ -74,21 +75,21 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
                 columns={[
                     {
                         accessor: 'order',
-                        Filter: filterFabric({ text: columns.order}),
+                        Filter: filterFabric({ text: columns.order, allStatusesText}),
                         filterable: true,
                         filterMethod,
                         Cell: cell
                     },
                     {
                         accessor: 'name',
-                        Filter: filterFabric({ text: columns.name}),
+                        Filter: filterFabric({ text: columns.name, allStatusesText}),
                         filterable: true,
                         filterMethod,
                         Cell: cell
                     },
                     {
                         accessor: 'phone',
-                        Filter: filterFabric({ text: columns.phone}),
+                        Filter: filterFabric({ text: columns.phone, allStatusesText}),
                         filterable: true,
                         filterMethod,
                         Cell: cell
@@ -101,6 +102,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
                     },
                     {
                         Filter: filterFabric({
+                            allStatusesText,
                             text: columns.status,
                             type: 'select',
                             selectValeus: orderStatuses.map(status => statuses[status])

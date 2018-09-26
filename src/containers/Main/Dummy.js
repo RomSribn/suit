@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import Widget3D from 'clothes-widget-3d';
 import { Redirect } from 'react-router';
 import _ from 'lodash';
+import { currentItems } from '../../stores/garments/galleryStore';
 const INITIALS = 'initials';
 
 class Widget extends PureComponent {
@@ -71,6 +72,44 @@ export default class App extends Component {
   componentDidMount = () => {
     prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo', {});
   }
+  update = (subgroup) => {
+    const items = currentItems;
+    
+          const {
+            orderStore
+          } = this.props;
+    
+          const codeInOrder =
+            _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
+          const item = items.find(i => i.our_code === codeInOrder);
+    
+          if (!_.isEmpty(item)) {
+              item.elementInfo = {
+                  garment: 'shirt',
+                  group: 'design',
+                  subgroup
+              };
+          }
+          orderStore.setActiveItem(item);
+          orderStore.setPreviewElement(null);
+  };
+  handleClickAsset = ({ id }) => {
+    const {
+      orderStore
+    } = this.props;
+    console.log(this);
+    const subgroup =
+      _.findKey(
+          orderStore.order.shirt[0].design,
+          ['our_code', id]
+      );
+    if (id !== this.state.subgroup) {
+      this.update(subgroup);
+      this.setState({
+        subgroup
+      })
+    }
+  };
   render() {
     const { orderStore } = this.props;
     const activeElement = orderStore.activeElement || {};
@@ -171,16 +210,4 @@ export default class App extends Component {
     </React.Fragment>);
   }
 
-  handleClickAsset = ({ id }) => {
-    const subgroup =
-      _.findKey(
-          this.props.orderStore.order.shirt[0].design,
-          ['our_code', id]
-      );
-    if (id !== this.state.subgroup) {
-      this.setState({
-        subgroup
-      })
-    }
-  };
 }

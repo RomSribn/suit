@@ -2,7 +2,7 @@ import { Columns, OrderStatus } from './index';
 
 type Loc = {
     columns:  Record<Columns, string>;
-    statuses: Record<OrderStatus, string>
+    statuses: Record<OrderStatus | 'ALL_STATUSES', string>;
 };
 
 const loc: MakeLocale<Loc> = {
@@ -19,7 +19,8 @@ const loc: MakeLocale<Loc> = {
             TEMPORARY: 'Temporary',
             NEW: 'New',
             IN_PROGRESS: 'In progress',
-            DONE: 'Done'
+            DONE: 'Done',
+            ALL_STATUSES: 'All statuses'
         }
     },
     ru: {
@@ -35,7 +36,8 @@ const loc: MakeLocale<Loc> = {
             TEMPORARY: 'Временный',
             NEW: 'Новый',
             IN_PROGRESS: 'В работе',
-            DONE: 'Завершен'
+            DONE: 'Завершен',
+            ALL_STATUSES: 'Все статусы'
         }
     }
 };

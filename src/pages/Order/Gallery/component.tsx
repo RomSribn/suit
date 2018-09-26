@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import * as _ from 'lodash';
 import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
@@ -8,6 +9,7 @@ import './styles.styl';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
+    shownItem: GalleryStoreItem;
     previewElementIndex: number;
     mouseOverElement: boolean;
 }
@@ -17,51 +19,105 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         const activeIndex = props.items.findIndex(i => i.our_code === ( props.order!.activeElement || {})['id']); // tslint:disable-line
         this.state = {
             activeElementIndex: activeIndex === -1 ? 0 : activeIndex,
-            previewElementIndex: 0,    
+            previewElementIndex: 0,
             load: {
                 success: null,
                 error: null,
             },
+            shownItem: this.shownItem,
             mouseOverElement: false,
         };
     }
     componentWillMount() {
         this.props.filterStore.loadFilters(services.shirtFilters);
     }
+    get shownItem(): GalleryStoreItem {
+        const {
+            items,
+            previewElement,
+            activeElement,
+            galleryStore,
+            order: orderStore
+        } = this.props;
+
+        const {
+            garment,
+            subGroup: group,
+            group: subGroup
+        } = galleryStore;
+
+        const previewVal = items.find(i => i.our_code === _.get(previewElement, 'value'));
+        let item = previewVal;
+
+        if (_.isEmpty(item)) {
+            item = activeElement!;
+        }
+
+        if (_.isEmpty(item)) {
+            const codeInOrder: string|null =
+                _.get(orderStore, `order.${garment}[0].${group}.${subGroup}.our_code`, null);
+            item = items.find(i => i.our_code === codeInOrder);
+        }
+
+        if (!_.isEmpty(item)) {
+            item!.elementInfo = {
+                garment: garment,
+                group,
+                subGroup
+            };
+        }
+        return item!;
+    }
+    updateActiveElement = () => {
+        const item = this.shownItem;
+        if (_.isEmpty(item)) {
+            return;
+        }
+        const { img_url_2d: imageUrl } = item;
+        if (this.state.shownItem.our_code !== item.our_code) {
+            this.setState({
+                shownItem: item
+            });
+        }
+        if (this.state.load.success === imageUrl) {
+            return;
+        }
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+            this.setState({
+                load: {
+                    ...this.state.load,
+                    success: imageUrl,
+                },
+            });
+        };
+        image.onerror = () => {
+            this.setState({
+                load: {
+                    ...this.state.load,
+                    error: 'no image provided',
+                },
+            });
+        };
+    }
+    componentWillUpdate() {
+        const item = this.shownItem;
+        if (
+            _.isEmpty(this.props.activeElement) && item ||
+            !_.isEqual(
+                _.get(this, 'props.activeElement.elementInfo'),
+                _.get(item, 'elementInfo')
+            )
+        ) {
+            this.props.setActiveOrderItem(item);
+        } else {
+            this.updateActiveElement();
+        }
+    }
     componentDidMount() {
         try {
-            if (this.props.items.length) {
-                this.setActiveElementIndex(
-                    this.state.activeElementIndex &&
-                    this.state.activeElementIndex > -1 ?
-                    this.state.activeElementIndex :
-                    0)
-                    ();
-            }
-            const item = this.props.items[
-                this.state.previewElementIndex === -1
-                    ? this.state.activeElementIndex
-                    : this.state.previewElementIndex
-            ];
-            const { img_url_2d: imageUrl } = item;
-            const image = new Image();
-            image.src = imageUrl;
-            image.onload = () => {
-                this.setState({
-                    load: {
-                        ...this.state.load,
-                        success: imageUrl,
-                    },
-                });
-            };
-            image.onerror = () => {
-                this.setState({
-                    load: {
-                        ...this.state.load,
-                        error: 'no image provided',
-                    },
-                });
-            };
+            this.updateActiveElement();
         } catch (e) {
             this.setState({
                 load: {
@@ -80,9 +136,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             subGroup: this.props.galleryStore.group
         };
         if (action === 'click') {
-            this.setState({
-                activeElementIndex: i,
-            });
             const {
                 setActiveOrderItem,
                 items,
@@ -92,9 +145,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 elementInfo
             });
         } else {
-            this.setState({
-                previewElementIndex: i,
-            });
             if (action === 'enter') {
                 this.props.setPreviewElement({
                     ...elementInfo,
@@ -120,7 +170,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         const {
             items,
             lang,
-            group,
+            group
         } = this.props;
 
         if (!items.length) {
@@ -128,11 +178,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             this.state.load.success = null;
             return null;
         }
-        const item = items[
-            this.state.previewElementIndex === -1
-                ? this.state.activeElementIndex
-                : this.state.previewElementIndex
-        ];
+        this.updateActiveElement();
+        const item = this.state.shownItem;
+        if (_.isEmpty(item)) {
+            return null;
+        }
         const title = item.title[lang];
         let description = item.description[lang];
         const descriptionSize = 153;
@@ -175,7 +225,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                          }
                         <GalleryBar
                             items={items}
-                            activeElementIndex={this.state.activeElementIndex}
+                            shownItem={item}
                             setActiveElementIndex={this.setActiveElementIndex}
                             mouseEnter={this.mouseEnterElement}
                             mouseLeave={this.mouseLeaveElement}

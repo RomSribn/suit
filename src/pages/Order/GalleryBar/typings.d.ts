@@ -1,7 +1,7 @@
 interface GalleryBarProps {
     items: GalleryStoreItems,
     setActiveElementIndex(i: number, action?: string): () => void;
-    activeElementIndex: number;
+    shownItem: GalleryStoreItem;
     mouseEnter(link: string): void;
     mouseLeave(): void;
     isMouseOverElement: boolean;

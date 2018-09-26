@@ -2,6 +2,9 @@ import { observable, action } from 'mobx';
 import { API_ROOT } from '../../config/routes';
 import { callApi } from '../../utils/apiAxios';
 
+// TODO: Перейти на синглтон
+let currentItems = null;
+
 class GalleryStore implements GalleryStore {
     garment: string;
     subGroup: string;
@@ -49,8 +52,7 @@ class GalleryStore implements GalleryStore {
         this.filters = filters;
     }
     _fetchSucceed = (isFitting: boolean) => (items: GalleryStoreItems) => {
-
-        this.items.push(
+        const _items = [
             ...items
             .filter(i => Boolean(i.img_url_2d || i.is_input || isFitting))
             .map(i => {
@@ -61,7 +63,9 @@ class GalleryStore implements GalleryStore {
                         img_url_2d: 'http://194.87.239.90' + i.img_url_2d!.replace('/html', '')
                     };
             })
-        );
+        ];
+        this.items.push(..._items);
+        currentItems = _items;
     }
     _fetchError = (e: Error) => {
         this.error = e;
@@ -71,4 +75,5 @@ class GalleryStore implements GalleryStore {
 
 export {
     GalleryStore,
+    currentItems
 };

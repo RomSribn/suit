@@ -52,7 +52,8 @@ class Gallery extends React.Component<GalleryContainerProps> {
                 )
                 : (
                     <Component
-                        key={galleryStore.items.toString()}
+                        key={(galleryStore.items || [])
+                            .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
                         order={order}
                         lang={lang}
                         setActiveOrderItem={setActiveOrderItem}
@@ -60,7 +61,9 @@ class Gallery extends React.Component<GalleryContainerProps> {
                         items={galleryStore.items}
                         galleryStore={galleryStore}
                         group={group}
-                        filterStore={filterStore}                    
+                        filterStore={filterStore}
+                        activeElement={orderStore.activeElement}
+                        previewElement={orderStore.previewElement}
                     />
                 )
         );

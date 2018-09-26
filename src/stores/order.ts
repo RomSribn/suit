@@ -65,8 +65,12 @@ class OrderStore implements IOrderStore {
         this.order[garment] = value;
     }
     @action
-    setPreviewElement = (value: ActivePreviewElement ) => {
-        this.previewElement = Object.assign({}, value);
+    setPreviewElement = (value: ActivePreviewElement | null ) => {
+        if (!value) {
+            this.previewElement = null;
+        } else {
+            this.previewElement = Object.assign({}, value);
+        }
     }
     @action
     setOrder (_o: Order) {

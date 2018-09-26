@@ -5,6 +5,7 @@ import * as classnames from 'classnames';
 
 interface P {
     item: GalleryStoreItem;
+    shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
     onClick(): void;
     onMouseEnter(): void;
@@ -62,6 +63,7 @@ class GalleryItem extends React.Component<P, S > {
         const {
             onClick,
             onMouseEnter,
+            shownItem,
             onMouseLeave
         } = this.props;
         const {
@@ -72,7 +74,9 @@ class GalleryItem extends React.Component<P, S > {
             return null;
         }
         const orderStore = this.props.orderStore!;
-        const active = _.get(orderStore, 'activeElement.our_code', '') === id;
+        const active =
+            _.get(orderStore, 'activeElement.our_code', '') === id ||
+            shownItem.our_code === id;
         const click = () => {
             onClick();
         };
@@ -103,7 +107,7 @@ class GalleryItem extends React.Component<P, S > {
 type makeGalleryItems = (
     items: GalleryStoreItems,
     setActiveElementIndex: (i: number, action?: string, id?: string, fabric?: string) => () => void,
-    activeElementIndex: number,
+    shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
     mouseEnter: (link: string) => void,
@@ -114,7 +118,7 @@ const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 const makeGalleryItems: makeGalleryItems = (
     items,
     setActiveElementIndex,
-    activeElementIndex,
+    shownItem,
     incremetLoadedCount,
     isMouseOverElement,
     mouseEnter,
@@ -123,7 +127,7 @@ const makeGalleryItems: makeGalleryItems = (
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
         return acc;
-    }, []).join('');
+    }, []).join('') + shownItem.our_code;
     if (galleryItemsCache[cache]) {
         return galleryItemsCache[cache];
     }
@@ -133,6 +137,7 @@ const makeGalleryItems: makeGalleryItems = (
                 key={item.fabric_code + item.our_code}
                 item={item}
                 onClick={setActiveElementIndex(i)}
+                shownItem={shownItem}
                 onMouseEnter={() => {
                     setActiveElementIndex(i, 'enter')();
                     mouseEnter(item.image_url_3d!);
@@ -278,7 +283,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         const {
             items,
             setActiveElementIndex,
-            activeElementIndex,
+            shownItem,
             mouseEnter,
             mouseLeave,
             isMouseOverElement,
@@ -302,7 +307,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 {makeGalleryItems(
                     activeItems,
                     setActiveElementIndex,
-                    activeElementIndex,
+                    shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,
                     mouseEnter,

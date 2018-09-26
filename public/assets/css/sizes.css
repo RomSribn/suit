@@ -4,7 +4,7 @@
     flex-grow: 1;    
     overflow-y: auto;
     padding-right: .7333rem;
-    margin: 2.3333rem 0 3.4666rem 0;
+    margin-top: 1.3333rem;
 }
 .sizes__wrap{
     display: -webkit-flex;

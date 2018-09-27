@@ -11,17 +11,17 @@ class Widget extends PureComponent {
     showDummy: true,
   };
   checkIsActive() {
-    const onBlur = ()  =>  { 
-      this.setState({showDummy: false}); 
-    }; 
-    window.onfocus = () => { 
+    const onBlur = ()  =>  {
+      this.setState({showDummy: false});
+    };
+    window.onfocus = () => {
         window.onblur.cancel();
-        this.setState({showDummy: true}); 
+        this.setState({showDummy: true});
         this.renderWidget();
         // renderWidget is called here, because if not, dummy won't be rendered
-    }; 
+    };
     window.onblur =  _.debounce(onBlur, 1000);
-  }  
+  }
   renderWidget() {
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
@@ -63,7 +63,7 @@ class Widget extends PureComponent {
 
   render() {
     if (!this.state.showDummy) {
-       return null; 
+       return null;
     }
     return (
         <div
@@ -98,15 +98,15 @@ export default class App extends Component {
   }
   update = (subgroup) => {
     const items = currentItems;
-    
+
           const {
             orderStore
           } = this.props;
-    
+
           const codeInOrder =
             _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
           const item = items.find(i => i.our_code === codeInOrder);
-    
+
           if (!_.isEmpty(item)) {
               item.elementInfo = {
                   garment: 'shirt',
@@ -213,12 +213,24 @@ export default class App extends Component {
       };
     }
     if (activeElement.elementInfo &&
-      activeElement.elementInfo.subGroup && 
+      activeElement.elementInfo.subGroup &&
       activeElement.elementInfo.subGroup.includes(INITIALS)) {
       selected = initials;
     }
     if (!_.isEmpty(initials) && typeof selected !== initials) {
       params.push(initials);
+    }
+    if (!_.isEmpty(activeElement)) {
+      // Если в параметрах нет активного элемента
+      // Может случиться, если по дефолту у элемента нет заданного значения
+      if (!params.find(param => (
+        activeElement.our_code === param ||
+        activeElement.our_code === param.id
+      ))) {
+        // Добавляем его в к параметрам отображения
+        params.push(activeElement.our_code);
+      }
+
     }
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}

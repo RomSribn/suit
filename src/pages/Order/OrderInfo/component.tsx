@@ -17,7 +17,17 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
             <div className="calc-blc">
                 <div className="calc-blc__col calc-blc__col--summ">
                     <div className="calc-blc__col-name">{loc[lang!].price}:</div>
-                    <div className="calc-blc__col-val">{loc[lang!].currency} {price}</div>
+                    <div className="calc-blc__col-val">
+                        <div
+                            className={
+                                'calc-blc__col-val__curr' +
+                                (lang === 'en' ? ' calc-blc__col-val__curr_euro' : '')
+                            }
+                        >
+                            {lang !== 'en' ? loc[lang!].currency : ''}
+                        </div>
+                        {price}
+                    </div>
                 </div>
                 <div className="calc-blc__slash">&nbsp;/&nbsp;</div>
                 <div className="calc-blc__col calc-blc__col--date">

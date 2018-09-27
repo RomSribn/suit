@@ -40,7 +40,8 @@ const filterMethod = (filter: any, row: any) => { // tslint:disable-line
     return row[filter.id].toLocaleLowerCase().includes(filter.value.toLowerCase()); // tslint:disable-line
 };
     
-class Table extends React.PureComponent<TProps, { activeOrderId: string | null}> {
+class Table extends React.PureComponent<TProps, { activeOrderId: string | null }> {
+    private panelRow: PanelRow | null;
     constructor(props: TProps) {
         super(props);
         this.state = {
@@ -51,13 +52,16 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
         this.setState({ activeOrderId: id });
     }
     render() {
+        const {
+            activeOrderId
+        } = this.state;
         const lang = this.props.lang;
         const columns = loc[lang].columns;
         const statuses = loc[lang].statuses;
         const allStatusesText = loc[lang].statuses.ALL_STATUSES;
         return (
         <React.Fragment key="Orders table fragment">
-            <PanelRow orderId={this.state.activeOrderId} />
+            <PanelRow ref={(ref) => this.panelRow = ref} orderId={activeOrderId} />
             <RTable
                 className="orders"
                 showPagination={false}
@@ -67,9 +71,10 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null}>
                 getTrProps={(_: any, rowInfo: any) => { // tslint:disable-line
                     return {
                         onClick: () => {
+                            this.panelRow && this.panelRow.triggerControls(true); // tslint:disable-line
                             this.setActiveOrderId(rowInfo.row.order);
                         },
-                        className: classNames({ _active: this.state.activeOrderId === rowInfo.row.order})
+                        className: classNames({ _active: activeOrderId === rowInfo.row.order})
                     };
                 }}
                 columns={[

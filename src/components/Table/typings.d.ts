@@ -4,3 +4,7 @@ interface HeaderCellParams {
     isFilter?: boolean;
     accessor?: string;
 }
+
+interface PanelRowProps {
+    orderId: string | null;
+}

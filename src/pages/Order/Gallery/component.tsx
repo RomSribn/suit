@@ -17,6 +17,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     constructor(props: GalleryProps) {
         super(props);
         const activeIndex = props.items.findIndex(i => i.our_code === ( props.order!.activeElement || {})['id']); // tslint:disable-line
+        const shownItem = this.shownItem;
         this.state = {
             activeElementIndex: activeIndex === -1 ? 0 : activeIndex,
             previewElementIndex: 0,
@@ -24,7 +25,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 success: null,
                 error: null,
             },
-            shownItem: this.shownItem,
+            shownItem: _.isEmpty(shownItem) ? props.items[0] : shownItem,
             mouseOverElement: false,
         };
     }
@@ -71,6 +72,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     updateActiveElement = () => {
         const item = this.shownItem;
         if (_.isEmpty(item)) {
+            if (this.props.items[0]) {
+                this.props.setActiveOrderItem(this.props.items[0]);
+            }
             return;
         }
         const { img_url_2d: imageUrl } = item;
@@ -178,20 +182,20 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             this.state.load.success = null;
             return null;
         }
-        this.updateActiveElement();
         const item = this.state.shownItem;
         if (_.isEmpty(item)) {
             return null;
         }
+        this.updateActiveElement();
         const title = item.title[lang];
         let description = item.description[lang];
         const descriptionSize = 153;
-        if (description.length > descriptionSize) { 
-        // if ((description) && (description.length > descriptionSize)) {  
+        if (description.length > descriptionSize) {
+        // if ((description) && (description.length > descriptionSize)) {
         // если description == null, без проверки "if ((description) &&..." будет ошибка
         // в TS для description тип string указан, так что скорее всего лишнее
             description = description.substring(0, descriptionSize).trim() + '...';
-        } 
+        }
         const {
             our_code: code,
             price,

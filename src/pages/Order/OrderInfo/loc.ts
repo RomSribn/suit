@@ -8,7 +8,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
     en: {
         delivery: 'delivery',
         price: 'total price',
-        currency: '$',    
+        currency: '€',    
     },
     ru: {
         delivery: 'доставим до',

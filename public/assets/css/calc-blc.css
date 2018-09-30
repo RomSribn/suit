@@ -24,17 +24,8 @@
     font-weight: 400;
     line-height: .8;
 }
-.calc-blc__col-val > * {
+.calc-blc__col-val > .calc-blc__col-val__curr, .calc-blc__col-val > span {
     display: inline-block;
-}
-.calc-blc__col--summ .calc-blc__col-val{color: #046b71;}
-.calc-blc__col-val__curr {
-    height: 1.4rem;
-    width: 1.4rem;
-    background-size: 1.4rem 1.4rem;
-}
-.calc-blc__col-val__curr.calc-blc__col-val__curr_euro {
-    background-image: url(../img/footer/euro.svg);
 }
 @media only screen and (max-width : 1210px){
     .calc-blc__col-name{

@@ -24,7 +24,9 @@
     font-weight: 400;
     line-height: .8;
 }
-.calc-blc__col--summ .calc-blc__col-val{color: #046b71;}
+.calc-blc__col-val .calc-blc__col-val__curr {
+    display: inline-block;
+}
 @media only screen and (max-width : 1210px){
     .calc-blc__col-name{
         font-size: 8px;

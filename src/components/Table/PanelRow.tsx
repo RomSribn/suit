@@ -6,21 +6,28 @@ import { routes } from '../../config/routes';
 import './panelRowStyles.css';
 import './panelRowStyles.styl';
 
-interface PanelRowProps {
-    orderId: string | null;
-}
-
-class PanelRow extends React.PureComponent<PanelRowProps, {showcontrols: boolean}> {
+class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean}> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
-            showcontrols: true
+            showControls: false
         };
+    }
+    triggerControls = (showControlsBoolValue?: boolean) => {
+        const {
+            showControls
+        } = this.state;
+        this.setState({
+            showControls: showControlsBoolValue || !showControls
+        });
     }
     render() {
         const {
             orderId
         } = this.props;
+        const {
+            showControls
+        } = this.state;
         const itemClassName = classNames('controls__item', { disabled: !Boolean(orderId) });
         return (
             <div className="panel-row">
@@ -33,8 +40,8 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showcontrols: boolean
                             autoComplete="off"
                             className="search__input"
                             placeholder="Поиск ..."
-                            onFocus={() => this.setState({showcontrols: false })}
-                            onBlur={() => this.setState({showcontrols: true })}
+                            onFocus={() => this.setState({showControls: false })}
+                            onBlur={() => this.setState({showControls: true })}
                         />
                         <span
                             className="icon-close search__clear"
@@ -43,7 +50,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showcontrols: boolean
                         />
                     </div>
                 </form>
-                <div className={classNames('controls', { hidden: !this.state.showcontrols})}>
+                <div className={classNames('controls', { hidden: !showControls})}>
                     <ul className="controls__list">
                         <li className="controls__item disabled">
                             <a

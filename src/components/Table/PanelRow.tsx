@@ -1,12 +1,21 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { ConfirmPopup } from '../ConfirmPopup';
 import { routes } from '../../config/routes';
 
 import './panelRowStyles.css';
 import './panelRowStyles.styl';
 
-class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean}> {
+interface PanelRowProps {
+    orderId: string | null;
+}
+
+interface PanelRowState {
+    showControls: boolean;
+}
+
+class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
@@ -77,11 +86,11 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean
                             />
                         </li>
                         <li className={itemClassName}>
-                            <a
-                                className="controls__link controls__link--eye"
-                                href="#"
-                                title=""
-                            />
+                            <ConfirmPopup>
+                                <button
+                                    className="controls__link controls__link--eye"
+                                />
+                            </ConfirmPopup>
                         </li>
                         <li className={itemClassName}>
                             <a

@@ -24,7 +24,7 @@
     font-weight: 400;
     line-height: .8;
 }
-.calc-blc__col-val > .calc-blc__col-val__curr, .calc-blc__col-val > span {
+.calc-blc__col-val .calc-blc__col-val__curr {
     display: inline-block;
 }
 @media only screen and (max-width : 1210px){

@@ -14,7 +14,8 @@ import { prepareTableData } from './utils';
 })
 @observer
 class ListOrders extends React.Component<ListOrdersProps> {
-    componentDidMount() {
+    constructor(props: ListOrdersProps) {
+        super(props);
         this.props.ordersStore!.fetch();
     }
     render() {

@@ -44,7 +44,7 @@ class Wrapper extends Component {
 
         {/* // Закрытые страницы  */}
         <Switch>
-            <Route path={routes.ordersList}><ListOrders /></Route>
+        <Route path={routes.ordersList}><ListOrders onFinishLoading={this.hideSpinner}/></Route>
         </Switch>
     </Common>)
   }

@@ -13,7 +13,6 @@ interface CommonProps {
     children?: React.ReactChildren;
     userStore?: IUserStore;
     routingStore?: History;
-    showSpinner(): void;
     onDummyLoad(): void;
 }
 
@@ -44,7 +43,6 @@ class Common extends React.Component<CommonProps> {
                         {this.props.children}
                     </div>
                     <DemoSection
-                        showSpinner={this.props.showSpinner}
                         onDummyLoad={this.props.onDummyLoad}
                     />
                 </div>

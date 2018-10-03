@@ -9,6 +9,8 @@ import { Order } from '../pages/Order'
 import { ListOrders } from '../pages/ListOrders';
 import Login from './Login'
 
+let orderPageWasRendered = false;
+
 @inject(({user, app, order}) => ({
   user,
   app,
@@ -29,7 +31,6 @@ class Wrapper extends Component {
     return (<React.Fragment key="common wrapper with spinner">
       {this.state.showSpinner && <Spinner />}
       <Common
-        showSpinner={this.showSpinner}
         onDummyLoad={this.hideSpinner}
       >
           <Route path={routes.order} exact={true} render={() => {
@@ -38,13 +39,21 @@ class Wrapper extends Component {
           }}/>
           <Switch>
             <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
-            <Route exact={true} path={routes.index}>
-              {/* // TODO: убрать это после того, как добавим элементы кроме рубашки */}
-              <Redirect to={routes.order + '/shirt'} />
-            </Route>
+            <Route exact={true} path={routes.index} render={() => {
+              if (!orderPageWasRendered) {
+                this.showSpinner();
+                orderPageWasRendered = true;
+              }
+              /* // TODO: убрать это после того, как добавим элементы кроме рубашки */
+              return <Redirect to={routes.order + '/shirt'} />
+            }}/>
             <Route
               path={routes.order}
               render={(props) => {
+                if (!orderPageWasRendered) {
+                  this.showSpinner();
+                  orderPageWasRendered = true;
+                }
                 return (
                   <Order {...props } order={this.props.order} />
                 )

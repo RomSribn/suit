@@ -5,7 +5,7 @@ import DemoDummy from '../../containers/Main/Dummy';
 const DemoSection = (props: any) => { // tslint:disable-line no-any
     return (
     <div className="demo" >
-        <DemoDummy onDummyLoad={props.onDummyLoad} showSpinner={props.showSpinner} />
+        <DemoDummy onDummyLoad={props.onDummyLoad} />
     </div>);
 };
 

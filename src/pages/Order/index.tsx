@@ -6,8 +6,9 @@ import { routes } from './routes';
 
 let wasRendered = false;
 
-class Order extends React.PureComponent<any> {  //tslint:disable-line
-    componentWillMount() {
+class Order extends React.PureComponent<any> { //tslint:disable-line
+    constructor(props: any) { //tslint:disable-line
+        super(props);
         wasRendered = false;
     }
     render() {

@@ -76,6 +76,7 @@ declare namespace OrderList {
         }
     }
     interface IOrderStore<Data = ServerData.List> {
+        isFetching: boolean;
         orders: ServerData.OrderItem[];
         fetch(): Promise<void | Axios.Response<Data>>;
     }

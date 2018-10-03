@@ -29,7 +29,7 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
                     <div className="calc-blc__col-name">{loc[lang!].delivery}:</div>
                     <div
                         style={{textAlign: 'center'}}
-                        className="calc-blc__col-val"
+                        className="calc-blc__col-val calc-blc__col-val-delivery"
                     >{deliveryDate}
                     </div>
                 </div>

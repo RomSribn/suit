@@ -33,16 +33,16 @@
 .main-menu__link span{
     display: block;
     height: .7333rem;
-    margin-top: .6rem;
+    margin-top: .5rem;
 }
 .main-menu__link:before{
     content: '';
     display: block;
-    height: 1.4666rem;
+    height: 1.5rem;
     width: 3.5333rem;
     background: 0 top no-repeat;
     -webkit-background-size: contain;
-    background-size: contain;
+    background-size: auto;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;    

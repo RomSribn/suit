@@ -169,6 +169,9 @@ export default class App extends Component {
       })
       return acc;
     }, []);
+    if (params.length !== 0) {
+      this.props.showSpinner();
+    }
     const { subgroup } = this.state;
     let selected = '';
     if (

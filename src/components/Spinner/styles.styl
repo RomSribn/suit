@@ -1,17 +1,19 @@
 .spinner
     &__wrapper
-        position: fixed
+        position fixed
+        top 0
+        left 0
         display flex
         justify-content center
         align-items center
         height 100%
         width 100%
         background #fff
-        z-index: 6
+        z-index 6
 
     width 6.6666rem
     height 3px
-    display: flex
+    display flex
 
     .line
         fill none
@@ -22,8 +24,8 @@
             stroke #000
             stroke-width 3px
             stroke-dasharray 55% 100%
-            animation: spin 1s infinite
-            animation-timing-function: linear
+            animation spin 1s infinite
+            animation-timing-function linear
 
 
 @keyframes spin

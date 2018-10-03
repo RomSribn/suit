@@ -40,13 +40,13 @@
     display: block;
     height: 1.4666rem;
     width: 3.5333rem;
-    background: 0 center no-repeat;
+    background: 0 top no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;    
-}
+}                                                                                                                                                       
 .main-menu__link--order:before{background-image: url(../img/menu/white/order.svg);}
 .main-menu__link--panel:before{background-image: url(../img/menu/white/panel.svg);}
 .main-menu__link--clientele:before{background-image: url(../img/menu/white/clientele.svg);}

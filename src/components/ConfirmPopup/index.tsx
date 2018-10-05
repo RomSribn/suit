@@ -6,7 +6,7 @@ import { ConfirmPopup as Component } from './component';
     lang: app.lang
 }))
 @observer
-class ConfirmPopup extends React.Component {
+class ConfirmPopup extends React.Component<ConfirmPopupProps> {
     render() {
         return <Component {...this.props} />;
     }

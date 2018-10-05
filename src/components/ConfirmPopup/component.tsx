@@ -6,8 +6,8 @@ import './styles.styl';
 
 const baseClassName = 'confirm-popup';
 
-type AllProps = OrderStatusIncreaseProps & DefaultProps;
-class ConfirmPopup extends React.PureComponent<OrderStatusIncreaseProps, OrderStatusIncreaseState> {
+type AllProps = ConfirmPopupProps & DefaultProps;
+class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpState> {
     static defaultProps = {
         lang: 'ru'
     };

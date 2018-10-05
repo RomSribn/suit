@@ -1,7 +1,7 @@
 declare namespace OrderList {
     namespace ServerData{
         type allowedGarment = 'shirt';
-        type allowedStatuses = 'TEMPORARY';
+        type allowedStatuses = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';
 
         type CommonOptions = {
             is_allowOwnFabric: boolean;

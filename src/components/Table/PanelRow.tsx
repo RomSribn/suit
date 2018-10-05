@@ -3,13 +3,10 @@ import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../ConfirmPopup';
 import { routes } from '../../config/routes';
+import { loc } from './loc';
 
 import './panelRowStyles.css';
 import './panelRowStyles.styl';
-
-interface PanelRowProps {
-    orderId: string | null;
-}
 
 interface PanelRowState {
     showControls: boolean;
@@ -32,12 +29,19 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     }
     render() {
         const {
-            orderId
+            orderInfo,
+            orderStatuses,
+            lang
         } = this.props;
         const {
             showControls
         } = this.state;
-        const itemClassName = classNames('controls__item', { disabled: !Boolean(orderId) });
+        const itemClassName = classNames('controls__item', { disabled: !Boolean(orderInfo && orderInfo.id) });
+        const currentStatus = loc[lang].statuses[orderStatuses[orderInfo && orderInfo.status.id || 0]];
+        const nextStatusIndex = orderInfo && orderInfo.status.id + 1 < orderStatuses.length ?
+            orderInfo && orderInfo.status.id + 1 :
+            orderStatuses.length - 1;
+        const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex]];
         return (
             <div className="panel-row">
                 <form className="search">
@@ -80,13 +84,18 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 className="controls__link controls__link--refresh"
                                 to={{
                                     pathname: `${routes.details}/shirt`,
-                                    search: `order_id=${orderId}`
+                                    search: `order_id=${orderInfo && orderInfo.id}`
                                 }}
                                 title=""
                             />
                         </li>
                         <li className={itemClassName}>
-                            <ConfirmPopup>
+                            <ConfirmPopup
+                                actionText={loc[lang].confirmActionTextFabric({
+                                    currentStatus: currentStatus,
+                                    nextStatus: nextStatus
+                                })}
+                            >
                                 <button
                                     className="controls__link controls__link--eye"
                                 />

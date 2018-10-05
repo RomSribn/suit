@@ -1,4 +1,4 @@
-interface OrderStatusIncreaseState {
+interface ConfirmPopUpState {
     isOpen: boolean,
 }
 
@@ -7,6 +7,6 @@ interface DefaultProps {
     actionText: string;
 }
 
-type OrderStatusIncreaseProps = {
+type ConfirmPopupProps = {
     children?: React.ReactNode;
 } & Partial<DefaultProps>;

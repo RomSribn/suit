@@ -1,6 +1,5 @@
 import * as moment from 'moment';
 import { TableData } from '../../components/Table';
-import { loc as TLoc } from '../../components/Table/loc';
 
 type PrepareTableData = (orders: OrderList.OrderItem[], lang: string) => TableData;
 
@@ -10,7 +9,7 @@ const prepareTableData: PrepareTableData = (orders, lang) => {
         name: order.customer.name,
         fitting: 'First',
         phone: order.customer.phone,
-        status: TLoc[lang].statuses[order.status.name],
+        status: order.status,
         date: moment(order.date).format('DD/MM/YYYY')
     }));
 };

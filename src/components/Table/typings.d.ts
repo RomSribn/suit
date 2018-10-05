@@ -4,7 +4,23 @@ interface HeaderCellParams {
     isFilter?: boolean;
     accessor?: string;
 }
+interface OrderStatusInfo {
+    id: number;
+    name: string;
+}
+interface OrderInfo {
+    id: string;
+    name: string;
+    phone: string;
+    fitting: string;
+    status: OrderStatusInfo;
+    date: string; // TODO: подумать как скрестить Date и string
+}
+
+type OrderStatus = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';
 
 interface PanelRowProps {
-    orderId: string | null;
+    orderInfo: OrderInfo | null;
+    orderStatuses: OrderStatus[];
+    lang: Lang;
 }

@@ -23,9 +23,32 @@ class OrdersStore implements OrderList.IOrderStore {
         this._onSuccess,
         this._onError);
     }
+
+    @action
+    updateOrder = (order: OrderList.OrderItem) => {
+        return callApi({
+            method: 'PUT',
+            url: `${services.orders}/${order.orderId}`,
+            data: order
+        },
+        () => { this.isFetching = true; },
+        () => {
+            const currentOrderIndex = this.orders.findIndex(item => item.orderId === order.orderId);
+            if (currentOrderIndex !== -1) {
+                this.orders[currentOrderIndex] = order;
+            }
+            this.isFetching = false;
+        },
+        this._onError
+
+    );
+    }
    
     _onSuccess = (data: List) => {
-        this.orders = observable.array(data.items);
+        const nonNullableDataItems = data.items.filter(item => {
+            return Boolean(item.customer && item.customer.id);
+        });
+        this.orders = observable.array(nonNullableDataItems);
         this.isFetching = false;
     }
     _onError = (e: Error) => {

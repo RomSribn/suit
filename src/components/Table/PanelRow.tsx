@@ -27,6 +27,21 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             showControls: showControlsBoolValue || !showControls
         });
     }
+    onAcceptClickFabric = (status: {id: number, name: OrderStatus}) => () => {
+        const {
+            ordersStore,
+            orderInfo
+        } = this.props;
+        const currentOrderId = orderInfo && orderInfo.id;
+        const currentOrder = ordersStore.orders.find(item => String(item.orderId) === currentOrderId);
+        if (currentOrder) {
+            return ordersStore.updateOrder({
+                ...currentOrder,
+                status
+            });
+        }
+        return;
+    }
     render() {
         const {
             orderInfo,
@@ -91,6 +106,10 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                         </li>
                         <li className={itemClassName}>
                             <ConfirmPopup
+                                onAcceptClick={
+                                    this.onAcceptClickFabric(
+                                        { id: nextStatusIndex, name: orderStatuses[nextStatusIndex]}
+                                    )}
                                 actionText={loc[lang].confirmActionTextFabric({
                                     currentStatus: currentStatus,
                                     nextStatus: nextStatus

@@ -16,6 +16,12 @@ type TableDataItem = {
 type TableData = TableDataItem[];
 interface TProps {
     orders: TableData;
+    // TODO: Ну, а че поделать, если у нас ахуенныйы бек, который нихуя не умеет в PATCH
+    // TODO: удалить к хуям после появления PUT
+    /** Эта поебота нужна для того, чтобы потом находить весь заказ среди всех имеющихся
+     * и отправлять его PUT'ом
+     */
+    ordersStore: OrderList.IOrderStore;
     lang: Lang;
 }
 
@@ -80,6 +86,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
                 ref={(ref) => this.panelRow = ref}
                 orderInfo={selectedOrder}
                 orderStatuses={orderStatuses}
+                ordersStore={this.props.ordersStore}
                 lang={lang}
             />
             <RTable
@@ -88,7 +95,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
                 sortable={false}   
                 loadingText=""
                 minRows={0}
-                getTrProps={({}, rowInfo: RowInfo) => { // tslint:disable-line
+                getTrProps={({}, rowInfo: RowInfo) => {
                     return {
                         onClick: () => {
                             this.panelRow && this.panelRow.triggerControls(true); // tslint:disable-line

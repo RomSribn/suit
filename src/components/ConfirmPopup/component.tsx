@@ -8,14 +8,27 @@ const baseClassName = 'confirm-popup';
 
 type AllProps = ConfirmPopupProps & DefaultProps;
 class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpState> {
-    static defaultProps = {
-        lang: 'ru'
+    static defaultProps: DefaultProps = {
+        lang: 'ru',
+        actionText: '',
+        onAcceptClick: () => undefined
     };
     constructor(props: AllProps) {
         super(props);
         this.state = {
             isOpen: false
         };
+    }
+    closePopup = () => {
+        this.setState({ isOpen: false });
+    }
+    onAccetpClick = () => {
+        const acceptClickResult = this.props.onAcceptClick!();
+        if (acceptClickResult &&  acceptClickResult instanceof Promise) {
+            acceptClickResult.then(this.closePopup);
+        } else {
+            this.closePopup();
+        }
     }
     render() {
         const {
@@ -29,7 +42,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
                  <span onClick={() => this.setState({ isOpen: true })}>{this.props.children}</span>
                 <PopUp
                     open={isOpen}
-                    onClose={() => this.setState({ isOpen: false })}
+                    onClose={this.closePopup}
                 >
                     <div className={`${baseClassName}__wrapper`}>
                         <div className={baseClassName}>
@@ -41,13 +54,14 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
                             <div className={`${baseClassName}__controls`}>
                                 <Button
                                     className={`${baseClassName}__controls-item`}
+                                    onClick={this.onAccetpClick}
                                 >
                                 {loc[lang].confirm}
                                 </Button>
                                 <Button
                                     className={`${baseClassName}__controls-item`}
                                     theme="white"
-                                    onClick={() => this.setState({isOpen: false})}
+                                    onClick={this.closePopup}
                                 >{loc[lang].back}
                                 </Button>
                             </div>

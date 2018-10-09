@@ -5,6 +5,7 @@ interface ConfirmPopUpState {
 interface DefaultProps {
     lang: Lang;
     actionText: string;
+    onAcceptClick: (...args: any[]) => any;
 }
 
 type ConfirmPopupProps = {

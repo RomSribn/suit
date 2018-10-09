@@ -22,5 +22,6 @@ type OrderStatus = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';
 interface PanelRowProps {
     orderInfo: OrderInfo | null;
     orderStatuses: OrderStatus[];
+    ordersStore: OrderList.IOrderStore;
     lang: Lang;
 }

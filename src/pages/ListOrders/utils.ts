@@ -6,9 +6,9 @@ type PrepareTableData = (orders: OrderList.OrderItem[], lang: string) => TableDa
 const prepareTableData: PrepareTableData = (orders, lang) => {
     return orders.map(order => ({
         order: order.orderId.toString(),
-        name: order.customer.name,
+        name: order.customer && order.customer.name || '',
         fitting: 'First',
-        phone: order.customer.phone,
+        phone: order.customer && order.customer.phone || '',
         status: order.status,
         date: moment(order.date).format('DD/MM/YYYY')
     }));

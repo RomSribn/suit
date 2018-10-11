@@ -1,6 +1,58 @@
+import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
+
+namespace Fucking {
+    export interface Item {
+        additionalFabric?: { ourCode: string; };
+        design: {
+            ourCode: string;
+            value: string;
+        };
+    }
+
+    export interface Fitting {
+        ourCode: string;
+        value: string;
+    }
+
+    export interface PutData {
+        statusId: number;
+        fittings: Fitting[];
+        mainFabric: { ourCode: string; };
+        items: Item[];
+    }
+
+    export type PrepareDataForPut = (data: OrderList.OrderItem) => Fucking.PutData;
+}
+
+const prepareDataForFuckingPut: Fucking.PrepareDataForPut = (data) => {
+    let fittings: Fucking.Fitting[] = [];
+    let items: Fucking.Item[] = [];
+    _.forIn(data.garments, (garment) => {
+        fittings = _.map(garment.fittings, (fittingItem) => ({
+            ourCode: fittingItem.fitting.our_code,
+            value: fittingItem.value
+        }));
+
+        items = _.map(garment.items, (garmentItem) => ({
+            additionalFabric: garmentItem.additionalFabric && {
+                ourCode: garmentItem.additionalFabric.our_code
+            },
+            design: {
+                ourCode: garmentItem.design.our_code,
+                value: garmentItem.value
+            }
+        }));
+    });
+    return {
+        fittings,
+        statusId: data.status.statusId,
+        mainFabric: { ourCode: data.garments.shirt.mainFabric.our_code },
+        items
+    };
+};
 
 type List = OrderList.ServerData.List;
 type Fetch<Data> = () => Promise<void | Axios.Response<Data>>;
@@ -10,7 +62,7 @@ class OrdersStore implements OrderList.IOrderStore {
     @observable error: Error | null = null;
 
     @observable orders = observable.array<OrderList.OrderItem>();
-    
+
     @action
     fetch: Fetch<List> = () => {
         this.error = null;
@@ -29,7 +81,7 @@ class OrdersStore implements OrderList.IOrderStore {
         return callApi({
             method: 'PUT',
             url: `${services.orders}/${order.orderId}`,
-            data: order
+            data: prepareDataForFuckingPut(order)
         },
         () => { this.isFetching = true; },
         () => {
@@ -43,7 +95,7 @@ class OrdersStore implements OrderList.IOrderStore {
 
     );
     }
-   
+
     _onSuccess = (data: List) => {
         const nonNullableDataItems = data.items.filter(item => {
             return Boolean(item.customer && item.customer.id);

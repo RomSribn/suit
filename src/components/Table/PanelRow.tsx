@@ -27,7 +27,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             showControls: showControlsBoolValue || !showControls
         });
     }
-    onAcceptClickFabric = (status: {id: number, name: OrderStatus}) => () => {
+    onAcceptClickFabric = (status: {statusId: number, name: OrderStatus}) => () => {
         const {
             ordersStore,
             orderInfo
@@ -52,10 +52,13 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             showControls
         } = this.state;
         const itemClassName = classNames('controls__item', { disabled: !Boolean(orderInfo && orderInfo.id) });
-        const currentStatus = loc[lang].statuses[orderStatuses[orderInfo && orderInfo.status.id || 0]];
-        const nextStatusIndex = orderInfo && orderInfo.status.id + 1 < orderStatuses.length ?
-            orderInfo && orderInfo.status.id + 1 :
+        const currentStatus = loc[lang].statuses[orderStatuses[orderInfo && orderInfo.status.statusId || 0]];
+        let nextStatusIndex = orderInfo && orderInfo.status.statusId + 1 < orderStatuses.length ?
+            orderInfo && orderInfo.status.statusId + 1 :
             orderStatuses.length - 1;
+        if (!Boolean(orderInfo && orderInfo.status.statusId + 1)) {
+            nextStatusIndex = 1;
+        }
         const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex]];
         return (
             <div className="panel-row">
@@ -108,7 +111,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             <ConfirmPopup
                                 onAcceptClick={
                                     this.onAcceptClickFabric(
-                                        { id: nextStatusIndex, name: orderStatuses[nextStatusIndex]}
+                                        { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex]}
                                     )}
                                 actionText={loc[lang].confirmActionTextFabric({
                                     currentStatus: currentStatus,

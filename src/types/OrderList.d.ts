@@ -30,11 +30,11 @@ declare namespace OrderList {
             weight: MakeLocale<number>;
         };
         type ServerGarmentItem = {
-            additionalFabric: SubgroupValues;
+            additionalFabric?: SubgroupValues;
             design: SubgroupValues;
             value: string;
         };
-    
+
         interface OrderItem {
             customer?: User;
             date: string;
@@ -63,11 +63,11 @@ declare namespace OrderList {
             orderId: number;
             price: MakeLocale<number>;
             status: {
-                id: number;
+                statusId: number;
                 name: allowedStatuses;
             };
         }
-    
+
         interface List {
             items: OrderItem[];
             page: number;

@@ -5,7 +5,7 @@ interface HeaderCellParams {
     accessor?: string;
 }
 interface OrderStatusInfo {
-    id: number;
+    statusId: number;
     name: string;
 }
 interface OrderInfo {

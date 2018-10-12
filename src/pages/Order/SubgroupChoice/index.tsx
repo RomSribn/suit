@@ -11,9 +11,10 @@ type FilterFields = (
     subgroup: string,
     lang: string,
     order: Order,
-    garment: string
+    garment: string,
+    defaultValues?: OrderItem 
 ) => SubgroupChoiceItem;
-const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
+const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaultValues) => {
     let status;
     try {
         const orderVal = order[garment][order[garment].length - 1];
@@ -30,6 +31,15 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
     if (item.subsection_our_code === 'fitting') {
         status = null;
     }
+    let ourCode = null;
+    let defaultCode = null;
+    if (order[garment][0].design[item.subsection_our_code]) {
+        ourCode = order[garment][0].design[item.subsection_our_code].our_code;
+        defaultCode = defaultValues!.design[item.subsection_our_code]!.our_code;
+    } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
+        ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
+        defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
+    }
     return {
         link: `${subgroup}/${item.subsection_our_code}`,
         linkName: item.title[lang],
@@ -37,7 +47,9 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
         isSubclear: item.is_subclear,
         isInput: item.is_input,
         status,
-        subgroupTitle: item.title
+        subgroupTitle: item.title,
+        ourCode: ourCode,
+        defaultCode: defaultCode,
     };
 };
 
@@ -53,6 +65,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment) => {
         lang: app.lang,
         SubgroupsStore: new Subgroups(nextProps.match.params.garment),
         order: order.order,
+        defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment][0] : {},
         userStore: user,
         activeExceptions: order.exceptions,
         setSubgroupTitle: order.setSubgroupTitle,
@@ -82,7 +95,8 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             choiceItem,
             popOrderPathitem,
             backLink,
-            setSubgroupTitle
+            setSubgroupTitle,
+            defaultValues
         } = this.props;
         const $store = SubgroupsStore.data as SubgroupsI;
         const isLogin = this.props.userStore!.isAuth;
@@ -92,7 +106,8 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 'fitting',
                 lang!,
                 order!,
-                garment
+                garment,
+                defaultValues
             ));
         const data = $store
             ? [
@@ -102,14 +117,16 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     'fabric_ref',
                     lang!,
                     order!,
-                    garment
+                    garment,
+                    defaultValues
                 )),
                 ...$store.design.map((v: Subgroup) => filterFields(
                     v,
                     'design',
                     lang!,
                     order!,
-                    garment
+                    garment,
+                    defaultValues
                 )),
                 ...fittingSection]
             : [];

@@ -58,6 +58,9 @@
     outline-width: 0;
 }
 
+.custom__control:hover {
+    cursor: pointer;
+}
 .custom__control:before,
 .custom__control:after{
     content: '';

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
+import { loc } from './loc';
 
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
     componentDidMount() {
@@ -17,8 +18,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             choiceItem,
             lang
         } = this.props;
-        // TODO: add translation
-        const choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, 'не выбрано');
+        const choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
         return (
                 <Link to={backLink} onClick={this.backClick} className="custom custom--open">
                     <span className="custom__content">

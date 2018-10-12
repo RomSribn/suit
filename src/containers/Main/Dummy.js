@@ -6,8 +6,11 @@ import _ from 'lodash';
 import { currentItems } from '../../stores/garments/galleryStore';
 const INITIALS = 'initials';
 
+@inject(({ order, garments: {Subgroups}, }) => ({
+  orderStore: order,
+  SubgroupsStore: new Subgroups('shirt'),
+}))
 class Widget extends PureComponent {
-
   componentDidMount() {
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
@@ -32,7 +35,63 @@ class Widget extends PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.assets !== this.props.assets) {
-      this.widget3d.update(this.props.assets).then(this.handleUpdated);
+      const exceptions = _.get(this, "props.orderStore.exceptions", []);
+      const activeExceptions = _.get(this, "props.orderStore.activeElement.exception", []);
+      const activeElementCode = _.get(this, "props.orderStore.activeElement.our_code", null);      
+      const subGroup = _.get(this, "props.orderStore.activeElement.elementInfo.subGroup");
+      const defaultValues = _.get(this, "props.orderStore.defaultValues", {});
+      let allExceptions = exceptions ?
+        Object.keys(exceptions).reduce((ac, garmentKey) => {
+          Object.keys(exceptions[garmentKey]).forEach(elementKey => {
+            if (elementKey !== subGroup) {
+              ac.push(...exceptions[garmentKey][elementKey].exceptions)
+            }
+          })
+          
+          return ac
+        }, [])
+        : [];
+
+        const defaultItemValues = {}
+        if (defaultValues) {
+          Object.keys(defaultValues)
+          .filter(item => !item.includes(['manequin']))
+          .map(filteredGarment => 
+              defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
+                .map(garmentObject => Object.keys(garmentObject.design)
+                  .forEach(
+                    elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
+                  )
+                )
+          ) 
+        }
+        const  mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => this.props.assets.includes(activeExceptionCode));
+
+        if (mutuallyExclusiveItems.length && exceptions) {
+          mutuallyExclusiveItems.forEach((item) => {
+            Object.keys(exceptions).forEach((garmentKey) => {
+              Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
+                if (exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)) {
+                  allExceptions = allExceptions.filter((i) => {
+                    if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
+                        if (!this.props.assets.includes(defaultItemValues[elementKey])) {
+                          this.props.assets.push(defaultItemValues[elementKey])
+                        }
+                    }
+                    
+                    return !exceptions[garmentKey][elementKey].exceptions.includes(i)
+                    })
+                }
+              })
+            })
+          })
+        }
+       
+        const actualExceptions = [...allExceptions, ...activeExceptions];
+        const nextAssets = this.props.assets
+          .filter(i => !actualExceptions.includes(i))
+   
+        this.widget3d.update(nextAssets).then(this.handleUpdated);
     }
 
     if (prevProps.selected !== this.props.selected) {
@@ -169,7 +228,6 @@ export default class App extends Component {
       })
       return acc;
     }, []);
-
     const { subgroup } = this.state;
     let selected = '';
     if (

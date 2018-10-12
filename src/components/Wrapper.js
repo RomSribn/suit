@@ -14,7 +14,7 @@ let orderPageWasRendered = false;
 @inject(({user, app, order}) => ({
   user,
   app,
-  order: order.order,
+  order: order.order
 })) @observer
 class Wrapper extends Component {
   constructor(props) {

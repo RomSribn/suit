@@ -11,7 +11,7 @@ class SubgroupChoice extends React.PureComponent<SubgroupChoiceProps> {
 
         return (
             <ChoiceItems
-                lang={lang}
+                lang={lang!}
                 basicRoute={match.url}
                 items={data!}
             />

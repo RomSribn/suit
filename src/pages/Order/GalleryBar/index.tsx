@@ -12,13 +12,14 @@ interface P {
     onMouseLeave(): void;
     incremetLoadedCount(): void;
 }
+
 interface S extends ImageLoadState {
 
 }
 
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
 @inject(({ order }) => ({
-        orderStore: order
+        orderStore: order,
     })
 )
 @observer
@@ -29,7 +30,7 @@ class GalleryItem extends React.Component<P, S > {
             load: {
                 error: null,
                 success: null,
-            },
+            }
         };
     }
     componentDidMount() {
@@ -59,12 +60,13 @@ class GalleryItem extends React.Component<P, S > {
             });
         }
     }
+
     render() {
         const {
-            onClick,
             onMouseEnter,
             shownItem,
-            onMouseLeave
+            onMouseLeave,
+            onClick
         } = this.props;
         const {
             img_url_2d: image,
@@ -85,11 +87,11 @@ class GalleryItem extends React.Component<P, S > {
                 onClick={click}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
-                className="gallery__item-blc"
+                className={'gallery__item-blc'}
                 style={{
                     maxWidth: '33.3333%',
                     width: '100%',
-                    padding: '0 0 1.333rem 1.333rem',
+                    padding: '0 0 1.333rem 1.333rem'
                 }}
             >
                 <div
@@ -104,6 +106,8 @@ class GalleryItem extends React.Component<P, S > {
         );
     }
 }
+
+const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 type makeGalleryItems = (
     items: GalleryStoreItems,
     setActiveElementIndex: (i: number, action?: string, id?: string, fabric?: string) => () => void,
@@ -114,7 +118,6 @@ type makeGalleryItems = (
     mouseLeave: () => void,
 ) => React.ReactNode[];
 
-const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 const makeGalleryItems: makeGalleryItems = (
     items,
     setActiveElementIndex,
@@ -157,6 +160,10 @@ type State = {
     allLoaded: false;
     loadingProgress: number;
     renderedElementsCount: number;
+    isScrolling: boolean;
+    isShowedExceptionPopup: boolean;
+    titleSubGroup: string;
+    titleElement: Translations<string> | null;
 };
 
 class GalleryBar extends React.Component<GalleryBarProps, State> {
@@ -235,6 +242,10 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             allLoaded: false,
             loadingProgress: 0,
             renderedElementsCount: 35,
+            isShowedExceptionPopup: false,
+            titleSubGroup: '',
+            isScrolling: false,
+            titleElement: null
         };
     }
     componentDidMount() {
@@ -279,6 +290,16 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         }
     }
 
+    showExceptionPopup = (titleSubGroup: string, titleElement: Translations<string> | null) => (
+        this.setState({
+            isShowedExceptionPopup: true,
+            titleSubGroup,
+            titleElement
+        })
+    )
+
+    hideExceptionPopup = () => this.setState({ isShowedExceptionPopup: false });
+
     render() {
         const {
             items,
@@ -289,7 +310,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             isMouseOverElement,
         } = this.props;
         const {
-            renderedElementsCount
+            renderedElementsCount,
         } = this.state;
         const activeItems =
         renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);

@@ -6,6 +6,7 @@ import { trim } from '../../../config/routes';
 @inject(({ routing, app, order }, nextProps) => ({
     lang: app.lang,
     orderStore: order,
+    mutuallyExclusivePopup: order.mutuallyExclusivePopup,
     popOrderPathitem: app.popOrderPathItem,
     backLink:
         '/' + trim(
@@ -30,11 +31,13 @@ class FooterBar extends React.Component<FooterBarProps> {
             backLink,
             popOrderPathitem,
             orderStore,
+            mutuallyExclusivePopup
         } = this.props;
         return (
             <Component 
                 lang={lang}
                 backLink={backLink}
+                mutuallyExclusivePopup={mutuallyExclusivePopup}
                 popOrderPathitem={popOrderPathitem}
                 orderStore={orderStore}
             />

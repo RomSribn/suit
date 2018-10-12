@@ -2,7 +2,11 @@ import * as React from 'react';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
 
-class FadeIn extends React.PureComponent<{children: any}> { // tslint:disable-line no-any
+type P = {
+    children: React.ReactElement<any>[]| React.ReactElement<any> | any // tslint:disable-line no-any
+};
+
+class FadeIn extends React.PureComponent<P> {  // tslint:disable-line no-any
     render() {
         return (
             <ReactCSSTransitionGroup

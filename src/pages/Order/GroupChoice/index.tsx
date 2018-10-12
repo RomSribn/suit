@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
+    componentDidMount() {
+        this.props.setSubgroupTitle(this.props.choiceItem.value);
+    }
     backClick = () => {
         this.props.popOrderPathitem();
     }

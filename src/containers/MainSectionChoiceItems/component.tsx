@@ -13,6 +13,7 @@ interface CommonProps {
     noCursorPointer?: boolean;
     lang: string | undefined;
 }
+
 const Common = (props: CommonProps) => {
     const {
         item,
@@ -60,11 +61,11 @@ interface LinkProps {
     item: SubgroupChoiceItem;
     onClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
-
     basicRoute: string;
     lang?: string;
 }
 class CustomLink extends React.PureComponent<LinkProps> {
+
     render () {
         const {
             item,
@@ -73,6 +74,7 @@ class CustomLink extends React.PureComponent<LinkProps> {
             clearClick,
             lang
         } = this.props;
+
         return (
             <Link
                 to={`${basicRoute}/${item.link}`}
@@ -150,13 +152,13 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         basicRoute: '/',
         pushOrderPathitem: () => undefined,
     };
-    onClick = (item: OrderPathItem) => () => {
-        const { pushOrderPathItem } = this.props;
-        pushOrderPathItem!(item);
+    onClick = (nextOrderPath: OrderPathItem) => () => {
+        this.props.pushOrderPathItem!(nextOrderPath);
     }
     clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
         e.preventDefault();
         const orderStore = this.props.orderStore!;
+        orderStore.clearException(garment, element);
         orderStore.clearElement(garment, element);
     }
 
@@ -166,6 +168,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             basicRoute,
             lang
         } = this.props;
+
         return (
         <ReactCSSTransitionGroup
             transitionName="height-fade-in"
@@ -180,6 +183,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                         item={item}
                         clearClick={this.clearClick}
                         orderStore={this.props.orderStore!}
+                        key={`custom-input-${item.id}`}
                     /> :
                     <CustomLink
                         lang={lang}
@@ -187,6 +191,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                         item={item}
                         onClick={this.onClick}
                         clearClick={this.clearClick}
+                        key={`custom-link-${item.id}`}
                     />
                 )
         )}

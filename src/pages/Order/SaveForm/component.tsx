@@ -64,6 +64,7 @@ class SaveForm extends React.PureComponent<FormProps> {
                                             component={field.component}
                                             type={field.type}
                                             placeholder={loc[lang].placeHolders[field.name]}
+                                            key={`field-${field.name}`}
                                         />
                                     ))}
                                     <div className="buttons">

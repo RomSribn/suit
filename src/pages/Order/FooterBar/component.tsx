@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router';
 import { SaveButton } from './SaveButton';
 import { routes } from '../routes';
 import { Button } from '../../../components/Button';
+import { MutuallyExclusivePopup } from '../../../components/MutuallyExclusivePopup';
+import { PopUp } from '../../../containers/Popup';
 import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 
@@ -25,10 +27,19 @@ class FooterBar extends React.Component<FooterBarProps> {
     render() {
         const {
             lang,
-            backLink
+            backLink,
+            mutuallyExclusivePopup
         } = this.props;
         return (
             <div className="footer-btn-bar">
+                <PopUp open={mutuallyExclusivePopup && mutuallyExclusivePopup!.show}>
+                  {
+                    mutuallyExclusivePopup && mutuallyExclusivePopup!.show ?
+                    <MutuallyExclusivePopup lang={lang!} {...mutuallyExclusivePopup!} /> :
+                    null
+                  }
+                </PopUp>
+
                 <Route
                     path={routes.subgroupChoice}
                     exact={true}
@@ -71,7 +82,12 @@ class FooterBar extends React.Component<FooterBarProps> {
                                     to={`${routes.details}/${props[0].match.params.garment}`}
                                     onClick={this.onBackClick}
                                 >
-                                    <SaveButton {...props[0]} isUpdate={true}>{loc[lang!].save}</SaveButton>
+                                    <SaveButton
+                                        {...props[0]}
+                                        isUpdate={true}
+                                    >
+                                        {loc[lang!].save}
+                                    </SaveButton>
                                 </Link>
                             );
                         }}

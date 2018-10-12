@@ -1,5 +1,6 @@
 interface GalleryBarProps {
     items: GalleryStoreItems,
+    app?: IAppStore,
     setActiveElementIndex(i: number, action?: string): () => void;
     shownItem: GalleryStoreItem;
     mouseEnter(link: string): void;

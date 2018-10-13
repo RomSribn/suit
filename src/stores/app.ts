@@ -1,10 +1,10 @@
 import { observable, action } from 'mobx';
 
-interface Locale {
-  index: string;
-  order: string;
-}
-const makeLocale: MakeLocale<Locale> = () => ({
+type LocaleTextFields = 'index'|'order'|'garments'|'shirt';
+
+type Locale = Record<LocaleTextFields, string>;
+
+const loc: Translations<Locale> = {
   en: {
     index: 'main',
     order: 'order',
@@ -17,8 +17,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
     garments: 'изделия',
     shirt: 'рубашка'
   },
-});
-const loc = makeLocale();
+};
 
 const makeInitionalOrderPath = (lang: string) => [{
   value: loc[lang].order,
@@ -29,17 +28,17 @@ const makeInitionalOrderPath = (lang: string) => [{
 }];
 
 class App implements IAppStore {
-  @observable lang: string;
+  @observable lang: Lang;
   @observable showUserMenu = false;
   orderPath = observable.array<OrderPathItem>([]);
 
-  constructor(lang: string) {
+  constructor(lang: Lang) {
     this.lang = lang || 'en';
     this.orderPath.push(...makeInitionalOrderPath(lang));
   }
 
   @action
-  setLang = (lang: string) => {
+  setLang = (lang: Lang) => {
     this.lang = lang;
     this.orderPath[0].value = loc[lang].order;
     this.orderPath[1].value = loc[lang].shirt;

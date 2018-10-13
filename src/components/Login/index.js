@@ -72,16 +72,16 @@ class Login extends Component {
         <div className="left-side">
           <h2 className="title">{loc[lang].title}</h2>
           <p className="additional-info">{loc[lang].info}
-            { 
+            {
               !userStore.error ? null :
               // eslint-disable-next-line jsx-a11y/href-no-hash
               this.state.showForgot ? <span>{loc[lang].forgetPass}</span> :
-              // eslint-disable-next-line jsx-a11y/href-no-hash              
+              // eslint-disable-next-line jsx-a11y/href-no-hash
                 <a className="link forgot" href="#" onClick={this.forgotClick}>{loc[lang].forgetPass}</a>
             }
             {
               this.state.showForgot &&
-              // eslint-disable-next-line jsx-a11y/href-no-hash                
+              // eslint-disable-next-line jsx-a11y/href-no-hash
               <span className="link forgot">{loc[lang].forgetText}</span>
             }
           </p>

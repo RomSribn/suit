@@ -1,5 +1,5 @@
 interface IAppStore {
-    lang: string;
+    lang: Lang;
     showUserMenu: boolean;
     orderPath: OrderPathItem[];
     setLang: (lang: string) => void;

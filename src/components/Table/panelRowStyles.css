@@ -122,9 +122,11 @@
     display: block;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: #fff;
 }
 .controls__link:hover {
     background-color: #eceeee;
+    cursor: pointer;
 }
 .controls__link--phone {
     background-image: url('/assets/img/controls/phone.svg');
@@ -143,6 +145,8 @@
 .controls__link--eye {
     background-image: url('/assets/img/controls/eye.svg');
     background-size: 1.34rem 0.87rem;
+    width: 100%;
+    border: none;
 }
 .controls__link--trash {
     background-image: url('/assets/img/controls/trash.svg');

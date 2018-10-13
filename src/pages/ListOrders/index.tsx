@@ -26,6 +26,7 @@ class ListOrders extends React.Component<ListOrdersProps> {
             <Table
                 orders={prepareTableData(ordersStore.orders, lang)}
                 lang={lang}
+                ordersStore={ordersStore}
             />
         </div>
         );

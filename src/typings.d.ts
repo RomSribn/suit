@@ -49,8 +49,10 @@ interface OrderPathItem {
 
 type OrderPath = OrderPathItem[];
 
+type Lang = 'ru' | 'en';
+
 interface AppStore {
-    lang: string;
+    lang: Lang;
     orderPath: OrderPath;
 }
 

@@ -1,7 +1,7 @@
 declare namespace OrderList {
     namespace ServerData{
         type allowedGarment = 'shirt';
-        type allowedStatuses = 'TEMPORARY';
+        type allowedStatuses = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';
 
         type CommonOptions = {
             is_allowOwnFabric: boolean;
@@ -30,13 +30,13 @@ declare namespace OrderList {
             weight: MakeLocale<number>;
         };
         type ServerGarmentItem = {
-            additionalFabric: SubgroupValues;
+            additionalFabric?: SubgroupValues;
             design: SubgroupValues;
             value: string;
         };
-    
+
         interface OrderItem {
-            customer: User;
+            customer?: User;
             date: string;
             deliveryDays: number;
             garments: {
@@ -63,11 +63,11 @@ declare namespace OrderList {
             orderId: number;
             price: MakeLocale<number>;
             status: {
-                id: number;
+                statusId: number;
                 name: allowedStatuses;
             };
         }
-    
+
         interface List {
             items: OrderItem[];
             page: number;
@@ -79,6 +79,9 @@ declare namespace OrderList {
         isFetching: boolean;
         orders: ServerData.OrderItem[];
         fetch(): Promise<void | Axios.Response<Data>>;
+        updateOrder(
+            order: ServerData.OrderItem
+        ): Promise<void | Axios.Response<{}>>;
     }
     type OrderItem = ServerData.OrderItem;
 }

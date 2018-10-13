@@ -1,12 +1,18 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { ConfirmPopup } from '../ConfirmPopup';
 import { routes } from '../../config/routes';
+import { loc } from './loc';
 
 import './panelRowStyles.css';
 import './panelRowStyles.styl';
 
-class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean}> {
+interface PanelRowState {
+    showControls: boolean;
+}
+
+class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
@@ -21,14 +27,52 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean
             showControls: showControlsBoolValue || !showControls
         });
     }
+    onAcceptClickFabric = (status: {statusId: number, name: OrderStatus}) => () => {
+        const {
+            ordersStore,
+            orderInfo,
+            acceptCallback
+        } = this.props;
+        const currentOrderId = orderInfo && orderInfo.id;
+        const currentOrder = ordersStore.orders.find(item => String(item.orderId) === currentOrderId);
+        if (currentOrder) {
+            return ordersStore.updateOrder({
+                ...currentOrder,
+                status
+            }).then((data) => {
+                if (acceptCallback) {
+                    acceptCallback.call(this, data);
+                }
+                this.setState({ showControls: false });
+            });
+        }
+        return;
+    }
     render() {
         const {
-            orderId
+            orderInfo,
+            orderStatuses,
+            lang
         } = this.props;
         const {
             showControls
         } = this.state;
-        const itemClassName = classNames('controls__item', { disabled: !Boolean(orderId) });
+        const itemClassName = classNames('controls__item', { disabled: !Boolean(orderInfo && orderInfo.id) });
+        const currentStatusIndex: number = orderInfo && (orderInfo.status.statusId ||
+          // TODO:  ХАК! В овтетах до сих пор присутвтуют поля id вместо statusId
+          // Удалить, как только их почистят и приведут к одной модели
+          orderInfo.status['id']) || // tslint:disable-line
+          // На сервере статусы начинаются с 1
+          1;
+        const currentStatus = loc[lang].statuses[orderStatuses[currentStatusIndex - 1]];
+
+        let nextStatusIndex = currentStatusIndex < orderStatuses.length ?
+            currentStatusIndex + 1 :
+            orderStatuses.length;
+        if (!Boolean(currentStatusIndex)) {
+            nextStatusIndex = 1;
+        }
+        const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
         return (
             <div className="panel-row">
                 <form className="search">
@@ -71,17 +115,26 @@ class PanelRow extends React.PureComponent<PanelRowProps, {showControls: boolean
                                 className="controls__link controls__link--refresh"
                                 to={{
                                     pathname: `${routes.details}/shirt`,
-                                    search: `order_id=${orderId}`
+                                    search: `order_id=${orderInfo && orderInfo.id}`
                                 }}
                                 title=""
                             />
                         </li>
                         <li className={itemClassName}>
-                            <a
-                                className="controls__link controls__link--eye"
-                                href="#"
-                                title=""
-                            />
+                            <ConfirmPopup
+                                onAcceptClick={
+                                    this.onAcceptClickFabric(
+                                        { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
+                                    )}
+                                actionText={loc[lang].confirmActionTextFabric({
+                                    currentStatus: currentStatus,
+                                    nextStatus
+                                })}
+                            >
+                                <button
+                                    className="controls__link controls__link--eye"
+                                />
+                            </ConfirmPopup>
                         </li>
                         <li className={itemClassName}>
                             <a

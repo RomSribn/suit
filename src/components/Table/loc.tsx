@@ -31,7 +31,7 @@ const loc: Translations<Loc> = {
             ALL_STATUSES: 'All statuses'
         },
         confirmActionTextFabric: (params) =>
-            `change an order from the 
+            `change an order from the
             status "${params.currentStatus}" to the status "${params.nextStatus}"`
     },
     ru: {

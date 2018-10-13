@@ -30,7 +30,8 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     onAcceptClickFabric = (status: {statusId: number, name: OrderStatus}) => () => {
         const {
             ordersStore,
-            orderInfo
+            orderInfo,
+            acceptCallback
         } = this.props;
         const currentOrderId = orderInfo && orderInfo.id;
         const currentOrder = ordersStore.orders.find(item => String(item.orderId) === currentOrderId);
@@ -38,6 +39,11 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             return ordersStore.updateOrder({
                 ...currentOrder,
                 status
+            }).then((data) => {
+                if (acceptCallback) {
+                    acceptCallback.call(this, data);
+                }
+                this.setState({ showControls: false });
             });
         }
         return;
@@ -52,14 +58,21 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             showControls
         } = this.state;
         const itemClassName = classNames('controls__item', { disabled: !Boolean(orderInfo && orderInfo.id) });
-        const currentStatus = loc[lang].statuses[orderStatuses[orderInfo && orderInfo.status.statusId || 0]];
-        let nextStatusIndex = orderInfo && orderInfo.status.statusId + 1 < orderStatuses.length ?
-            orderInfo && orderInfo.status.statusId + 1 :
-            orderStatuses.length - 1;
-        if (!Boolean(orderInfo && orderInfo.status.statusId + 1)) {
+        const currentStatusIndex: number = orderInfo && (orderInfo.status.statusId ||
+          // TODO:  ХАК! В овтетах до сих пор присутвтуют поля id вместо statusId
+          // Удалить, как только их почистят и приведут к одной модели
+          orderInfo.status['id']) || // tslint:disable-line
+          // На сервере статусы начинаются с 1
+          1;
+        const currentStatus = loc[lang].statuses[orderStatuses[currentStatusIndex - 1]];
+
+        let nextStatusIndex = currentStatusIndex < orderStatuses.length ?
+            currentStatusIndex + 1 :
+            orderStatuses.length;
+        if (!Boolean(currentStatusIndex)) {
             nextStatusIndex = 1;
         }
-        const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex]];
+        const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
         return (
             <div className="panel-row">
                 <form className="search">
@@ -111,11 +124,11 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             <ConfirmPopup
                                 onAcceptClick={
                                     this.onAcceptClickFabric(
-                                        { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex]}
+                                        { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
                                     )}
                                 actionText={loc[lang].confirmActionTextFabric({
                                     currentStatus: currentStatus,
-                                    nextStatus: nextStatus
+                                    nextStatus
                                 })}
                             >
                                 <button

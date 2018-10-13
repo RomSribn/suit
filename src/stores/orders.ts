@@ -97,10 +97,7 @@ class OrdersStore implements OrderList.IOrderStore {
     }
 
     _onSuccess = (data: List) => {
-        const nonNullableDataItems = data.items.filter(item => {
-            return Boolean(item.customer && item.customer.id);
-        });
-        this.orders = observable.array(nonNullableDataItems);
+        this.orders = observable.array(data.items);
         this.isFetching = false;
     }
     _onError = (e: Error) => {

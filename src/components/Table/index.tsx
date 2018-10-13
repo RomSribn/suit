@@ -48,9 +48,9 @@ const headerCell = (params: HeaderCellParams) => {
 
 const cell = (row: any) => <div className="orders__data">{row.value}</div>; // tslint:disable-line
 const filterMethod = (filter: any, row: any) => { // tslint:disable-line
-    return row[filter.id].toLocaleLowerCase().includes(filter.value.toLowerCase()); // tslint:disable-line
+    return row[filter.id].toLowerCase().includes(filter.value.toLowerCase()); // tslint:disable-line
 };
-    
+
 class Table extends React.PureComponent<TProps, { activeOrderId: string | null, selectedOrder: OrderInfo | null }> {
     private panelRow: PanelRow | null;
     constructor(props: TProps) {
@@ -60,7 +60,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
             selectedOrder: null
         };
     }
-    setActiveOrderId = (id: string) => {
+    setActiveOrderId = (id: string | null) => {
         this.setState({ activeOrderId: id });
     }
 
@@ -68,6 +68,9 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
         this.setState({ selectedOrder: orderInfo });
     }
 
+    resetActiveInfo = () => {
+        this.setState({ selectedOrder: null, activeOrderId: null });
+    }
     render() {
         const {
             activeOrderId,
@@ -88,11 +91,12 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
                 orderStatuses={orderStatuses}
                 ordersStore={this.props.ordersStore}
                 lang={lang}
+                acceptCallback={this.resetActiveInfo}
             />
             <RTable
                 className="orders"
                 showPagination={false}
-                sortable={false}   
+                sortable={false}
                 loadingText=""
                 minRows={0}
                 getTrProps={({}, rowInfo: RowInfo) => {
@@ -143,7 +147,10 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
                             type: 'select',
                             selectValeus: orderStatuses
                         }),
-                        filterMethod,
+                        filterMethod: (filter: any, row: any) => { // tslint:disable-line
+                            return row[filter.id].name.toLowerCase()
+                                    .includes(filter.value.toLowerCase()); // tslint:disable-line
+                        },
                         filterable: true,
                         accessor: 'status',
                         Cell: (row: {value: {name: string}}) =>
@@ -154,7 +161,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
                         filterable: true,
                         accessor: 'date',
                         Cell: cell
-                    } 
+                    }
                 ]}
                 data={this.props.orders}
             />

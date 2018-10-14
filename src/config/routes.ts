@@ -24,17 +24,26 @@ export const services = {
   logout: `${API_ROOT}/api/auth/logout`,
 
 };
+
+const routes = {
+  details: `/order/details`,
+  order: '/order/details/shirt',
+  orderList: '/order/list',
+  login: '/login',
+  index: '/',
+};
+
 type MakeNavigationRoutes = () => NavigationRoutes;
 const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
-  order: '/order/details/shirt',
+  order: routes.order,
   panel: '/panel',
   clientele: '/clients',
   calendar: '/calendar',
   tasks: '/tasks',
   analytics: '/analytics',
   settings: '/settings',
-  ordersList: '/order/list'
+  ordersList: routes.orderList
 });
 const navigationRoutes = makeNavigationRoutes();
 
@@ -59,13 +68,6 @@ const routesTranslations = {
     analytics: 'аналтика',
     settings: 'настройки',
   },
-};
-
-const routes = {
-  details: `/order/details`,
-  order: '/order',
-  login: '/login',
-  index: '/',
 };
 
 export {

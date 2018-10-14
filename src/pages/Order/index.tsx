@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import { MainSection } from './SectionMain';
-import { routes } from './routes';
+// import { routes } from './routes';
 
 let wasRendered = false;
 
@@ -14,8 +14,6 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
     render() {
         if (!wasRendered) {
             wasRendered = true;
-            // TODO: изменить редирект. Сейчас на /shirt потому что есть только рубашка
-            return <Redirect to={routes.index + '/shirt'} />;
         }
         const {
             location,
@@ -51,7 +49,7 @@ class Container extends React.Component<any>{ //tslint:disable-line
             orderStore.fetchInitialOrder(
                 Object.keys(garmentsStore.garmentsList),
                 (garments) => garmentsStore.setChosenGarments(garments)
-            );   
+            );
             return null;
         }
         return <Order {...this.props} />;

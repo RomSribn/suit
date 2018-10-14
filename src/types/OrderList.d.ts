@@ -82,6 +82,9 @@ declare namespace OrderList {
         updateOrder(
             order: ServerData.OrderItem
         ): Promise<void | Axios.Response<{}>>;
+        deleteOrder(
+            orderId: number
+        ): Promise<void | Axios.Response<{}>>;
     }
     type OrderItem = ServerData.OrderItem;
 }

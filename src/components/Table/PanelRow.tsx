@@ -5,7 +5,6 @@ import { ConfirmPopup } from '../ConfirmPopup';
 import { routes } from '../../config/routes';
 import { loc } from './loc';
 
-import './panelRowStyles.css';
 import './panelRowStyles.styl';
 
 interface PanelRowState {
@@ -47,6 +46,16 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             });
         }
         return;
+    }
+
+    onDeleteClick = () => {
+        const {
+            ordersStore,
+            orderInfo
+        } = this.props;
+        if (orderInfo && orderInfo.id) {
+            ordersStore.deleteOrder(Number(orderInfo.id));
+        }
     }
     render() {
         const {
@@ -126,13 +135,13 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                     this.onAcceptClickFabric(
                                         { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
                                     )}
-                                actionText={loc[lang].confirmActionTextFabric({
+                                actionText={loc[lang].fabric.updateOrder({
                                     currentStatus: currentStatus,
                                     nextStatus
                                 })}
                             >
                                 <button
-                                    className="controls__link controls__link--eye"
+                                    className="controls__button controls__button--eye"
                                 />
                             </ConfirmPopup>
                         </li>
@@ -144,11 +153,15 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             />
                         </li>
                         <li className={itemClassName}>
-                            <a
-                                className="controls__link controls__link--trash"
-                                href="#"
-                                title="удалить"
-                            />
+                            <ConfirmPopup
+                                actionText={loc[lang].fabric.delete(orderInfo && orderInfo.id || '')}
+                                onAcceptClick={this.onDeleteClick}
+                            >
+                                <button
+                                    className="controls__button controls__button--trash"
+                                    title="удалить"
+                                />
+                            </ConfirmPopup>
                         </li>
                         <li className={itemClassName}>
                             <a

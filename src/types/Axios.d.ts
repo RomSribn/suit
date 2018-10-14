@@ -24,7 +24,7 @@ declare namespace Axios {
       
       interface RequestConfig {
         url?: string;
-        method?: string;
+        method?: 'POST' | 'PUT' | 'GET' | 'PATCH' | 'DELETE';
         baseURL?: string;
         transformRequest?: Transformer | Transformer[];
         transformResponse?: Transformer | Transformer[];

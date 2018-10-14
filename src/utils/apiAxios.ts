@@ -38,7 +38,7 @@ export function callApi(
     if (typeof onRequestSuccess === 'function') {
       onRequestSuccess(response.data, response.headers);      
     }
-    return response;
+    return response as Axios.Response;
   }).catch((error) => {
     if (error.response.status === 401) {
       localStorage.removeItem('AuthUser');

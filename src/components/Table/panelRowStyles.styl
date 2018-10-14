@@ -1,14 +1,11 @@
-.controls
-    &__item
-        position relative
-        &.disabled
-            cursor default
-            background: none
-            &:before
-                content ''
-                display block
-                position absolute
-                height 100%
-                width 100%
-                z-index 9
-                background: rgba(255, 255, 255, 0.8)
+.panel-row
+    position relative
+    display flex
+    align-items flex-end
+    width 100%
+    margin-bottom 2rem
+    flex-shrink 0
+
+@import "./style.search.styl"
+@import "./style.icon.styl"
+@import "./style.controls.styl"

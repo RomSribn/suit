@@ -1,0 +1,81 @@
+.controls
+    position absolute
+    right 0
+    transition .6s ease-in-out
+    z-index 4
+
+    &__list
+        display flex
+        background #fff
+
+    &.hidden
+        display block
+        transform translateX(110%)
+
+    &__item
+        border-left 1px solid rgba(147, 160, 174, 0.3)
+        width 3.8rem
+        height 40px
+        position relative
+
+        &.disabled
+            cursor default
+            background: none
+            &:before
+                content ''
+                display block
+                position absolute
+                height 100%
+                width 100%
+                z-index 9
+                background: rgba(255, 255, 255, 0.8)
+    &__button
+        width 100%
+        height 100%
+        border none
+        background-color: white
+        background-repeat no-repeat
+        background-position center
+
+        &:hover
+            background-color #eceeee
+            cursor pointer
+
+        &--eye
+            background-image url('/assets/img/controls/eye.svg')
+            background-size 1.34rem 0.87rem
+
+        &--trash
+            background-image url('/assets/img/controls/trash.svg')
+            background-size 1rem 1.07rem
+
+    &__link
+        height 100%
+        display block
+        background-repeat no-repeat
+        background-position center
+        background-color #fff
+
+        &:hover
+            background-color #eceeee
+            cursor pointer
+
+        &--phone
+            background-image url('/assets/img/controls/phone.svg')
+            background-size 1.28rem 1.28rem
+
+        &--refresh
+            background-image url('/assets/img/controls/refresh2.svg')
+            background-size 1.27rem 1.07rem
+
+        &--msg
+            background-image url('/assets/img/controls/msg.svg')
+            background-size 1.53rem 1.13rem
+
+        &--edit
+            background-image url('/assets/img/controls/edit.svg')
+            background-size 1.14rem 1.07rem
+
+        &--pdf
+            background-image url('/assets/img/controls/pdf.svg')
+            background-size: 1.27rem 1.27rem

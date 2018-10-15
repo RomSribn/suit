@@ -56,9 +56,8 @@ class OrderStore implements IOrderStore {
     }
     @action
     clearElement = (garment: string, element: string) => {
-        const newValue = this.order;
+        const newValue = {...this.order};
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
-
         newValue[garment][0][group][element] =
             (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isItemClear`) &&
             (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isSubClear`)))
@@ -68,6 +67,8 @@ class OrderStore implements IOrderStore {
         if (newValue[garment][0][group][element] === null) {
             delete newValue[garment][0][group][element];
         }
+
+        this.order = newValue;
     }
     @action
     setFitting = (garment: string, fitting: { id: string; value: string}) => {

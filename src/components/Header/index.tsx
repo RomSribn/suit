@@ -14,17 +14,17 @@ import { Header as Component } from './component';
 class Header extends React.Component<HeaderContainerProps> {
     render() {
         const {
-            path
+            path,
+            userStore,
+            appStore
         } = this.props;
-        const userStore = this.props.userStore!;
-        const appStore = this.props.appStore!;
-        
         return (
             <Component
-                lang={appStore.lang}
-                userStore={userStore}
-                appStore={appStore}
+                lang={appStore!.lang}
+                userStore={userStore!}
+                appStore={appStore!}
                 path={path}
+                isAuth={userStore!.isAuth}
             />
         );
     }

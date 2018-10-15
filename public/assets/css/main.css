@@ -80,7 +80,6 @@
     background-size: contain;
     color: #fff;
     font-size: .8666rem;
-    text-transform: uppercase;
 }
 .chopcard{
     position: relative;
@@ -160,6 +159,7 @@
 .main--white .profile-link{
     background-image: url(../img/bar-nav/balck/user.svg);
     color: #000;
+    text-transform: uppercase;
 }
 .main--white .main__header-content{color: #000;}
 

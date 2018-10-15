@@ -2,23 +2,25 @@ import * as React from 'react';
 import { HeaderBar } from './HeaderBar';
 import { HeaderContent } from './HeaderContent';
 
-class Header extends React.PureComponent<HeaderProps> {
+class Header extends React.Component<HeaderProps> {
     static defaultProps = {
         userName: undefined,
     };
     render() {
         const {
             path,
-            lang
+            lang,
+            appStore,
+            userStore,
+            isAuth
         } = this.props;
-        const appStore = this.props.appStore!;
-        const userStore = this.props.userStore!;
         return (
             <div className="main__header">
                 <HeaderBar
                     lang={lang}
                     setLang={appStore.setLang}
                     userStore={userStore}
+                    isAuth={isAuth}
                 />
                 <HeaderContent
                     path={path!}

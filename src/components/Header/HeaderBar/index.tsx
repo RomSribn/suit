@@ -7,8 +7,8 @@ import Login from '../../Login';
 import './styles.styl';
 
 const loginText = {
-    en: 'login',
-    ru: 'войти'
+    en: 'Log In',
+    ru: 'ВОЙТИ'
 };
 
 type State = { showLoginForm: boolean; };
@@ -22,10 +22,13 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
         // TODO: Разобраться какого хера при использвании стрелки теряется контекст
         this.profileLinkClick = this.profileLinkClick.bind(this);
     }
-    profileLinkClick(e: React.MouseEvent) {
+    profileLinkClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        const userStore = this.props.userStore;
-        if (!userStore.isAuth) {
+        const {
+            userStore,
+            isAuth
+        } = this.props;
+        if (!isAuth) {
             this.setState({
                 showLoginForm: true
             });

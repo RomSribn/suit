@@ -6,11 +6,14 @@ import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
 import { routes } from '../../../config/routes';
 import * as _ from 'lodash';
+import { SimpleModal } from '../../../components/SimpleModal';
+import { loc } from './loc';
 
 interface State {
   open: boolean;
   isExceptionPopupOpen: boolean;
   redirectToOrders: boolean;
+  showErrorModal: boolean;
 }
 @inject(({ app, order, routing, garments: { Subgroups } }, props) => {
   return ({
@@ -25,12 +28,17 @@ interface State {
 
 @observer
 class SaveButton extends React.Component<SaveButtonProps, State> {
+  static defaultProps = {
+    saveCallback: () => undefined,
+    lang: 'en'
+  };
   constructor(props: SaveButtonProps) {
     super(props);
     this.state = {
       open: false,
       isExceptionPopupOpen: false,
-      redirectToOrders: false
+      redirectToOrders: false,
+      showErrorModal: false
     };
 
   }
@@ -44,9 +52,16 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
   }
 
   onClose = (e: React.MouseEvent) => {
+    const {
+      saveCallback
+    } = this.props;
     this.setState({ open: false });
+    saveCallback && saveCallback() // tslint:disable-line
   }
   onClick = () => {
+    const {
+      saveCallback
+    } = this.props;
     if (this.props.isUpdate) {
       this.updateOrder();
     } else if (this.props.saveExistingOrder) {
@@ -54,6 +69,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       this.setState({
         redirectToOrders: true
       });
+      saveCallback && saveCallback(); // tslint:disable-line
     } else {
       this.setState({ open: true });
     }
@@ -199,6 +215,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
 
           if (exceptionsForPopup.length) {
             const isRemovable = true;
+            console.warn('handleExclsuive');
             this.handleExclsuive(
               isRemovable,
               exceptionsForPopup,
@@ -210,6 +227,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
             );
           }
         } else {
+          console.warn('handleSetOrder');
           this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
         }
 
@@ -218,15 +236,51 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       const { } = _;
     }
   }
+
+  onCallbackErrorModal = (result: string) => {
+    const { saveCallback } = this.props;
+    this.setState({ showErrorModal: false }, () => {
+        switch (result) {
+            case 'repeat':
+                saveCallback!();
+                return this.updateOrder();
+            case 'back':
+                return saveCallback!();
+            default:
+                return saveCallback!();
+        }
+    });
+  }
+  
   render() {
     const {
       children,
+      lang
     } = this.props;
+    const {
+      showErrorModal,
+      open
+    } = this.state;
     if (this.state.redirectToOrders) {
       const orderId: number = _.get(this, 'props.orderStore.orderInfo.orderId', 0);
       // TODO:  господи, прости
       return <Redirect to={`${routes.orderList}?${orderId && 'active_order_id=' + orderId}`} />;
     }
+    const errorModalData = {
+      desc: loc[lang!].errorMessage,
+      buttons: [
+          {
+              key: 'repeat',
+              text: loc[lang!].repeat,
+              theme: 'black'
+          },
+          {
+              key: 'back',
+              text: loc[lang!].back,
+              theme: 'white'
+          },
+      ] as ButtonType[]
+    };
     return (
       <React.Fragment key="order save popup">
         <Button
@@ -234,10 +288,16 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
           theme="black"
         >{children}
         </Button>
-        <PopUp onClose={this.onClose} open={this.state.open}>
+        <PopUp onClose={this.onClose} open={open}>
           <SaveForm close={this.onClose} />
         </PopUp>
-
+        <SimpleModal
+          isSmall={true}
+          isTransparent={true}
+          show={showErrorModal}
+          data={errorModalData}
+          callback={this.onCallbackErrorModal}
+        />
       </React.Fragment>
     );
   }

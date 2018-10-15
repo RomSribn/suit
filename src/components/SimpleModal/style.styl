@@ -1,0 +1,49 @@
+.simple-modal-wrapper
+  position absolute
+  top 50%
+  left 50%
+  width 68rem
+  height 33rem
+  transform translate(-50%, -50%)
+  z-index 1000
+  background url('https://pp.userapi.com/c834400/v834400579/3b45b/Qyg4hrop6uo.jpg') no-repeat center
+  background-size cover
+  padding 5.25rem
+  color #fff
+  &_small
+    width 45rem
+    height 18rem
+    
+  &_transparent 
+    background none
+
+  .simple-modal
+    height 100%
+    display flex
+    flex-direction column
+    display flex
+    flex-direction column
+    justify-content space-between
+    .title-wrapper
+      .title-text
+        font-size 1.4rem
+        font-weight 700
+
+        &_black
+          color black
+    .desc-wrapper
+      margin: 0 1rem
+      text-align center
+      .desc-text
+        font-size 1.2rem
+
+        &_black
+          color black
+    .buttons-wrapper
+      display flex
+      justify-content center
+      flex-wrap wrap
+      margin-top 1rem
+      align-items center
+      .button-wrapper 
+        margin 0.4rem 1rem

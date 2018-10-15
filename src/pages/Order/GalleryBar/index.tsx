@@ -170,7 +170,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
     intervalID: number;
     isScrolling = false;
-    scrollGallery: HTMLElement;
+    scrollGallery?: HTMLElement;
     static sizing() {
         try {
             const barWrap = document.getElementById('js-bar-wrap') as HTMLElement,

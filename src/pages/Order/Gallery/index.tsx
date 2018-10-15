@@ -47,7 +47,8 @@ class Gallery extends React.Component<GalleryContainerProps> {
             setActiveOrderItem,
             setPreviewElement,
             match: { params: { group } },
-            filterStore
+            filterStore,
+            match
         } = this.props;
 
         return (
@@ -65,6 +66,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
                             .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
                         order={order}
                         lang={lang}
+                        match={match}
                         setActiveOrderItem={setActiveOrderItem}
                         setPreviewElement={setPreviewElement}
                         items={galleryStore.items}

@@ -6,6 +6,7 @@ interface GalleryBarProps {
     mouseEnter(link: string): void;
     mouseLeave(): void;
     isMouseOverElement: boolean;
+    activeElementIndex: number;
 }
 
 interface Child {

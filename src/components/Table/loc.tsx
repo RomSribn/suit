@@ -7,6 +7,12 @@ type Loc = {
     columns:  Record<Columns, string>;
     /** Наименования статусов, доступных для фильтрации */
     statuses: Record<OrderStatus | 'ALL_STATUSES', string>;
+    from: string;
+    till: string;
+    clear: string;
+    submit: string;
+    months: string[];
+    weekDaysShort: string[];
     /**
      * Возвращает строку вида "перевести заказ из статуса {params.currentStatus} в {params.nextStatus}"
      */
@@ -32,7 +38,26 @@ const loc: Translations<Loc> = {
         },
         confirmActionTextFabric: (params) =>
             `change an order from the
-            status "${params.currentStatus}" to the status "${params.nextStatus}"`
+            status "${params.currentStatus}" to the status "${params.nextStatus}"`,
+        from: 'From',
+        till: 'Till',
+        clear: 'CLEAR',
+        submit: 'SUBMIT',
+        months: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ],
+        weekDaysShort: ['SUN', 'MON', 'TU', 'WED', 'TH', 'FR', 'SAT']
     },
     ru: {
         columns: {
@@ -51,7 +76,26 @@ const loc: Translations<Loc> = {
             ALL_STATUSES: 'Все статусы'
         },
         confirmActionTextFabric: (params) =>
-            `перевести заказ из статуса "${params.currentStatus}" в статус "${params.nextStatus}"`
+            `перевести заказ из статуса "${params.currentStatus}" в статус "${params.nextStatus}"`,
+        from: 'От',
+        till: 'До',
+        clear: 'ОТЧИСТИТЬ',
+        submit: 'ПРИМЕНИТЬ',
+        months: [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь',
+        ],
+        weekDaysShort: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
     }
 };
 

@@ -56,18 +56,19 @@ class OrderStore implements IOrderStore {
     }
     @action
     clearElement = (garment: string, element: string) => {
-        const newValue = this.order;
+        const newValue = {...this.order};
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
-
         newValue[garment][0][group][element] =
-            (!_.get(this, `defaultValues.${garment}[0]${group}.${element}.isItemClear`) &&
-            (!_.get(this, `defaultValues.${garment}[0]${group}.${element}.isSubClear`)))
-             ? _.get(this, `defaultValues.${garment}[0]${group}.${element}`)
-             : null;
+            (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isItemClear`) &&
+            (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isSubClear`)))
+             ? null
+             : _.get(this, `defaultValues.${garment}[0]${group}.${element}`);
 
         if (newValue[garment][0][group][element] === null) {
             delete newValue[garment][0][group][element];
         }
+
+        this.order = newValue;
     }
     @action
     setFitting = (garment: string, fitting: { id: string; value: string}) => {
@@ -240,7 +241,7 @@ class OrderStore implements IOrderStore {
                   _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
                   _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
                   _.set(x, `design.${_cur.subsectionOurCode}.isItemClear`, _.get(_cur, 'isItemClear'));
-                  _.set(x, `design.${_cur.subsectionOurCode}.isSubClear`, _.get(_cur, 'isSubClear'));
+                  _.set(x, `design.${_cur.subsectionOurCode}.isSubClear`, _.get(_cur, 'isSubclear'));
 
                   nextExceptions[_.get(_cur, 'garmentId')] = {
                     ...nextExceptions[_.get(_cur, 'garmentId')],

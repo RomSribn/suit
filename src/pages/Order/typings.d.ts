@@ -37,4 +37,6 @@ interface SubgroupChoiceItem {
     linkName: string;
     id: string;
     isHidden?: boolean;
+    ourCode?: string | null;
+    defaultCode?: string | null;
 }

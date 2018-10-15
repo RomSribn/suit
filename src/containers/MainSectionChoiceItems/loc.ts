@@ -1,13 +1,16 @@
 interface Locale {
     clear: string;
+    noStatus: string;
 }
 
 const makeLocale: MakeLocale<Locale> = () => ({
     en: {
-        clear: 'clear'
+        clear: 'clear',
+        noStatus: 'not chosen'
     },
     ru: {
-        clear: 'очистить'
+        clear: 'очистить',
+        noStatus: 'не выбрано'
     },
 });
 

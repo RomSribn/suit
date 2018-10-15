@@ -21,6 +21,18 @@ const Common = (props: CommonProps) => {
         noCursorPointer,
         lang = 'en'
     } = props;
+
+    const renderClearButton = (choiceItem: SubgroupChoiceItem) => {
+        switch (choiceItem.id) {
+            case 'initials_text':
+                return choiceItem.status && typeof choiceItem.status === 'string'
+                && choiceItem.status !== loc[lang].noStatus;
+            default:
+                return choiceItem.isSubclear !== null &&
+                choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
+        }
+    };
+
     return (
         <div className={classNames('custom', { 'custom__no-pointer': noCursorPointer})}>
             <span className="custom__content">
@@ -32,11 +44,10 @@ const Common = (props: CommonProps) => {
                 >
                     {item.linkName} {!!item.status && ':'}
                 </span>
-                {/* <span className="custom__status">{item.status}</span> */}
                 <span className="custom__status">{props.children}</span>
 
             </span>
-            <span title="clear" className="custom__control">
+            <span className="custom__control">
                 <Switch>
                     <Route
                         exact={true}
@@ -46,7 +57,8 @@ const Common = (props: CommonProps) => {
                         path="/order/details/:garment"
                         component={(...args: any[]) => { // tslint:disable-line no-any
                             const garment = args[0].match.params.garment;
-                            return item.isSubclear !== null ?
+                            // TODO: check the structure for intials_text
+                            return renderClearButton(item) ?
                                 <span onClick={clearClick(garment, item.id!)}>{loc[lang!].clear}</span> :
                             null;
                         }}
@@ -125,6 +137,8 @@ class CustomInput extends React.PureComponent<InputProps> {
             item,
             clearClick
         } = this.props;
+        // TODO: refactor shirtIntials to string/or valid object
+        const value = this.props.orderStore.getShirtInitials();
         return (
        <Common
            item={item}
@@ -135,8 +149,8 @@ class CustomInput extends React.PureComponent<InputProps> {
            <input
                type="text"
                maxLength={8}
-               placeholder="не выбрано"
-               value={this.props.orderStore.getShirtInitials()}
+               placeholder={loc[lang!].noStatus}
+               value={typeof value !== 'object' ? value : ''}
                onChange={this.onChange}
                onBlur={this.save}
                ref={this.input}
@@ -168,7 +182,6 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             basicRoute,
             lang
         } = this.props;
-
         return (
         <ReactCSSTransitionGroup
             transitionName="height-fade-in"

@@ -70,10 +70,12 @@ interface OrderItem {
         fabric: OrderItemInfo;
         [key: string] : any;
     };
-    design : {
-        [key: string] : OrderItemInfo;
-    };
+    design : OrderDesign;
     [key: string] : any;
+}
+
+interface OrderDesign {
+    [key: string] : OrderItemInfo;
 }
 
 interface ServerItem {

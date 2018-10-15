@@ -6,6 +6,7 @@ interface SubgroupChoiceProps {
     match: Match;
     path?: string;
     order?: Order;
+    defaultValues?: OrderItem;
     setSubgroupTitle?(): void;
     choiceItem?: OrderPathItem,
     popOrderPathitem?(): void;

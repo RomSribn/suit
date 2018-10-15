@@ -237,7 +237,7 @@ class OrderStore implements IOrderStore {
               fabric_ref: {}
             };
             tmp[cur].forEach((_cur) => {
-              if (_cur.subsectionOurCode !== 'fabric') {
+              if (_cur.subsectionOurCode !== 'fabric' && _cur.isSubclear) {
                   _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
                   _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
                   _.set(x, `design.${_cur.subsectionOurCode}.isItemClear`, _.get(_cur, 'isItemClear'));

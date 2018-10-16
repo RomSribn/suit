@@ -19,12 +19,13 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     try {
         const orderVal = order[garment][order[garment].length - 1];
         if (item.is_input) {
-            status = orderVal[subgroup][item.subsection_our_code];
+            status = typeof orderVal[subgroup][item.subsection_our_code] === 'object'
+                ? ''
+                : orderVal[subgroup][item.subsection_our_code];
         } else {
             status = orderVal[subgroup][item.subsection_our_code].title[lang];
+            status = Boolean(status) ? status : loc[lang].noStatus;
         }
-        status = Boolean(status) ? status : loc[lang].noStatus;
-
     } catch (_) {
         status = loc[lang].noStatus;
     }
@@ -35,7 +36,9 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     let defaultCode = null;
     if (order[garment][0].design[item.subsection_our_code]) {
         ourCode = order[garment][0].design[item.subsection_our_code].our_code;
-        defaultCode = defaultValues!.design[item.subsection_our_code]!.our_code;
+        if (defaultValues!.design[item.subsection_our_code]) {
+            defaultCode = defaultValues!.design[item.subsection_our_code]!.our_code;
+        }
     } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
         ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
         defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;

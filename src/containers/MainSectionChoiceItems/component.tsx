@@ -135,10 +135,8 @@ class CustomInput extends React.PureComponent<InputProps> {
         const {
             lang,
             item,
-            clearClick
+            clearClick,
         } = this.props;
-        // TODO: refactor shirtIntials to string/or valid object
-        const value = this.props.orderStore.getShirtInitials();
         return (
        <Common
            item={item}
@@ -150,7 +148,7 @@ class CustomInput extends React.PureComponent<InputProps> {
                type="text"
                maxLength={8}
                placeholder={loc[lang!].noStatus}
-               value={typeof value !== 'object' ? value : ''}
+               value={item.status}
                onChange={this.onChange}
                onBlur={this.save}
                ref={this.input}

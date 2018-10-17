@@ -8,7 +8,7 @@ interface OrderStatusInfo {
     statusId: number;
     name: string;
 }
-interface OrderInfo {
+interface TableOrderInfo {
     id: string;
     name: string;
     phone: string;
@@ -20,7 +20,7 @@ interface OrderInfo {
 type OrderStatus = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';
 
 interface PanelRowProps {
-    orderInfo: OrderInfo | null;
+    orderInfo: TableOrderInfo | null;
     orderStatuses: OrderStatus[];
     acceptCallback?: (...arg: any[]) => any;
     ordersStore: OrderList.IOrderStore;

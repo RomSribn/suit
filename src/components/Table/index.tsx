@@ -27,7 +27,7 @@ interface TProps {
 
 type RowInfo = {
     /** Информация о заказе, сообранная по столбцам */
-    row: OrderInfo;
+    row: TableOrderInfo;
 } | undefined;
 
 const headerCell = (params: HeaderCellParams) => {
@@ -51,7 +51,9 @@ const filterMethod = (filter: any, row: any) => { // tslint:disable-line
     return row[filter.id].toLowerCase().includes(filter.value.toLowerCase()); // tslint:disable-line
 };
 
-class Table extends React.PureComponent<TProps, { activeOrderId: string | null, selectedOrder: OrderInfo | null }> {
+class Table extends React.PureComponent<
+    TProps, { activeOrderId: string | null, selectedOrder: TableOrderInfo | null }
+    > {
     private panelRow: PanelRow | null;
     constructor(props: TProps) {
         super(props);
@@ -64,7 +66,7 @@ class Table extends React.PureComponent<TProps, { activeOrderId: string | null, 
         this.setState({ activeOrderId: id });
     }
 
-    setActiveOrderInfo = (orderInfo: OrderInfo) => {
+    setActiveOrderInfo = (orderInfo: TableOrderInfo) => {
         this.setState({ selectedOrder: orderInfo });
     }
 

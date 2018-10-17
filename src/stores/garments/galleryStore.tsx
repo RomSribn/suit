@@ -3,7 +3,7 @@ import { API_ROOT } from '../../config/routes';
 import { callApi } from '../../utils/apiAxios';
 
 // TODO: Перейти на синглтон
-let currentItems = null;
+let currentItems: GalleryStoreItem[] = [];
 
 class GalleryStore implements GalleryStore {
     garment: string;

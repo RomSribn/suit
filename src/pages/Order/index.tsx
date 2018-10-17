@@ -46,8 +46,8 @@ class Container extends React.Component<any>{ //tslint:disable-line
             garmentsStore.fetchGarmentsList();
             return null;
         }
+        const query = parseQuery(this.props.routingStore.location.search);
         if (orderStore.isEmptyOrder()) {
-            const query = parseQuery(this.props.routingStore.location.search);
             if (query.order_id) {
                 orderStore.fetchInitialOrder(
                     Object.keys(garmentsStore.garmentsList),
@@ -63,6 +63,10 @@ class Container extends React.Component<any>{ //tslint:disable-line
                 );
             }
             return null;
+        } else {
+            if (query.order_id && query.order_id !== String((orderStore.orderInfo && orderStore.orderInfo.orderId))) {
+                orderStore.fetchOrder(query.order_id);
+            }
         }
         return <Order {...this.props} />;
     }

@@ -45,6 +45,8 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
   onClick = () => {
     if (this.props.isUpdate) {
       this.updateOrder();
+    } else if (this.props.saveExistingOrder) {
+      this.props.orderStore!.saveOrder();
     } else {
       this.setState({ open: true });
     }

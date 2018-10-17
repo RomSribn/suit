@@ -1,8 +1,41 @@
 import { observable, action } from 'mobx';
 import * as _ from 'lodash';
-import { ERRORS_CODES } from '../config/constants';
+// import { ERRORS_CODES } from '../config/constants';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
+
+const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
+    const res: Order = {};
+    Object.keys(serverOrder.garments).forEach(garmentName => {
+        const serverGarment = serverOrder.garments[garmentName];
+        res[garmentName] = {} as OrderItem;
+        const newGarment: OrderItem = res[garmentName];
+        newGarment.fabric_ref = {
+            fabric: {
+                our_code: serverGarment.mainFabric.our_code,
+                title: serverGarment.mainFabric.title
+            }
+        };
+
+        // Секция Design
+        newGarment.design = {};
+        serverGarment.items.forEach(designItem => {
+            const tmpDesign = { ...designItem };
+            const newDesignValue: OrderItemInfo = {
+                our_code: tmpDesign.design.our_code,
+                title: tmpDesign.design.title
+            };
+            newGarment.design[tmpDesign.design.common.subsection_our_code] = newDesignValue;
+        });
+        /**
+         * Ублюдский хак из-за того, что по всей сторе сейчас
+         * каждый из элементов одежды имеет массив
+         */
+        // TODO: Убрать к хуям эту поеботу и перебрать все места, где это въебывается в массив
+        _.set(res, garmentName, observable.array<OrderItem>([newGarment]));
+    });
+    return res;
+};
 
 const STOP_CODES = ['trousers', 'body', 'shoes', 'eyes', 'head'];
 
@@ -43,7 +76,7 @@ class OrderStore implements IOrderStore {
     @observable mutuallyExclusivePopup: MutuallyExclusive | null = null;
     @observable hiddenElements = observable.array<string>();
     @observable isFetching = false;
-    prevActiveItem?: string | null = null; 
+    prevActiveItem?: string | null = null;
     @observable error: object | null = null;
 
     isEmptyOrder = () => _.isEmpty(this.order);
@@ -99,17 +132,17 @@ class OrderStore implements IOrderStore {
     }
 
     @action
-    isExclusivePopupShowing = () => _.get(this, 'mutuallyExclusivePopup.show', false) 
+    isExclusivePopupShowing = () => _.get(this, 'mutuallyExclusivePopup.show', false)
 
     @action
     setOrder (_o: Order, exception?: OrderItemException | null) {
         this.order = {..._o};
         this.updateOrderInfo();
-        
+
         if (exception) {
             const garment = Object.keys(exception)[0];
             const subGroup = Object.keys(exception[garment])[0];
-            
+
             if (this.activeElement) {
                 this.prevActiveItem = subGroup;
             }
@@ -170,23 +203,36 @@ class OrderStore implements IOrderStore {
     @action
     fetchInitialOrder = (
         garments: string[],
-        callback?: (...args: any[]) => any // tslint:disable-line no-any 
+        callback?: (...args: any[]) => any // tslint:disable-line no-any
     ) => {
-        this.error = null;        
-        if (!garments.length) {
-            this.error = {
-                code: ERRORS_CODES.VALUES_NEEDED,
+        return callApi({
+            method: 'GET',
+            url: services.garmentsDefaults
+        }, () => { this.isFetching = true; },
+        (data: any) => { // tslint:disable-line no-any
+            this._onSuccess(data, callback);
+        },
+        this._onError);
+    }
+    @action
+    fetchOrder = (orderId: string) => {
+        this.error = null;
+        return callApi({
+            method: 'GET',
+            url: `${services.orders}/${orderId}`
+        }, () => { this.isFetching = true; },
+        (data: Fuckup.OrderFromServer) => {
+            this.order = {
+                ...this.order,
+                ...prepareDataFromServer(data),
             };
-        } else {
-            callApi({
-                method: 'GET',
-                url: services.garmentsDefaults
-            }, () => { this.isFetching = true; },
-            (data: any) => { // tslint:disable-line no-any
-                this._onSuccess(data, callback);
-            },
-            this._onError);
-        }
+            this.orderInfo = {
+                orderId: data.orderId,
+                deliveryDays: data.deliveryDays,
+                price: data.price
+            };
+        },
+        this._onError);
     }
     @action
     saveOrder = (customerInfo?: User) => {
@@ -200,7 +246,10 @@ class OrderStore implements IOrderStore {
         },
         (): null => null,
         (info: OrderInfo) => {
-            this.orderInfo = info;
+            this.orderInfo = {
+                ...this.orderInfo,
+                ...info
+            };
             return info;
         },
         this._onError
@@ -219,7 +268,10 @@ class OrderStore implements IOrderStore {
         },
         (): null => null,
         (info: OrderInfo) => {
-            this.orderInfo = info;
+            this.orderInfo = {
+                ...this.orderInfo,
+                ...info
+            };
             return info;
         },
         this._onError
@@ -251,7 +303,7 @@ class OrderStore implements IOrderStore {
                             .map((subException: string) => subException.trim())
                             .filter((subException: string) => subException !== '')
                             : [],
-                        titleSubGroup: _.get(_cur, 'subsectionTitle'), 
+                        titleSubGroup: _.get(_cur, 'subsectionTitle'),
                         titleElement: _.get(_cur, 'title'),
                         is_item_clear: _.get(_cur, 'isItemClear')
                     }

@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 // import { Redirect } from 'react-router';
 import { MainSection } from './SectionMain';
 // import { routes } from './routes';
-
+import { parseQuery } from '../../utils/common';
 let wasRendered = false;
 
 class Order extends React.PureComponent<any> { //tslint:disable-line
@@ -32,9 +32,10 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
     }
 }
 
-@inject(({ order, garments }) => ({
+@inject(({ order, garments, routing }) => ({
     orderStore: order,
-    garmentsStore: garments.garments
+    garmentsStore: garments.garments,
+    routingStore: routing
 }))
 @observer
 class Container extends React.Component<any>{ //tslint:disable-line
@@ -46,10 +47,21 @@ class Container extends React.Component<any>{ //tslint:disable-line
             return null;
         }
         if (orderStore.isEmptyOrder()) {
-            orderStore.fetchInitialOrder(
-                Object.keys(garmentsStore.garmentsList),
-                (garments) => garmentsStore.setChosenGarments(garments)
-            );
+            const query = parseQuery(this.props.routingStore.location.search);
+            if (query.order_id) {
+                orderStore.fetchInitialOrder(
+                    Object.keys(garmentsStore.garmentsList),
+                    (garments) => garmentsStore.setChosenGarments(garments)
+                )
+                .then(() => {
+                    orderStore.fetchOrder(query.order_id);
+                });
+            } else {
+                orderStore.fetchInitialOrder(
+                    Object.keys(garmentsStore.garmentsList),
+                    (garments) => garmentsStore.setChosenGarments(garments)
+                );
+            }
             return null;
         }
         return <Order {...this.props} />;

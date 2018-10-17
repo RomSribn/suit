@@ -1,9 +1,10 @@
 interface FooterBarProps {
     lang?: string;
-    orderStore?: Order;
+    orderStore?: IOrderStore;
     popOrderPathitem?(): void;
     backLink?: string;
     mutuallyExclusivePopup?: MutuallyExclusive;
+    orderId?: number;
 }
 
 type SaveButtonInject = {
@@ -20,7 +21,9 @@ type SaveButtonInject = {
 }
 
 type SaveButtonSelfProps = {
-    isUpdate?: boolean, match?: {
+    saveExistingOrder?: boolean;
+    isUpdate?: boolean;
+    match?: {
         params: {
             garment: string;
             group: string;

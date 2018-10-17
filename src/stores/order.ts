@@ -46,11 +46,21 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
         .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
             _.values(garment[0].design).forEach(item => {
                 if (!STOP_CODES.includes(item.our_code)) {
-                    acc.push({
-                        design: {
-                            ourCode: item.our_code
-                        }
-                    });
+                    // TODO: Ну да. хуйня. Сейчас только инициалы хранятся в виде стринги
+                    if (typeof item === 'string') {
+                        acc.push({
+                            design: {
+                                ourCode: 'initials_text',
+                                value: item
+                            }
+                        });
+                    } else {
+                        acc.push({
+                            design: {
+                                ourCode: item.our_code
+                            }
+                        });
+                    }
                 }
             });
             return acc;

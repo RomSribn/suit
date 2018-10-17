@@ -3,33 +3,9 @@ import { observable, action } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
-namespace Fucking {
-    export interface Item {
-        additionalFabric?: { ourCode: string; };
-        design: {
-            ourCode: string;
-            value: string;
-        };
-    }
-
-    export interface Fitting {
-        ourCode: string;
-        value: string;
-    }
-
-    export interface PutData {
-        statusId: number;
-        fittings: Fitting[];
-        mainFabric: { ourCode: string; };
-        items: Item[];
-    }
-
-    export type PrepareDataForPut = (data: OrderList.OrderItem) => Fucking.PutData;
-}
-
-const prepareDataForFuckingPut: Fucking.PrepareDataForPut = (data) => {
-    let fittings: Fucking.Fitting[] = [];
-    let items: Fucking.Item[] = [];
+const prepareDataForFuckupPut: Fuckup.PrepareDataForServer = (data) => {
+    let fittings: Fuckup.Fitting[] = [];
+    let items: Fuckup.Item[] = [];
     _.forIn(data.garments, (garment) => {
         fittings = _.map(garment.fittings, (fittingItem) => ({
             ourCode: fittingItem.fitting.our_code,
@@ -81,7 +57,7 @@ class OrdersStore implements OrderList.IOrderStore {
         return callApi({
             method: 'PUT',
             url: `${services.orders}/${order.orderId}`,
-            data: prepareDataForFuckingPut(order)
+            data: prepareDataForFuckupPut(order)
         },
         () => { this.isFetching = true; },
         () => {

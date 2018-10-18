@@ -97,7 +97,7 @@ class FooterBar extends React.Component<FooterBarProps> {
                             <SaveButton
                                 saveExistingOrder={true}
                             >
-                                {loc[lang!].save}
+                                {loc[lang!].update}
                             </SaveButton> :
                             <FadeIn>
                                 <SaveButton>{loc[lang!].create}</SaveButton>

@@ -1,18 +1,18 @@
-interface Locale {
-    back: string;
-    save: string;
-}
+type Actions = 'back' | 'create' | 'save' | 'update';
+type Locale = Record<Actions, string>;
 
-const makeLocale: MakeLocale<Locale> = () => ({
+const makeLocale = (): Translations<Locale> => ({
     en: {
         back: 'back',
         create: 'to fitting',
         save: 'save',
+        update: 'update'
     },
     ru: {
         back: 'назад',
         create: 'на примерку',
         save: 'сохранить',
+        update: 'обновить'
     },
 });
 

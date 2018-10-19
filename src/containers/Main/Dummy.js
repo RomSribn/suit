@@ -225,7 +225,7 @@ export default class App extends Component {
               }
             }
           } else {
-            if (!subgroup.includes(INITIALS)) {
+            if (!subgroup.includes(INITIALS) && subgroupVal) {
               acc.push(subgroupVal.our_code);
             }
           }

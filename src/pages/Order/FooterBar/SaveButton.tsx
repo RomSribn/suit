@@ -91,7 +91,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       exceptionsForPopup.forEach(exceptionForPopup => {
         const { garmentKey, elementKey } = exceptionForPopup;
         orderStore.clearException(garmentKey, elementKey);
-        orderStore.clearElement(garmentKey, elementKey);
+        orderStore.clearElement(garmentKey, elementKey, 'default');
       });
     } else {
       exceptionsForPopup.forEach(exceptionForPopup => {
@@ -173,11 +173,18 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
               orderStore!.order[filteredGarment].reduce((ac: string[], i: string[]) => [...ac, i], [])
                 .map((garmentObject: Order) => Object.keys(garmentObject.design)
                   .forEach(
-                    elementKey => orderItems[elementKey] = garmentObject.design[elementKey].our_code
+                    elementKey => {
+                      if (garmentObject.design[elementKey]) {
+                        orderItems[elementKey] = garmentObject.design[elementKey].our_code;
+                      } else {
+                        orderItems[elementKey] = defaultItemValues[elementKey];
+                      }
+                    }
                   ))
             );
         }
-        const arrayItemsInOrder = Object.keys(orderItems).map(orderItemKey => orderItems[orderItemKey]);
+        const arrayItemsInOrder = orderItems ?
+          Object.keys(orderItems).map(orderItemKey => orderItems[orderItemKey]) : [];
         const mutuallyExclusiveItems = activeExceptions
           .filter((activeExceptionCode: string) => arrayItemsInOrder.includes(activeExceptionCode));
         // initial values end

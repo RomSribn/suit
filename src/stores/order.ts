@@ -104,14 +104,24 @@ class OrderStore implements IOrderStore {
       }
     }
     @action
-    clearElement = (garment: string, element: string) => {
+    clearElement = (garment: string, element: string, actionType: ClearElementActionType) => {
         const newValue = {...this.order};
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
-        newValue[garment][0][group][element] =
-            (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isItemClear`) &&
-            (_.get(this, `defaultValues.${garment}[0]${group}.${element}.isSubClear`)))
+
+        if (actionType === 'click') {
+            newValue[garment][0][group][element] =
+            (
+                _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
+                _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
+            )
              ? null
-             : _.get(this, `defaultValues.${garment}[0]${group}.${element}`);
+             : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+        } else {
+            newValue[garment][0][group][element] =
+            (_.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`))
+             ? null
+             : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+        }
 
         if (newValue[garment][0][group][element] === null) {
             delete newValue[garment][0][group][element];

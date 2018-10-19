@@ -8,7 +8,7 @@ interface IOrderStore {
     exceptions: OrderItemException | null;
     mutuallyExclusivePopup: MutuallyExclusive | null,
     isEmptyOrder: () => boolean;
-    clearElement: (garment: string, element: string) => void;
+    clearElement: (garment: string, element: string, actionType: ClearElementActionType) => void;
     clearException: (garment: string, subGroup: string) => void;
     setMutuallyExclusivePopup: (callbackFunction: any) => void;
     activeElement: GalleryStoreItem | null;
@@ -76,6 +76,8 @@ interface OrderItem {
     } & { initials_text?: string };
     [key: string] : any;
 }
+
+type ClearElementActionType = 'default' | 'click'
 
 interface OrderDesign {
     [key: string] : OrderItemInfo;

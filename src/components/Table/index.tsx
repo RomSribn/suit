@@ -98,7 +98,7 @@ class Table extends React.PureComponent<
                 acceptCallback={this.resetActiveInfo}
             />
             <RTable
-                className="orders"
+                className={classNames('orders', 'flex-content')}
                 showPagination={false}
                 sortable={false}
                 loadingText=""

@@ -4,6 +4,12 @@ import * as _ from 'lodash';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
+type CloneOrderObject = (order: Order) => Order;
+const cloneOrderObject: CloneOrderObject = (order) => {
+    // TODO: изменить эту сраную заглушку. нет времени заниматься нормальным переносом значений
+    return JSON.parse(JSON.stringify(order));
+};
+
 const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
     const res: Order = {};
     Object.keys(serverOrder.garments).forEach(garmentName => {
@@ -68,7 +74,7 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
     return {
         customer,
         items,
-        statusId: 1,
+        statusId: 2,
         mainFabric: {
             ourCode: order.shirt[0].fabric_ref.fabric.our_code
         }
@@ -256,10 +262,16 @@ class OrderStore implements IOrderStore {
         },
         (): null => null,
         (info: OrderInfo) => {
-            this.orderInfo = {
-                ...this.orderInfo,
-                ...info
-            };
+            if (method === 'POST') {
+                if (this.defaultValues) {
+                    this.order = cloneOrderObject(this.defaultValues);
+                }
+            } else {
+                this.orderInfo = {
+                    ...this.orderInfo,
+                    ...info
+                };
+            }
             return info;
         },
         this._onError

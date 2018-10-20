@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 
-import { navigationRoutes as routes, routes as commonRoutes } from '../config/routes';
+import { routes } from '../config/routes';
 import { Spinner } from './Spinner';
 import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
@@ -22,7 +22,7 @@ class Wrapper extends Component {
     this.state = {
       showSpinner: false
     };
-  } 
+  }
   hideSpinner = () => this.setState({ showSpinner: false });
   showSpinner = () => this.setState({ showSpinner: true });
   render() {
@@ -38,15 +38,19 @@ class Wrapper extends Component {
             return null;
           }}/>
           <Switch>
-            <Route path={commonRoutes.login} component={() => <Login shouldRedirect={true}/>} />
-            <Route exact={true} path={routes.index} render={() => {
+            <Route path={routes.login} component={() => <Login shouldRedirect={true}/>} />
+            <Route exact path={routes.index} render={() => {
               if (!orderPageWasRendered) {
                 this.showSpinner();
                 orderPageWasRendered = true;
               }
-              /* // TODO: убрать это после того, как добавим элементы кроме рубашки */
-              return <Redirect to={routes.order + '/shirt'} />
+              /* // TODO: изменить это после того, как добавим элементы кроме рубашки */
+              return <Redirect to={routes.order} />;
             }}/>
+            {
+              !orderPageWasRendered &&
+              <Route path={`${routes.details}/:garment/:any`} component={ () =><Redirect to={routes.order} /> } />
+            }
             <Route
               path={routes.order}
               render={(props) => {
@@ -59,15 +63,22 @@ class Wrapper extends Component {
                 )
               }}
             />
-            <Route path="/" component={ () => !loggedIn ? <Redirect to="/" /> : null } />          
+
+            {/* // Закрытые страницы  */}
+            <Route path={routes.index} render={() => {
+              if (!loggedIn) {
+                return <Redirect to={routes.index} />;
+              }
+              return (
+                <Switch>
+                  <Route path={routes.orderList}>
+                    <ListOrders />
+                  </Route>
+                </Switch>
+              );
+            }} />
           </Switch>
 
-          {/* // Закрытые страницы  */}
-          <Switch>
-          <Route path={routes.ordersList}>
-            <ListOrders />
-          </Route>
-          </Switch>
       </Common>
       </React.Fragment>)
   }

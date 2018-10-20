@@ -146,10 +146,13 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             </ConfirmPopup>
                         </li>
                         <li className={itemClassName}>
-                            <a
+                            <Link
                                 className="controls__link controls__link--edit"
-                                href="#"
-                                title="редактировать"
+                                to={{
+                                    pathname: `${routes.details}/shirt`,
+                                    search: `order_id=${orderInfo && orderInfo.id}`
+                                }}
+                                title=""
                             />
                         </li>
                         <li className={itemClassName}>

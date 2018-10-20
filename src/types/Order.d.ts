@@ -1,7 +1,7 @@
 interface IOrderStore {
     orderInfo: OrderInfo | null;
     defaultValues: Order | null;
-    hiddenElements: string[];    
+    hiddenElements: string[];
     order: Order;
     isFetching: boolean;
     activeSubGroup: string;
@@ -21,8 +21,8 @@ interface IOrderStore {
     toggleHiddenElement(element: string): void;
     setShirtInitials(initials: string): void;
     getShirtInitials(): string;
-    // fetchOrder(orderId: string): void;
-    fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): void;
+    fetchOrder(orderId: string): void;
+    fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
 }
 
 interface Order {
@@ -37,7 +37,7 @@ interface OrderInfo {
 
 interface OrderItemInfo {
     our_code: string;
-    is_subclear: boolean;
+    is_subclear?: boolean;
     title: Translations<string>;
 }
 
@@ -70,7 +70,9 @@ interface OrderItem {
         fabric: OrderItemInfo;
         [key: string] : any;
     };
-    design : OrderDesign;
+    design : {
+        [key: string] : OrderItemInfo;
+    } & { initials_text?: string };
     [key: string] : any;
 }
 
@@ -107,7 +109,7 @@ interface MutuallyExclusive {
     activeItemCode: string | undefined,
     exceptions: {
         exceptionItem: Translations<string> | undefined,
-        exceptionSubgroup: Translations<string> | undefined        
+        exceptionSubgroup: Translations<string> | undefined
     }[]
     onClick: (func: any) => void // tslint:disable-line
     onClose: (func: any) => void // tslint:disable-line

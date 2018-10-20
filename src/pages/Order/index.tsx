@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import { MainSection } from './SectionMain';
-import { routes } from './routes';
-
+// import { routes } from './routes';
+import { parseQuery } from '../../utils/common';
 let wasRendered = false;
 
 class Order extends React.PureComponent<any> { //tslint:disable-line
@@ -14,8 +14,6 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
     render() {
         if (!wasRendered) {
             wasRendered = true;
-            // TODO: изменить редирект. Сейчас на /shirt потому что есть только рубашка
-            return <Redirect to={routes.index + '/shirt'} />;
         }
         const {
             location,
@@ -34,9 +32,10 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
     }
 }
 
-@inject(({ order, garments }) => ({
+@inject(({ order, garments, routing }) => ({
     orderStore: order,
-    garmentsStore: garments.garments
+    garmentsStore: garments.garments,
+    routingStore: routing
 }))
 @observer
 class Container extends React.Component<any>{ //tslint:disable-line
@@ -47,12 +46,27 @@ class Container extends React.Component<any>{ //tslint:disable-line
             garmentsStore.fetchGarmentsList();
             return null;
         }
+        const query = parseQuery(this.props.routingStore.location.search);
         if (orderStore.isEmptyOrder()) {
-            orderStore.fetchInitialOrder(
-                Object.keys(garmentsStore.garmentsList),
-                (garments) => garmentsStore.setChosenGarments(garments)
-            );   
+            if (query.order_id) {
+                orderStore.fetchInitialOrder(
+                    Object.keys(garmentsStore.garmentsList),
+                    (garments) => garmentsStore.setChosenGarments(garments)
+                )
+                .then(() => {
+                    orderStore.fetchOrder(query.order_id);
+                });
+            } else {
+                orderStore.fetchInitialOrder(
+                    Object.keys(garmentsStore.garmentsList),
+                    (garments) => garmentsStore.setChosenGarments(garments)
+                );
+            }
             return null;
+        } else {
+            if (query.order_id && query.order_id !== String((orderStore.orderInfo && orderStore.orderInfo.orderId))) {
+                orderStore.fetchOrder(query.order_id);
+            }
         }
         return <Order {...this.props} />;
     }

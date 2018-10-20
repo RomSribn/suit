@@ -179,7 +179,7 @@ class OrderStore implements IOrderStore {
             };
         } else {
             callApi({
-                method: 'get',
+                method: 'GET',
                 url: services.garmentsDefaults
             }, () => { this.isFetching = true; },
             (data: any) => { // tslint:disable-line no-any

@@ -7,10 +7,17 @@ type Loc = {
     columns:  Record<Columns, string>;
     /** Наименования статусов, доступных для фильтрации */
     statuses: Record<OrderStatus | 'ALL_STATUSES', string>;
-    /**
-     * Возвращает строку вида "перевести заказ из статуса {params.currentStatus} в {params.nextStatus}"
-     */
-    confirmActionTextFabric(params: ConfirmActionTextParams): string;
+    fabric: {
+
+        /**
+         * Возвращает строку вида "удалить заказ {orderId}"
+         */
+        delete(orderId: string): string;
+        /**
+         * Возвращает строку вида "перевести заказ из статуса {params.currentStatus} в {params.nextStatus}"
+         */
+        updateOrder(params: ConfirmActionTextParams): string;
+    };
 };
 
 const loc: Translations<Loc> = {
@@ -30,9 +37,12 @@ const loc: Translations<Loc> = {
             DONE: 'Done',
             ALL_STATUSES: 'All statuses'
         },
-        confirmActionTextFabric: (params) =>
-            `change an order from the
-            status "${params.currentStatus}" to the status "${params.nextStatus}"`
+        fabric: {
+            delete: (orderId) => `delete ordere ${orderId}`,
+            updateOrder: (params) =>
+                `change an order from the
+                status "${params.currentStatus}" to the status "${params.nextStatus}"`
+        }
     },
     ru: {
         columns: {
@@ -50,8 +60,11 @@ const loc: Translations<Loc> = {
             DONE: 'Завершен',
             ALL_STATUSES: 'Все статусы'
         },
-        confirmActionTextFabric: (params) =>
+        fabric: {
+            delete: (orderId) => `удалить заказ ${orderId}`,
+            updateOrder: (params) =>
             `перевести заказ из статуса "${params.currentStatus}" в статус "${params.nextStatus}"`
+        }
     }
 };
 

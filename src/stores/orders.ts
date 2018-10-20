@@ -68,7 +68,7 @@ class OrdersStore implements OrderList.IOrderStore {
         this.error = null;
 
         return callApi({
-            method: 'get',
+            method: 'GET',
             url: services.orders
         },
         () => { this.isFetching = true; },
@@ -93,6 +93,22 @@ class OrdersStore implements OrderList.IOrderStore {
         },
         this._onError
 
+    );
+    }
+
+    @action
+    deleteOrder = (orderId: number) => {
+        return callApi({
+            url: `${services.orders}/${orderId}`,
+            method: 'DELETE'
+        },
+        () => { this.isFetching = true; },
+        (response) => {
+            this.orders =
+            observable.array<OrderList.OrderItem>(this.orders.filter(order => order.orderId !== orderId));
+            this.isFetching = false;
+        },
+        this._onError
     );
     }
 

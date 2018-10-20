@@ -50,7 +50,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
                                 className={`${baseClassName}__text`}
                             >{loc[lang].confirmText + (this.props.actionText || loc[lang].defaultActionText)}?
                             </div>
-                            
+
                             <div className={`${baseClassName}__controls`}>
                                 <Button
                                     className={`${baseClassName}__controls-item`}
@@ -59,7 +59,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
                                 {loc[lang].confirm}
                                 </Button>
                                 <Button
-                                    className={`${baseClassName}__controls-item`}
+                                    className={`${baseClassName}__controls-item no-margin`}
                                     theme="white"
                                     onClick={this.closePopup}
                                 >{loc[lang].back}

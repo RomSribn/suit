@@ -12,10 +12,12 @@ type FilterFields = (
     lang: string,
     order: Order,
     garment: string,
-    defaultValues?: OrderItem 
+    defaultValues?: OrderItem
 ) => SubgroupChoiceItem;
 const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaultValues) => {
     let status;
+    let ourCode = null;
+    let defaultCode = null;
     try {
         const orderVal = order[garment][order[garment].length - 1];
         if (item.is_input) {
@@ -26,22 +28,21 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
             status = orderVal[subgroup][item.subsection_our_code].title[lang];
             status = Boolean(status) ? status : loc[lang].noStatus;
         }
+
+        if (order[garment][0].design[item.subsection_our_code]) {
+            ourCode = order[garment][0].design[item.subsection_our_code].our_code;
+            if (defaultValues!.design[item.subsection_our_code]) {
+                defaultCode = defaultValues!.design[item.subsection_our_code]!.our_code;
+            }
+        } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
+            ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
+            defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
+        }
     } catch (_) {
         status = loc[lang].noStatus;
     }
     if (item.subsection_our_code === 'fitting') {
         status = null;
-    }
-    let ourCode = null;
-    let defaultCode = null;
-    if (order[garment][0].design[item.subsection_our_code]) {
-        ourCode = order[garment][0].design[item.subsection_our_code].our_code;
-        if (defaultValues!.design[item.subsection_our_code]) {
-            defaultCode = defaultValues!.design[item.subsection_our_code]!.our_code;
-        }
-    } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
-        ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
-        defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
     }
     return {
         link: `${subgroup}/${item.subsection_our_code}`,

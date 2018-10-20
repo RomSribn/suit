@@ -37,7 +37,7 @@ class Widget extends PureComponent {
     if (prevProps.assets !== this.props.assets) {
       const exceptions = _.get(this, "props.orderStore.exceptions", []);
       const activeExceptions = _.get(this, "props.orderStore.activeElement.exception", []);
-      const activeElementCode = _.get(this, "props.orderStore.activeElement.our_code", null);      
+      const activeElementCode = _.get(this, "props.orderStore.activeElement.our_code", null);
       const subGroup = _.get(this, "props.orderStore.activeElement.elementInfo.subGroup");
       const defaultValues = _.get(this, "props.orderStore.defaultValues", {});
       let allExceptions = exceptions ?
@@ -47,7 +47,7 @@ class Widget extends PureComponent {
               ac.push(...exceptions[garmentKey][elementKey].exceptions)
             }
           })
-          
+
           return ac
         }, [])
         : [];
@@ -56,14 +56,14 @@ class Widget extends PureComponent {
         if (defaultValues) {
           Object.keys(defaultValues)
           .filter(item => !item.includes(['manequin']))
-          .map(filteredGarment => 
+          .map(filteredGarment =>
               defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
                 .map(garmentObject => Object.keys(garmentObject.design)
                   .forEach(
                     elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
                   )
                 )
-          ) 
+          )
         }
         const  mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => this.props.assets.includes(activeExceptionCode));
 
@@ -78,7 +78,7 @@ class Widget extends PureComponent {
                           this.props.assets.push(defaultItemValues[elementKey])
                         }
                     }
-                    
+
                     return !exceptions[garmentKey][elementKey].exceptions.includes(i)
                     })
                 }
@@ -86,11 +86,11 @@ class Widget extends PureComponent {
             })
           })
         }
-       
+
         const actualExceptions = [...allExceptions, ...activeExceptions];
         const nextAssets = this.props.assets
           .filter(i => !actualExceptions.includes(i))
-   
+
         this.widget3d.update(nextAssets).then(this.handleUpdated);
     }
 
@@ -153,6 +153,18 @@ export default class App extends Component {
           orderStore.setPreviewElement(null);
   };
   handleClickAsset = ({ id }) => {
+    // TODO
+    /**
+     * заблокировано в связи с order70
+     * https://trello.com/c/b4EoFe3q/155-order70-
+     * %D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-
+     * %D0%BE%D1%82%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-
+     * %D0%BF%D0%BE%D0%B4%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2-
+     * %D0%BF%D1%80%D0%B8-%D0%BD%D0%B0%D0%B6%D0%B0%D1%82%D0%B8%D0%B8-
+     * %D0%BD%D0%B0-%D0%BC%D0%B0%D0%BD%D0%B5%D0%BA%D0%B5%D0%BD
+     */
+    return;
+    /* eslint-disable */
     const {
       orderStore
     } = this.props;
@@ -168,6 +180,7 @@ export default class App extends Component {
         subgroup
       })
     }
+    /* eslint-enable */
   };
   render() {
     const { orderStore } = this.props;

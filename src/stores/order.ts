@@ -50,7 +50,7 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
                     if (typeof item === 'string') {
                         acc.push({
                             design: {
-                                ourCode: 'initials_text',
+                                ourCode: 'int1',
                                 value: item
                             }
                         });

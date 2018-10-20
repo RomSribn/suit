@@ -23,6 +23,7 @@ interface TProps {
      */
     ordersStore: OrderList.IOrderStore;
     lang: Lang;
+    baseOrderId?: string;
 }
 
 type RowInfo = {
@@ -58,7 +59,7 @@ class Table extends React.PureComponent<
     constructor(props: TProps) {
         super(props);
         this.state = {
-            activeOrderId: null,
+            activeOrderId: this.props.baseOrderId || null,
             selectedOrder: null
         };
     }
@@ -93,6 +94,7 @@ class Table extends React.PureComponent<
                 orderStatuses={orderStatuses}
                 ordersStore={this.props.ordersStore}
                 lang={lang}
+                activeOrderId={this.state.activeOrderId}
                 acceptCallback={this.resetActiveInfo}
             />
             <RTable

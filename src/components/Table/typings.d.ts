@@ -25,4 +25,5 @@ interface PanelRowProps {
     acceptCallback?: (...arg: any[]) => any;
     ordersStore: OrderList.IOrderStore;
     lang: Lang;
+    activeOrderId?: string | null;
 }

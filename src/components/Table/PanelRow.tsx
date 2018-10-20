@@ -15,7 +15,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
-            showControls: false
+            showControls: Boolean(this.props.activeOrderId)
         };
     }
     triggerControls = (showControlsBoolValue?: boolean) => {
@@ -30,9 +30,10 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
         const {
             ordersStore,
             orderInfo,
-            acceptCallback
+            acceptCallback,
+            activeOrderId
         } = this.props;
-        const currentOrderId = orderInfo && orderInfo.id;
+        const currentOrderId = (orderInfo && orderInfo.id) || activeOrderId;
         const currentOrder = ordersStore.orders.find(item => String(item.orderId) === currentOrderId);
         if (currentOrder) {
             return ordersStore.updateOrder({
@@ -53,20 +54,26 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             ordersStore,
             orderInfo
         } = this.props;
-        if (orderInfo && orderInfo.id) {
-            ordersStore.deleteOrder(Number(orderInfo.id));
+        // TODO: переделать на геттер
+        const orderId = orderInfo && orderInfo.id || this.props.activeOrderId;
+        if (orderId) {
+            ordersStore.deleteOrder(Number(orderId));
         }
     }
     render() {
         const {
             orderInfo,
             orderStatuses,
+            activeOrderId,
             lang
         } = this.props;
         const {
             showControls
         } = this.state;
-        const itemClassName = classNames('controls__item', { disabled: !Boolean(orderInfo && orderInfo.id) });
+        const itemClassName = classNames(
+            'controls__item',
+            { disabled: !Boolean(orderInfo && orderInfo.id || activeOrderId) }
+        );
         const currentStatusIndex: number = orderInfo && (orderInfo.status.statusId ||
           // TODO:  ХАК! В овтетах до сих пор присутвтуют поля id вместо statusId
           // Удалить, как только их почистят и приведут к одной модели
@@ -124,7 +131,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 className="controls__link controls__link--refresh"
                                 to={{
                                     pathname: `${routes.details}/shirt`,
-                                    search: `order_id=${orderInfo && orderInfo.id}`
+                                    search: `order_id=${orderInfo && orderInfo.id || activeOrderId}`
                                 }}
                                 title=""
                             />
@@ -150,14 +157,14 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 className="controls__link controls__link--edit"
                                 to={{
                                     pathname: `${routes.details}/shirt`,
-                                    search: `order_id=${orderInfo && orderInfo.id}`
+                                    search: `order_id=${orderInfo && orderInfo.id || activeOrderId}`
                                 }}
                                 title=""
                             />
                         </li>
                         <li className={itemClassName}>
                             <ConfirmPopup
-                                actionText={loc[lang].fabric.delete(orderInfo && orderInfo.id || '')}
+                                actionText={loc[lang].fabric.delete(orderInfo && orderInfo.id || activeOrderId || '')}
                                 onAcceptClick={this.onDeleteClick}
                             >
                                 <button

@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { Redirect } from 'react-router';
 import { observer, inject } from 'mobx-react';
 import { SaveForm } from '../SaveForm';
 import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
+import { routes } from '../../../config/routes';
 import * as _ from 'lodash';
 
 interface State {
   open: boolean;
   isExceptionPopupOpen: boolean;
+  redirectToOrders: boolean;
 }
 @inject(({ app, order, routing, garments: { Subgroups } }, props) => {
   return ({
@@ -27,6 +30,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     this.state = {
       open: false,
       isExceptionPopupOpen: false,
+      redirectToOrders: false
     };
 
   }
@@ -47,6 +51,9 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       this.updateOrder();
     } else if (this.props.saveExistingOrder) {
       this.props.orderStore!.saveOrder();
+      this.setState({
+        redirectToOrders: true
+      });
     } else {
       this.setState({ open: true });
     }
@@ -215,6 +222,11 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     const {
       children,
     } = this.props;
+    if (this.state.redirectToOrders) {
+      const orderId: number = _.get(this, 'props.orderStore.orderInfo.orderId', 0);
+      // TODO:  господи, прости
+      return <Redirect to={`${routes.orderList}?${orderId && 'active_order_id=' + orderId}`} />;
+    }
     return (
       <React.Fragment key="order save popup">
         <Button

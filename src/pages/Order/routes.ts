@@ -12,7 +12,7 @@ const makeRoutes: MakeRoutes = (indexRoute = '/order') => {
 const routes = makeRoutes();
 
 const translations = {
-    route: {
+    baseRoute: {
         en: {
             shirt: 'shirt',
         },
@@ -78,7 +78,9 @@ const translations = {
     }
 };
 
-const getCombinedPathAndTitle = (routeKey: string) =>
+type RootKey = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice';
+
+const getCombinedPathAndTitle = (routeKey: RootKey) =>
   ({
         path: routes[routeKey], routeKey, title: routes[routeKey].indexOf(':') !== -1
             ? (<string> routes[routeKey]).split('/') 
@@ -88,8 +90,8 @@ const getCombinedPathAndTitle = (routeKey: string) =>
                     acc[curClear] = translations[curClear];
                     return acc;
                 }, {})
-            : Object.keys(translations.route).reduce((acc, cur) => {
-                acc[cur] = translations.route[cur][routeKey];
+            : Object.keys(translations.baseRoute).reduce((acc, cur) => {
+                acc[cur] = translations.baseRoute[cur][routeKey];
                 return acc;
             }, {})
 });

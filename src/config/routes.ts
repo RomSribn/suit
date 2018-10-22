@@ -70,7 +70,10 @@ const routesTranslations = {
   },
 };
 
-const getCombinedPathAndTitle = (routeKey: string) =>
+type RootKey = 'index' | 'order' | 'panel' | 'clientele' | 'calendar'
+  | 'tasks' | 'analytics' | 'settings' | 'ordersList';
+
+const getCombinedPathAndTitle = (routeKey: RootKey) =>
   ({
     path: navigationRoutes[routeKey], title: Object.keys(routesTranslations).reduce((acc, cur) => {
       acc[cur] = routesTranslations[cur][routeKey];

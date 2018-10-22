@@ -15,9 +15,9 @@ interface IOrderStore {
     previewElement: ActivePreviewElement | null;
     error: object | null;
     setGarmentValue(garment: string, value: any): void;
-    setOrder (_o: Order, exception: OrderItemException): void;
+    setOrder (_o: Order, exception?: OrderItemException): void;
     saveOrder(customerInfo?: User): Promise<any>;
-    updateOrderInfo(): Promise<any>;
+    updateOrderInfo(order: Order, customerInfo?: User): Promise<any>;
     toggleHiddenElement(element: string): void;
     setShirtInitials(initials: string): void;
     getShirtInitials(): string;

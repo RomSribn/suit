@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import * as _ from 'lodash';
+import { observer, inject } from 'mobx-react';
 import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
@@ -13,14 +14,36 @@ interface GalleryState extends ImageLoadState {
     previewElementIndex: number;
     mouseOverElement: boolean;
 }
-class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
+@inject(({order}) => ({
+    orderStore: order,
+    activeOrderItem: order.activeElement
+}))
+@observer
+class Gallery extends React.Component<GalleryProps, GalleryState> {
     constructor(props: GalleryProps) {
         super(props);
-        const activeIndex = props.items.findIndex(i => i.our_code === ( props.order!.activeElement || {})['id']); // tslint:disable-line
+        const {
+            order,
+            match,
+            orderStore,
+            items,
+        } = this.props;
+        let activeIndex;
         const shownItem = this.shownItem;
-
+        if (order!.activeElement && order!.activeElement!.our_code) {
+            activeIndex = items.findIndex(i => i.our_code === (order!.activeElement && order!.activeElement!.our_code || '')); // tslint:disable-line
+        } else {
+            if (match) {
+                const {
+                    garment,
+                    group,
+                    subgroup } = match.params;
+                const orderValue = orderStore!.order;
+                activeIndex = items.findIndex(i => i.our_code === (orderValue[garment][0][group][subgroup] && orderValue[garment][0][group][subgroup].our_code || '')); // tslint:disable-line
+            }
+        }
         this.state = {
-            activeElementIndex: activeIndex === -1 ? 0 : activeIndex,
+            activeElementIndex: (activeIndex === -1 || !activeIndex) ? 0 : activeIndex,
             previewElementIndex: 0,
             load: {
                 success: null,
@@ -144,11 +167,28 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             const {
                 setActiveOrderItem,
                 items,
+                match,
+                orderStore
             } = this.props;
-            setActiveOrderItem({
+            const newOrderItem = {
                 ...items[i],
                 elementInfo
-            });
+            };
+            setActiveOrderItem(newOrderItem);
+            if (this.state.activeElementIndex !== i && match) {
+                const {
+                    garment,
+                    group,
+                    subgroup } = match.params;
+                let newOrder = JSON.parse(JSON.stringify(orderStore!.order));
+                if (!newOrder) {
+                    newOrder = {};
+                }
+                newOrder[garment][0][group][subgroup] = {};
+                newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
+                newOrder[garment][0][group][subgroup].title = newOrderItem.title;
+                orderStore!.updateOrderInfo(newOrder);
+            }
         } else {
             if (action === 'enter') {
                 this.props.setPreviewElement({
@@ -177,17 +217,22 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             lang,
             group
         } = this.props;
+        const {
+            activeElementIndex,
+            load,
+            shownItem,
+            mouseOverElement
+        } = this.state;
 
         if (!items.length) {
-            this.state.load.error = 'empty';
-            this.state.load.success = null;
+            load.error = 'empty';
+            load.success = null;
             return null;
         }
-        const item = this.state.shownItem;
+        const item = shownItem;
         if (_.isEmpty(item)) {
             return null;
         }
-        this.updateActiveElement();
         const title = item.title[lang];
         let description = item.description[lang];
         const descriptionSize = 153;
@@ -207,7 +252,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
                         {group === 'fabric_ref' && <Controll />}
-                        { !this.state.load.success && !this.state.load.error
+                        { !load.success && !load.error
                         ? <div
                             className="preloader"
                             style={{
@@ -219,7 +264,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                             <div className="preloader__progline loaded"/>
                         </div>
                         </div>
-                        : this.state.load.success ?
+                        : load.success ?
                         <div className="gallery__img" id="js-gallery-img">
                             <img
                                 src={image}
@@ -231,10 +276,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                         <GalleryBar
                             items={items}
                             shownItem={item}
+                            activeElementIndex={activeElementIndex}
                             setActiveElementIndex={this.setActiveElementIndex}
                             mouseEnter={this.mouseEnterElement}
                             mouseLeave={this.mouseLeaveElement}
-                            isMouseOverElement={this.state.mouseOverElement}
+                            isMouseOverElement={mouseOverElement}
                         />
                     </div>
                 </div>

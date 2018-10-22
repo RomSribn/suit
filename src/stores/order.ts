@@ -133,7 +133,7 @@ class OrderStore implements IOrderStore {
         if (!value) {
             this.previewElement = null;
         } else {
-            this.previewElement = Object.assign({}, value);
+            this.previewElement = {...value};
         }
     }
 
@@ -278,7 +278,7 @@ class OrderStore implements IOrderStore {
     );
     }
     @action
-    updateOrderInfo = (customerInfo?: User) => {
+    updateOrderInfo = (order: Order = this.order, customerInfo?: User) => {
         const userInfo = customerInfo || {
             name: '',
             phone: ''
@@ -286,7 +286,7 @@ class OrderStore implements IOrderStore {
         return callApi({
             url: services.orderDeliveryInfo,
             method: 'POST',
-            data: prepareOrder(this.order, userInfo),
+            data: prepareOrder(order, userInfo),
         },
         (): null => null,
         (info: OrderInfo) => {

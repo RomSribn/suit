@@ -5,6 +5,8 @@ interface FooterBarProps {
     backLink?: string;
     mutuallyExclusivePopup?: MutuallyExclusive;
     orderId?: number;
+    routing?: any; // tslint:disable-line no-any
+    setActiveItem?(item: GalleryStoreItem | null): void;
 }
 
 type SaveButtonInject = {
@@ -30,7 +32,9 @@ type SaveButtonSelfProps = {
             subgroup: string;
         }
     };
-    children?: React.ReactNode
+    children?: React.ReactNode;
+    saveCallback?: Function;
+    lang?: string;
 }
 
 type SaveButtonProps = SaveButtonInject & SaveButtonSelfProps

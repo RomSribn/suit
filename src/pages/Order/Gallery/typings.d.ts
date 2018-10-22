@@ -9,6 +9,8 @@ interface GalleryProps {
     group: string,
     activeElement: GalleryStoreItem | null;
     previewElement: ActivePreviewElement | null;
+    match: any;
+    orderStore?: IOrderStore;
 }
 
 interface GalleryContainerProps extends GalleryProps {

@@ -32,19 +32,19 @@
                 &:focus
                     outline none
         &-th:focus
-            outline:none;
+            outline none
 
         &-thead .rt-tr
             display: flex;
             align-items: center;
 
         &-tbody
-            display:block;
-            width: 100%;
-            overflow: auto;
-            padding: 0.667rem;
-            position: relative;
-            transition: opacity 0.35s linear;
+            display block
+            width 100%
+            overflow auto
+            padding 0.667rem
+            position relative
+            transition opacity 0.35s linear
 
         &-tr-group
             .rt-tr
@@ -60,7 +60,6 @@
         &-tr
             display flex
             width 100%
-
 
 .orders__title
     &-text
@@ -221,3 +220,187 @@
                 height 0.42rem
                 border-width 0 2px 2px 0
                 transform rotate(45deg)
+
+.orders__date-picker 
+    &__wrapper
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+
+    &__inner 
+        background-color white
+        padding 0.5rem 0.8rem
+        display inline-block
+        box-shadow 0px 0px 15px 0px rgba(50, 50, 50, 0.25)
+        position absolute
+        display flex
+        flex 1
+        align-items center
+        flex-direction column
+        .DayPicker
+            font-size 0.72rem
+            &-wrapper
+                padding 0
+
+            &-Months
+                background: #F2F2F2
+
+            &-Month 
+                background-color #EAEAEA
+                margin-top 0
+
+            &-Caption 
+                border-top 1px #D5D5D5 solid
+                border-bottom: 1px #D4D4D4 solid;
+                color black
+                background-color: white
+                margin-left -1rem;
+                padding: 0.6rem 1.4rem
+                width 120%
+
+            &-Day
+                outline none
+                background-color white
+                border-radius 0
+                border 1px solid #F3F3F3
+                &:hover
+                    background-color black!important
+                    color white
+                    border-radius 0
+
+                &--today
+                    background-color #F2F2F2
+                    color black
+                    border-radius 0
+
+                &--selected
+                    background-color #F2F2F2
+                    color black
+                    &:hover
+                        background-color #F2F2F2
+
+            &-WeekDays
+                border 0
+                border-top 1px #d5d5d5 solid
+                background-color #F2F2F2
+
+            &-Weekday
+                color #323232
+                font-weight 700
+
+            &-NavButton
+                top 0.5em
+
+        .date-picker__title 
+            display flex
+            align-self flex-start
+            &-text 
+                font-size 1.2rem
+                color grey
+
+        .top-input-wrapper, .bottom-input-wrapper 
+            width 13.0666rem
+            margin 0 1rem 0
+            .input-box 
+                display flex
+                align-items center
+                justify-content center
+                margin-bottom 1.24rem
+                padding 0.75rem
+                border 1px solid #e6e6e6
+                font-weight 500
+                background-color #eceeed
+                color #000
+                &.active
+                    background-color transparent
+
+                &__input-label 
+                    font-weight 700
+                    font-size 1rem
+
+                &-input 
+                    width calc(100% - 4rem)
+                    margin 0 0.4rem
+                    line-height 1
+                    font normal .8666rem
+                    font-weight normal
+                    color #8a8a8a
+                    background none
+                    border none
+                    outline none
+
+                &_grey 
+                    background-color #ECEEED
+
+                .datepicker__icon
+                    display block
+                    width 1.52rem
+                    height 1.52rem
+                    background url(/assets/img/calendar.svg) no-repeat
+        .top-input-wrapper
+            margin-top 0.8rem
+
+        .picker-wrapper
+            margin-bottom 0.5rem
+            height 0
+            transition height 0.3s linear
+            overflow hidden
+            &.active 
+                height auto
+
+        .btns-wrapper 
+            margin-top 1rem
+            display flex
+            flex 1
+            align-items center
+            justify-content center
+            flex-direction column
+            .btn-wrapper
+                margin 0.8rem 0
+
+.orders__list-picker
+    &__wrapper
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+
+    &__inner 
+        background-color white
+        padding 1rem
+        display inline-block
+        box-shadow:0px 0px 15px 0px rgba(50, 50, 50, 0.25);
+        position absolute
+        display flex
+        flex 1
+        align-items center
+        flex-direction column
+        .list__title
+            display flex
+            align-self flex-start
+            &-text
+                font-size 1.2rem
+                color grey
+
+.orders__list-picker 
+    &__inner
+        border-radius 2px
+        padding 0
+        .list-wrapper
+            margin-top 0.8rem
+            .list-item-wrapper
+                .list-item
+                    padding 0 5rem 0 1.24rem
+                    cursor pointer
+
+                    &:hover
+                        background-color rgba(236,238,238,0.5)
+
+                    &-text
+                        padding 0.8rem 1.24rem
+                        color #8a8a8a
+                        font 15px/1.2 'Roboto', sans-serif
+                        font-weight: 400;

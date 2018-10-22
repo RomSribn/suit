@@ -7,7 +7,7 @@ const loc: MakeLocale<Loc> = {
         order: 'order',
     },
     ru: {
-        order: 'заказать',
+        order: 'заказы',
     },
 };
 

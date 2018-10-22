@@ -70,8 +70,16 @@ const routesTranslations = {
   },
 };
 
+const getCombinedPathAndTitle = (routeKey: string) =>
+  ({
+    path: navigationRoutes[routeKey], title: Object.keys(routesTranslations).reduce((acc, cur) => {
+      acc[cur] = routesTranslations[cur][routeKey];
+      return acc;
+  }, {})});
+
 export {
   navigationRoutes,
   routesTranslations,
   routes,
+  getCombinedPathAndTitle
 };

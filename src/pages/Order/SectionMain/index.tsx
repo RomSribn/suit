@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import * as classnames from 'classnames';
+import { getCombinedPathAndTitle } from '../routes';
+import CrumbRoute from '../../../utils/CrumbRoute';
 import { Filter } from '../Filter';
 import { GarmentChoise } from '../GarmentChoiseForm';
 import { Main as Details } from '../Details';
@@ -43,16 +45,16 @@ class MainSection extends React.Component<MainSectionProps> {
                         )}
                     >
                         <Switch>
-                            <Route
-                                path={`${routes.garment}`}
+                            <CrumbRoute
+                                {...getCombinedPathAndTitle('garment')}
                                 component={SubgroupChoice}
-                            />                        
+                            />
                             <Route path={routes.details} component={Details} />
                         </Switch>
                     </div>
                     <Switch>
-                        <Route
-                            path={`${routes.subgroupChoice}`}
+                        <CrumbRoute
+                            {...getCombinedPathAndTitle('subgroupChoice')}
                             component={Gallery}
                         />
                     </Switch>

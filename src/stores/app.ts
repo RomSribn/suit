@@ -32,9 +32,10 @@ class App implements IAppStore {
   @observable showUserMenu = false;
   orderPath = observable.array<OrderPathItem>([]);
 
-  constructor(lang: Lang) {
-    this.lang = lang || 'en';
-    this.orderPath.push(...makeInitionalOrderPath(lang));
+  constructor(lang?: Lang) {
+    const newLang = lang || 'en';
+    this.lang = newLang;
+    this.orderPath.push(...makeInitionalOrderPath(newLang));
   }
 
   @action
@@ -65,7 +66,7 @@ class App implements IAppStore {
   }
 
 }
-const app = new App('ru');
+const app = new App();
 
 export {
   app,

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { observer, inject } from 'mobx-react';
 import { Route, Switch } from 'react-router';
 import { SaveButton } from './SaveButton';
 import { routes } from '../routes';
@@ -12,38 +11,33 @@ import { loc } from './loc';
 
 import './styles.styl';
 
-@inject(({ order, routing}) => ({
-    orderStore: order,
-    routing,
-    setActiveItem: order.setActiveItem
-}))
-@observer
-class FooterBar extends React.Component<FooterBarProps, { prevOrder?: Order }> {
+type Props = FooterBarProps & { orderStore: IOrderStore };
+
+class FooterBar extends React.PureComponent<Props, { prevOrder?: Order }> {
     static defaultProps = {
         goBack: () => undefined,
-        popOrderPathitem: () =>          undefined,
+        popOrderPathitem: () => undefined,
         lang: 'en',
         backLink: '',
     };
-    componentDidMount() {
-        const {
-            orderStore
-        } = this.props;
-        console.warn('set prev order');
-        this.setState({ prevOrder: JSON.parse(JSON.stringify(orderStore!.order) )});
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            prevOrder: JSON.parse(JSON.stringify(this.props.orderStore.order) )
+        };
     }
     onBackClick = () => {
         const {
-            popOrderPathitem,
-            orderStore,
-            setActiveItem
+            popOrderPathitem
         } = this.props;
+        const orderStore = this.props.orderStore!;
+        const { setActiveItem } = orderStore;
         const {
             prevOrder
         } = this.state;
-        console.warn('onBackClick');
-        prevOrder && orderStore!.updateOrderInfo(prevOrder); // tslint:disable-line
-        setActiveItem && setActiveItem(null); // tslint:disable-line
+        prevOrder && orderStore.updateOrderInfo(prevOrder); // tslint:disable-line
+        setActiveItem(null);
         popOrderPathitem!();
     }
     saveCallback = (linkToRedirect: string | undefined) => {
@@ -54,8 +48,7 @@ class FooterBar extends React.Component<FooterBarProps, { prevOrder?: Order }> {
         } = this.props;
         routing.push(linkToRedirect);
         popOrderPathitem!();
-        this.setState({ prevOrder: JSON.parse(JSON.stringify(orderStore!.order))});
-        console.warn('set prev order saveCallback');
+        this.setState({ prevOrder: JSON.parse(JSON.stringify(orderStore.order))});
     }
     render() {
         const {
@@ -111,18 +104,25 @@ class FooterBar extends React.Component<FooterBarProps, { prevOrder?: Order }> {
                         path={routes.subgroupChoice}
                         component={(...props: any[]) => { // tslint:disable-line
                             return (
+                                <Link
+                                    to={`${routes.details}/${props[0].match.params.garment}`}
+                                    onClick={this.onBackClick}
+                                >
                                     <SaveButton
                                         {...props[0]}
                                         saveCallback={
-                                            () => this.saveCallback(
-                                                `${routes.details}/${props[0].match.params.garment}`
-                                            )
+                                            () => {
+                                                this.saveCallback(
+                                                    `${routes.details}/${props[0].match.params.garment}`
+                                                );
+                                            }
                                         }
                                         isUpdate={true}
                                         lang={lang}
                                     >
                                         {loc[lang!].save}
                                     </SaveButton>
+                                </Link>
                             );
                         }}
                     />

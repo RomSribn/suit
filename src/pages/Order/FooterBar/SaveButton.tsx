@@ -215,7 +215,6 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
 
           if (exceptionsForPopup.length) {
             const isRemovable = true;
-            console.warn('handleExclsuive');
             this.handleExclsuive(
               isRemovable,
               exceptionsForPopup,
@@ -227,7 +226,6 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
             );
           }
         } else {
-          console.warn('handleSetOrder');
           this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
         }
 
@@ -251,7 +249,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         }
     });
   }
-  
+
   render() {
     const {
       children,

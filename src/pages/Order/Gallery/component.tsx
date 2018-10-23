@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import * as _ from 'lodash';
-import { observer, inject } from 'mobx-react';
 import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
@@ -14,31 +13,25 @@ interface GalleryState extends ImageLoadState {
     previewElementIndex: number;
     mouseOverElement: boolean;
 }
-@inject(({order}) => ({
-    orderStore: order,
-    activeOrderItem: order.activeElement
-}))
-@observer
-class Gallery extends React.Component<GalleryProps, GalleryState> {
+class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     constructor(props: GalleryProps) {
         super(props);
         const {
-            order,
             match,
-            orderStore,
             items,
         } = this.props;
         let activeIndex;
         const shownItem = this.shownItem;
-        if (order!.activeElement && order!.activeElement!.our_code) {
-            activeIndex = items.findIndex(i => i.our_code === (order!.activeElement && order!.activeElement!.our_code || '')); // tslint:disable-line
+        const orderStore = this.props.orderStore!;
+        if (orderStore.activeElement && orderStore.activeElement!.our_code) {
+            activeIndex = items.findIndex(i => i.our_code === (orderStore.activeElement && orderStore.activeElement!.our_code || '')); // tslint:disable-line
         } else {
             if (match) {
                 const {
                     garment,
                     group,
                     subgroup } = match.params;
-                const orderValue = orderStore!.order;
+                const orderValue = orderStore.order;
                 activeIndex = items.findIndex(i => i.our_code === (orderValue[garment][0][group][subgroup] && orderValue[garment][0][group][subgroup].our_code || '')); // tslint:disable-line
             }
         }
@@ -56,13 +49,14 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
     componentWillMount() {
         this.props.filterStore.loadFilters(services.shirtFilters);
     }
+
     get shownItem(): GalleryStoreItem {
         const {
             items,
             previewElement,
             activeElement,
             galleryStore,
-            order: orderStore
+            orderStore
         } = this.props;
 
         const {

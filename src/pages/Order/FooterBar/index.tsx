@@ -9,6 +9,7 @@ import { trim } from '../../../config/routes';
     mutuallyExclusivePopup: order.mutuallyExclusivePopup,
     popOrderPathitem: app.popOrderPathItem,
     orderId: order.orderInfo && order.orderInfo.orderId,
+    routing,
     backLink:
         '/' + trim(
             routing
@@ -33,7 +34,8 @@ class FooterBar extends React.Component<FooterBarProps> {
             popOrderPathitem,
             orderStore,
             mutuallyExclusivePopup,
-            orderId
+            orderId,
+            routing
         } = this.props;
         return (
             <Component
@@ -41,8 +43,9 @@ class FooterBar extends React.Component<FooterBarProps> {
                 backLink={backLink}
                 mutuallyExclusivePopup={mutuallyExclusivePopup}
                 popOrderPathitem={popOrderPathitem}
-                orderStore={orderStore}
+                orderStore={orderStore!}
                 orderId={orderId}
+                routing={routing!}
             />
         );
     }

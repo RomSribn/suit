@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 
-import { routes } from '../config/routes';
+import { routes, getCombinedPathAndTitle } from '../config/routes';
+import CrumbRoute from '../utils/CrumbRoute';
 import { Spinner } from './Spinner';
 import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
@@ -15,7 +16,8 @@ let orderPageWasRendered = false;
   user,
   app,
   order: order.order
-})) @observer
+}))
+@observer
 class Wrapper extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,9 @@ class Wrapper extends Component {
   hideSpinner = () => this.setState({ showSpinner: false });
   showSpinner = () => this.setState({ showSpinner: true });
   render() {
+    const {
+      app
+    } = this.props;
     const loggedIn = this.props.user.isAuth;
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (<React.Fragment key="common wrapper with spinner">
@@ -51,8 +56,8 @@ class Wrapper extends Component {
               !orderPageWasRendered &&
               <Route path={`${routes.details}/:garment/:any`} component={ () =><Redirect to={routes.order} /> } />
             }
-            <Route
-              path={routes.order}
+            <CrumbRoute
+              {...getCombinedPathAndTitle('order')}
               render={(props) => {
                 if (!orderPageWasRendered) {
                   this.showSpinner();
@@ -71,9 +76,9 @@ class Wrapper extends Component {
               }
               return (
                 <Switch>
-                  <Route path={routes.orderList}>
+                  <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
                     <ListOrders />
-                  </Route>
+                  </CrumbRoute>
                 </Switch>
               );
             }} />

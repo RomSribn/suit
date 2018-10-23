@@ -1,31 +1,9 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { loc } from './loc';
+import { Breadcrumbs, Crumbs } from 'react-breadcrumbs';
 
-type MakePath = (orderPath: OrderPath, f: (link: string) => void) => React.ReactNode[];
-const makePath: MakePath = (path, f) => {
-    const className = '';
-    return path.map((item, i) => (
-        i === path.length - 1
-            ? null
-            : item.link
-            ? (
-                <Link
-                    onClick={() => { f(item.value); }}
-                    className={className}
-                    key={item.link + item.value}
-                    to={item.link || ''}
-                >{item.value} / 
-                </Link>)
-            : <span className={className} key={item.link + item.value}>{item.value}/</span>
-    ));
-}; 
-
-class HeaderContent extends React.Component<HeaderContentProps> {
+class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: string}> {
     static defaultProps = {
         lang: 'en',
-        orderPath: [],
-        cutOrderPath: (value: string) => undefined,
     };
     static indexStyle = {
         position: 'relative' as 'relative',
@@ -39,29 +17,35 @@ class HeaderContent extends React.Component<HeaderContentProps> {
         fontSize: '100%',
         marginBottom: 0,
     };
+
+    constructor(props: HeaderContentProps) {
+        super(props);
+        this.state = {
+
+        };
+    }
+
+    setCrumbs = (crumbs: Crumbs) => {
+        const {
+            pageTitle
+        } = this.state;
+        if (crumbs && crumbs[0] && pageTitle !== crumbs[0].title) {
+            this.setState({ pageTitle: crumbs && crumbs[0] && crumbs[0].title });
+        }
+        return crumbs;
+    }
+
     render() {
         const {
-            orderPath,
-            cutOrderPath,
-            lang,
-        } = this.props;
-        const currentSectionName = orderPath![orderPath!.length - 1].value;
-        const isOrderPage = currentSectionName === loc[lang!].order;
+            pageTitle
+        } = this.state;
         return (
         <div
             className="main__header-content"
             style={HeaderContent.style}
         >
-            <h1 className="main__header-title">
-                <span>{loc[lang!].order}</span>
-                { !isOrderPage &&
-                    <span>&nbsp;&nbsp;<i>|</i>&nbsp;&nbsp;</span>
-                }
-                {isOrderPage ? '' : currentSectionName}
-            </h1>
-            <nav className="breadcrumbs">
-                {makePath(orderPath!, cutOrderPath!)}
-            </nav>
+            {pageTitle && <h1 className="main__header-title">{pageTitle}</h1>}
+            <Breadcrumbs setCrumbs={this.setCrumbs} separator=" / " />
         </div>);
     }
 }

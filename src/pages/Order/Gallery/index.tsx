@@ -5,25 +5,40 @@ import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
 
+const galleryCache = {};
+
 @inject(({
     app,
     garments: { GalleryStore },
     order,
-    order: { setActiveItem, setPreviewElement, exceptions, isExclusivePopupShowing },
-    filterStore
+    filterStore,
 }, nextProps: GalleryContainerProps) => {
     const {
         garment,
         group,
         subgroup,
     } = nextProps.match.params;
+    const {
+        setActiveItem,
+        setPreviewElement,
+        isExclusivePopupShowing,
+        activeElement,
+        exceptions
+    } = order;
+
+    const cacheName = [garment, group, subgroup].toString();
+    if (!galleryCache[cacheName]) {
+        galleryCache[cacheName] = new GalleryStore(garment, group, subgroup, exceptions);
+    }
+
     return {
         setActiveOrderItem: setActiveItem,
-        setPreviewElement: setPreviewElement,
+        setPreviewElement,
         isExclusivePopupShowing,
         lang: app.lang,
-        order,
-        galleryStore: new GalleryStore(garment, group, subgroup, exceptions),
+        activeOrderItem: activeElement,
+        orderStore: order,
+        galleryStore: galleryCache[cacheName],
         filterStore: filterStore,
         ...nextProps,
     };
@@ -36,14 +51,13 @@ class Gallery extends React.Component<GalleryContainerProps> {
         }
     }
     render() {
-        const orderStore = this.props.order!;
+        const orderStore = this.props.orderStore!;
         if (orderStore.isEmptyOrder()) {
             return <Redirect to={routes.details} />;
         }
         const {
             galleryStore,
             lang,
-            order,
             setActiveOrderItem,
             setPreviewElement,
             match: { params: { group } },
@@ -54,7 +68,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
         return (
                 group === 'fitting'
                 ? (
-                    <Fitting 
+                    <Fitting
                         key={galleryStore.items.toString()}
                         lang={lang}
                         items={[...galleryStore.items]}
@@ -64,7 +78,6 @@ class Gallery extends React.Component<GalleryContainerProps> {
                     <Component
                         key={(galleryStore.items || [])
                             .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
-                        order={order}
                         lang={lang}
                         match={match}
                         setActiveOrderItem={setActiveOrderItem}
@@ -73,8 +86,10 @@ class Gallery extends React.Component<GalleryContainerProps> {
                         galleryStore={galleryStore}
                         group={group}
                         filterStore={filterStore}
+                        orderStore={orderStore}
                         activeElement={orderStore.activeElement}
                         previewElement={orderStore.previewElement}
+                        activeOrderItem={this.props.activeOrderItem}
                     />
                 )
         );

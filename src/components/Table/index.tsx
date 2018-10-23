@@ -51,6 +51,7 @@ class Table extends React.Component<TProps, TState> {
     private panelRow: React.RefObject<PanelRow>;
     constructor(props: TProps) {
         super(props);
+        this.panelRow = React.createRef();
         this.state = {
             activeOrderId: this.props.baseOrderId || null,
             selectedOrder: null,
@@ -242,7 +243,7 @@ class Table extends React.Component<TProps, TState> {
                 getTrProps={({}, rowInfo: RowInfo) => {
                     return {
                         onClick: () => {
-                            this.panelRow.current && this.panelRow.current.triggerControls(true); // tslint:disable-line
+                            this.panelRow && this.panelRow.current && this.panelRow.current.triggerControls(true); // tslint:disable-line
                             if (rowInfo) {
                                 this.setActiveOrderId(rowInfo.row.id);
                                 this.setActiveOrderInfo(rowInfo.row);
@@ -254,6 +255,7 @@ class Table extends React.Component<TProps, TState> {
                 columns={[
                     {
                         accessor: 'order',
+                        id: 'id',
                         Filter: () => <Filter text={columns.order} />,
                         filterable: true,
                         filterMethod: this.filterMethod,

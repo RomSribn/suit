@@ -12,6 +12,7 @@ interface IOrderStore {
     clearException: (garment: string, subGroup: string) => void;
     setMutuallyExclusivePopup: (callbackFunction: any) => void;
     activeElement: GalleryStoreItem | null;
+    setActiveItem(item: GalleryStoreItem | null): void;
     previewElement: ActivePreviewElement | null;
     error: object | null;
     setGarmentValue(garment: string, value: any): void;

@@ -262,15 +262,9 @@ class OrderStore implements IOrderStore {
         },
         (): null => null,
         (info: OrderInfo) => {
-            if (method === 'POST') {
-                if (this.defaultValues) {
-                    this.order = cloneOrderObject(this.defaultValues);
-                }
-            } else {
-                this.orderInfo = {
-                    ...this.orderInfo,
-                    ...info
-                };
+            if (this.defaultValues) {
+                this.order = cloneOrderObject(this.defaultValues);
+                this.orderInfo = null;
             }
             return info;
         },

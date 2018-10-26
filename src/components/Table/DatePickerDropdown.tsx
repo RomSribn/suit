@@ -224,7 +224,7 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
                 onClick={this.onClickClear}
                 theme="white"
               >
-                <p>{loc[lang].clear}</p>
+                <p>{loc[lang].clear.toUpperCase()}</p>
               </Button>
             </div>
             <div className="btn-wrapper">

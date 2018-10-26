@@ -18,6 +18,8 @@ type Loc = {
          */
         updateOrder(params: ConfirmActionTextParams): string;
     };
+    clear: string;
+    submit: string;
 };
 
 const loc: Translations<Loc> = {
@@ -42,7 +44,9 @@ const loc: Translations<Loc> = {
             updateOrder: (params) =>
                 `change an order from the
                 status "${params.currentStatus}" to the status "${params.nextStatus}"`
-        }
+        },
+        clear: 'clear',
+        submit: 'submit'
     },
     ru: {
         columns: {
@@ -64,7 +68,9 @@ const loc: Translations<Loc> = {
             delete: (orderId) => `удалить заказ ${orderId}`,
             updateOrder: (params) =>
             `перевести заказ из статуса "${params.currentStatus}" в статус "${params.nextStatus}"`
-        }
+        },
+        clear: 'отчитсить',
+        submit: 'отправить'
     }
 };
 

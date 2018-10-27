@@ -65,7 +65,12 @@
     &-text
         text-transform capitalize
         cursor: default
-        color: #999999
+        color #8A8A8A
+
+    .action-text-wrapper
+        &.active
+            .orders__title-text
+                color black
 
 .orders__title, .orders__data {
     width: 16.6%;
@@ -222,7 +227,7 @@
                 border-width 0 2px 2px 0
                 transform rotate(45deg)
 
-.orders__date-picker 
+.orders__date-picker
     &__wrapper
         position absolute
         top 0
@@ -230,7 +235,7 @@
         width 100%
         height 100%
 
-    &__inner 
+    &__inner
         background-color white
         padding 0.5rem 0.8rem
         display inline-block
@@ -248,11 +253,11 @@
             &-Months
                 background: #F2F2F2
 
-            &-Month 
+            &-Month
                 background-color #EAEAEA
                 margin-top 0
 
-            &-Caption 
+            &-Caption
                 border-top 1px #D5D5D5 solid
                 border-bottom: 1px #D4D4D4 solid;
                 color black
@@ -294,17 +299,17 @@
             &-NavButton
                 top 0.5em
 
-        .date-picker__title 
+        .date-picker__title
             display flex
             align-self flex-start
-            &-text 
+            &-text
                 font-size 1.2rem
                 color grey
 
-        .top-input-wrapper, .bottom-input-wrapper 
+        .top-input-wrapper, .bottom-input-wrapper
             width 13.0666rem
             margin 0 1rem 0
-            .input-box 
+            .input-box
                 display flex
                 align-items center
                 justify-content space-between
@@ -317,7 +322,7 @@
                 &.active
                     background-color transparent
 
-                &__input-label 
+                &__input-label
                     font-weight 500
                     font-size 1.14rem
 
@@ -325,11 +330,11 @@
                     & .input-wrapper, & &__input-label
                         display inline-block
                         vertical-align baseline
-                    
+
                     & .input-wrapper
                         width calc(100% - 6rem)
 
-                &-input 
+                &-input
                     margin 0 0.4rem
                     line-height 1rem
                     font-size .8666rem
@@ -340,7 +345,7 @@
                     outline none
                     width: 6rem;
 
-                &_grey 
+                &_grey
                     background-color #ECEEED
 
                 .datepicker__icon
@@ -356,10 +361,10 @@
             height 0
             transition height 0.3s linear
             overflow hidden
-            &.active 
+            &.active
                 height auto
 
-        .btns-wrapper 
+        .btns-wrapper
             margin-top 1rem
             display flex
             flex 1
@@ -370,7 +375,7 @@
                 margin 0.8rem 0
                 .button
                     width 13.1rem
-                    .frame 
+                    .frame
                         left 0
                         right 0
                         width calc(100% + 0px)
@@ -383,7 +388,7 @@
         width 100%
         height 100%
 
-    &__inner 
+    &__inner
         background-color white
         padding 1rem
         display inline-block
@@ -400,7 +405,7 @@
                 font-size 1.2rem
                 color grey
 
-.orders__list-picker 
+.orders__list-picker
     &__inner
         border-radius 2px
         padding 0
@@ -417,5 +422,6 @@
                     &-text
                         padding 0.8rem 1.24rem
                         color #8a8a8a
-                        font 15px/1.2 'Roboto', sans-serif
+                        font-weight: 400;
+                        font-stretch: condensed;
                         font-weight: 400;

@@ -179,17 +179,21 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
         >
           <div className="top-input-wrapper">
             <div className={classNames(inputBoxClass)}>
-              <p className={classNames(inputBoxClass + '__input-label')}>
-                {loc[lang].from + ':'}
-              </p>
-              <input
-                type="text"
-                className={classNames(inputBoxClass + '-input')}
-                onChange={(e: { target: HTMLInputElement; }) => this.setField('dateFrom', e.target.value)}
-                placeholder={'00.00.0000'}
-                value={dateFrom}
-                onBlur={() => this.setActiveCalendar()}
-              />
+              <span className="labell-input-wrapper">
+                <span className={classNames(inputBoxClass + '__input-label')}>
+                  {loc[lang].from + ':'}
+                </span>
+                <span className="input-wrapper">
+                  <input
+                    type="text"
+                    className={classNames(inputBoxClass + '-input')}
+                    onChange={(e: { target: HTMLInputElement; }) => this.setField('dateFrom', e.target.value)}
+                    placeholder={'00.00.0000'}
+                    value={dateFrom}
+                    onBlur={() => this.setActiveCalendar()}
+                  />
+                </span>
+              </span>
               <span onClick={() => this.setActiveCalendar('dateFrom')} className="datepicker__icon"/>
             </div>
           </div>
@@ -203,20 +207,22 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
             />
           </div>
           <div className="bottom-input-wrapper">
-            <div className={classNames(inputBoxClass)}>
-              <p className={classNames(inputBoxClass + '__input-label')}>
+            <span className={classNames(inputBoxClass)}>
+              <span className={classNames(inputBoxClass + '__input-label')}>
                 {loc[lang].till + ':'}
-              </p>
-              <input
-                type="text"
-                className={classNames(inputBoxClass + '-input')}
-                onChange={(e: { target: HTMLInputElement; }) => this.setField('dateTo', e.target.value)}
-                placeholder={'00.00.0000'}
-                value={dateTo}
-                onBlur={() => this.setActiveCalendar()}
-              />
+              </span>
+              <span className="input-wrapper">
+                <input
+                  type="text"
+                  className={classNames(inputBoxClass + '-input')}
+                  onChange={(e: { target: HTMLInputElement; }) => this.setField('dateTo', e.target.value)}
+                  placeholder={'00.00.0000'}
+                  value={dateTo}
+                  onBlur={() => this.setActiveCalendar()}
+                />
+              </span>
               <span onClick={() => this.setActiveCalendar('dateTo')} className="datepicker__icon"/>
-            </div>
+            </span>
           </div>
           <div className={classNames('picker-wrapper', { active: activeCalendar === 'dateTo' })}>
             <DayPicker

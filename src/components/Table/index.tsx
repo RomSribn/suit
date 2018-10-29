@@ -283,10 +283,10 @@ class Table extends React.Component<TProps, TState> {
                     },
                     {
                         Filter: (props) => <Filter
-                            textIsActive={showListPickerFilter}
                             text={(activeFilterValues.status && loc[lang].statuses[activeFilterValues.status])
                                 || columns.status}
                             type="select"
+                            isActive={showListPickerFilter}
                             selectValues={[
                                 { value: 'all', text: allStatusesText },
                                 ...orderStatuses.map(status => ({ value: status, text: statuses[status] }))
@@ -311,9 +311,9 @@ class Table extends React.Component<TProps, TState> {
                     },
                     {
                         Filter: (props) => <Filter
-                            textIsActive={showDatePickerFilter}
                             text={columns.date}
                             type="date"
+                            isActive={showDatePickerFilter}
                             onClickFilterItem={this.onClickFilterItem}
                             updatePickerData={
                                 (

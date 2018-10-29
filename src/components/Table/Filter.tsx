@@ -15,7 +15,7 @@ class Filter extends React.Component<FilterParams> {
         const {
             updatePickerData,
         } = this.props;
-        if (prevProps.text !== this.props.text) {
+        if (prevProps.text !== this.props.text && this.props.isActive) {
             updatePickerData!(this.props, this.inputWrapper);
         }
     }
@@ -26,7 +26,7 @@ class Filter extends React.Component<FilterParams> {
             text,
             type,
             onClickFilterItem,
-            textIsActive
+            isActive
         } = params;
         const baseClass = 'orders__title';
         switch (type) {
@@ -44,7 +44,7 @@ class Filter extends React.Component<FilterParams> {
                                     onChange
                                 )
                             } 
-                            className={classNames('action-text-wrapper', {'active': textIsActive})}
+                            className={classNames('action-text-wrapper', {'active': isActive})}
                         >
                             <span className={`${baseClass}-text`}>{text}</span>
                             <span className="arrow" />
@@ -68,7 +68,7 @@ class Filter extends React.Component<FilterParams> {
                                     ) => onChange!(value.dateFrom + '--' + value.dateTo)
                                 )
                             }
-                            className={classNames('action-text-wrapper', {'active': textIsActive})}
+                            className={classNames('action-text-wrapper', {'active': isActive})}
                         >
                             <span className={`${baseClass}-text`}>{text}</span>
                             <span className="arrow" />

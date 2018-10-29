@@ -65,6 +65,12 @@
     &-text
         text-transform capitalize
         cursor: default
+        color: #999999
+    
+    .action-text-wrapper
+        &.active
+            .orders__title-text
+                color black
 
 .orders__title, .orders__data {
     width: 16.6%;
@@ -324,12 +330,13 @@
                     width calc(100% - 4rem)
                     margin 0 0.4rem
                     line-height 1
-                    font normal .8666rem
+                    font-size .8666rem
                     font-weight normal
                     color #8a8a8a
                     background none
                     border none
                     outline none
+                    margin-top 0.4rem
 
                 &_grey 
                     background-color #ECEEED

@@ -24,6 +24,10 @@ interface TProps {
 interface TState {
   fields: DatePickerFilterFields;
   activeCalendar: string;
+  initialDatePickerPosition: {
+    left: number;
+    top: number;
+  } | null;
 }
 
 class DatePickerDropdown extends React.Component<TProps, TState> {
@@ -36,7 +40,8 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
     };
     this.state = {
       fields,
-      activeCalendar: ''
+      activeCalendar: '',
+      initialDatePickerPosition: null
     };
   }
 
@@ -79,9 +84,13 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
     const {
       data
     } = this.props;
+    const {
+      initialDatePickerPosition
+    } = this.state;
     if (data!.inputRef && data!.inputRef.current && this.datePickerInner) {
       const wrapperElementPosition = getOffset(data!.inputRef.current);
-      const datePickerPosition = getOffset(this.datePickerInner!);
+      const datePickerPosition = initialDatePickerPosition || getOffset(this.datePickerInner!);
+      !initialDatePickerPosition && this.setState({initialDatePickerPosition: datePickerPosition}) //tslint:disable-line
       this.datePickerInner!.style.left =
         (
           wrapperElementPosition.left - (datePickerPosition.left * 1.02)
@@ -171,7 +180,7 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
           <div className="top-input-wrapper">
             <div className={classNames(inputBoxClass)}>
               <p className={classNames(inputBoxClass + '__input-label')}>
-                {loc[lang].from}
+                {loc[lang].from + ':'}
               </p>
               <input
                 type="text"
@@ -196,7 +205,7 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
           <div className="bottom-input-wrapper">
             <div className={classNames(inputBoxClass)}>
               <p className={classNames(inputBoxClass + '__input-label')}>
-                {loc[lang].till}
+                {loc[lang].till + ':'}
               </p>
               <input
                 type="text"

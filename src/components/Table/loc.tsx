@@ -29,7 +29,7 @@ const loc: Translations<Loc> = {
         columns: {
             order: ' Order',
             name: 'Name',
-            fitting: 'fitting',
+            fitting: 'Fitting',
             phone: 'Phone',
             status: 'Status',
             date: 'date'
@@ -56,7 +56,7 @@ const loc: Translations<Loc> = {
         columns: {
             order: 'Номер заказа',
             name: 'ФИО',
-            fitting: 'примерка',
+            fitting: 'Примерка',
             phone: 'Телефон',
             status: 'Статус',
             date: 'дата'

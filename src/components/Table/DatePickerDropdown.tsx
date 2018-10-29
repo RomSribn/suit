@@ -208,18 +208,20 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
           </div>
           <div className="bottom-input-wrapper">
             <span className={classNames(inputBoxClass)}>
-              <span className={classNames(inputBoxClass + '__input-label')}>
-                {loc[lang].till + ':'}
-              </span>
-              <span className="input-wrapper">
-                <input
-                  type="text"
-                  className={classNames(inputBoxClass + '-input')}
-                  onChange={(e: { target: HTMLInputElement; }) => this.setField('dateTo', e.target.value)}
-                  placeholder={'00.00.0000'}
-                  value={dateTo}
-                  onBlur={() => this.setActiveCalendar()}
-                />
+              <span className="labell-input-wrapper">
+                <span className={classNames(inputBoxClass + '__input-label')}>
+                  {loc[lang].till + ':'}
+                </span>
+                <span className="input-wrapper">
+                  <input
+                    type="text"
+                    className={classNames(inputBoxClass + '-input')}
+                    onChange={(e: { target: HTMLInputElement; }) => this.setField('dateTo', e.target.value)}
+                    placeholder={'00.00.0000'}
+                    value={dateTo}
+                    onBlur={() => this.setActiveCalendar()}
+                  />
+                </span>
               </span>
               <span onClick={() => this.setActiveCalendar('dateTo')} className="datepicker__icon"/>
             </span>

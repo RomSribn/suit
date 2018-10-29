@@ -70,6 +70,16 @@
     width: calc(100% - 4.2rem);
     flex-grow: 1;
 }
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)
+and (-webkit-min-device-pixel-ratio: 1)  { 
+    .size {
+        width: -webkit-calc(100% - .9333rem);
+        width: -moz-calc(100% - .9333rem);
+        width: calc(100% - .9333rem);
+    }
+}
 .size__name{
     display: block;
     font-size: .8rem;

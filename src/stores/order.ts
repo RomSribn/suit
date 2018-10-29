@@ -214,6 +214,7 @@ class OrderStore implements IOrderStore {
     @action
     setActiveItem = (item: GalleryStoreItem | null) => {
         this.activeElement = Object.assign({}, item);
+        this.updateOrderInfo();
     }
 
     @action
@@ -264,8 +265,9 @@ class OrderStore implements IOrderStore {
         (info: OrderInfo) => {
             if (this.defaultValues) {
                 this.order = cloneOrderObject(this.defaultValues);
-                this.orderInfo = null;
+                this.updateOrderInfo(this.order);
             }
+
             return info;
         },
         this._onError
@@ -277,10 +279,21 @@ class OrderStore implements IOrderStore {
             name: '',
             phone: ''
         };
+        const newOrder = cloneOrderObject(order);
+        if (this.activeElement && this.activeElement.elementInfo) {
+            if (this.activeElement.elementInfo.subGroup === 'fabric') {
+                newOrder.shirt[0].fabric_ref.fabric.our_code = this.activeElement.our_code;
+            } else {
+                newOrder
+                [this.activeElement.elementInfo.garment][0]
+                [this.activeElement.elementInfo.group]
+                [this.activeElement.elementInfo.subGroup] = this.activeElement.our_code;
+            }
+        }
         return callApi({
             url: services.orderDeliveryInfo,
             method: 'POST',
-            data: prepareOrder(order, userInfo),
+            data: prepareOrder(newOrder, userInfo),
         },
         (): null => null,
         (info: OrderInfo) => {

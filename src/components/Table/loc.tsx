@@ -20,6 +20,8 @@ type Loc = {
     };
     clear: string;
     submit: string;
+    from: string;
+    till: string;
 };
 
 const loc: Translations<Loc> = {
@@ -46,7 +48,9 @@ const loc: Translations<Loc> = {
                 status "${params.currentStatus}" to the status "${params.nextStatus}"`
         },
         clear: 'clear',
-        submit: 'submit'
+        submit: 'submit',
+        from: 'From',
+        till: 'Till'
     },
     ru: {
         columns: {
@@ -70,7 +74,9 @@ const loc: Translations<Loc> = {
             `перевести заказ из статуса "${params.currentStatus}" в статус "${params.nextStatus}"`
         },
         clear: 'отчитсить',
-        submit: 'отправить'
+        submit: 'отправить',
+        from: 'От',
+        till: 'До'
     }
 };
 

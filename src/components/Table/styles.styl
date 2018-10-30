@@ -65,6 +65,7 @@
     &-text
         text-transform capitalize
         cursor: default
+        color: #999999
 
 .orders__title, .orders__data {
     width: 16.6%;
@@ -306,9 +307,9 @@
             .input-box 
                 display flex
                 align-items center
-                justify-content center
+                justify-content space-between
                 margin-bottom 1.24rem
-                padding 0.75rem
+                padding 0.58rem
                 border 1px solid #e6e6e6
                 font-weight 500
                 background-color #eceeed
@@ -317,19 +318,27 @@
                     background-color transparent
 
                 &__input-label 
-                    font-weight 700
-                    font-size 1rem
+                    font-weight 500
+                    font-size 1.14rem
+
+                .labell-input-wrapper
+                    & .input-wrapper, & &__input-label
+                        display inline-block
+                        vertical-align baseline
+                    
+                    & .input-wrapper
+                        width calc(100% - 6rem)
 
                 &-input 
-                    width calc(100% - 4rem)
                     margin 0 0.4rem
-                    line-height 1
-                    font normal .8666rem
+                    line-height 1rem
+                    font-size .8666rem
                     font-weight normal
                     color #8a8a8a
                     background none
                     border none
                     outline none
+                    width: 6rem;
 
                 &_grey 
                     background-color #ECEEED
@@ -359,6 +368,12 @@
             flex-direction column
             .btn-wrapper
                 margin 0.8rem 0
+                .button
+                    width 13.1rem
+                    .frame 
+                        left 0
+                        right 0
+                        width calc(100% + 0px)
 
 .orders__list-picker
     &__wrapper

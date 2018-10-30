@@ -35,7 +35,7 @@ interface FilterParams {
     onClickFilterItem?(params: FilterParams, inputRef: React.RefObject<HTMLDivElement>, setFilterValue?: SetFilterValueFunction): void;
     onChange?: (value: any) => void;
     updatePickerData?(params: FilterParams, inputRef: React.RefObject<HTMLDivElement>, setFilterValue?: SetFilterValueFunction): void;
-    textIsActive?: boolean;
+    isActive?: boolean;
 }
 
 interface ListItem {

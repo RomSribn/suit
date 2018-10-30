@@ -11,6 +11,10 @@ interface TProps {
 interface TState {
   dateFrom?: string;
   dateTo?: string;
+  initialDatePickerPosition: {
+    left: number;
+    top: number;
+  } | null;
 }
 
 const getOffset = (el: HTMLElement | null) => {
@@ -23,7 +27,13 @@ class ListPickerDropdown extends React.PureComponent<TProps, TState> {
     setFilterValue: () => undefined
   };
   listPickerInner?: HTMLElement;
-
+  constructor(props: TProps) {
+    super(props);
+    this.state = {
+      initialDatePickerPosition: null
+    };
+  }
+  
   onClickItem = ({ item, index }: {item: ListItem, index: number}) => {
     const {
       data
@@ -48,9 +58,13 @@ class ListPickerDropdown extends React.PureComponent<TProps, TState> {
     const {
       data
     } = this.props;
+    const {
+      initialDatePickerPosition
+    } = this.state;
     if (data!.inputRef && data!.inputRef.current && this.listPickerInner) {
       const wrapperElementPosition = getOffset(data!.inputRef.current);
-      const listPickerPosition = getOffset(this.listPickerInner!);
+      const listPickerPosition = initialDatePickerPosition || getOffset(this.listPickerInner!);
+      !initialDatePickerPosition && this.setState({ initialDatePickerPosition: listPickerPosition }) // tslint:disable-line
       this.listPickerInner!.style.left = (
           wrapperElementPosition.left - (listPickerPosition.left * 1)
         ) + 'px';

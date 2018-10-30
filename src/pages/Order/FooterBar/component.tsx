@@ -13,7 +13,7 @@ import './styles.styl';
 
 type Props = FooterBarProps & { orderStore: IOrderStore };
 
-class FooterBar extends React.PureComponent<Props, { prevOrder?: Order }> {
+class FooterBar extends React.PureComponent<Props> {
     static defaultProps = {
         goBack: () => undefined,
         popOrderPathitem: () => undefined,
@@ -21,34 +21,22 @@ class FooterBar extends React.PureComponent<Props, { prevOrder?: Order }> {
         backLink: '',
     };
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            prevOrder: JSON.parse(JSON.stringify(this.props.orderStore.order) )
-        };
-    }
     onBackClick = () => {
         const {
             popOrderPathitem
         } = this.props;
         const orderStore = this.props.orderStore!;
         const { setActiveItem } = orderStore;
-        const {
-            prevOrder
-        } = this.state;
-        prevOrder && orderStore.updateOrderInfo(prevOrder); // tslint:disable-line
         setActiveItem(null);
         popOrderPathitem!();
     }
     saveCallback = (linkToRedirect: string | undefined) => {
         const {
             popOrderPathitem,
-            routing,
-            orderStore
+            routing
         } = this.props;
         routing.push(linkToRedirect);
         popOrderPathitem!();
-        this.setState({ prevOrder: JSON.parse(JSON.stringify(orderStore.order))});
     }
     render() {
         const {

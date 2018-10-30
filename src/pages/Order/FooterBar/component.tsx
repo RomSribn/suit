@@ -27,10 +27,6 @@ class FooterBar extends React.PureComponent<Props> {
         } = this.props;
         const orderStore = this.props.orderStore!;
         const { setActiveItem } = orderStore;
-        const {
-            prevOrder
-        } = this.state;
-        prevOrder && orderStore.updateOrderInfo(prevOrder); // tslint:disable-line
         setActiveItem(null);
         popOrderPathitem!();
     }

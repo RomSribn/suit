@@ -38,7 +38,7 @@ type Translations <Locale> = {
     ru: Locale,
 }
 
-type MakeLocale<Locale> =
+type MakeLocale<Locale> = 
     Translations<Locale> |
     (() => Translations<Locale>)
 
@@ -65,7 +65,7 @@ interface Garment {
     id: string;
     name: string;
   }
-
+  
 interface Garments {
     [key: string]: Garment;
 }

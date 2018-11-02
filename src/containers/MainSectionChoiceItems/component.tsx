@@ -71,7 +71,7 @@ const Common = (props: CommonProps) => {
 
 interface LinkProps {
     item: SubgroupChoiceItem;
-    onClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
+    onClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
     basicRoute: string;
     lang?: string;
@@ -113,7 +113,7 @@ class CustomLink extends React.PureComponent<LinkProps> {
 interface InputProps {
     item: SubgroupChoiceItem;
     orderStore: IOrderStore;
-    clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any    
+    clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
     lang?: string;
 }
 class CustomInput extends React.PureComponent<InputProps> {
@@ -129,6 +129,23 @@ class CustomInput extends React.PureComponent<InputProps> {
         if (orderStore.orderInfo && orderStore.orderInfo.orderId) {
             this.props.orderStore.saveOrder();
         }
+    }
+
+    onFocus = () => {
+        const {
+            orderStore
+        } = this.props;
+        orderStore.setActiveItem(
+            {
+                // tslint:disable-next-line
+                our_code: orderStore.order.shirt[0].design['initials_arrangement'].our_code
+            } as GalleryStoreItem
+        );
+    }
+
+    onBLur = () => {
+        this.props.orderStore.setActiveItem(null);
+        this.save();
     }
 
     render() {
@@ -150,7 +167,8 @@ class CustomInput extends React.PureComponent<InputProps> {
                placeholder={loc[lang!].noStatus}
                value={item.status}
                onChange={this.onChange}
-               onBlur={this.save}
+               onFocus={this.onFocus}
+               onBlur={this.onBLur}
                ref={this.input}
            />
        </Common>
@@ -188,7 +206,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         >
             {items.map(
             (item: SubgroupChoiceItem) => (
-                    item.isInput ? 
+                    item.isInput ?
                     <CustomInput
                         lang={lang}
                         item={item}

@@ -189,7 +189,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         e.preventDefault();
         const orderStore = this.props.orderStore!;
         orderStore.clearException(garment, element);
-        orderStore.clearElement(garment, element);
+        orderStore.clearElement(garment, element, 'click');
     }
 
     render() {

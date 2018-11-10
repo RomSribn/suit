@@ -6,10 +6,11 @@ interface IOrderStore {
     isFetching: boolean;
     activeSubGroup: string;
     exceptions: OrderItemException | null;
+    defaultExceptions: OrderItemException | null;
     mutuallyExclusivePopup: MutuallyExclusive | null,
     isEmptyOrder: () => boolean;
     clearElement: (garment: string, element: string, actionType: ClearElementActionType) => void;
-    clearException: (garment: string, subGroup: string) => void;
+    clearException: (garment: string, subGroup: string, actionType: ClearElementActionType) => void;
     setMutuallyExclusivePopup: (callbackFunction: any) => void;
     activeElement: GalleryStoreItem | null;
     setActiveItem(item: GalleryStoreItem | null): void;

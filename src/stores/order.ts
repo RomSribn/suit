@@ -49,28 +49,28 @@ type PrepareOrder = (order: Order, customer?: User) => ServerOrder;
 const prepareOrder: PrepareOrder = (order, customer?) => {
     const items: ServerItem[] =
         _.values(order)
-        .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
-            _.values(garment[0].design).forEach(item => {
-                if (!STOP_CODES.includes(item.our_code)) {
-                    // TODO: Ну да. хуйня. Сейчас только инициалы хранятся в виде стринги
-                    if (typeof item === 'string') {
-                        acc.push({
-                            design: {
-                                ourCode: 'int1',
-                                value: item
-                            }
-                        });
-                    } else {
-                        acc.push({
-                            design: {
-                                ourCode: item.our_code
-                            }
-                        });
+            .reduce((acc: ServerItem[], garment: OrderItem): ServerItem[] => {
+                _.values(garment[0].design).forEach(item => {
+                    if (!STOP_CODES.includes(item.our_code)) {
+                        // TODO: Ну да. хуйня. Сейчас только инициалы хранятся в виде стринги
+                        if (typeof item === 'string') {
+                            acc.push({
+                                design: {
+                                    ourCode: 'int1',
+                                    value: item
+                                }
+                            });
+                        } else {
+                            acc.push({
+                                design: {
+                                    ourCode: item.our_code
+                                }
+                            });
+                        }
                     }
-                }
-            });
-            return acc;
-    }, []);
+                });
+                return acc;
+            }, []);
     return {
         customer,
         items,
@@ -84,6 +84,7 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
 class OrderStore implements IOrderStore {
     @observable orderInfo: OrderInfo | null = null;
     @observable exceptions: OrderItemException | null = null;
+    @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
     @observable activeElement: GalleryStoreItem | null = null;
@@ -99,28 +100,28 @@ class OrderStore implements IOrderStore {
 
     @action
     toggleHiddenElement = (element: string) => {
-      if (!this.hiddenElements.remove(element)) {
-        this.hiddenElements.push(element);
-      }
+        if (!this.hiddenElements.remove(element)) {
+            this.hiddenElements.push(element);
+        }
     }
     @action
     clearElement = (garment: string, element: string, actionType: ClearElementActionType) => {
-        const newValue = {...this.order};
+        const newValue = { ...this.order };
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
 
         if (actionType === 'click') {
             newValue[garment][0][group][element] =
-            (
-                _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
-                _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
-            )
-             ? null
-             : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+                (
+                    _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
+                    _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
+                )
+                    ? null
+                    : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
         } else {
             newValue[garment][0][group][element] =
-            (_.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`))
-             ? null
-             : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+                (_.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`))
+                    ? null
+                    : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
         }
 
         if (newValue[garment][0][group][element] === null) {
@@ -130,7 +131,7 @@ class OrderStore implements IOrderStore {
         this.order = newValue;
     }
     @action
-    setFitting = (garment: string, fitting: { id: string; value: string}) => {
+    setFitting = (garment: string, fitting: { id: string; value: string }) => {
         this.order[garment][0].fitting[fitting.id] = fitting.value;
     }
     @action
@@ -139,11 +140,11 @@ class OrderStore implements IOrderStore {
     }
 
     @action
-    setPreviewElement = (value: ActivePreviewElement | null ) => {
+    setPreviewElement = (value: ActivePreviewElement | null) => {
         if (!value) {
             this.previewElement = null;
         } else {
-            this.previewElement = {...value};
+            this.previewElement = { ...value };
         }
     }
 
@@ -154,15 +155,15 @@ class OrderStore implements IOrderStore {
 
     @action
     setMutuallyExclusivePopup = (value: MutuallyExclusive) => {
-        this.mutuallyExclusivePopup = {...value};
+        this.mutuallyExclusivePopup = { ...value };
     }
 
     @action
     isExclusivePopupShowing = () => _.get(this, 'mutuallyExclusivePopup.show', false)
 
     @action
-    setOrder (_o: Order, exception?: OrderItemException | null) {
-        this.order = {..._o};
+    setOrder(_o: Order, exception?: OrderItemException | null) {
+        this.order = { ..._o };
         this.updateOrderInfo();
 
         if (exception) {
@@ -179,7 +180,7 @@ class OrderStore implements IOrderStore {
                 if (this.exceptions[garment] && this.exceptions[garment][subGroup]) {
                     const nextExceptions = { ...this.exceptions };
                     nextExceptions[garment][subGroup].exceptions = exception[garment][subGroup].exceptions;
-                    this.exceptions =  nextExceptions;
+                    this.exceptions = nextExceptions;
                 } else if (this.exceptions[garment]) {
                     this.exceptions[garment][subGroup] = {
                         exceptions: [''],
@@ -196,16 +197,60 @@ class OrderStore implements IOrderStore {
     // TODO: заглушка для рубашки
     @action
     setShirtInitials = (initials: string) => {
-        const newOrder = {...this.order};
+        const newOrder = { ...this.order };
         newOrder.shirt[0].design.initials_text = initials;
         this.order = newOrder;
     }
 
-    @action clearException = (garment: string, subGroup: string): void => {
-        if (this.exceptions !== null) {
-            const nextExceptions = { ...this.exceptions };
-            nextExceptions[garment] =
-              _.pick(nextExceptions[garment], Object.keys(nextExceptions[garment]).filter(i => i !== subGroup));
+    @action clearException = (garment: string, subGroup: string, actionType: ClearElementActionType): void => {
+        if (actionType === 'click' && (this.exceptions !== null && this.exceptions[garment][subGroup])) {
+            const newOrder = { ...this.order };
+            const defaultDesign = _.get(this.defaultValues, `[${garment}][0].design`, {});
+
+            // merge нужен чтобы скопировать exceptions массив внутри элементов
+            const nextExceptions = _.merge({}, this.exceptions);
+            let filteredItems: ExceptionItem[] = [];
+
+            Object.keys(nextExceptions[garment]).forEach(elementKey => {
+                if (elementKey === subGroup) {
+                    nextExceptions[garment][elementKey].exceptions = [];
+                    filteredItems.push(this.exceptions![garment][elementKey]);
+                }
+            });
+            const defaultCodes = Object.keys(defaultDesign).map(defaultKey => {
+                return defaultDesign[defaultKey].our_code;
+            });
+            const removedItems: string[] = [];
+            filteredItems.forEach((filteredItem) => {
+                filteredItem.exceptions.forEach(exception => {
+                    if (defaultCodes.includes(exception)) {
+                        removedItems.push(exception);
+                    }
+                });
+            });
+            removedItems.forEach(removedItem => {
+                const defaultKeyForRemovedItem =
+                    _.findKey(defaultDesign, ['our_code', removedItem]);
+                
+                const defaultObjectForRemovedItem: OrderItem
+                    = defaultDesign[defaultKeyForRemovedItem!];
+                if (!defaultObjectForRemovedItem!.isSubClear) {
+                    newOrder[garment][0].design[defaultKeyForRemovedItem!]
+                        = defaultObjectForRemovedItem;
+                }
+                nextExceptions[garment][defaultKeyForRemovedItem!].exceptions =
+                    this.defaultExceptions![garment][defaultKeyForRemovedItem!].exceptions;
+            });
+
+            this.order = newOrder;
+            this.exceptions = nextExceptions;
+        } else if (this.exceptions !== null) {
+            const nextExceptions = _.merge({}, this.exceptions);
+            Object.keys(nextExceptions[garment]).forEach(elementKey => {
+                if (elementKey === subGroup) {
+                    nextExceptions[garment][elementKey].exceptions = [];
+                }
+            });
 
             this.exceptions = nextExceptions;
         }
@@ -236,10 +281,10 @@ class OrderStore implements IOrderStore {
             method: 'GET',
             url: services.garmentsDefaults
         }, () => { this.isFetching = true; },
-        (data: any) => { // tslint:disable-line no-any
-            this._onSuccess(data, callback);
-        },
-        this._onError);
+            (data: any) => { // tslint:disable-line no-any
+                this._onSuccess(data, callback);
+            },
+            this._onError);
     }
     @action
     fetchOrder = (orderId: string) => {
@@ -248,22 +293,22 @@ class OrderStore implements IOrderStore {
             method: 'GET',
             url: `${services.orders}/${orderId}`
         }, () => { this.isFetching = true; },
-        (data: Fuckup.OrderFromServer) => {
-            this.order = {
-                ...this.order,
-                ...prepareDataFromServer(data),
-            };
-            this.orderInfo = {
-                orderId: data.orderId,
-                deliveryDays: data.deliveryDays,
-                price: data.price
-            };
-        },
-        this._onError);
+            (data: Fuckup.OrderFromServer) => {
+                this.order = {
+                    ...this.order,
+                    ...prepareDataFromServer(data),
+                };
+                this.orderInfo = {
+                    orderId: data.orderId,
+                    deliveryDays: data.deliveryDays,
+                    price: data.price
+                };
+            },
+            this._onError);
     }
     @action
     saveOrder = (customerInfo?: User) => {
-        const {orderInfo} = this;
+        const { orderInfo } = this;
         const method = orderInfo && orderInfo.orderId ? 'PUT' : 'POST';
         const id = orderInfo && orderInfo.orderId ? `/${orderInfo.orderId}` : '';
         return callApi({
@@ -271,17 +316,17 @@ class OrderStore implements IOrderStore {
             method,
             data: prepareOrder(this.order, customerInfo),
         },
-        (): null => null,
-        (info: OrderInfo) => {
-            if (this.defaultValues) {
-                this.order = cloneOrderObject(this.defaultValues);
-                this.orderInfo = null;
-                this.updateOrderInfo(this.order);
-            }
-            return info;
-        },
-        this._onError
-    );
+            (): null => null,
+            (info: OrderInfo) => {
+                if (this.defaultValues) {
+                    this.order = cloneOrderObject(this.defaultValues);
+                    this.orderInfo = null;
+                    this.updateOrderInfo(this.order);
+                }
+                return info;
+            },
+            this._onError
+        );
     }
     @action
     updateOrderInfo = (order: Order = this.order, customerInfo?: User) => {
@@ -306,16 +351,16 @@ class OrderStore implements IOrderStore {
             method: 'POST',
             data: prepareOrder(newOrder, userInfo),
         },
-        (): null => null,
-        (info: OrderInfo) => {
-            this.orderInfo = {
-                ...this.orderInfo,
-                ...info
-            };
-            return info;
-        },
-        this._onError
-    );
+            (): null => null,
+            (info: OrderInfo) => {
+                this.orderInfo = {
+                    ...this.orderInfo,
+                    ...info
+                };
+                return info;
+            },
+            this._onError
+        );
     }
     _onSuccess = (data: any, callback?: any) => { // tslint:disable-line
         const tmp = _.groupBy(data, 'garmentId'); // tslint:disable-line
@@ -325,39 +370,40 @@ class OrderStore implements IOrderStore {
         });
         const defaultOrder = Object.keys(tmp).reduce((acc, cur) => {
             const x = {
-              design: {},
-              fabric_ref: {}
+                design: {},
+                fabric_ref: {}
             };
             tmp[cur].forEach((_cur) => {
-              if (_cur.subsectionOurCode !== 'fabric' && !_cur.isSubclear) {
-                  _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
-                  _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
-                  _.set(x, `design.${_cur.subsectionOurCode}.isItemClear`, _.get(_cur, 'isItemClear'));
-                  _.set(x, `design.${_cur.subsectionOurCode}.isSubClear`, _.get(_cur, 'isSubclear'));
+                if (_cur.subsectionOurCode !== 'fabric' && !_cur.isSubclear) {
+                    _.set(x, `design.${_cur.subsectionOurCode}.our_code`, _.get(_cur, 'ourCode'));
+                    _.set(x, `design.${_cur.subsectionOurCode}.title`, _.get(_cur, 'title'));
+                    _.set(x, `design.${_cur.subsectionOurCode}.isItemClear`, _.get(_cur, 'isItemClear'));
+                    _.set(x, `design.${_cur.subsectionOurCode}.isSubClear`, _.get(_cur, 'isSubclear'));
 
-                  nextExceptions[_.get(_cur, 'garmentId')] = {
-                    ...nextExceptions[_.get(_cur, 'garmentId')],
-                    [_.get(_cur, 'subsectionOurCode')]: {
-                        exceptions: _.get(_cur, 'exception') ? _.get(_cur, 'exception')
-                            .split(',')
-                            .map((subException: string) => subException.trim())
-                            .filter((subException: string) => subException !== '')
-                            : [],
-                        titleSubGroup: _.get(_cur, 'subsectionTitle'),
-                        titleElement: _.get(_cur, 'title'),
-                        is_item_clear: _.get(_cur, 'isItemClear')
-                    }
-                  };
-              } else {
-                _.set(x, 'fabric_ref.fabric.our_code', _.get(_cur, 'ourCode'));
-                _.set(x, 'fabric_ref.fabric.title', _.get(_cur, 'title'));
-              }
+                    nextExceptions[_.get(_cur, 'garmentId')] = {
+                        ...nextExceptions[_.get(_cur, 'garmentId')],
+                        [_.get(_cur, 'subsectionOurCode')]: {
+                            exceptions: _.get(_cur, 'exception') ? _.get(_cur, 'exception')
+                                .split(',')
+                                .map((subException: string) => subException.trim())
+                                .filter((subException: string) => subException !== '')
+                                : [],
+                            titleSubGroup: _.get(_cur, 'subsectionTitle'),
+                            titleElement: _.get(_cur, 'title'),
+                            is_item_clear: _.get(_cur, 'isItemClear')
+                        }
+                    };
+                } else {
+                    _.set(x, 'fabric_ref.fabric.our_code', _.get(_cur, 'ourCode'));
+                    _.set(x, 'fabric_ref.fabric.title', _.get(_cur, 'title'));
+                }
             });
             acc[cur] = [x];
             return acc;
-          }, {});
+        }, {});
         this.setOrder(defaultOrder);
         this.exceptions = nextExceptions;
+        this.defaultExceptions = nextExceptions;
 
         this.defaultValues = defaultOrder;
         if (callback) {

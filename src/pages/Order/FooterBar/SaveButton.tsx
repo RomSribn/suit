@@ -90,13 +90,13 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     if (isRemovable) {
       exceptionsForPopup.forEach(exceptionForPopup => {
         const { garmentKey, elementKey } = exceptionForPopup;
-        orderStore.clearException(garmentKey, elementKey);
+        orderStore.clearException(garmentKey, elementKey, 'default');
         orderStore.clearElement(garmentKey, elementKey, 'default');
       });
     } else {
       exceptionsForPopup.forEach(exceptionForPopup => {
         const { garmentKey, elementKey } = exceptionForPopup;
-        orderStore.clearException(garmentKey, elementKey);
+        orderStore.clearException(garmentKey, elementKey, 'default');
       });
     }
     this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
@@ -202,21 +202,20 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
 
         if (mutuallyExclusiveItems.length && exceptions) {
           const exceptionsForPopup: { garmentKey: string, elementKey: string }[] = [];
-          mutuallyExclusiveItems.forEach(() => {
-            Object.keys(exceptions).forEach((garmentKey) => {
-              Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-                if (exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)) {
-                  allExceptions.forEach((exceptionCode) => {
-                    const isExceptionItemExistInOrder = arrayItemsInOrder.find((key: string) =>
-                      exceptions[garmentKey][elementKey].exceptions.includes(key));
+          // TODO: добавить id: exceptionsIds, чтобы избежать рыскания в вложенных циклах
+          Object.keys(exceptions).forEach((garmentKey) => {
+            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
+              if (exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)) {
+                allExceptions.forEach((exceptionCode) => {
+                  const isExceptionItemExistInOrder = arrayItemsInOrder.find((key: string) =>
+                    exceptions[garmentKey][elementKey].exceptions.includes(key));
 
-                    if (exceptions[garmentKey][elementKey].exceptions.includes(exceptionCode)
-                      && isExceptionItemExistInOrder === exceptionCode) {
-                      exceptionsForPopup.push({ garmentKey, elementKey });
-                    }
-                  });
-                }
-              });
+                  if (exceptions[garmentKey][elementKey].exceptions.includes(exceptionCode)
+                    && isExceptionItemExistInOrder === exceptionCode) {
+                    exceptionsForPopup.push({ garmentKey, elementKey });
+                  }
+                });
+              }
             });
           });
 
@@ -245,15 +244,15 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
   onCallbackErrorModal = (result: string) => {
     const { saveCallback } = this.props;
     this.setState({ showErrorModal: false }, () => {
-        switch (result) {
-            case 'repeat':
-                saveCallback!();
-                return this.updateOrder();
-            case 'back':
-                return saveCallback!();
-            default:
-                return saveCallback!();
-        }
+      switch (result) {
+        case 'repeat':
+          saveCallback!();
+          return this.updateOrder();
+        case 'back':
+          return saveCallback!();
+        default:
+          return saveCallback!();
+      }
     });
   }
 
@@ -274,16 +273,16 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     const errorModalData = {
       desc: loc[lang!].errorMessage,
       buttons: [
-          {
-              key: 'repeat',
-              text: loc[lang!].repeat,
-              theme: 'black'
-          },
-          {
-              key: 'back',
-              text: loc[lang!].back,
-              theme: 'white'
-          },
+        {
+          key: 'repeat',
+          text: loc[lang!].repeat,
+          theme: 'black'
+        },
+        {
+          key: 'back',
+          text: loc[lang!].back,
+          theme: 'white'
+        },
       ] as ButtonType[]
     };
     return (

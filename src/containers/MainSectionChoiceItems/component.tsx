@@ -188,7 +188,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
     clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
         e.preventDefault();
         const orderStore = this.props.orderStore!;
-        orderStore.clearException(garment, element);
+        orderStore.clearException(garment, element, 'click');
         orderStore.clearElement(garment, element, 'click');
     }
 

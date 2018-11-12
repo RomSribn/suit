@@ -19,7 +19,6 @@
 @import "filter.css" screen;
 @import "demo.css" screen;
 @import "lang-menu.css" screen;
-@import "rotate.css" screen;
 
 
 .zero-max-height {
@@ -34,38 +33,38 @@
 }
 .flip-fade-leave.flip-fade-leave-active {
   /* opacity: 0; */
-  transform: rotateX(90deg);    
+  transform: rotateX(90deg);
   transition: transform .3s ease-in;
 }
 
 .flip-fade-enter {
   /* opacity: 0; */
-  transform: rotateX(-90deg);        
-  position: absolute;    
+  transform: rotateX(-90deg);
+  position: absolute;
 }
 .flip-fade-enter.flip-fade-enter-active {
   /* opacity: 1; */
-  transform: rotateX(0);        
+  transform: rotateX(0);
   transition: transform .3s ease-in;
 }
 
 
 .fade-in-leave {
   /* position: absolute; */
-  opacity: 1;     
+  opacity: 1;
   transition: opacity .3s ease-in;
 }
 
 .fade-in-leave.fade-in-leave-active {
-  /* opacity: 0; */ 
+  /* opacity: 0; */
   opacity: 0;
   /* transition: opacity .3s ease-in; */
 }
 
 .fade-in-enter {
   /* opacity: 0; */
-  opacity: 0;     
-  transition: opacity .3s ease-in; 
+  opacity: 0;
+  transition: opacity .3s ease-in;
 }
 .fade-in-enter.fade-in-enter-active {
   opacity: 1;
@@ -77,7 +76,7 @@
 /* transition with absolute position */
 .fade-in-absolute-leave {
   /* position: absolute; */
-  opacity: 1;     
+  opacity: 1;
   transition: opacity .3s ease-in;
 }
 
@@ -87,9 +86,9 @@
 }
 
 .fade-in-absolute-enter {
-  position: absolute;  
-  opacity: 0;     
-  transition: opacity .3s ease-in; 
+  position: absolute;
+  opacity: 0;
+  transition: opacity .3s ease-in;
 }
 .fade-in-absolute-enter.fade-in-absolute-enter-active {
   opacity: 1;
@@ -103,21 +102,21 @@
 }
 
 .page-fade-in-leave {
-  opacity: 1;     
+  opacity: 1;
   transition: opacity .3s ease-in;
 }
 
 .page-fade-in-leave.page-fade-in-leave-active {
-  opacity: 0;     
+  opacity: 0;
   transition: opacity .3s ease-in;
 }
 
 .page-fade-in-enter {
-  opacity: 0;     
-  transition: opacity .3s ease-in; 
+  opacity: 0;
+  transition: opacity .3s ease-in;
 }
 .page-fade-in-enter.page-fade-in-enter-active {
-  opacity: 1;     
+  opacity: 1;
   transition: opacity .3s ease-in;
 }
 
@@ -134,13 +133,13 @@
 }
 
 
-/* 
+/*
   height-fade-in animations
 */
 .height-fade-in-leave {
   max-height: 2rem;
   overflow: hidden;
-  opacity: 1;  
+  opacity: 1;
   transition:  all .3s ease-in;
 }
 
@@ -152,13 +151,13 @@
 
 .height-fade-in-enter {
   opacity: 0;
-  transition: all .3s; 
+  transition: all .3s;
 }
 .height-fade-in-enter.height-fade-in-enter-active {
   opacity: 1;
   transition: all .3s;
 }
 
-/* 
+/*
   height-fade-in animations
 */

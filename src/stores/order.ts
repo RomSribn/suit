@@ -110,13 +110,17 @@ class OrderStore implements IOrderStore {
         const group = element === 'fabric' ? 'fabric_ref' : 'design';
 
         if (actionType === 'click') {
-            newValue[garment][0][group][element] =
+            if (element === 'initials_text') {
+                newValue[garment][0][group][element] = '';
+            } else {
+                newValue[garment][0][group][element] =
                 (
                     _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
                     _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
                 )
                     ? null
                     : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+            }
         } else {
             newValue[garment][0][group][element] =
                 (_.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`))
@@ -231,7 +235,7 @@ class OrderStore implements IOrderStore {
             removedItems.forEach(removedItem => {
                 const defaultKeyForRemovedItem =
                     _.findKey(defaultDesign, ['our_code', removedItem]);
-                
+
                 const defaultObjectForRemovedItem: OrderItem
                     = defaultDesign[defaultKeyForRemovedItem!];
                 if (!defaultObjectForRemovedItem!.isSubClear) {

@@ -1,6 +1,7 @@
 interface GalleryProps {
     lang: string;
     items: GalleryStoreItems,
+    // TODO: сделать нормальную типизацию для галлереи
     galleryStore: any;
     filterStore: IFilterStore;
     setActiveOrderItem(item: GalleryStoreItem | null): void;

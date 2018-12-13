@@ -7,6 +7,7 @@ interface P {
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
+    filterStore?: IFilterStore;
     onClick(): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
@@ -18,8 +19,12 @@ interface S extends ImageLoadState {
 }
 
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
-@inject(({ order }) => ({
+@inject(({
+    order,
+    filterStore
+}) => ({
         orderStore: order,
+        filterStore
     })
 )
 @observer
@@ -74,6 +79,21 @@ class GalleryItem extends React.Component<P, S > {
         } = this.props.item;
         if (!this.state.load.success) {
             return null;
+        }
+        // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна надо будет притрагиваиться
+        // только при рефакторе всего проекта
+        if (this.props.filterStore) {
+            const filters = this.props.filterStore.userFilters;
+            const filterNames = Object.keys(filters);
+
+            for (const name in filterNames) {
+                // Если в массиве значений данного фильтра filters[name]
+                // есть такое же значение, как у данного элемента галлереи,
+                // тогда шлем все нахуй
+                if (filters[name] && filters[name].includes(this.props.item[name].filterValue)) {
+                    return null;
+                }
+            }
         }
         const orderStore = this.props.orderStore!;
         const active =
@@ -185,17 +205,17 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 barWrap.style.overflowY = 'auto';
             }
 
-            // БАГ: в опере и хроме, если зажать скрол левой кнопкой мыши, 
-            // то с него слетит фокус, из-за display = 'none',   
+            // БАГ: в опере и хроме, если зажать скрол левой кнопкой мыши,
+            // то с него слетит фокус, из-за display = 'none',
             // barWrap.style.display = 'none';
             // imageWrap.style.display = 'none';
-            
+
             const wrapHeight = document.getElementById('js-gallery-wrap')!.offsetHeight,
                 wrapWidth = document.getElementById('js-gallery-wrap')!.offsetWidth,
-                barContainer = document.getElementById('js-bar-container')!, 
+                barContainer = document.getElementById('js-bar-container')!,
                 barItems = barContainer.querySelectorAll('.gallery__item-blc') as NodeListOf<HTMLElement>,
-                barWrapWidth = wrapWidth - wrapHeight - 2;            
-            
+                barWrapWidth = wrapWidth - wrapHeight - 2;
+
             if (wrapHeight >= wrapWidth - 140) {
                 imageWrap.style.width = `${wrapWidth - 141}px`;
                 barWrap.style.width = '140px';
@@ -207,7 +227,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                         barItems[_i].style.maxWidth = '100%';
                     }
                 } else if (barWrapWidth / 4 <= 71) {
-                    for (var i = 0; i < barItems.length; i++) { 
+                    for (var i = 0; i < barItems.length; i++) {
                         barItems[i].style.maxWidth = '50%';
                     }
                 } else if (barWrapWidth / 4 <= 142) {
@@ -223,7 +243,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             imageWrap.style.height = `${wrapHeight}px`;
             barWrap.style.height = `${wrapHeight}px`;
             imageWrap.style.display = 'block';
-            barWrap.style.display = 'block';            
+            barWrap.style.display = 'block';
         } catch (_) {
             //
         }
@@ -280,7 +300,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         if (heightOfAllItems > containerHeight && !this.isScrolling) {
             if (this.scrollGallery!.scrollTop + this.scrollGallery!.clientHeight >=
                 this.scrollGallery!.scrollHeight) {
-                    this.setState({ 
+                    this.setState({
                         renderedElementsCount: this.state.renderedElementsCount + itterStep,
                     });
                     // optimize ui rerender

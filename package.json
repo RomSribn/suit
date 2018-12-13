@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "integratino:start": "node integration/scripts/start.js",
+    "integratino:build": "node integration/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {

@@ -9,7 +9,6 @@ interface P {
     orderStore?: IOrderStore;
     onClick(): void;
     onMouseEnter(): void;
-    onMouseLeave(): void;
     incremetLoadedCount(): void;
 }
 
@@ -65,7 +64,6 @@ class GalleryItem extends React.Component<P, S > {
         const {
             onMouseEnter,
             shownItem,
-            onMouseLeave,
             onClick
         } = this.props;
         const {
@@ -86,7 +84,6 @@ class GalleryItem extends React.Component<P, S > {
             <div
                 onClick={click}
                 onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
                 className={'gallery__item-blc'}
                 style={{
                     maxWidth: '33.3333%',
@@ -111,12 +108,10 @@ const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 type makeGalleryItems = (
     items: GalleryStoreItems,
     setActiveElementIndex: (i: number, action?: string, id?: string, fabric?: string) => () => void,
-    setPreviewElementIndex: (i: number, action?: string) => void,
+    setPreviewElementIndex: (elementIndex: number, action?: string) => void,
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
-    mouseEnter: () => void,
-    mouseLeave: () => void,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -126,8 +121,6 @@ const makeGalleryItems: makeGalleryItems = (
     shownItem,
     incremetLoadedCount,
     isMouseOverElement,
-    mouseEnter,
-    mouseLeave,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -145,11 +138,6 @@ const makeGalleryItems: makeGalleryItems = (
                 shownItem={shownItem}
                 onMouseEnter={() => {
                     setPreviewElementIndex(i, 'enter');
-                    // mouseEnter();
-                }}
-                onMouseLeave={(): void => {
-                    // setActiveElementIndex(-1, 'leave')();
-                    // mouseLeave();
                 }}
                 incremetLoadedCount={incremetLoadedCount}
             />);
@@ -308,8 +296,6 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             setActiveElementIndex,
             setPreviewElementIndex,
             shownItem,
-            mouseEnter,
-            mouseLeave,
             isMouseOverElement,
         } = this.props;
         const {
@@ -335,8 +321,6 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                     shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,
-                    mouseEnter,
-                    mouseLeave,
                 )}
                 </div>
             </div>

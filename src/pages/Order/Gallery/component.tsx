@@ -145,7 +145,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
 
     }
 
-    setPreviewElementIndex = (i: number, action: string) => {
+    setPreviewElementIndex = (elementIndex: number, action: string) => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
             // TODO: разобраться с путаницей наименований
@@ -155,7 +155,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         if (action === 'enter') {
             this.props.setPreviewElement({
                 ...elementInfo,
-                value: this.props.items[i].our_code
+                value: this.props.items[elementIndex].our_code
             });
         } else {
             this.props.setPreviewElement(null);
@@ -196,17 +196,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 orderStore!.updateOrderInfo(newOrder);
             }
         }
-    }
-    mouseEnterElement = () => {
-        this.setState({
-            mouseOverElement: true,
-        });
-    }
-    mouseLeaveElement = () => {
-        this.setState({
-            mouseOverElement: false,
-        });
-        this.props.setPreviewElement(null);
     }
     render() {
         const {
@@ -275,8 +264,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                             activeElementIndex={activeElementIndex}
                             setActiveElementIndex={this.setActiveElementIndex}
                             setPreviewElementIndex={this.setPreviewElementIndex}
-                            mouseEnter={this.mouseEnterElement}
-                            mouseLeave={this.mouseLeaveElement}
                             isMouseOverElement={mouseOverElement}
                         />
                     </div>

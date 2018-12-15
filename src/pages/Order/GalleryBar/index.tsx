@@ -137,7 +137,7 @@ const makeGalleryItems: makeGalleryItems = (
                 onClick={setActiveElementIndex(i)}
                 shownItem={shownItem}
                 onMouseEnter={() => {
-                    setPreviewElementIndex(i, 'enter');
+                    setPreviewElementIndex(elementIndex, 'enter');
                 }}
                 incremetLoadedCount={incremetLoadedCount}
             />);

@@ -111,16 +111,18 @@ const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 type makeGalleryItems = (
     items: GalleryStoreItems,
     setActiveElementIndex: (i: number, action?: string, id?: string, fabric?: string) => () => void,
+    setPreviewElementIndex: (i: number, action?: string) => void,
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
-    mouseEnter: (link: string) => void,
+    mouseEnter: () => void,
     mouseLeave: () => void,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
     items,
     setActiveElementIndex,
+    setPreviewElementIndex,
     shownItem,
     incremetLoadedCount,
     isMouseOverElement,
@@ -142,12 +144,12 @@ const makeGalleryItems: makeGalleryItems = (
                 onClick={setActiveElementIndex(i)}
                 shownItem={shownItem}
                 onMouseEnter={() => {
-                    setActiveElementIndex(i, 'enter')();
-                    mouseEnter(item.image_url_3d!);
+                    setPreviewElementIndex(i, 'enter');
+                    // mouseEnter();
                 }}
                 onMouseLeave={(): void => {
-                    setActiveElementIndex(-1, 'leave')();
-                    mouseLeave();
+                    // setActiveElementIndex(-1, 'leave')();
+                    // mouseLeave();
                 }}
                 incremetLoadedCount={incremetLoadedCount}
             />);
@@ -304,6 +306,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         const {
             items,
             setActiveElementIndex,
+            setPreviewElementIndex,
             shownItem,
             mouseEnter,
             mouseLeave,
@@ -328,6 +331,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 {makeGalleryItems(
                     activeItems,
                     setActiveElementIndex,
+                    setPreviewElementIndex,
                     shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,

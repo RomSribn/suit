@@ -117,17 +117,27 @@ class FooterBar extends React.Component<Props> {
                             );
                         }}
                     />
+                    <Route path={routes.garment}>
+                        <Link
+                            to={backLink}
+                        >
+                            <Button theme="black">
+                                {loc[lang!].done}
+                            </Button>
+                        </Link>
+                    </Route>
+
                     <Route path={routes.details}>
-                        {   this.props.orderId ?
-                            <SaveButton
-                                saveExistingOrder={true}
-                            >
-                                {loc[lang!].update}
-                            </SaveButton> :
-                            <FadeIn>
-                                <SaveButton>{loc[lang!].create}</SaveButton>
-                            </FadeIn>
-                        }
+                    {   this.props.orderId ?
+                        <SaveButton
+                            saveExistingOrder={true}
+                        >
+                            {loc[lang!].update}
+                        </SaveButton> :
+                        <FadeIn>
+                            <SaveButton>{loc[lang!].create}</SaveButton>
+                        </FadeIn>
+                    }
                     </Route>
                 </Switch>
             </div>

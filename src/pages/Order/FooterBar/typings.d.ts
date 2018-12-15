@@ -1,5 +1,5 @@
 interface FooterBarProps {
-    lang?: string;
+    lang?: Lang;
     orderStore?: IOrderStore;
     popOrderPathitem?(): void;
     backLink?: string;

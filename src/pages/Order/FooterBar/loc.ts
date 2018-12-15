@@ -8,7 +8,7 @@ interface Locale {
     errorMessage: string;
     okay: string;
     oops: string;
-    
+    done: string;
 }
 
 const makeLocale = (): Translations<Locale> => ({
@@ -21,6 +21,7 @@ const makeLocale = (): Translations<Locale> => ({
         errorMessage: 'Something\'s wrong. We recommend to try again.',
         okay: 'ok',
         oops: 'Oops',
+        done: 'done',
     },
     ru: {
         back: 'назад',
@@ -31,6 +32,7 @@ const makeLocale = (): Translations<Locale> => ({
         errorMessage: 'Что-то пошло не так. Рекомендуем повторить действие!',
         okay: 'хорошо',
         oops: 'Упс',
+        done: 'готово',
     },
 });
 

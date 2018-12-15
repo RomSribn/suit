@@ -14,7 +14,7 @@ interface Locale {
 const makeLocale = (): Translations<Locale> => ({
     en: {
         back: 'back',
-        create: 'to fitting',
+        create: 'send',
         save: 'save',
         update: 'update',
         repeat: 'repeat',
@@ -25,7 +25,7 @@ const makeLocale = (): Translations<Locale> => ({
     },
     ru: {
         back: 'назад',
-        create: 'на примерку',
+        create: 'отправить',
         save: 'сохранить',
         update: 'обновить',
         repeat: 'повторить',

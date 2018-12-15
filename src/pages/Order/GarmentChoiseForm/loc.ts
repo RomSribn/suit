@@ -5,6 +5,12 @@ interface Locale {
     };
     submit: string;
     pathItemValue: string;
+    garmentsHardcodes: {
+        suit: string;
+        shoes: string;
+        more: string;
+    };
+    unavailablePopupText: string;
 }
 
 const makeLocale: MakeLocale<Locale> = () => ({
@@ -15,6 +21,12 @@ const makeLocale: MakeLocale<Locale> = () => ({
         },
         submit: 'submit',
         pathItemValue: 'garments',
+        garmentsHardcodes: {
+            suit: 'suit',
+            shoes: 'shoes',
+            more: 'more'
+        },
+        unavailablePopupText: 'We are working at this section yet. Today you have access to the shirt'
     },
     ru: {
         choiceText: {
@@ -23,6 +35,12 @@ const makeLocale: MakeLocale<Locale> = () => ({
         },
         submit: 'принять',
         pathItemValue: 'изделия',
+        garmentsHardcodes: {
+            suit: 'костюм',
+            shoes: 'обувь',
+            more: 'еще'
+        },
+        unavailablePopupText: 'Мы еще работаем над этим разделом, Сегодня у вас есть доступ к рубашке'
     },
 });
 

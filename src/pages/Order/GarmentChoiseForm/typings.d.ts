@@ -1,6 +1,6 @@
 interface GarmentChoiceFormProps {
     catalogFormClassName?: string;
-    lang?: string;
+    lang?: Lang;
     isIndexPage?: boolean;
     garments?: Garments;
     activeGarments?: string[];

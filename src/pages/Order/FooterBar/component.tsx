@@ -13,7 +13,7 @@ import './styles.styl';
 
 type Props = FooterBarProps & { orderStore: IOrderStore };
 
-class FooterBar extends React.PureComponent<Props> {
+class FooterBar extends React.Component<Props> {
     static defaultProps = {
         goBack: () => undefined,
         popOrderPathitem: () => undefined,
@@ -41,7 +41,7 @@ class FooterBar extends React.PureComponent<Props> {
     render() {
         const {
             lang,
-            backLink,
+            backLink = '',
             mutuallyExclusivePopup
         } = this.props;
         return (
@@ -54,39 +54,42 @@ class FooterBar extends React.PureComponent<Props> {
                   }
                 </PopUp>
 
-                <Route
-                    path={routes.subgroupChoice}
-                    exact={true}
-                    component={() => {
-                        return (
-                            <Link
-                                to={backLink!}
-                                onClick={this.onBackClick}
-                                style={{
-                                    cursor: 'pointer',
-                            }}
-                            >
-                                <Button theme="white" className="back-button">
-                                    {loc[lang!].back}
-                                </Button>
-                            </Link>
-                        );
-                    }}
-                />
-                <Route
-                    path={routes.garment}
-                    exact={true}
-                    component={() => {
-                        return (
-                            <span
-                            >
-                                <Button theme="white" className="back-button" disabled={true}>
-                                    {loc[lang!].back}
-                                </Button>
-                            </span>
-                        );
-                    }}
-                />
+                <Switch>
+                    <Route
+                        path={routes.garment}
+                        component={() => {
+                            return (
+                                <Link
+                                    to={backLink}
+                                >
+                                    <Button
+                                        theme="white"
+                                        className="back-button"
+                                    >
+                                        {loc[lang!].back}
+                                    </Button>
+                                </Link>
+                            );
+                        }}
+                    />
+                    <Route
+                        path={routes.details}
+                        component={() => {
+                            return (
+                                <span>
+                                    <Button
+                                        theme="white"
+                                        className="back-button"
+                                        disabled={true}
+                                    >
+                                        {loc[lang!].back}
+                                    </Button>
+                                </span>
+                            );
+                        }}
+                    />
+                </Switch>
+
                 <Switch>
                     <Route
                         path={routes.subgroupChoice}

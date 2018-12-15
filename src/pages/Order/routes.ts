@@ -2,8 +2,8 @@ type MakeRoutes = (indexRoute?: string) => OrderRoutes;
 
 const makeRoutes: MakeRoutes = (indexRoute = '/order') => {
     return {
-        index: `${indexRoute}/details/shirt`,
-        details: `${indexRoute}/details/shirt`,
+        index: `${indexRoute}/details`,
+        details: `${indexRoute}/details`,
         garment: `${indexRoute}/details/:garment`,
         groupChoice: `${indexRoute}/details/:garment/:group`,
         subgroupChoice: `${indexRoute}/details/:garment/:group/:subgroup`
@@ -83,9 +83,9 @@ type RootKey = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice
 const getCombinedPathAndTitle = (routeKey: RootKey) =>
   ({
         path: routes[routeKey], routeKey, title: routes[routeKey].indexOf(':') !== -1
-            ? (<string> routes[routeKey]).split('/') 
-                .filter((item: string) => item.indexOf(':') !== -1) 
-                .reduce((acc, cur) => { 
+            ? (<string> routes[routeKey]).split('/')
+                .filter((item: string) => item.indexOf(':') !== -1)
+                .reduce((acc, cur) => {
                     const curClear = cur.replace( ':' , '' );
                     acc[curClear] = translations[curClear];
                     return acc;

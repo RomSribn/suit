@@ -19,7 +19,7 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
             match,
          } = this.props;
         const routes = makeRoutes(match.url);
-        const detailsDeep = !(/\/order\/.*\/.*/i.test(location.pathname));
+        const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
         const afterGarmentChoice = (/\/order\/.*\/.*/i.test(location.pathname));
         const isIndexPage = false;
 

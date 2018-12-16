@@ -10,7 +10,7 @@ import { Order } from '../pages/Order'
 import { ListOrders } from '../pages/ListOrders';
 import Login from './Login'
 
-let orderPageWasRendered = false;
+let dummyWasRendered = false;
 
 @inject(({user, app, order}) => ({
   user,
@@ -25,8 +25,14 @@ class Wrapper extends Component {
       showSpinner: false
     };
   }
-  hideSpinner = () => this.setState({ showSpinner: false });
-  showSpinner = () => this.setState({ showSpinner: true });
+  hideSpinner = () => {
+    dummyWasRendered = true;
+    this.setState({ showSpinner: false });
+  }
+  showSpinner = () => {
+    this.setState({ showSpinner: true });
+  }
+
   render() {
     const {
       app
@@ -45,23 +51,22 @@ class Wrapper extends Component {
           <Switch>
             <Route path={routes.login} component={() => <Login shouldRedirect={true}/>} />
             <Route exact path={routes.index} render={() => {
-              if (!orderPageWasRendered) {
+              if (!dummyWasRendered) {
+                dummyWasRendered = true;
                 this.showSpinner();
-                orderPageWasRendered = true;
               }
-              /* // TODO: изменить это после того, как добавим элементы кроме рубашки */
               return <Redirect to={routes.order} />;
             }}/>
             {
-              !orderPageWasRendered &&
-              <Route path={`${routes.details}/:garment/:any`} component={ () =><Redirect to={routes.order} /> } />
+              !dummyWasRendered &&
+              <Route path={`${routes.details}/:any`} component={ () =><Redirect to={routes.order} /> } />
             }
             <CrumbRoute
               {...getCombinedPathAndTitle('order')}
               render={(props) => {
-                if (!orderPageWasRendered) {
+                if (!dummyWasRendered) {
                   this.showSpinner();
-                  orderPageWasRendered = true;
+                  dummyWasRendered = true;
                 }
                 return (
                   <Order {...props } order={this.props.order} />

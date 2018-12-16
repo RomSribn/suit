@@ -158,7 +158,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 value: this.props.items[elementIndex].our_code
             });
         } else {
-            console.warn('this.props.setPreviewElement(null);');
             this.props.setPreviewElement(null);
         }
     }

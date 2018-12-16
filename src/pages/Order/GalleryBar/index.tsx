@@ -9,6 +9,7 @@ interface P {
     orderStore?: IOrderStore;
     onClick(): void;
     onMouseEnter(): void;
+    onMouseLeave(): void;
     incremetLoadedCount(): void;
 }
 
@@ -63,6 +64,7 @@ class GalleryItem extends React.Component<P, S > {
     render() {
         const {
             onMouseEnter,
+            onMouseLeave,
             shownItem,
             onClick
         } = this.props;
@@ -84,6 +86,7 @@ class GalleryItem extends React.Component<P, S > {
             <div
                 onClick={click}
                 onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
                 className={'gallery__item-blc'}
                 style={{
                     maxWidth: '33.3333%',
@@ -129,15 +132,18 @@ const makeGalleryItems: makeGalleryItems = (
     if (galleryItemsCache[cache]) {
         return galleryItemsCache[cache];
     }
-    const result = items.map((item, i) => {
+    const result = items.map((item, elementIndex) => {
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}
                 item={item}
-                onClick={setActiveElementIndex(i)}
+                onClick={setActiveElementIndex(elementIndex)}
                 shownItem={shownItem}
                 onMouseEnter={() => {
                     setPreviewElementIndex(elementIndex, 'enter');
+                }}
+                onMouseLeave={() => {
+                    setPreviewElementIndex(-1, 'leave');
                 }}
                 incremetLoadedCount={incremetLoadedCount}
             />);

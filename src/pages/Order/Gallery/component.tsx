@@ -9,7 +9,6 @@ import './styles.styl';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
-    shownItem: GalleryStoreItem;
     previewElementIndex: number;
     mouseOverElement: boolean;
 }
@@ -21,7 +20,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             items,
         } = this.props;
         let activeIndex;
-        const shownItem = this.shownItem;
         const orderStore = this.props.orderStore!;
         if (orderStore.activeElement && orderStore.activeElement!.our_code) {
             activeIndex = items.findIndex(i => i.our_code === (orderStore.activeElement && orderStore.activeElement!.our_code || '')); // tslint:disable-line
@@ -42,7 +40,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 success: null,
                 error: null,
             },
-            shownItem: _.isEmpty(shownItem) ? props.items[0] : shownItem,
             mouseOverElement: false,
         };
     }
@@ -96,11 +93,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             return;
         }
         const { img_url_2d: imageUrl } = item;
-        if (this.state.shownItem.our_code !== item.our_code) {
-            this.setState({
-                shownItem: item
-            });
-        }
         if (this.state.load.success === imageUrl) {
             return;
         }
@@ -123,20 +115,22 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             });
         };
     }
-    componentWillUpdate() {
+    componentWillReceiveProps(nextProps: GalleryProps) {
         const item = this.shownItem;
         if (
             _.isEmpty(this.props.activeElement) && item ||
             !_.isEqual(
-                _.get(this, 'props.activeElement.elementInfo'),
+                _.get(nextProps, 'activeElement.elementInfo'),
                 _.get(item, 'elementInfo')
             )
         ) {
             this.props.setActiveOrderItem(item);
         } else {
             this.updateActiveElement();
+            
         }
     }
+    
     componentDidMount() {
         try {
             this.updateActiveElement();
@@ -150,6 +144,24 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
 
     }
+
+    setPreviewElementIndex = (elementIndex: number, action: string) => {
+        const elementInfo = {
+            garment: this.props.galleryStore.garment,
+            // TODO: разобраться с путаницей наименований
+            group: this.props.galleryStore.subGroup,
+            subGroup: this.props.galleryStore.group
+        };
+        if (action === 'enter') {
+            this.props.setPreviewElement({
+                ...elementInfo,
+                value: this.props.items[elementIndex].our_code
+            });
+        } else {
+            this.props.setPreviewElement(null);
+        }
+    }
+
     setActiveElementIndex = (i: number, action: string = 'click', link = '' ) => () => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
@@ -183,27 +195,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 newOrder[garment][0][group][subgroup].title = newOrderItem.title;
                 orderStore!.updateOrderInfo(newOrder);
             }
-        } else {
-            if (action === 'enter') {
-                this.props.setPreviewElement({
-                    ...elementInfo,
-                    value: this.props.items[i].our_code
-                });
-            } else {
-                this.props.setPreviewElement(null);
-            }
         }
-        }
-    mouseEnterElement = () => {
-        this.setState({
-            mouseOverElement: true,
-        });
-    }
-    mouseLeaveElement = () => {
-        this.setState({
-            mouseOverElement: false,
-        });
-        this.props.setPreviewElement(null);
     }
     render() {
         const {
@@ -214,7 +206,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         const {
             activeElementIndex,
             load,
-            shownItem,
             mouseOverElement
         } = this.state;
 
@@ -223,7 +214,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             load.success = null;
             return null;
         }
-        const item = shownItem;
+        const item = this.shownItem;
         if (_.isEmpty(item)) {
             return null;
         }
@@ -272,8 +263,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                             shownItem={item}
                             activeElementIndex={activeElementIndex}
                             setActiveElementIndex={this.setActiveElementIndex}
-                            mouseEnter={this.mouseEnterElement}
-                            mouseLeave={this.mouseLeaveElement}
+                            setPreviewElementIndex={this.setPreviewElementIndex}
                             isMouseOverElement={mouseOverElement}
                         />
                     </div>

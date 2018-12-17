@@ -69,8 +69,8 @@ class GalleryItem extends React.Component<P, S > {
     render() {
         const {
             onMouseEnter,
-            shownItem,
             onMouseLeave,
+            shownItem,
             onClick
         } = this.props;
         const {
@@ -131,21 +131,19 @@ const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 type makeGalleryItems = (
     items: GalleryStoreItems,
     setActiveElementIndex: (i: number, action?: string, id?: string, fabric?: string) => () => void,
+    setPreviewElementIndex: (elementIndex: number, action?: string) => void,
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
-    mouseEnter: (link: string) => void,
-    mouseLeave: () => void,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
     items,
     setActiveElementIndex,
+    setPreviewElementIndex,
     shownItem,
     incremetLoadedCount,
     isMouseOverElement,
-    mouseEnter,
-    mouseLeave,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -154,20 +152,18 @@ const makeGalleryItems: makeGalleryItems = (
     if (galleryItemsCache[cache]) {
         return galleryItemsCache[cache];
     }
-    const result = items.map((item, i) => {
+    const result = items.map((item, elementIndex) => {
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}
                 item={item}
-                onClick={setActiveElementIndex(i)}
+                onClick={setActiveElementIndex(elementIndex)}
                 shownItem={shownItem}
                 onMouseEnter={() => {
-                    setActiveElementIndex(i, 'enter')();
-                    mouseEnter(item.image_url_3d!);
+                    setPreviewElementIndex(elementIndex, 'enter');
                 }}
-                onMouseLeave={(): void => {
-                    setActiveElementIndex(-1, 'leave')();
-                    mouseLeave();
+                onMouseLeave={() => {
+                    setPreviewElementIndex(-1, 'leave');
                 }}
                 incremetLoadedCount={incremetLoadedCount}
             />);
@@ -324,9 +320,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         const {
             items,
             setActiveElementIndex,
+            setPreviewElementIndex,
             shownItem,
-            mouseEnter,
-            mouseLeave,
             isMouseOverElement,
         } = this.props;
         const {
@@ -348,11 +343,10 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 {makeGalleryItems(
                     activeItems,
                     setActiveElementIndex,
+                    setPreviewElementIndex,
                     shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,
-                    mouseEnter,
-                    mouseLeave,
                 )}
                 </div>
             </div>

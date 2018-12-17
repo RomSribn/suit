@@ -7,7 +7,7 @@ import { GarmentChoise as GarmentChoiseComponent } from './component';
         lang: app.lang,
         pushOrderPathitem: app.pushOrderPathItem,
         garments: garments.garmentsList,
-        fetchGarments: garments.fetchGarmentsList,    
+        fetchGarments: garments.fetchGarmentsList,
         toggleGarment: (garment: string) => (action: string) => {
             garments.toggleGarment(action)(garment);
         },
@@ -30,6 +30,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             fetchGarments,
             makeOrder,
             pushOrderPathitem,
+            routes,
         } = this.props;
         return (
             <GarmentChoiseComponent
@@ -41,7 +42,8 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
                 toggleGarment={toggleGarment}
                 path={path}
                 makeOrder={makeOrder}
-                isIndexPage={false}
+                routes={routes}
+                isIndexPage={path === routes.index}
                 pushOrderPathitem={pushOrderPathitem}
             />
         );

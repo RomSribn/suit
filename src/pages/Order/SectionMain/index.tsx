@@ -16,7 +16,8 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
-            afterGarmentChoice
+            afterGarmentChoice,
+            routes : mainSectinoRoutes
         } = this.props;
 
         return (
@@ -32,14 +33,20 @@ class MainSection extends React.Component<MainSectionProps> {
                 >
                     <Filter />
                     <GarmentChoise
+                        routes={mainSectinoRoutes}
                         catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
                     />
                     <div
                         className={classnames(
                             {
-                                customs: !isIndexPage,  
+                                customs: !isIndexPage,
                             },
                             {
+                                /**
+                                 * Если убрать этот класс, можно увидеть как дохера
+                                 * ререндеров происходит при переходе на галлерею тканей
+                                 * @todo Разобраться че за нах
+                                 */
                                 ['customs--short']: !detailsDeep,
                             },
                         )}

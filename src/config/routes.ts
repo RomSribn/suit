@@ -27,7 +27,7 @@ export const services = {
 
 const routes = {
   details: `/order/details`,
-  order: '/order/details/shirt',
+  order: '/order/details',
   orderList: '/order/list',
   login: '/login',
   index: '/',

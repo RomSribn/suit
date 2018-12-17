@@ -8,29 +8,31 @@ interface Locale {
     errorMessage: string;
     okay: string;
     oops: string;
-    
+    done: string;
 }
 
 const makeLocale = (): Translations<Locale> => ({
     en: {
         back: 'back',
-        create: 'to fitting',
+        create: 'send',
         save: 'save',
         update: 'update',
         repeat: 'repeat',
         errorMessage: 'Something\'s wrong. We recommend to try again.',
         okay: 'ok',
         oops: 'Oops',
+        done: 'done',
     },
     ru: {
         back: 'назад',
-        create: 'на примерку',
+        create: 'отправить',
         save: 'сохранить',
         update: 'обновить',
         repeat: 'повторить',
         errorMessage: 'Что-то пошло не так. Рекомендуем повторить действие!',
         okay: 'хорошо',
         oops: 'Упс',
+        done: 'готово',
     },
 });
 

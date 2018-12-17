@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-// import { Redirect } from 'react-router';
 import { MainSection } from './SectionMain';
-// import { routes } from './routes';
+import { makeRoutes } from './routes';
 import { parseQuery } from '../../utils/common';
 let wasRendered = false;
 
@@ -17,7 +16,9 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
         }
         const {
             location,
+            match,
          } = this.props;
+        const routes = makeRoutes(match.url);
         const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
         const afterGarmentChoice = (/\/order\/.*\/.*/i.test(location.pathname));
         const isIndexPage = false;
@@ -27,6 +28,7 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
                 afterGarmentChoice={afterGarmentChoice}
                 isIndexPage={isIndexPage}
                 detailsDeep={detailsDeep}
+                routes={routes}
             />
         );
     }

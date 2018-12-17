@@ -4,6 +4,8 @@ import * as classNames from 'classnames';
 import { FadeIn } from '../../../containers/Transitions';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
+import { PopUp } from '../../../containers/Popup';
+import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
 
@@ -39,14 +41,15 @@ const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, togg
                 </span>
                 </FadeIn>
                 </span>
-                
+
             </label>
         ) : null;
     });
 interface State {
     garmentChoiceFormHeight: number;
+    showUnavailablePopup: boolean;
 }
-class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> { 
+class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
     static defaultProps = {
         lang: 'en',
         garments: {},
@@ -58,6 +61,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         super(props);
         this.state = {
             garmentChoiceFormHeight: 0,
+            showUnavailablePopup: false
         };
     }
     componentWillMount() {
@@ -114,7 +118,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         this.props.toggleGarment!(REMOVE)(garment);
     }
     toggle = (garment: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) { 
+        if (e.target.checked) {
             this.activate(garment);
          } else {
              this.remove(garment);
@@ -140,7 +144,26 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     marginBottom: 0,
                 } : {}}
             >
-            
+                <PopUp
+                    open={this.state.showUnavailablePopup}
+                >
+                    <div
+                        style={{
+                            height: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column'
+                        }}
+                    >
+                        <div style={{ marginBottom: '2rem' }}>{loc[lang!].unavailablePopupText}</div>
+                        <Button
+                            onClick={() => this.setState({showUnavailablePopup: false})}
+                        >ok
+                        </Button>
+                    </div>
+                </PopUp>
+
                 <form
                     className={`catalog__form ${catalogFormClassName}`}
                     style={
@@ -158,6 +181,40 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     }
                     <div className="catalog__form-wrap">
                         {makeCatalogItems(garments!, lang!, activeGarments!, this.toggle)}
+                        {/* TODO заглушки пока нет разделов, помимо рубашки */}
+                        <label
+                            className="catalog__item"
+                            onClick={() => this.setState({showUnavailablePopup: true})}
+                        >
+                            <input type="checkbox" name="goods" checked={false} />
+                            <span className="catalog__item-decoration">
+                                <span key={lang}>
+                                    {loc[lang!].garmentsHardcodes.suit}
+                                </span>
+                            </span>
+                        </label>
+                        <label
+                            className="catalog__item"
+                            onClick={() => this.setState({showUnavailablePopup: true})}
+                        >
+                            <input type="checkbox" name="goods" checked={false} />
+                            <span className="catalog__item-decoration">
+                                <span key={lang}>
+                                    {loc[lang!].garmentsHardcodes.shoes}
+                                </span>
+                            </span>
+                        </label>
+                        <label
+                            className="catalog__item"
+                            onClick={() => this.setState({showUnavailablePopup: true})}
+                        >
+                            <input type="checkbox" name="goods" checked={false} />
+                            <span className="catalog__item-decoration">
+                                <span key={lang}>
+                                    {loc[lang!].garmentsHardcodes.more}
+                                </span>
+                            </span>
+                        </label>
                     </div>
                     {   isIndexPage &&
                         <div className="catalog__submit-bar">
@@ -165,7 +222,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                 <Link
                                     to="/order/details"
                                     key={lang}
-                                    onClick={this.makeOrder} 
+                                    onClick={this.makeOrder}
                                     className="catalog__submit"
                                 >
                                     {loc[lang!].submit}

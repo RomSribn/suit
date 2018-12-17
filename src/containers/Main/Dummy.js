@@ -6,6 +6,17 @@ import _ from 'lodash';
 import { currentItems } from '../../stores/garments/galleryStore';
 const INITIALS = 'initials';
 
+/**
+ * Ух бля. Костылеми больше, костылем меньше. Уже абсолютно похуй, крч. Прости меня, будущий Я.
+ * Основное назначение этой поебени - при первом рендере рендерить
+ * только базовые элементы манекена
+ *
+ */
+let wasRendered = false;
+
+/** Эти элементы рендерятся при первой отрисовке для снижения трафика */
+const baseDummyElements = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
+
 @inject(({ order, garments: {Subgroups}, }) => ({
   orderStore: order,
   SubgroupsStore: new Subgroups('shirt'),
@@ -91,7 +102,18 @@ class Widget extends PureComponent {
         const nextAssets = this.props.assets
           .filter(i => !actualExceptions.includes(i))
 
-        this.widget3d.update(nextAssets).then(this.handleUpdated);
+          /**
+           * При загрузке без кеша все хорошо.
+           * Но по какой-то непонятной ссаной бесовщине при перезагузке
+           * порядок первого рендера такой:
+           * отрендерил состояние с дефолтами -> отрендерил дефолты оО
+           * потому здесь какой-то непонятный грязный хак.
+           * У меня заканчиваются крылышки и пиво. так что читай todo:
+           * @todo Если ты знаешь в чем причина - U R welcome, fix it
+           */
+          setTimeout(() => {
+            this.widget3d.update(nextAssets).then(this.handleUpdated);
+          }, 500);
     }
 
     if (prevProps.selected !== this.props.selected) {
@@ -184,102 +206,109 @@ export default class App extends Component {
   };
   render() {
     const { orderStore } = this.props;
-    const activeElement = orderStore.activeElement || {};
-    const initials = {};
-    const params = Object.keys(orderStore.order).reduce((acc, garment) => {
-      const curGarment = orderStore.order[garment];
-      GROUPS.forEach(group => {
-        Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
-          const subgroupVal = curGarment[0][group][subgroup];
-          if (subgroup.includes(INITIALS)) {
-            if (!initials.text) {
-              initials.text = { value: ''};
-            }
-            if(subgroup === `${INITIALS}_text`) {
-              initials.text.value = subgroupVal;
-            }
-            const val = _.get(activeElement , 'elementInfo.subGroup') === subgroup ?
-              activeElement.our_code :
-              subgroupVal.our_code;
-            if (subgroup === `${INITIALS}_arrangement`) {
-              initials.id = val
-            }
-            if (subgroup === `${INITIALS}_color`) {
-              initials.text.color = val;
-            }
-            if (subgroup === `${INITIALS}_style`) {
-              initials.text.font = val;
-            }
-          }
-          if (
-            activeElement.elementInfo &&
-            activeElement.elementInfo.garment === garment &&
-            activeElement.elementInfo.group === group &&
-            activeElement.elementInfo.subGroup === subgroup
-          ) {
-            if (subgroup === `${INITIALS}_arrangement`) {
-              initials.id = activeElement.our_code;
-            } else {
-              if (!subgroup.includes(INITIALS)) {
-                acc.push(activeElement.our_code)
-              }
-            }
-          } else {
-            if (!subgroup.includes(INITIALS) && subgroupVal) {
-              acc.push(subgroupVal.our_code);
-            }
-          }
-          // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
-          if (subgroup ===`${INITIALS}_color`) {
-            if (_.get(activeElement, 'elementInfo.subGroup') ===`${INITIALS}_color`) {
-              acc.push(activeElement.our_code);
-            } else {
-              acc.push(subgroupVal.our_code)
-            }
-          }
-        })
-      })
-      return acc;
-    }, []);
     const { subgroup } = this.state;
     let selected = '';
-    if (
-      activeElement.elementInfo &&
-      prevInfo.garment === activeElement.elementInfo.garment &&
-      prevInfo.group === activeElement.elementInfo.group &&
-      prevInfo.subGroup === activeElement.elementInfo.subGroup &&
-      !activeElement.elementInfo.subGroup.includes(INITIALS)
-    ) {
-      selected = prevInfo.code;
-    } else {
-      selected = activeElement.our_code;
-      prevInfo = {
-        code: activeElement.our_code,
-        garment: _.get(activeElement, 'elementInfo.garment', ''),
-        group: _.get(activeElement, 'elementInfo.group', ''),
-        subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
-      };
-    }
-    if (activeElement.elementInfo &&
-      activeElement.elementInfo.subGroup &&
-      activeElement.elementInfo.subGroup.includes(INITIALS)) {
-      selected = initials;
-    }
-    if (!_.isEmpty(initials) && typeof selected !== initials) {
-      params.push(initials);
-    }
-    if (!_.isEmpty(activeElement)) {
-      // Если в параметрах нет активного элемента
-      // Может случиться, если по дефолту у элемента нет заданного значения
-      if (!params.find(param => (
-        activeElement.our_code === param ||
-        activeElement.our_code === param.id
-      ))) {
-        // Добавляем его в к параметрам отображения
-        params.push(activeElement.our_code);
-      }
+    const activeElement = orderStore.activeElement || {};
+    const initials = {};
+    let params = [];
 
+    if (orderStore.isEmptyOrder() || !wasRendered) {
+      params = baseDummyElements;
+    } else {
+      params = Object.keys(orderStore.order).reduce((acc, garment) => {
+        const curGarment = orderStore.order[garment];
+        GROUPS.forEach(group => {
+          Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
+            const subgroupVal = curGarment[0][group][subgroup];
+            if (subgroup.includes(INITIALS)) {
+              if (!initials.text) {
+                initials.text = { value: ''};
+              }
+              if(subgroup === `${INITIALS}_text`) {
+                initials.text.value = subgroupVal;
+              }
+              const val = _.get(activeElement , 'elementInfo.subGroup') === subgroup ?
+                activeElement.our_code :
+                subgroupVal.our_code;
+              if (subgroup === `${INITIALS}_arrangement`) {
+                initials.id = val
+              }
+              if (subgroup === `${INITIALS}_color`) {
+                initials.text.color = val;
+              }
+              if (subgroup === `${INITIALS}_style`) {
+                initials.text.font = val;
+              }
+            }
+            if (
+              activeElement.elementInfo &&
+              activeElement.elementInfo.garment === garment &&
+              activeElement.elementInfo.group === group &&
+              activeElement.elementInfo.subGroup === subgroup
+            ) {
+              if (subgroup === `${INITIALS}_arrangement`) {
+                initials.id = activeElement.our_code;
+              } else {
+                if (!subgroup.includes(INITIALS)) {
+                  acc.push(activeElement.our_code)
+                }
+              }
+            } else {
+              if (!subgroup.includes(INITIALS) && subgroupVal) {
+                acc.push(subgroupVal.our_code);
+              }
+            }
+            // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
+            if (subgroup ===`${INITIALS}_color`) {
+              if (_.get(activeElement, 'elementInfo.subGroup') ===`${INITIALS}_color`) {
+                acc.push(activeElement.our_code);
+              } else {
+                acc.push(subgroupVal.our_code)
+              }
+            }
+          })
+        })
+        return acc;
+      }, []);
+      if (
+        activeElement.elementInfo &&
+        prevInfo.garment === activeElement.elementInfo.garment &&
+        prevInfo.group === activeElement.elementInfo.group &&
+        prevInfo.subGroup === activeElement.elementInfo.subGroup &&
+        !activeElement.elementInfo.subGroup.includes(INITIALS)
+      ) {
+        selected = prevInfo.code;
+      } else {
+        selected = activeElement.our_code;
+        prevInfo = {
+          code: activeElement.our_code,
+          garment: _.get(activeElement, 'elementInfo.garment', ''),
+          group: _.get(activeElement, 'elementInfo.group', ''),
+          subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
+        };
+      }
+      if (activeElement.elementInfo &&
+        activeElement.elementInfo.subGroup &&
+        activeElement.elementInfo.subGroup.includes(INITIALS)) {
+        selected = initials;
+      }
+      if (!_.isEmpty(initials) && typeof selected !== initials) {
+        params.push(initials);
+      }
+      if (!_.isEmpty(activeElement)) {
+        // Если в параметрах нет активного элемента
+        // Может случиться, если по дефолту у элемента нет заданного значения
+        if (!params.find(param => (
+          activeElement.our_code === param ||
+          activeElement.our_code === param.id
+        ))) {
+          // Добавляем его в к параметрам отображения
+          params.push(activeElement.our_code);
+        }
+
+      }
     }
+    wasRendered = true;
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
       <Widget

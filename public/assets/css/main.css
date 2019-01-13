@@ -182,3 +182,38 @@
 @media only screen and (max-height : 700px){
     .profile-link, .breadcrumbs{font-size: 11px;}
 }
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .main__header {
+        height: 30px;
+        min-height: 30px;
+        margin: 0 auto;
+        width: 100%;
+        visibility: visible;
+
+        /* when 3d active
+        background: rgba(255, 255, 255, .5);
+        width: calc(100vw + 1rem);
+        margin: -1rem 0rem 0rem -2rem;
+        padding: 0.5rem 2rem 3rem 3rem; */
+    }
+    .main__footer {
+        flex-direction: column;
+        height: 8.4rem;
+        width: 100%;
+        margin: 0 auto;
+        justify-content: flex-start;
+    }
+    .main__middle {
+        padding: calc(1rem + 4px) 0 0 0;
+        position: initial;
+    }
+    .main--white{
+        background: rgba(255, 255, 255, 0.85);
+    }
+}
+
+@media only screen and (max-height: 450px) {
+    .main__middle {
+        max-height: 67vh;
+    }
+}

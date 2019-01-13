@@ -11,6 +11,8 @@ import { SubgroupChoice } from '../SubgroupChoice';
 import { Footer } from '../Footer';
 import { routes } from '../routes';
 
+import './styles.styl';
+
 class MainSection extends React.Component<MainSectionProps> {
     render() {
         const {
@@ -27,8 +29,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     style={{
                         justifyContent: !detailsDeep
                             ? 'flex-start'
-                            : 'center',
-                        marginBottom: !detailsDeep ? 'calc(2.4rem + 4px)' : '0'
+                            : 'center'
                     }}
                 >
                     <Filter />

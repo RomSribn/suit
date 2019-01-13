@@ -93,4 +93,36 @@
 @media only screen and (max-width: 991px)
     .order-form__container
         .button-bar.white
-            width: auto;    
+            width: auto;
+@media only screen and (max-width: 450px), only screen and (max-height: 450px)
+    .order-form__container
+      height: 100vh;
+      width: 100vw;
+    .order-form__content
+      width: auto
+    .order-form__container
+        .button-bar.white
+          .button
+            margin-left: 0
+
+@media only screen and (max-height: 450px)
+    .order-form__container
+        .button-bar.white
+          width 189px
+
+ @media only screen and (max-width: 450px)
+    .order-form__container
+      padding: 50% 3.5rem 2.5rem 3.5rem;
+
+    .order-form__content
+      width: auto
+      .foot-note
+        right: 30%;
+      .buttons
+        width: calc(100% - 2px);
+      .order-form
+        .button.black
+            width: calc(46vw - 1.333rem - 1.2rem);
+        .button.white
+            margin-left: 0
+            width: calc(44vw - 1.333rem - 1.2rem);

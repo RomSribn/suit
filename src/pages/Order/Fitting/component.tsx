@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import { isMobile, isLandscape } from '../../../utils';
 
 interface Props {
     item: GalleryStoreItem;
@@ -39,35 +40,40 @@ class FittingItem extends React.PureComponent<Props, State> {
         };
     }
     render () {
-    const {
-        item,
-        lang,
-    } = this.props;
-    return (
-        <label className="size">
-            <span
-                className={classnames(
-                    'size__wrap',
-                    { valid: this.state.valid }
-                )}
-            >
-                <span className="size__name">{item.title[lang]}</span>
-                <input
-                    className="size__input"
-                    type="text"
-                    value={this.state.value}
-                    onChange={this.focuseOnLabel}
-                    onInput={(e: any) => { e.preventDefault(); }}  // tslint:disable-line
-                /> 
-                <span className="size__output-lines-group">
-                    <span className="size__output-line size__output-line--1" />
-                    <span className="size__output-line size__output-line--2"/>
-                    <span className="size__output-line size__output-line--3" />
+        const {
+            item,
+            lang,
+        } = this.props;
+        const title = isMobile() && !isLandscape() && item.title[lang].length > 11 ?
+            item.title[lang].slice(0, 10) + '...'
+            : item.title[lang];
+        
+        return (
+            <label className="size">
+                <span
+                    className={classnames(
+                        'size__wrap',
+                        { valid: this.state.valid }
+                    )}
+                >
+                    <span className="size__name">{title}</span>
+                    <input
+                        className="size__input"
+                        type="text"
+                        value={this.state.value}
+                        onChange={this.focuseOnLabel}
+                        onInput={(e: any) => { e.preventDefault(); }}  // tslint:disable-line
+                    /> 
+                    <span className="size__output-lines-group">
+                        <span className="size__output-line size__output-line--1" />
+                        <span className="size__output-line size__output-line--2"/>
+                        <span className="size__output-line size__output-line--3" />
+                    </span>
+                    <span className="size__color-elem"/>
                 </span>
-                <span className="size__color-elem"/>
-            </span>
-            <span className="size__units">см</span>
-        </label>);
+                <span className="size__units">см</span>
+            </label>
+        );
     }
 }
 

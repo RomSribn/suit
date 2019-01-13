@@ -3,6 +3,8 @@ import * as _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import * as classnames from 'classnames';
 
+import { isMobile, isLandscape } from '../../../utils';
+
 interface P {
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
@@ -107,12 +109,10 @@ class GalleryItem extends React.Component<P, S > {
                 onClick={click}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
-                className={'gallery__item-blc'}
-                style={{
-                    maxWidth: '33.3333%',
-                    width: '100%',
-                    padding: '0 0 1.333rem 1.333rem'
-                }}
+                className={classnames(
+                    'gallery__item-blc',
+                    { landscape:  isMobile() && isLandscape() }
+                )}
             >
                 <div
                     className={classnames(
@@ -184,73 +184,11 @@ type State = {
 
 class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
-    intervalID: number;
     isScrolling = false;
     scrollGallery?: HTMLElement;
-    static sizing() {
-        try {
-            const barWrap = document.getElementById('js-bar-wrap') as HTMLElement,
-                imageWrap = document.getElementById('js-gallery-img') as HTMLElement;
-
-            // для устранения скачков при скролинге в хроме и опере, баг возникает из-за:
-            // barWrap.style.display = 'none';
-            // imageWrap.style.display = 'none';
-            if ((barWrap.scrollHeight) && (barWrap.scrollHeight > barWrap.offsetHeight)) {
-                barWrap.style.overflowY = 'scroll';
-            } else {
-                barWrap.style.overflowY = 'auto';
-            }
-
-            // БАГ: в опере и хроме, если зажать скрол левой кнопкой мыши,
-            // то с него слетит фокус, из-за display = 'none',
-            // barWrap.style.display = 'none';
-            // imageWrap.style.display = 'none';
-
-            const wrapHeight = document.getElementById('js-gallery-wrap')!.offsetHeight,
-                wrapWidth = document.getElementById('js-gallery-wrap')!.offsetWidth,
-                barContainer = document.getElementById('js-bar-container')!,
-                barItems = barContainer.querySelectorAll('.gallery__item-blc') as NodeListOf<HTMLElement>,
-                barWrapWidth = wrapWidth - wrapHeight - 2;
-
-            if (wrapHeight >= wrapWidth - 140) {
-                imageWrap.style.width = `${wrapWidth - 141}px`;
-                barWrap.style.width = '140px';
-            } else {
-                imageWrap.style.width = `${wrapHeight}px`;
-                barWrap.style.width = `${barWrapWidth}px`;
-                if (barWrapWidth / 4 <= 36) {
-                    for (let _i = 0; _i < barItems.length; _i++) {
-                        barItems[_i].style.maxWidth = '100%';
-                    }
-                } else if (barWrapWidth / 4 <= 71) {
-                    for (var i = 0; i < barItems.length; i++) {
-                        barItems[i].style.maxWidth = '50%';
-                    }
-                } else if (barWrapWidth / 4 <= 142) {
-                    for (let _i = 0; _i < barItems.length; _i++) {
-                        barItems[_i].style.maxWidth = '33.3333%';
-                    }
-                } else if (barWrapWidth / 4 <= 284) {
-                    for (let _i = 0; _i < barItems.length; _i++) {
-                        barItems[_i].style.maxWidth = '25%';
-                    }
-                }
-            }
-            imageWrap.style.height = `${wrapHeight}px`;
-            barWrap.style.height = `${wrapHeight}px`;
-            imageWrap.style.display = 'block';
-            barWrap.style.display = 'block';
-        } catch (_) {
-            //
-        }
-    }
 
     incremetLoadedCount = () => {
         this.loadedCount++;
-        if (this.loadedCount === this.props.items.length) {
-            GalleryBar.sizing();
-            window.addEventListener('resize', GalleryBar.sizing);
-        }
     }
     constructor(props: GalleryBarProps) {
         super(props);
@@ -263,13 +201,6 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             isScrolling: false,
             titleElement: null
         };
-    }
-    componentDidMount() {
-        this.intervalID = window.setInterval(GalleryBar.sizing, 1000);
-    }
-    componentwillUnmount() {
-        window.removeEventListener('resize', GalleryBar.sizing);
-        window.clearInterval(this.intervalID);
     }
 
     handlerItemScrollLoader = (event: ScrollEvent) => {

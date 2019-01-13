@@ -120,3 +120,33 @@
     .footer-btn-bar__white:active:after,
     .footer-btn-bar__white:hover:after{border-right-color: #000;}
 }
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .footer-btn-bar__mobile {
+        justify-content: space-between;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-btn-bar__mobile span {
+        width: 100%;
+    }
+
+    .footer-btn-bar__mobile > a {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .footer-btn-bar__mobile > span:nth-of-type(2), .footer-btn-bar__mobile > a:nth-of-type(2) {
+        margin-top: 1rem;
+    }
+}
+
+@media only screen and (max-height: 450px) {
+    .footer-btn-bar__mobile {
+        flex-direction: row;
+    }
+    .footer-btn-bar__mobile > span, .footer-btn-bar__mobile > a {
+        width: 24vw;
+    }
+}

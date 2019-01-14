@@ -19,7 +19,7 @@ const loc: Translations<Locale> = {
   },
 };
 
-const makeInitionalOrderPath = (lang: string) => [{
+const makeInitionalOrderPath = (lang: Lang) => [{
   value: loc[lang].order,
   link: '/order/details/shirt',
 }, {
@@ -66,7 +66,7 @@ class App implements IAppStore {
   }
 
 }
-const app = new App();
+const app = new App(navigator.language.indexOf('ru') !== -1 ? 'ru' : 'en' );
 
 export {
   app,

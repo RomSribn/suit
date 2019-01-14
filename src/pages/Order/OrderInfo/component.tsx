@@ -1,18 +1,34 @@
 import * as React from 'react';
 import { loc } from './loc';
 
+import { isMobile, isLandscape, isTablet, isIpadPro } from '../../../utils';
+
 class OrderInfo extends React.PureComponent<OrderInfoProps> {
     static defaultProps: OrderInfoProps = {
         lang: 'en',
         deliveryDate: '00.00.0000',
         price: ''
     };
+
+    componentWillMount() {
+        if (isMobile() || isTablet() || isIpadPro()) {
+            // window.addEventListener('orientationchange', () => {
+            //     setTimeout(() => {
+            //         this.forceUpdate();
+            //     }, 200);
+            // }, false);
+          }
+    }
+
     render() {
         const {
             lang,
             deliveryDate,
             price
         } = this.props;
+        const fullDeliveryDate = isTablet() && !isLandscape()
+            ? deliveryDate.split('.').slice(0, deliveryDate.split('.').length - 1).join('/')
+            : deliveryDate;
         return (
             <div className="calc-blc">
                 <div className="calc-blc__col calc-blc__col--summ">
@@ -30,7 +46,7 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
                     <div
                         style={{textAlign: 'center'}}
                         className="calc-blc__col-val calc-blc__col-val-delivery"
-                    >{deliveryDate}
+                    >{fullDeliveryDate}
                     </div>
                 </div>
             </div>
@@ -38,6 +54,30 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
     }
 }
 
+class OrderInfoMobile extends React.PureComponent<OrderInfoProps> {
+    static defaultProps: OrderInfoProps = {
+        lang: 'en',
+        deliveryDate: '00.00.0000',
+        price: ''
+    };
+    render() {
+        const {
+            lang,
+            deliveryDate,
+            price
+        } = this.props;
+        return (
+            <div className="calc-blc-mobile">
+                <span className="calc-text-mobile">{`${loc[lang!].price}: ${loc[lang!].currency}${price}`}
+                {(!isMobile() || isLandscape()) && <span>&nbsp;/&nbsp;</span>}
+                {(!isMobile() || isLandscape()) && (`${loc[lang!].delivery} ${deliveryDate}`)}
+                </span>
+            </div>
+        );
+    }
+}
+
 export {
     OrderInfo,
+    OrderInfoMobile
 };

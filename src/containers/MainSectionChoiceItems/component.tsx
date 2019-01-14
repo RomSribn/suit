@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
 import { loc } from './loc';
+import { isMobile, isLandscape } from '../../utils';
 
 interface CommonProps {
     children?: React.ReactNode;
@@ -32,7 +33,6 @@ const Common = (props: CommonProps) => {
                 choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
         }
     };
-
     return (
         <div className={classNames('custom', { 'custom__no-pointer': noCursorPointer})}>
             <span className="custom__content">
@@ -42,29 +42,33 @@ const Common = (props: CommonProps) => {
                         color: 'black',
                     }}
                 >
-                    {item.linkName} {!!item.status && ':'}
+                    {`${item.linkName}${!!item.status ? ':' : ''}`}
                 </span>
                 <span className="custom__status">{props.children}</span>
 
             </span>
-            <span className="custom__control">
-                <Switch>
-                    <Route
-                        exact={true}
-                        path="/order/details"
-                    />
-                    <Route
-                        path="/order/details/:garment"
-                        component={(...args: any[]) => { // tslint:disable-line no-any
-                            const garment = args[0].match.params.garment;
-                            // TODO: check the structure for intials_text
-                            return renderClearButton(item) ?
-                                <span onClick={clearClick(garment, item.id!)}>{loc[lang!].clear}</span> :
-                            null;
-                        }}
-                    />
-                </Switch>
-            </span>
+            {
+                !noCursorPointer ?
+                    <span className="custom__control">
+                        <Switch>
+                            <Route
+                                exact={true}
+                                path="/order/details"
+                            />
+                            <Route
+                                path="/order/details/:garment"
+                                component={(...args: any[]) => { // tslint:disable-line no-any
+                                    const garment = args[0].match.params.garment;
+                                    // TODO: check the structure for intials_text
+                                    return renderClearButton(item) && !isMobile() ?
+                                        <span onClick={clearClick(garment, item.id!)}>{loc[lang!].clear}</span> :
+                                    null;
+                                }}
+                            />
+                        </Switch>
+                    </span>
+                : null
+            }
         </div>
     );
 };
@@ -86,7 +90,9 @@ class CustomLink extends React.PureComponent<LinkProps> {
             clearClick,
             lang
         } = this.props;
-
+        const status = isMobile() && !isLandscape() && item.status && item.status!.length > 13
+            ? item.status!.slice(0, 10) + '...'
+            : item.status;
         return (
             <Link
                 to={`${basicRoute}/${item.link}`}
@@ -104,7 +110,7 @@ class CustomLink extends React.PureComponent<LinkProps> {
                     item={item}
                     clearClick={clearClick}
                 >
-                    {item.status}
+                    {status}
                 </Common>
             </Link>
         );

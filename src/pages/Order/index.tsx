@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { MainSection } from './SectionMain';
 import { makeRoutes } from './routes';
 import { parseQuery } from '../../utils/common';
+import { listeners } from '../../utils';
 let wasRendered = false;
 
 class Order extends React.PureComponent<any> { //tslint:disable-line
@@ -41,6 +42,9 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
 }))
 @observer
 class Container extends React.Component<any>{ //tslint:disable-line
+    componentDidMount() {
+        listeners.resize.subscribe(() => this.setState({}));
+    }
     render() {
         const orderStore = this.props.orderStore as IOrderStore;
         const garmentsStore = this.props.garmentsStore;

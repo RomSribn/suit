@@ -4,6 +4,10 @@ import Widget3D from 'clothes-widget-3d';
 import { Redirect } from 'react-router';
 import _ from 'lodash';
 import { currentItems } from '../../stores/garments/galleryStore';
+import { isMobile, isTablet, isIpadPro, listeners } from '../../utils';
+
+import './styles.demo.styl';
+
 const INITIALS = 'initials';
 
 /**
@@ -16,18 +20,41 @@ let wasRendered = false;
 
 /** Эти элементы рендерятся при первой отрисовке для снижения трафика */
 const baseDummyElements = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
+let demoSectionWidth = 400;
 
 @inject(({ order, garments: {Subgroups}, }) => ({
   orderStore: order,
   SubgroupsStore: new Subgroups('shirt'),
 }))
 class Widget extends PureComponent {
+  constructor(props) {
+    super(props);
+    if (document.querySelector('html').offsetWidth <= 450) {
+    }
+    demoSectionWidth = 200;
+  }
+  componentWillUnmount = () => {
+    listeners.orientationchange.unsubscribe(this.orientationchangeListenerIndex);
+    listeners.resize.unsubscribe(this.resizeListenerIndex);
+  }
   componentDidMount() {
+    const { resize, orientationchange } = listeners
+    if (isMobile() || isTablet() || isIpadPro()) {
+      document.ontouchmove = function (e) {
+        e.preventDefault();
+      }
+    }
+
+    this.resizeListenerIndex = resize.subscribe(() => {
+      this.widget3d && this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight)
+    });
+
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
       apiPath: 'http://194.87.239.90:8081/api/',
       assetsPath: 'http://194.87.239.90/assets/models/',
       salonId: 1,
+      useMobilePositions: isMobile,
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       }
@@ -36,6 +63,7 @@ class Widget extends PureComponent {
     try {
       this.widget3d.firstUpdate.then(() => {
         this.props.onDummyLoad();
+        this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight)
       });
       this.widget3d.update(this.props.assets)
       .then(this.handleUpdated);
@@ -126,7 +154,7 @@ class Widget extends PureComponent {
         <div
           className="widget3d"
           ref={(node) => this.widgetContainer = node}
-          style={{ position: 'absolute', width: '400%', height: '100%', left: '-150%' }}
+          style={{ width: `${demoSectionWidth}%`, height: '100%' }}
         />
       );
   }

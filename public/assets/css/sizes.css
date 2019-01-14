@@ -185,3 +185,29 @@ and (-webkit-min-device-pixel-ratio: 1)  {
     -ms-transform: translateX(-.25rem);
     transform: translateX(-.25rem);
 }
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .sizes__wrap {
+        width: 94%;
+        margin: auto;
+        margin-top: 1.3333rem;
+        padding-right: 0;
+    }
+    .size {
+        width: 94%;
+        margin: auto;
+        margin-top: 1.3333rem;
+        min-width: inherit;
+        flex-grow: 0;
+    }
+    .size__units {
+        width: 2.2rem;
+        font-size: 0.8rem;
+    }
+    .size__input {
+        width: 3.8rem;
+    }
+    .size__output-lines-group {
+        right: 2.8666rem;
+        width: 1.0333rem;
+    }
+}

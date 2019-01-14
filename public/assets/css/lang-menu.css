@@ -11,11 +11,7 @@
     font-size: 1rem;
     color: #d4d4d4;
 }
-.lang-menu__link{
-    color: #d4d4d4;
-    margin-left: 2.6666rem;
-    width: 3.63rem;
-}
+
 .lang-menu__link.active{
     color: #fff;
     font-weight: 400;

@@ -1,9 +1,8 @@
 .filter{
     position: absolute;
     right: 100%;
-    top: 0;
-    bottom: 1.6667rem;
-    height: 100%;
+    top: calc(2.4rem + 4px);
+    height: calc(100% - calc(2.4rem + 4px));
     width: 0;
     background: #eceeee;
     overflow: hidden;
@@ -14,9 +13,9 @@
     transition: .35s ease;
     
 }
-.filter.open{width: 14.6666rem;}
+.filter.open{width: 13.6666rem;}
 .filter__wrap{
-    width: 14.6666rem;
+    width: 13.6666rem;
     padding: 0 1.6666rem 0 0;
     height: 100%;
     overflow-y: auto;
@@ -143,4 +142,18 @@ input:checked + .filter__label-color:before{opacity: 1;}
 }
 @media only screen and (max-height : 700px){
     .filter__label-name{font-size: 11px;}
+}
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .filter {
+        top: 0;
+        height: 100%;
+    }
+    .filter.open{
+        width: 13rem;
+        margin-right: 0;
+    }
+    .filter__wrap {
+        width: 13rem;
+        padding: 1.8rem 0.6rem;
+    }
 }

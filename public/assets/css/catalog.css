@@ -1,17 +1,8 @@
 .catalog{
-    /* position: absolute;
-    left: 0;
-    top: 50%;
-    margin-top: -7rem; */
     color: #fff;
     width: 100%;
-    /* -webkit-transition: 600ms cubic-bezier(0.95, 0.05, 0.795, 0.035);
-    -o-transition: 600ms cubic-bezier(0.95, 0.05, 0.795, 0.035);
-    transition: 600ms cubic-bezier(0.95, 0.05, 0.795, 0.035);    */
 }
 .catalog--top-position{
-    /* position: relative;
-    top: 0; */
     margin-top: 0;
     margin-bottom: 2.3333rem;
 }
@@ -47,23 +38,25 @@
     flex-wrap: wrap;
     -ms-align-items: stretch;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 1rem;
 }
 .catalog--top-position .catalog__form-wrap{margin-bottom: 0;}
 .catalog__item{
     display: block;
-    width: -webkit-calc((100% - 4rem) / 4);
-    width: -moz-calc((100% - 4rem) / 4);
-    width: calc((100% - 4rem) / 4);
-    margin: 0 1.3333rem 1.3333rem 0;
+    margin: 0 0 1.3333rem 0;
     position: relative;
-    height: 2.6666rem;    
+    height: 2.6666rem;
+    display: flex;
+    flex: 1;
+}
+.catalog__item:not(:last-child) {
+    padding: 0 2rem 0 0px;
 }
 .catalog__item:nth-child(4n+4){margin-right: 0;}
 .catalog__item input{display: none;}
 .catalog__item-decoration{
-    display: block; 
+    display: block;
     width: 100%;
     height: 100%;
     -webkit-transition: .35s ease;
@@ -77,7 +70,7 @@
     color: #000;
     font-size: 1rem;
     font-weight: 500;
-    cursor: pointer;    
+    cursor: pointer;
 }
 .catalog--top-position .catalog__item-decoration{
     opacity: .3;
@@ -178,5 +171,25 @@
 .catalog__submit:hover .catalog__submit-rect--2{stroke-dashoffset: -150%;}
 
 @media only screen and (max-width : 1400px){
-    .catalog__intro-txt:after{height: 1px;}    
+    .catalog__intro-txt:after{height: 1px;}
+}
+
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .catalog {
+        width: 100%;
+        margin: auto;
+    }
+
+    .catalog__item-decoration {
+        font-size: .75rem;
+    }
+    .catalog__form-wrap {
+        justify-content: space-between;
+    }
+    .catalog__item {
+        width: calc((100% - 1rem) / 2);
+    }
+    .catalog__item:not(:last-child) {
+        padding: 0 2.8vw 0 0px;
+    }
 }

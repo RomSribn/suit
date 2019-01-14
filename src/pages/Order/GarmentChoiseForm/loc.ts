@@ -22,6 +22,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
         submit: 'submit',
         pathItemValue: 'garments',
         garmentsHardcodes: {
+            shirt: 'shirt',
             suit: 'suit',
             shoes: 'shoes',
             more: 'more'
@@ -36,6 +37,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
         submit: 'принять',
         pathItemValue: 'изделия',
         garmentsHardcodes: {
+            shirt: 'рубашка',
             suit: 'костюм',
             shoes: 'обувь',
             more: 'еще'

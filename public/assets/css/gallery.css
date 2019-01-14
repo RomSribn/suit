@@ -1,69 +1,3 @@
-.gallery{
-    width: 100%;
-    flex-grow: 1;
-    padding: 1.3333rem 0 0 0;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    -moz-flex-direction: column;
-    -ms-flex-direction: column;
-    -o-flex-direction: column;
-    flex-direction: column;
-    -ms-align-items: flex-start;
-    align-items: flex-start;
-    justify-content: flex-start;
-    align-content: stretch;
-}
-.gallery__prev-blc{
-    flex-grow: 1;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    -ms-align-items: stretch;
-    align-items: stretch;
-    align-content: stretch;
-    justify-content: space-between;
-    width: 100%;
-}
-.gallery__prev-wrap{
-    width: 100%;
-    position: relative;
-}
-.gallery__img{
-    border: 1px solid #eceeee;
-    float: left;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    -ms-align-items: flex-end;
-    align-items: flex-end;
-    justify-content: center;
-    display: none;
-    position: relative;
-    overflow: hidden;
-}
-.gallery__img img{
-    height: 100%;
-    width: 100%;
-}
-.gallery__bar{
-    overflow-y: auto;
-    float: right;
-    display: none;
-}
-.gallery__item-blc{
-    padding: 0 0 1.2666rem 1.2666rem;
-    flex-grow: 1;
-    float: left;
-    width: 100%;
-}
 .gallery__item{
     position: relative;
     width: 100%;
@@ -71,7 +5,7 @@
     cursor: pointer;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
-    transition: .35s ease;    
+    transition: .35s ease;
 }
 .gallery__item:hover,
 .gallery__item.active{border-color: #000;}
@@ -80,11 +14,12 @@
     height: 100%;
 }
 .gallery__footer{
-    height: 6.9rem; 
+    height: 6.9rem;
     margin-top: 1.3333rem;
     background: #eceeee;
     padding: 1.2rem 1.7333rem .7333rem 1.3333rem;
     width: 100%;
+    margin-bottom: 1rem;
 }
 .gallery__footer-header{
     display: -webkit-flex;
@@ -95,9 +30,9 @@
     -ms-align-items: center;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: .8666rem;    
+    margin-bottom: .8666rem;
 }
-.gallery__footer--title{    
+.gallery__footer--title{
     font-size: 1rem;
     font-weight: 500;
     line-height: 1;
@@ -113,19 +48,19 @@
     font-size: 1rem;
     line-height: 1.4;
 }
-.gallery__footer--txt-clamp{ 
+.gallery__footer--txt-clamp{
     /* обрезаем текст и выставляем троеточие если в блоке больше 2 строк, в firefox без троеточия*/
-	/* альтернативы 
-		https://www.npmjs.com/package/react-clamp-lines 
+	/* альтернативы
+		https://www.npmjs.com/package/react-clamp-lines
 		https://www.npmjs.com/package/clamp-js
 	*/
     overflow:hidden;
-    text-overflow: ellipsis;    
-    display: -webkit-box;    
-    -webkit-line-clamp: 2; 
-    -webkit-box-orient: vertical; 
-    word-wrap:break-word;    
-    max-height:2.8rem; 
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap:break-word;
+    max-height:2.8rem;
 }
 
 .gallery--colors .gallery__item{
@@ -144,7 +79,7 @@
     border: 0 solid #fff;
     -webkit-transition: .25s ease;
     -o-transition: .25s ease;
-    transition: .25s ease; 
+    transition: .25s ease;
     opacity: 0;
 }
 .gallery--colors .gallery__item.active:after,
@@ -264,9 +199,6 @@
 .gallery__photo-btn.show span{opacity: 1;}
 .gallery__photo-btn.show{background: #ebebeb;}
 
-
-
-
 .gallery__filter{
     position: absolute;
     top: 0;
@@ -281,4 +213,24 @@
 }
 @media only screen and (max-height : 700px){
     .gallery__footer--articul{font-size: 11px;}
+}
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+    .gallery__footer {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .gallery__footer--title {
+        font-size: 0.9rem;
+    }
+
+    .gallery__footer--txt-clamp {
+        font-size: 0.75rem;
+    }
+}
+
+@media only screen and (max-height: 450px) {
+    .gallery__footer {
+        display: none;
+    }
 }

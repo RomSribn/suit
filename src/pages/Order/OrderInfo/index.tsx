@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import * as moment from 'moment';
-import { OrderInfo as Component } from './component';
+import * as Component from './component';
+
+import { isMobile } from '../../../utils';
+
+import './styles.styl';
 
 @inject(({app, order}, nextProps) => ({
     lang: app.lang,
@@ -21,11 +25,22 @@ class OrderInfo extends React.Component<COrderInfoProps> {
             '00.00.0000';
         const price = orderInfo ? orderInfo.price[lang!] : '0';
         return (
-            <Component
-                lang={lang!}
-                deliveryDate={deliveryDate}
-                price={price}
-            />
+            <React.Fragment>
+            {
+                !isMobile() ?
+                <Component.OrderInfo
+                    lang={lang!}
+                    deliveryDate={deliveryDate}
+                    price={price}
+                /> :
+                <Component.OrderInfoMobile
+                    lang={lang!}
+                    deliveryDate={deliveryDate}
+                    price={price}
+                />
+            }
+            </React.Fragment>
+            
         );
     }
 }

@@ -17,13 +17,33 @@
     background-size cover
     padding 5.25rem
     color white
-    & > div.text
+
+    @media only screen and (max-width: 450px), only screen and (max-height: 450px)
+      height 100vh
+      width 100vw
+      padding: 3.2rem 5.25rem
+
+      .button-bar
+        width: 48%;
+
+      .button.black 
+      .button.white
+        margin-left: 0;
+
+    @media only screen and (max-width: 450px)
+      padding: 50% 3.5rem 2.5rem 3.5rem
+      
+      .button.white
+        width: 100%;
+
+    & .text
       text-align right
       position absolute
       bottom 1.04rem
       right 5.25rem
       font-size 90%
       color gray-for-placeholder
+
     button.exit
       position absolute
       top 13px
@@ -37,18 +57,26 @@
       height 25px
       width 25px
       border-radius 100%
-    div.left-side
+    .left-side
       position relative
       width 50%
       height 100%
       display flex
       flex-direction column
+
+      @media only screen and (max-width: 450px), only screen and (max-height: 450px)
+        width 100%
+        height auto
       h2.title
         color #fafafa
         font-size: 1rem
         font-weight: 500
         text-transform: uppercase
         line-height: 1
+
+        @media only screen and (max-width: 450px), only screen and (max-height: 450px)
+          text-align center
+
       p.additional-info
         margin 1.32rem 0
         font-size .86666rem
@@ -81,6 +109,8 @@
         align-items center
         align-content center
         margin-top 1.5rem
+        @media only screen and (max-height: 450px)
+          margin 1rem 0
         .remember
           display flex
           align-items center
@@ -109,7 +139,14 @@
         display flex
         align-items center
         justify-content space-between
+        @media only screen and (max-height: 450px)
+          position relative
 
       label.cb-text
         padding-top 2px
         font-size .86666rem
+
+    &__language-control
+        position absolute
+        bottom 1rem
+        right 3 rem

@@ -8,6 +8,7 @@ import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
+import { isMobile } from '../../../utils';
 
 type MakeCatalogItems = (
     g: Garments,
@@ -36,7 +37,7 @@ const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, togg
                             ? garments[garment].titles![lang]
                                 ? garments[garment].titles![lang]
                                 : garment
-                            : garments[garment].name
+                            : loc[lang!].garmentsHardcodes[garments[garment].id] || garments[garment].name
                     }
                 </span>
                 </FadeIn>
@@ -153,7 +154,10 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            width: '70%',
+                            margin: 'auto',
+                            textAlign: 'center'
                         }}
                     >
                         <div style={{ marginBottom: '2rem' }}>{loc[lang!].unavailablePopupText}</div>
@@ -193,28 +197,34 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                 </span>
                             </span>
                         </label>
-                        <label
-                            className="catalog__item"
-                            onClick={() => this.setState({showUnavailablePopup: true})}
-                        >
-                            <input type="checkbox" name="goods" checked={false} />
-                            <span className="catalog__item-decoration">
-                                <span key={lang}>
-                                    {loc[lang!].garmentsHardcodes.shoes}
-                                </span>
-                            </span>
-                        </label>
-                        <label
-                            className="catalog__item"
-                            onClick={() => this.setState({showUnavailablePopup: true})}
-                        >
-                            <input type="checkbox" name="goods" checked={false} />
-                            <span className="catalog__item-decoration">
-                                <span key={lang}>
-                                    {loc[lang!].garmentsHardcodes.more}
-                                </span>
-                            </span>
-                        </label>
+                        {
+                            !isMobile() &&
+                                <label
+                                    className="catalog__item"
+                                    onClick={() => this.setState({showUnavailablePopup: true})}
+                                >
+                                    <input type="checkbox" name="goods" checked={false} />
+                                    <span className="catalog__item-decoration">
+                                        <span key={lang}>
+                                            {loc[lang!].garmentsHardcodes.shoes}
+                                        </span>
+                                    </span>
+                                </label>
+                        }
+                        {
+                            !isMobile() &&
+                                <label
+                                    className="catalog__item"
+                                    onClick={() => this.setState({showUnavailablePopup: true})}
+                                >
+                                    <input type="checkbox" name="goods" checked={false} />
+                                    <span className="catalog__item-decoration">
+                                        <span key={lang}>
+                                            {loc[lang!].garmentsHardcodes.more}
+                                        </span>
+                                    </span>
+                                </label>
+                        }
                     </div>
                     {   isIndexPage &&
                         <div className="catalog__submit-bar">

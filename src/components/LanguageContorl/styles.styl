@@ -1,0 +1,38 @@
+.lang-menu
+    .mobile-only
+        @media only screen and (min-width: 450px)
+            display: none
+
+    &.white
+        .lang-menu__link
+            color #d4d4d4
+
+    &.black
+        .lang-menu__link
+            color #8a8a8a
+
+    &.shortcut
+        .lang-menu__link
+            text-transform uppercase
+            padding 0 5px
+
+    &__link
+        padding 0 1.333rem
+        position relative
+
+        .active
+            font-weight 400
+
+        &:first-letter
+            text-transform uppercase
+
+        &:after
+            content '|'
+            position absolute
+            right 0
+
+        &:last-child
+            margin-right 0
+
+            &:after
+                content ''

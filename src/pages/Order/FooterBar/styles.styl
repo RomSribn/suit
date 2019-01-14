@@ -1,2 +1,24 @@
 .button.back-button
     margin-right 2.333rem
+
+@media only screen and (max-width: 450px)
+    .button
+        width 100%
+        .frame
+            svg
+                width 98%
+        .back-button
+            margin-bottom: 0.5rem;
+            margin-right: 0;
+        &.black
+            width 100%
+            margin 0 auto
+
+@media only screen and (max-height: 450px)
+    .button 
+        .frame
+            svg
+                width 99%
+        &.black
+            width: 100%;
+            margin: auto;

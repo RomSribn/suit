@@ -8,12 +8,14 @@ import { Spinner } from './Spinner';
 import { Common } from '../containers/Common';
 import { Order } from '../pages/Order'
 import { ListOrders } from '../pages/ListOrders';
+import { PopUp } from '../containers/Popup'
+import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup'
 import Login from './Login'
 
 let dummyWasRendered = false;
 
-@inject(({user, app, order}) => ({
-  user,
+@inject(({ user, app, order }) => ({
+  userStore: user,
   app,
   order: order.order
 }))
@@ -22,7 +24,8 @@ class Wrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSpinner: false
+      showSpinner: false,
+      showLoginForm: false,
     };
   }
   hideSpinner = () => {
@@ -35,15 +38,32 @@ class Wrapper extends Component {
 
   render() {
     const {
-      app
+      app,
+      userStore
     } = this.props;
-    const loggedIn = this.props.user.isAuth;
+    const { lang, showMobileMenu, toggleMobileMenu, setLang }  = app;
+    const { logout, isAuth } = userStore;
+    const loggedIn = this.props.userStore.isAuth;
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (<React.Fragment key="common wrapper with spinner">
       {this.state.showSpinner && <Spinner />}
       <Common
         onDummyLoad={this.hideSpinner}
       >
+          <PopUp open={showMobileMenu}>
+            {
+              showMobileMenu && isAuth ?
+                <MobileNavigationMenuPopup
+                  currentLang={lang}
+                  closeMenu={toggleMobileMenu}
+                  setLang={setLang}
+                  sideEffects={{
+                    logout: logout.bind(userStore)
+                  }}
+                /> :
+              <Login loginCallback={toggleMobileMenu} closeForm={toggleMobileMenu} />
+            }
+          </PopUp>
           <Route path={routes.order} exact={true} render={() => {
             this.props.app.resetOrderPath();
             return null;

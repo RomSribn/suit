@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { TRANSITION_DUARAION } from '../../config/constants';
 import { loc, Languages } from './loc';
+
+import './styles.styl';
 
 type MakeLanguageItems = (
     list: string[],
@@ -34,38 +34,38 @@ class LanguageControl extends React.PureComponent<LanguageControlProps> {
     static defaultProps = {
         lang: 'en',
         changeLanguage: () => {}, // tslint:disable-line
+        theme: 'white'
     };
     render() {
         const {
             lang,
             changeLanguage,
+            className,
+            mobileOnly,
+            shortcut,
+            theme
          } = this.props;
         const languagesList = Object.keys(loc.en.languages);
         return (
-            <ReactCSSTransitionGroup
-                transitionName="fade-in-absolute"
-                transitionEnterTimeout={TRANSITION_DUARAION}
-                transitionLeaveTimeout={TRANSITION_DUARAION}
+            <div
+                className={
+                    classNames(
+                        className,
+                        'lang-menu',
+                        theme,
+                        {
+                            ['mobile-only']: mobileOnly,
+                            shortcut
+                        }
+                    )
+                }
             >
-                <div
-                    key={lang}
-                    className="lang-menu"
-                    style={{
-                        width: 250,
-                        bottom: 0,
-                        right: 0,
-                    }}
-                >
-                    {makeLanguageItems(
-                        languagesList,
-                        loc[lang!].languages,
-                        lang!,
-                        changeLanguage!)}
-                    <div className="lang-menu__line" />
-                    <div className="lang-menu__text">{loc[lang!].language}</div>
-                </div>
-            </ReactCSSTransitionGroup>
-
+                {makeLanguageItems(
+                    languagesList,
+                    shortcut ? loc[lang!].languagesShortcut : loc[lang!].languages,
+                    lang!,
+                    changeLanguage!)}
+            </div>
         );
     }
 }

@@ -67,7 +67,7 @@
 
             & .rect--2
                 stroke: white
-    
+
     &:not(.disabled).white:hover .rect--2
             stroke-dashoffset 0
 
@@ -98,46 +98,45 @@
             stroke-width 3px
 
 
-@media only screen and (max-width  1140px)
+@media only screen and (max-width:  1140px)
     .button
         &.black
             width 10.5rem
         &.white
             width 10.5rem
+@media only screen and (max-width: 768px) and (max-width: 1024px) and (orientation: portrait) 
+    .button
+        &.black
+            width 8.5rem
+        &.white
+            width 8.5rem
 
-@media only screen and (max-width  991px)
+@media only screen and (max-width:  991px)
     .button-bar
         &.white
-            width 2.4rem
             font-size 0
             padding 0
 
-            &:after
-                content ''
-                display block
-                border 5px solid transparent
-                border-right-color #b7b7b7
-                position absolute
-                left -8px
-                bottom -6px
-                z-index 2
-                transition all .2s ease-out .45s
-
         &:active .rect--2,
-        &:hover .rect--2 
+        &:hover .rect--2
             stroke-dasharray 170% 250%
             stroke-dashoffset -130%
-        
+
         &:active:after,
         &:hover:after
             border-right-color #000
 
 
-    .rect--1 
-        stroke-dasharray 300% 60%
-        stroke-dashoffset 0%
-        
-    .rect--2 
+    .rect--2
         stroke-dasharray 180% 250%
         stroke-dashoffset -70%
-    
+
+@media only screen and (max-width:  450px), only screen and (max-height: 450px)
+    .button-bar
+        width: 189px;
+    .button
+        &.black
+            width: calc(100% + 4px);
+            margin-left: -2px;
+        &.white
+            width 100%;

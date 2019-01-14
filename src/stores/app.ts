@@ -29,13 +29,18 @@ const makeInitionalOrderPath = (lang: Lang) => [{
 
 class App implements IAppStore {
   @observable lang: Lang;
-  @observable showUserMenu = false;
+  @observable showMobileMenu = false;
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
     this.lang = newLang;
     this.orderPath.push(...makeInitionalOrderPath(newLang));
+  }
+
+  @action
+  toggleMobileMenu = () => {
+    this.showMobileMenu = !this.showMobileMenu;
   }
 
   @action

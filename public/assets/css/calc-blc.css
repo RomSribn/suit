@@ -8,6 +8,20 @@
     align-items: flex-end;
     justify-content: flex-start;
 }
+.calc-blc-mobile {
+    margin-top: -50px;
+    margin-bottom: 1.3333rem;
+    background: #eceeee;
+    color: black;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    text-transform: uppercase;
+}
+.calc-text-mobile {
+    margin: auto;
+    font-size: 0.75rem;
+}
 .calc-blc__col-name{
     font-size: 9px;
     color: #000;
@@ -41,3 +55,8 @@
     }
 }
 
+@media only screen and (max-height: 450px) {
+    .calc-blc-mobile {
+        margin-bottom: 2rem;
+    }
+}

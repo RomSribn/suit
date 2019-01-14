@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import * as classnames from 'classnames';
-import { routes } from '../../config/routes';
 import { LanguageControl as Component } from './component';
 
-@inject(({app}, nextProps: LanguageControlLanguageControlPropsProps) => ({
+@inject(({app}, nextProps: LanguageControlLanguageControlContainerProps) => ({
     lang: app.lang,
     changeLanguage: app.setLang,
-    route: nextProps.location.pathname,
     ...nextProps,
 }))
 @observer
-class LanguageControl extends React.Component<LanguageControlLanguageControlPropsProps> {
+class LanguageControl extends React.Component<LanguageControlLanguageControlContainerProps> {
     changeLanguage = (lang: string) => (e: React.MouseEvent<React.ReactNode>) => {
         try {
             e.preventDefault();
@@ -23,22 +20,18 @@ class LanguageControl extends React.Component<LanguageControlLanguageControlProp
     render() {
         const {
             lang,
-            route,
+            mobileOnly,
+            className,
+            shortcut
         } = this.props;
         return (
-            <div
-                className={classnames(
-                    'main__footer',
-                    {
-                        ['main__footer--index']: route === routes.order,
-                    },
-                )}
-            >
-                <Component
-                    lang={lang}
-                    changeLanguage={this.changeLanguage}
-                />
-            </div>
+            <Component
+                lang={lang}
+                mobileOnly={mobileOnly}
+                changeLanguage={this.changeLanguage}
+                className={className}
+                shortcut={shortcut}
+            />
         );
     }
 }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Redirect } from 'react-router';
+import { LanguageControl } from '../LanguageContorl';
+import { FadeIn } from '../../containers/Transitions';
 import { Button } from '../Button';
 import { loc } from './loc';
 import './Login.styl';
-
-
 
 @inject(({user, app}) => ({
   appStore: app,
@@ -50,10 +50,13 @@ class Login extends Component {
     e.preventDefault();
     this.setState({ showForgot: true })
   }
-  backClick = () => {
+  backClick = (e) => {
+    e.preventDefault()
+    console.log(this.props.closeForm)
     if (this.state.showForgot) {
       this.setState({showForgot: false})
     } else {
+      console.log('1', this.props.closeForm)
       this.props.closeForm && this.props.closeForm()
     }
   }
@@ -67,7 +70,9 @@ class Login extends Component {
       return <Redirect to="/" />
     }
     const lang = appStore.lang;
-    return <div className="login-container">
+    return <FadeIn>
+      {/* key-prop нужен для того, чтобы отработал FadeIn так как иначе считает, что children тот же самый */}
+    <div className="login-container" key={lang}>
       <form className="login" onSubmit={this.handleLogin}>
         <div className="left-side">
           <h2 className="title">{loc[lang].title}</h2>
@@ -124,9 +129,10 @@ class Login extends Component {
             <Button theme="white" invertTheme={true} onClick={this.backClick}>{loc[lang].back}</Button>
           </div>
         </div>
-        <div className="text">* autumn 2017 Louis Purple</div>
+        <LanguageControl mobileOnly={true} className="login__language-control" />
       </form>
     </div>
+    </FadeIn>
   }
 
 }

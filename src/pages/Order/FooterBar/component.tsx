@@ -45,7 +45,7 @@ class FooterBar extends React.Component<Props> {
             mutuallyExclusivePopup
         } = this.props;
         return (
-            <div className="footer-btn-bar">
+            <div className="footer-btn-bar footer-btn-bar__mobile">
                 <PopUp open={mutuallyExclusivePopup && mutuallyExclusivePopup!.show}>
                   {
                     mutuallyExclusivePopup && mutuallyExclusivePopup!.show ?

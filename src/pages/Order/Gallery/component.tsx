@@ -5,6 +5,8 @@ import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
+import { listeners, isLandscapeInitial } from '../../../utils';
+
 import './styles.styl';
 
 interface GalleryState extends ImageLoadState {
@@ -13,6 +15,10 @@ interface GalleryState extends ImageLoadState {
     mouseOverElement: boolean;
 }
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
+    private imageRef: React.RefObject<HTMLDivElement>;
+    private galleryBarWrapperRef: React.RefObject<HTMLDivElement>;
+    private resizeSubscriptionIndex: number | null;
+    private resizeCalled = false;
     constructor(props: GalleryProps) {
         super(props);
         const {
@@ -33,6 +39,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 activeIndex = items.findIndex(i => i.our_code === (orderValue[garment][0][group][subgroup] && orderValue[garment][0][group][subgroup].our_code || '')); // tslint:disable-line
             }
         }
+        this.imageRef = React.createRef();
+        this.galleryBarWrapperRef = React.createRef();
+        this.resizeSubscriptionIndex = null;
         this.state = {
             activeElementIndex: (activeIndex === -1 || !activeIndex) ? 0 : activeIndex,
             previewElementIndex: 0,
@@ -84,6 +93,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
         return item!;
     }
+
     updateActiveElement = () => {
         const item = this.shownItem;
         if (_.isEmpty(item)) {
@@ -104,6 +114,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     ...this.state.load,
                     success: imageUrl,
                 },
+            }, () => {
+                if (!this.resizeCalled) {
+                    this.resizeCalled = true;
+                    this.resizeHandler();
+                }
             });
         };
         image.onerror = () => {
@@ -127,12 +142,48 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             this.props.setActiveOrderItem(item);
         } else {
             this.updateActiveElement();
-            
         }
     }
-    
+
+    resizeHandler = () => {
+        if (!this.galleryBarWrapperRef.current) {
+            return;
+        }
+
+        const ref = this.imageRef.current;
+
+        this.galleryBarWrapperRef.current.setAttribute(
+            'style',
+            isLandscapeInitial ?
+                /** У элемента превью элемента есть отступ 5px */
+                `width: calc(100% - ${(ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0)}px);` : ''
+            );
+
+        if (ref) {
+            ref.setAttribute('style', '');
+            ref.setAttribute('style', `width: ${
+                // Исключаем учет border-ов
+                ref.offsetHeight > 7 ?
+                    Math.min(ref.offsetHeight, this.galleryBarWrapperRef.current.offsetWidth) :
+                    this.galleryBarWrapperRef.current.offsetWidth
+                }px`);
+            console.warn(this.galleryBarWrapperRef.current.offsetWidth);
+        }
+
+        this.galleryBarWrapperRef.current.setAttribute(
+            'style',
+            isLandscapeInitial ?
+                /** У элемента превью элемента есть отступ 5px */
+                `width: calc(100% - ${(ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0)}px);` :
+                `height: calc(100% - ${
+                    (ref ? ref.offsetHeight : 0) ? (this.galleryBarWrapperRef.current.offsetWidth + 10) : 0}px);`
+            );
+    }
+
     componentDidMount() {
         try {
+            listeners.resize.subscribe(this.resizeHandler);
+            this.resizeHandler();
             this.updateActiveElement();
         } catch (e) {
             this.setState({
@@ -142,9 +193,12 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 },
             });
         }
-
     }
-
+    componentWillUnmount() {
+        if (this.resizeSubscriptionIndex) {
+            listeners.resize.unsubscribe(this.resizeSubscriptionIndex);
+        }
+    }
     setPreviewElementIndex = (elementIndex: number, action: string) => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
@@ -228,8 +282,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             description = description.substring(0, descriptionSize).trim() + '...';
         }
         const {
-            our_code: code,
-            price,
             img_url_2d: image
         } = item;
         return (
@@ -250,28 +302,35 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                         </div>
                         </div>
                         : load.success ?
-                        <div className="gallery__img" id="js-gallery-img">
+                        <div
+                            className="gallery__img"
+                            id="js-gallery-img"
+                            ref={this.imageRef}
+                        >
                             <img
+                                className="image"
                                 src={image}
                                 alt="gallery image"
                             />
                         </div>
                         : null
                          }
-                        <GalleryBar
-                            items={items}
-                            shownItem={item}
-                            activeElementIndex={activeElementIndex}
-                            setActiveElementIndex={this.setActiveElementIndex}
-                            setPreviewElementIndex={this.setPreviewElementIndex}
-                            isMouseOverElement={mouseOverElement}
-                        />
+                        <div ref={this.galleryBarWrapperRef} className="gallery__bar-wrapper">
+                            <GalleryBar
+                                items={items}
+                                shownItem={item}
+                                activeElementIndex={activeElementIndex}
+                                setActiveElementIndex={this.setActiveElementIndex}
+                                setPreviewElementIndex={this.setPreviewElementIndex}
+                                isMouseOverElement={mouseOverElement}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="gallery__footer">
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                        <div className="gallery__footer--articul">₽{price.ru} / {code || 'code'}</div>
+                        {/* <div className="gallery__footer--articul">₽{price.ru} / {code || 'code'}</div> */}
                     </div>
                     <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">

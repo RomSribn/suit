@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import * as classNames from 'classnames';
+import { LanguageControl } from '../../../components/LanguageContorl';
 import { PopUp } from '../../../containers/Popup';
 import Login from '../../Login';
 
 import './styles.styl';
+import { HeaderBarProps } from '../typings';
 
 const loginText = {
     en: 'Log In',
@@ -36,7 +37,7 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
             userStore.logout();
         }
     }
-    
+
     closeForm = () => {
         this.setState({ showLoginForm: false });
     }
@@ -44,24 +45,12 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
     render() {
         const {
             userStore,
-            lang,
-            setLang
+            lang
         } = this.props;
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
         return (
             <div className="main__bar">
-                <span className="language-controll" >
-                    <span
-                        className={classNames('language-controll__item', {active: lang === 'ru'})}
-                        onClick={() => setLang('ru')}
-                    >RU
-                    </span>
-                    <span
-                        className={classNames('language-controll__item', {active: lang === 'en'})}
-                        onClick={() => setLang('en')}
-                    >EN
-                    </span>
-                </span>
+                <LanguageControl theme="black" shortcut={true} />
                 <Link to="#" onClick={this.profileLinkClick} className="profile-link">{userName}</Link>
                 <PopUp
                     open={this.state.showLoginForm}

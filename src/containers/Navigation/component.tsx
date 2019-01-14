@@ -8,6 +8,8 @@ import { TRANSITION_DUARAION } from '../../config/constants';
 import { navigationRoutes as routes } from '../../config/routes';
 import { loc } from './loc';
 
+import './styles.styl';
+
 interface HeaderProps {
 }
 const Header = (props: HeaderProps) => {
@@ -46,7 +48,7 @@ class NavigationItem extends React.Component<NavigationItemProps> {
                 to={routes[linkName]}
             >
             <ReactCSSTransitionGroup
-                transitionName="fade-in-absolute" 
+                transitionName="fade-in-absolute"
                 transitionEnterTimeout={TRANSITION_DUARAION}
                 transitionLeaveTimeout={TRANSITION_DUARAION}
             >
@@ -83,7 +85,7 @@ interface NavigationState {
 }
 class Navigation extends React.Component<NavigationProps, NavigationState> {
     static defaultProps = {
-        lang: 'en',   
+        lang: 'en',
     };
     constructor(props: NavigationProps) {
         super(props);
@@ -101,7 +103,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
             showActiveClassName: true,
         });
     }
-    
+
     render() {
         const {
             lang,

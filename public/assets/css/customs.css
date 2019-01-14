@@ -1,9 +1,7 @@
 .customs{
     flex-grow: 1;
     width: 100%;
-    overflow-y: auto;  
-    /* padding-right: 1.6666rem; */
-    padding-right: 1.6666rem;
+    overflow-y: auto;
     margin-bottom: calc(2.4rem + 4px);
 }
 .customs--no-scroll{
@@ -30,7 +28,19 @@
     cursor: pointer;
 }
 .custom.custom__no-pointer {
-    cursor: default;    
+    cursor: default;
+    padding-right: 0;
+}
+.custom.custom__no-pointer .custom__content {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+.custom.custom__no-pointer .custom__content .custom__status {
+    display: flex;
+    flex: 1;
+    height: 100%;
 }
 .custom:last-child{margin-bottom: 0;}
 .custom__name{
@@ -49,7 +59,7 @@
 
 .custom__status input {
     height: 100%;
-    width: 60%;
+    width: 100%;
     border: none;
     background: none;
     color: #8a8a8a;
@@ -85,12 +95,12 @@
     height: 2px;
     background: #000;
     position: absolute;
-    top: 50%;
+    top: 48%;
     right: 1.3333rem;
     margin-top: -1px;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
-    transition: .35s ease;  
+    transition: .35s ease;
 }
 .custom__control:after{
     -webkit-transform: rotate(-90deg);
@@ -112,4 +122,42 @@
 }
 @media only screen and (max-height : 700px){
     .custom__status{font-size: 11px;}
+}
+@media only screen and (max-width: 450px) {
+    .customs {
+        margin-bottom: calc(3rem + 4px);
+    }
+    .custom.custom__no-pointer {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 1.333rem;
+    }
+
+    .custom--short {
+        width: 94%;
+        margin: auto;
+    }
+
+    .custom--open {
+        width: 100%;
+        margin: auto;
+    }
+
+    .custom .custom__content {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .custom.custom__no-pointer .custom__content {
+        flex: initial;
+        display: initial;
+        height: auto;
+    }
+    .custom.custom__no-pointer .custom__content .custom__status {
+        display: initial;
+        flex: initial;
+    }
 }

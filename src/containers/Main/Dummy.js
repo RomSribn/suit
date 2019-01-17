@@ -68,7 +68,7 @@ class Widget extends PureComponent {
       this.widget3d.update(this.props.assets)
       .then(this.handleUpdated);
     } catch(err) {
-      console.log('here', err)
+      console.log('Ошибка при рендере манекена', err)
     }
   }
 
@@ -160,7 +160,6 @@ class Widget extends PureComponent {
   }
 
   handleUpdated = () => {
-    console.log('updated');
   }
 }
 

@@ -15,6 +15,7 @@ interface Child {
 
 interface ScrollEventTarget extends EventTarget {
     offsetHeight: number;
+    scrollTop: number;
     querySelector: (identifier: string) => Child;
 }
 

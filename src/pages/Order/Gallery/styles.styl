@@ -33,13 +33,11 @@
         display inline-block
         height 100%
         width 100%
-        @media only screen and (max-width: 450px), only screen and (max-height: 450px)
-            overflow-y inherit
+        overflow-y auto
 
         &-wrapper
             height: 100%;
             display: inline-block
-            overflow-y: auto
 
         &-cont
             display grid
@@ -52,7 +50,6 @@
             position relative
             @media only screen and (max-width: 450px), only screen and (max-height: 450px)
                 margin-bottom 1rem
-                overflow: hidden;
 
         &-blc
             width 100%

@@ -176,7 +176,6 @@ type State = {
     allLoaded: false;
     loadingProgress: number;
     renderedElementsCount: number;
-    isScrolling: boolean;
     isShowedExceptionPopup: boolean;
     titleSubGroup: string;
     titleElement: Translations<string> | null;
@@ -185,7 +184,8 @@ type State = {
 class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
     isScrolling = false;
-    scrollGallery?: HTMLElement;
+    galleryBar: React.RefObject<HTMLDivElement>;
+    galleryItemElement: HTMLDivElement | null;
 
     incremetLoadedCount = () => {
         this.loadedCount++;
@@ -198,44 +198,36 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             renderedElementsCount: 35,
             isShowedExceptionPopup: false,
             titleSubGroup: '',
-            isScrolling: false,
             titleElement: null
         };
         this.props.setPreviewElementIndex(this.props.activeElementIndex || 0, 'enter');
+        this.galleryBar = React.createRef();
     }
 
-    handlerItemScrollLoader = (event: ScrollEvent) => {
-        const galleryItem = event.target.querySelector('.gallery__item-blc');
-        const wrapHeight = galleryItem!.offsetHeight,
-              wrapWidth = galleryItem!.offsetWidth,
-              barWrapWidth = wrapWidth - wrapHeight - 2,
-              containerHeight = event.target.offsetHeight;
-
-        let divider = 1;
-        if (barWrapWidth / 4 <= 36) {
-            divider = 1;
-        } else if (barWrapWidth / 4 <= 71) {
-            divider = 2;
-        } else if (barWrapWidth / 4 <= 142) {
-            divider = 3;
-        } else if (barWrapWidth / 4 <= 284) {
-           divider = 4;
+    _handleScroll = (event: ScrollEvent) => {
+        if (this.state.renderedElementsCount >= this.props.items.length) {
+            return;
         }
+        if (!this.galleryBar.current) {
+            return;
+        }
+
+        const galleryWrapper = this.galleryBar.current;
 
         const itterStep = 10;
-        const heightOfAllItems = (this.state.renderedElementsCount / divider) * wrapHeight;
-        // // max height for scrolls
-        if (heightOfAllItems > containerHeight && !this.isScrolling) {
-            if (this.scrollGallery!.scrollTop + this.scrollGallery!.clientHeight >=
-                this.scrollGallery!.scrollHeight) {
-                    this.setState({
-                        renderedElementsCount: this.state.renderedElementsCount + itterStep,
-                    });
-                    // optimize ui rerender
-                    this.isScrolling = true;
-                    setTimeout(() => this.isScrolling = false, 100);
-                }
+
+        if (event.target && event.target.scrollTop > 0.5 * galleryWrapper.offsetHeight) {
+            this.setState({
+                renderedElementsCount: this.state.renderedElementsCount + itterStep,
+            });
         }
+    }
+
+    throttledHandleScroll = _.throttle(this._handleScroll, 300); // tslint:disable-line
+
+    handleScroll = (event: ScrollEvent) => {
+        event.persist();
+        this.throttledHandleScroll(event);
     }
 
     showExceptionPopup = (titleSubGroup: string, titleElement: Translations<string> | null) => (
@@ -263,12 +255,12 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
         return (
             <div
-                ref={comp => this.scrollGallery = comp!}
-                onScroll={this.handlerItemScrollLoader}
                 className="gallery__bar"
+                onScroll={this.handleScroll}
                 id="js-bar-wrap"
             >
                 <div
+                    ref={this.galleryBar}
                     className="gallery__bar-cont"
                     id="js-bar-container"
                 >

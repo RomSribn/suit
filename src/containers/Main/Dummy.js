@@ -218,7 +218,6 @@ export default class App extends Component {
     const {
       orderStore
     } = this.props;
-    console.log(this);
     const subgroup =
       _.findKey(
           orderStore.order.shirt[0].design,

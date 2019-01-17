@@ -167,7 +167,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     Math.min(ref.offsetHeight, this.galleryBarWrapperRef.current.offsetWidth) :
                     this.galleryBarWrapperRef.current.offsetWidth
                 }px`);
-            console.warn(this.galleryBarWrapperRef.current.offsetWidth);
         }
 
         this.galleryBarWrapperRef.current.setAttribute(
@@ -199,7 +198,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             listeners.resize.unsubscribe(this.resizeSubscriptionIndex);
         }
     }
-    setPreviewElementIndex = (elementIndex: number, action: string) => {
+    setPreviewElementIndex = (elementIndex: number, action?: 'enter') => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
             // TODO: разобраться с путаницей наименований

@@ -2,7 +2,7 @@ interface GalleryBarProps {
     items: GalleryStoreItems,
     app?: IAppStore,
     setActiveElementIndex(i: number, action?: string): () => void;
-    setPreviewElementIndex(elementIndex: number, action?: string): void;
+    setPreviewElementIndex(elementIndex: number, action?: 'enter'): void;
     shownItem: GalleryStoreItem;
     isMouseOverElement: boolean;
     activeElementIndex: number;

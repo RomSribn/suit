@@ -47,7 +47,6 @@ class fabricGroup extends group {
   }
 
   _onSuccess = (data, headers) => {
-    console.log(data)
     let items = data.map(i => observable({
       ...i,
       checked: false

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { loc } from './loc';
 
-import { isMobile, isLandscape, isTablet, isIpadPro } from '../../../utils';
+import { isMobile, isLandscape, isTablet, listeners } from '../../../utils';
 
 class OrderInfo extends React.PureComponent<OrderInfoProps> {
     static defaultProps: OrderInfoProps = {
@@ -10,16 +10,19 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
         price: ''
     };
 
+    listenerIndex: number;
+
     componentWillMount() {
-        if (isMobile() || isTablet() || isIpadPro()) {
-            // window.addEventListener('orientationchange', () => {
-            //     setTimeout(() => {
-            //         this.forceUpdate();
-            //     }, 200);
-            // }, false);
-          }
+        this.listenerIndex = listeners.orientationchange.subscribe(() => {
+            setTimeout(() => {
+                this.forceUpdate();
+            }, 200);
+        });
     }
 
+    componentWillUnmount() {
+        listeners.orientationchange.unsubscribe(this.listenerIndex);
+    }
     render() {
         const {
             lang,
@@ -27,7 +30,7 @@ class OrderInfo extends React.PureComponent<OrderInfoProps> {
             price
         } = this.props;
         const fullDeliveryDate = isTablet() && !isLandscape()
-            ? deliveryDate.split('.').slice(0, deliveryDate.split('.').length - 1).join('/')
+            ? deliveryDate.split('.').slice(0, deliveryDate.split('.').length - 1).join('.')
             : deliveryDate;
         return (
             <div className="calc-blc">

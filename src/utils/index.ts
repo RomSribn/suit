@@ -43,8 +43,10 @@ export const isTablet = () => html.offsetWidth <= 768
   || html.offsetHeight <= 768;
 
 // use accurate because it is also a normal pc resolution
-export const isIpadPro = () => html.offsetWidth <= 1366
-  || html.offsetHeight <= 1366;
+export const isIpadPro = () =>
+  (navigator.userAgent.match(/iPad/i) != null) &&
+  (html.offsetWidth <= 1366
+  || html.offsetHeight <= 1366);
 
 export const checkIfMobile = () => {
   const threshold = isLandscape() ? 650 : 450;

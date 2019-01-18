@@ -1,7 +1,6 @@
 interface DetailsProps {
     activeGarments?: SubgroupChoiceItem[];
-    lang?: string;
-    // setActiveGarment(g: string): void;
+    lang?: Lang;
 }
 
 interface DetailsContainerProps extends DetailsProps {

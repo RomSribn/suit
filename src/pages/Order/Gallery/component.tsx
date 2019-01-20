@@ -164,17 +164,16 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             ref.setAttribute('style', `width: ${
                 // Исключаем учет border-ов
                 ref.offsetHeight > 7 ?
-                    Math.min(ref.offsetHeight, this.galleryBarWrapperRef.current.offsetWidth) :
+                    Math.max(ref.offsetHeight, this.galleryBarWrapperRef.current.offsetWidth) :
                     this.galleryBarWrapperRef.current.offsetWidth
                 }px`);
-            console.warn(this.galleryBarWrapperRef.current.offsetWidth);
         }
 
         this.galleryBarWrapperRef.current.setAttribute(
             'style',
             isLandscapeInitial ?
-                /** У элемента превью элемента есть отступ 5px */
-                `width: calc(100% - ${(ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0)}px);` :
+                /** У элемента превью элемента есть отступ 5px + 2 бордеры с обеих сторон по 1px */
+                `width: calc(100% - ${(ref && ref.offsetWidth ? ref.offsetWidth + 7 : 0)}px);` :
                 `height: calc(100% - ${
                     (ref ? ref.offsetHeight : 0) ? (this.galleryBarWrapperRef.current.offsetWidth + 10) : 0}px);`
             );
@@ -184,6 +183,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         try {
             listeners.resize.subscribe(this.resizeHandler);
             this.resizeHandler();
+            setTimeout(this.resizeHandler, 300);
             this.updateActiveElement();
         } catch (e) {
             this.setState({
@@ -199,7 +199,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             listeners.resize.unsubscribe(this.resizeSubscriptionIndex);
         }
     }
-    setPreviewElementIndex = (elementIndex: number, action: string) => {
+    setPreviewElementIndex = (elementIndex: number, action?: 'enter') => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
             // TODO: разобраться с путаницей наименований

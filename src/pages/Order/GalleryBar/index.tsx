@@ -201,6 +201,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             isScrolling: false,
             titleElement: null
         };
+        this.props.setPreviewElementIndex(this.props.activeElementIndex || 0, 'enter');
     }
 
     handlerItemScrollLoader = (event: ScrollEvent) => {

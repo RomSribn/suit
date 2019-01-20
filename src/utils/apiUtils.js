@@ -15,7 +15,6 @@ export function checkStatus(response) {
 }
 
 export function parseJSON(response) {
-  console.log(response)
   return response.data;
 }
 
@@ -44,12 +43,10 @@ export function callApi(url, config, request, onRequestSuccess, onRequestFailure
     if(loadIdToken()) {
       requestConf.headers.set('x-auth-token', loadIdToken())
     }
-    console.log(requestConf)
     return fetch(url, requestConf)
       .then(checkStatus)
       .then(parseJSON)
       .then((json) => {
-        console.log("callApi", config, json)
         dispatch(onRequestSuccess(json));
       })
       .catch((error) => {
@@ -87,7 +84,7 @@ export function setIdToken(idToken) {
 
 /**
  * Устанавливает в localstorage информации о пользователе
- * 
+ *
  * @param {UserInfo} userInfo
  */
 export function setUserInfo(userInfo) {

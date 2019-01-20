@@ -52,11 +52,9 @@ class Login extends Component {
   }
   backClick = (e) => {
     e.preventDefault()
-    console.log(this.props.closeForm)
     if (this.state.showForgot) {
       this.setState({showForgot: false})
     } else {
-      console.log('1', this.props.closeForm)
       this.props.closeForm && this.props.closeForm()
     }
   }

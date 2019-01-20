@@ -68,9 +68,9 @@ class OrderInfoMobile extends React.PureComponent<OrderInfoProps> {
         } = this.props;
         return (
             <div className="calc-blc-mobile">
-                <span className="calc-text-mobile">{`${loc[lang!].price}: ${loc[lang!].currency}${price}`}
-                {(!isMobile() || isLandscape()) && <span>&nbsp;/&nbsp;</span>}
-                {(!isMobile() || isLandscape()) && (`${loc[lang!].delivery} ${deliveryDate}`)}
+                <span className="calc-text-mobile">
+                    <span>{`${loc[lang].price}: ${loc[lang].currency}${price}`}</span>
+                    <span className="portrait-hide">&nbsp;/&nbsp; {`${loc[lang].delivery} ${deliveryDate}`}</span>
                 </span>
             </div>
         );

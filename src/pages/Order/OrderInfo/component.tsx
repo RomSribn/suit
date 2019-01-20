@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { loc } from './loc';
 
-import { isMobile, isLandscape, isTablet, listeners } from '../../../utils';
+import { isLandscape, isTablet, listeners } from '../../../utils';
 
 class OrderInfo extends React.PureComponent<OrderInfoProps> {
     static defaultProps: OrderInfoProps = {

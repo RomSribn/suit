@@ -1,10 +1,10 @@
 interface OrderInfoProps {
-    lang: string;
+    lang: Lang;
     deliveryDate: string;
     price: string;
 }
 
 interface COrderInfoProps {
     order?: IOrderStore,
-    lang?: string
+    lang?: Lang
 }

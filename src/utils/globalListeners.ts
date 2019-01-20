@@ -1,9 +1,10 @@
+import * as React from 'react';
 import * as _ from 'lodash';
 
 type WindowEvents = keyof WindowEventMap;
 
 class GlobalListeners {
-    private listeners: (() => void)[];
+    private listeners: (undefined | (() => void))[];
     private event: WindowEvents;
 
     /**
@@ -11,7 +12,9 @@ class GlobalListeners {
      */
     private callListeners = _.throttle(() => {
         this.listeners.forEach(listener => {
-            listener.call(null);
+            if (listener) {
+                listener.call(null);
+            }
         });
     }, 300);
 
@@ -34,7 +37,7 @@ class GlobalListeners {
      * @param { number } subscriptionIndex Индекс подписки, возращенный из метода subscribe
      */
     unsubscribe = (subscriptionIndex: number) => {
-        this.listeners = this.listeners.filter((listener, index) => index === subscriptionIndex);
+        this.listeners[subscriptionIndex] = undefined;
     }
 
     /**
@@ -50,7 +53,30 @@ class GlobalListeners {
  * По триггеру события window.event вызывает все зарегистрированные коллбеки
  * для этого события
  */
-export const listeners = {
+const listeners = {
     resize: new GlobalListeners('resize'),
     orientationchange: new GlobalListeners('orientationchange'),
+};
+
+interface ListenerProps {
+    action: keyof typeof listeners;
+    callback: () => void;
+}
+
+class Listen extends React.Component<ListenerProps> {
+    listenerIndex: number;
+    componentDidMount() {
+        listeners[this.props.action].subscribe(this.props.callback);
+    }
+    componentWillUnmount() {
+        listeners[this.props.action].unsubscribe(this.listenerIndex);
+    }
+    render() {
+        return this.props.children;
+    }
+}
+
+export {
+    listeners,
+    Listen
 };

@@ -1,5 +1,5 @@
 interface SubgroupChoiceProps {
-    lang?: string;
+    lang?: Lang;
     data?: SubgroupChoiceItem[];
     SubgroupsStore?: any;
     fetchGarments?(): void;

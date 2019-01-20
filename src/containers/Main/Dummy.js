@@ -54,7 +54,7 @@ class Widget extends PureComponent {
       apiPath: 'http://194.87.239.90:8081/api/',
       assetsPath: 'http://194.87.239.90/assets/models/',
       salonId: 1,
-      useMobilePositions: isMobile,
+      useMobilePositions: isMobile(),
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       }

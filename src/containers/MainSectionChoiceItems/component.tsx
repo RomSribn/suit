@@ -223,7 +223,13 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                     <CustomLink
                         lang={lang}
                         basicRoute={basicRoute}
-                        item={item}
+                        item={
+                            {
+                                ...item,
+                                linkName: lang &&
+                                    loc[lang].garments[item.linkName.toLowerCase()] || item.linkName
+                            }
+                        }
                         onClick={this.onClick}
                         clearClick={this.clearClick}
                         key={`custom-link-${item.id}`}

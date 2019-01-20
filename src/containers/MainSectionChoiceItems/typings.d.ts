@@ -3,5 +3,5 @@ interface ChoiceItemsProps {
     basicRoute: string;
     pushOrderPathItem?(item: OrderPathItem): void;
     orderStore?: IOrderStore;
-    lang?: string;
+    lang?: Lang;
 }

@@ -5,7 +5,7 @@ import { services } from '../../../config/routes';
 import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
-import { listeners, isLandscapeInitial } from '../../../utils';
+import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 
 import './styles.styl';
 
@@ -282,7 +282,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             description = description.substring(0, descriptionSize).trim() + '...';
         }
         const {
-            img_url_2d: image
+            img_url_2d: image,
+            price,
+            our_code: code,
         } = item;
         return (
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
@@ -330,7 +332,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__footer">
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                        {/* <div className="gallery__footer--articul">₽{price.ru} / {code || 'code'}</div> */}
+                        {!isMobile() &&
+                            <div className="gallery__footer--articul">₽{price.ru}{code && (' / ' + code)}</div>
+                        }
                     </div>
                     <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">

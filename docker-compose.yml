@@ -1,0 +1,9 @@
+version: "1"
+services:
+  web:
+    image: chepurkoaleksei/fiber-clothes
+    command: node server/index.js
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/opt/app

@@ -13,7 +13,7 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
     };
     static style = {
         position: 'relative' as 'relative',
- 
+
         fontSize: '100%',
         marginBottom: 0,
     };
@@ -39,13 +39,24 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
         const {
             pageTitle
         } = this.state;
+        const {
+            lang
+        } = this.props;
         return (
         <div
             className="main__header-content"
             style={HeaderContent.style}
         >
             {pageTitle && <h1 className="main__header-title">{pageTitle}</h1>}
-            <Breadcrumbs setCrumbs={this.setCrumbs} separator=" / " />
+            <span>
+                {/* Вставялем чтобы подхватились стили. Вообще похуй */}
+                <span className="breadcrumbs">
+                    <a className="breadcrumbs__crumb" href="http://gasuits.ru">{lang === 'ru' ? 'главная' : 'main'}</a>
+                    <span className="breadcrumbs__separator"> /&nbsp;</span>
+                </span>
+
+                <Breadcrumbs className="breadcrumbs__wrapper" setCrumbs={this.setCrumbs} separator=" / " />
+            </span>
         </div>);
     }
 }

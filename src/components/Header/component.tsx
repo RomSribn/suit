@@ -11,7 +11,7 @@ class Header extends React.Component<HeaderProps> {
     static defaultProps = {
         userName: undefined,
     };
-    
+
     render() {
         const {
             path,
@@ -23,7 +23,7 @@ class Header extends React.Component<HeaderProps> {
             setCrumbs,
             title
         } = this.props;
-        
+
         return (
             <div className="main__header">
             {
@@ -46,6 +46,7 @@ class Header extends React.Component<HeaderProps> {
                         openMenu={openMenu}
                         title={title}
                         setCrumbs={setCrumbs}
+                        lang={lang}
                     />
                 </div>
             }

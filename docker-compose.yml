@@ -1,9 +1,7 @@
-version: "1"
+version: '3'
 services:
   web:
-    image: chepurkoaleksei/fiber-clothes
-    command: node server/index.js
+    image: chepurkoaleksei/clothes_layout
+    command: forever start server/index.js
     ports:
-      - 3000:3000
-    volumes:
-      - ./:/opt/app
+      - 80:3000

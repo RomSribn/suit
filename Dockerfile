@@ -1,4 +1,4 @@
-FROM node AS builder
+FROM node:8.11.3
 
 RUN mkdir -p /usr/src/app
 
@@ -9,8 +9,9 @@ RUN chmod 777 ~/.ssh
 ARG ssh_prv_key
 ARG ssh_pub_key
 ARG ssh_known_hosts
+ARG clothes_api
 
-ENV NODE_ENV=production
+ENV CLOTHES_API="$clothes_api"
 
 RUN apt-get update && \
     apt-get install -y \
@@ -39,13 +40,18 @@ RUN rm -rf node_modules
 RUN rm -f package-lock.json
 
 
-RUN npm remove webpack
-RUN npm remove webpack -g
-RUN npm i clothes-widget-3d git+ssh://git@bitbucket.org/haha29/widget3d.git#master
 RUN npm install
 RUN npm run build
 
+RUN ls -d */ | grep -P -v "(build|server)" | xargs -d"\n" rm -r
+
+RUN ls | grep -P -v "(build|server)" | xargs -d"\n" rm
+
+RUN npm i express forever
+
 EXPOSE 3000
+
+RUN rm -r ~/.ssh
 
 # Start the app
 CMD ["node", "server/index.js"]

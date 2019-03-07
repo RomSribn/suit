@@ -47,11 +47,12 @@ RUN ls -d */ | grep -P -v "(build|server)" | xargs -d"\n" rm -r
 
 RUN ls | grep -P -v "(build|server)" | xargs -d"\n" rm
 
-RUN npm i express forever
+RUN npm i express pm2
+RUN npm i -g pm2
 
 EXPOSE 3000
 
 RUN rm -r ~/.ssh
 
 # Start the app
-CMD ["node", "server/index.js"]
+CMD ["pm2", "start", "server/index.js"]

@@ -5,9 +5,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "NODE_ENV=production node scripts/build.js",
-    "docker:build": "docker build . -t chepurkoaleksei/clothes_layout --build-arg clothes_api=$CLOTHES_API --build-arg ssh_prv_key=\"$(cat ~/.ssh/id_rsa)\" --build-arg ssh_pub_key=\"$(cat ~/.ssh/id_rsa.pub)\" --build-arg ssh_known_hosts=\"$(cat ~/.ssh/known_hosts)\"",
-    "deploy": "sh .deploy/deploy.sh",
-    "server:update": "npm run docker:build; npm run deploy",
+    "server:update": "sh .deploy/update_server.sh",
     "integratino:start": "node integration/scripts/start.js",
     "integratino:build": "node integration/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

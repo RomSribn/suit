@@ -20,7 +20,7 @@ class Button extends React.PureComponent<ButtonProps> {
             <span className={classNames('button-bar', { white: whiteTheme })}>
                 <button
                     onClick={onClick}
-                    type={type}
+                    type={type as 'button'}
                     style={style}
                     className={
                         classNames(

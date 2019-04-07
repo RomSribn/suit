@@ -14,8 +14,7 @@ ARG clothes_api
 ENV CLOTHES_API="$clothes_api"
 
 RUN apt-get update && \
-    apt-get install -y \
-        git
+    apt-get install -y
 
 # Authorize SSH Host
 RUN mkdir -p /root/.ssh && \

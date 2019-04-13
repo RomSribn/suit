@@ -74,13 +74,25 @@ class Gallery extends React.Component<GalleryContainerProps> {
         
         const items = [...galleryStore.items].filter((galleryStoreItem: {}) => {
             const filtersKeys = Object.keys(filters);
-            for (const filterName of filtersKeys) {
+            
+            return filtersKeys.reduce((acc, filterName) => {
                 const filterValues = filters[filterName];
-                if (filterValues && filterValues.length && !filterValues.includes(galleryStoreItem[filterName].value)) {
+                if (filterValues &&
+                    filterValues.length
+                ) {
+                    if ( // И в хвост и в гриву
+                        filterValues.includes(String(galleryStoreItem[filterName].value)) ||
+                        filterValues.includes(String(galleryStoreItem[filterName])) ||
+                        !(galleryStoreItem[filterName] instanceof Object) &&
+                            filterValues.map(Number).includes(Number(galleryStoreItem[filterName]))
+                    ) {
+                        return true && acc;
+                    }
+                    
                     return false;
                 }
-            }
-            return true;
+                return acc;
+            }, true);
         });
 
         return (

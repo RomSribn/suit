@@ -37,9 +37,6 @@ class Filter extends React.Component<_FilterProps> {
 }))
 @observer
 class Controll extends React.Component<_ControllProps> {
-    componentWillUnmount() {
-        this.props.closeFilter!();
-    }
     render() {
         const {
             isOpen,

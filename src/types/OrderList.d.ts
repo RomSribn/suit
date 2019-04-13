@@ -20,14 +20,29 @@ declare namespace OrderList {
             description: MakeLocale<string>;
             exception: string[];
             img_url_2d: string;
-            main_color: MakeLocale<string>;
+            main_color: {
+                title: MakeLocale<string>;
+                value: string;
+            };
             our_code: string;
-            pattern: MakeLocale<string>;
-            pattern_size: MakeLocale<string>;
-            price: MakeLocale<string>;
-            second_colors: MakeLocale<string>[];
+            pattern: {
+                title: MakeLocale<string>;
+                value: string;
+            }
+            pattern_size: {
+                title: MakeLocale<string>;
+                value: string;
+            };
+            price: {
+                title: MakeLocale<string>;
+                value: string
+            };
+            second_colors: {
+                title: MakeLocale<string>;
+                value: string;
+            }[];
             title: MakeLocale<string>;
-            weight: MakeLocale<number>;
+            weight: MakeLocale<number>
         };
         type ServerGarmentItem = {
             additionalFabric?: SubgroupValues;

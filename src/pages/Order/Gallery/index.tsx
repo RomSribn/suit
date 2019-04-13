@@ -46,6 +46,11 @@ const galleryCache = {};
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
     componentWillUnmount() {
+        const filterStore = this.props.filterStore!;
+        filterStore.closeFilter();
+        filterStore.clearUserFilters();
+        filterStore.clearFilters();
+
         if (!this.props.isExclusivePopupShowing()) {
             this.props.setActiveOrderItem(null);
         }
@@ -64,6 +69,19 @@ class Gallery extends React.Component<GalleryContainerProps> {
             filterStore,
             match
         } = this.props;
+        
+        const filters = filterStore.userFilters;
+        
+        const items = [...galleryStore.items].filter((galleryStoreItem: {}) => {
+            const filtersKeys = Object.keys(filters);
+            for (const filterName of filtersKeys) {
+                const filterValues = filters[filterName];
+                if (filterValues && filterValues.length && !filterValues.includes(galleryStoreItem[filterName].value)) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
         return (
                 group === 'fitting'
@@ -71,18 +89,18 @@ class Gallery extends React.Component<GalleryContainerProps> {
                     <Fitting
                         key={galleryStore.items.toString()}
                         lang={lang}
-                        items={[...galleryStore.items]}
+                        items={items}
                     />
                 )
                 : (
                     <Component
-                        key={(galleryStore.items || [])
+                        key={(items || [])
                             .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
                         lang={lang}
                         match={match}
                         setActiveOrderItem={setActiveOrderItem}
                         setPreviewElement={setPreviewElement}
-                        items={galleryStore.items}
+                        items={items}
                         galleryStore={galleryStore}
                         group={group}
                         filterStore={filterStore}

@@ -7,12 +7,6 @@ class Controll extends React.PureComponent<ControllProps> {
         type: '',
         onCLick: () => null,
     };
-    componentWillUnmount() {
-        const { filterStore } = this.props;
-        filterStore!.closeFilter();
-        filterStore!.clearUserFilters();
-        filterStore!.clearFilters();
-    }
 
     render() {
         const {

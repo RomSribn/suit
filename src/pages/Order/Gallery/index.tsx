@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import { inject, observer } from 'mobx-react';
+import { intersection } from 'lodash';
 import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
@@ -74,7 +75,6 @@ class Gallery extends React.Component<GalleryContainerProps> {
         
         const items = [...galleryStore.items].filter((galleryStoreItem: {}) => {
             const filtersKeys = Object.keys(filters);
-            
             return filtersKeys.reduce((acc, filterName) => {
                 const filterValues = filters[filterName];
                 if (filterValues &&
@@ -84,7 +84,13 @@ class Gallery extends React.Component<GalleryContainerProps> {
                         filterValues.includes(String(galleryStoreItem[filterName].value)) ||
                         filterValues.includes(String(galleryStoreItem[filterName])) ||
                         !(galleryStoreItem[filterName] instanceof Object) &&
-                            filterValues.map(Number).includes(Number(galleryStoreItem[filterName]))
+                            filterValues.map(Number).includes(Number(galleryStoreItem[filterName])) ||
+                        // Так как это объекты mobx'a обычная проверка Array.isArray ну не сработает.
+                        // Используем костыль с проверкой на метод map
+                        galleryStoreItem[filterName].map &&
+                            intersection(
+                                filterValues, galleryStoreItem[filterName].map((val: {value: string}) => val.value)
+                            ).length
                     ) {
                         return true && acc;
                     }

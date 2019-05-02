@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Breadcrumbs, Crumbs } from 'react-breadcrumbs';
 import './style.styl';
+import { isMobile } from '../../../utils';
 
 type Props = {
   openMenu: () => void,
@@ -23,7 +24,7 @@ export default ({ openMenu, title, setCrumbs, lang }: Props) => {
               <a className="breadcrumbs__crumb" href="http://gasuits.ru">{lang === 'ru' ? 'главная' : 'main'}</a>
               <span className="breadcrumbs__separator"> /&nbsp;</span>
           </span>
-          <Breadcrumbs className="breadcrumbs__wrapper" setCrumbs={setCrumbs} separator=" / " />
+            {!isMobile() && <Breadcrumbs className="breadcrumbs__wrapper" setCrumbs={setCrumbs} separator=" / " />}
         </span>
       </main>
 

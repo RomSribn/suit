@@ -8,6 +8,10 @@ class Controll extends React.PureComponent<ControllProps> {
         onCLick: () => null,
     };
 
+    componentDidMount() {
+        this.props.onCLick();
+    }
+
     render() {
         const {
             onCLick,

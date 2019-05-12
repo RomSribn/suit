@@ -9,7 +9,9 @@ class Controll extends React.PureComponent<ControllProps> {
     };
 
     componentDidMount() {
-        this.props.onCLick();
+        if (!this.props.isOpen) {
+            this.props.onCLick();
+        }
     }
 
     render() {

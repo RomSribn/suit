@@ -81,6 +81,11 @@ class Wrapper extends Component {
               !dummyWasRendered &&
               <Route path={`${routes.details}/:any`} component={ () =><Redirect to={routes.order} /> } />
             }
+            {
+              !userStore.isAuth && <Route path={`${routes.details}/:garment/fitting/fitting`} component={({match, location}) => {
+                return <Redirect to={`${routes.details}/${match.params.garment}${location.search}`}/>;
+              }} />
+            }
             <CrumbRoute
               {...getCombinedPathAndTitle('order')}
               render={(props) => {

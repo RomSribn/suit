@@ -95,7 +95,6 @@ class FooterBar extends React.Component<Props> {
                     <Route
                         path={routes.subgroupChoice}
                         component={(...props: any[]) => { // tslint:disable-line
-                            const garment: string = props[0].match.params.garment;
                             const group: string = props[0].match.params.group;
                             const subGroup: string = props[0].match.params.subgroup;
 
@@ -117,14 +116,13 @@ class FooterBar extends React.Component<Props> {
                                     }
                                     link = `${link}/design/${currentData.design[currentIndex + 1].subsection_our_code}`;
                                 } else {
-                                    link = `${link}/fitting/fitting/`;
+                                    link = `${link}/fitting/fitting`;
                                 }
                             }
                             if (group) {
                                 link = `${link}`;
                             }
 
-                            console.log(garment, group, subGroup); // tslint:disable-line
                             return (
                                 <Link
                                     to={`${routes.details}/${props[0].match.params.garment}`}

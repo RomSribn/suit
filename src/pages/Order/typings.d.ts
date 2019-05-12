@@ -12,7 +12,7 @@ interface Subgroup {
     is_multiple: boolean;
     is_input: boolean;
     is_allowOwnFabric: boolean;
-    items: SubgroupItem[]
+    items: SubgroupItem[];
     title: {
         en: string;
         ru: string;

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 
 import './style.styl';
+import { Link } from 'react-router-dom';
 
 class Button extends React.PureComponent<ButtonProps> {
     render() {
@@ -14,24 +15,32 @@ class Button extends React.PureComponent<ButtonProps> {
             style,
             disabled,
             theme,
+            link,
         } = this.props;
         const whiteTheme = theme === 'white';
+
+        const commonProps = {
+            onClick,
+            style,
+            className: classNames(
+                className,
+                'button',
+                { disabled },
+                { black: !whiteTheme },
+                { white: whiteTheme },
+                { invert: invertTheme }
+            )
+        };
+
+        // @ts-ignore
+        const Component = link ? Link : props => <button {...props}/>;
+
         return (
             <span className={classNames('button-bar', { white: whiteTheme })}>
-                <button
-                    onClick={onClick}
+                <Component
+                    {...commonProps}
+                    to={link as string}
                     type={type as 'button'}
-                    style={style}
-                    className={
-                        classNames(
-                            className,
-                            'button',
-                            { disabled },
-                            { black: !whiteTheme },
-                            { white: whiteTheme },
-                            { invert: invertTheme }
-                        )
-                    }
                 >{children}
                 {
                     whiteTheme &&
@@ -50,7 +59,7 @@ class Button extends React.PureComponent<ButtonProps> {
                         </svg>
                     </div>
                 }
-                </button>
+                </Component >
             </span>
         );
     }

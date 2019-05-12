@@ -15,7 +15,7 @@ const makeLocale = (): Translations<Locale> => ({
     en: {
         back: 'back',
         create: 'send',
-        save: 'save',
+        save: 'next',
         update: 'update',
         repeat: 'repeat',
         errorMessage: 'Something\'s wrong. We recommend to try again.',
@@ -24,9 +24,9 @@ const makeLocale = (): Translations<Locale> => ({
         done: 'done',
     },
     ru: {
-        back: 'назад',
+        back: 'вернуться',
         create: 'отправить',
-        save: 'сохранить',
+        save: 'дальше',
         update: 'обновить',
         repeat: 'повторить',
         errorMessage: 'Что-то пошло не так. Рекомендуем повторить действие!',

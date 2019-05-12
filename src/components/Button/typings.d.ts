@@ -7,4 +7,5 @@ interface ButtonProps {
     style?: object;
     invertTheme?: boolean;
     theme?: 'black' | 'white';
+    link?: string;
 }

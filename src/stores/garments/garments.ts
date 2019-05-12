@@ -5,6 +5,10 @@ import GarmentStore from './garment';
 
 export const ADD: string = 'ADD_ACTIVE_GARMENT';
 export const REMOVE: string = 'REMOVE_ACTIVE_GARMENT';
+//
+// const GARMENTS_ORDER = [
+//     'shirt'
+// ];
 
 type GarmentsFromServer = Garment[];
 type GarmentsFromServerToGarmentsObject = (

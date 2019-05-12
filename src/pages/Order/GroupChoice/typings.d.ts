@@ -1,6 +1,9 @@
-interface GroupChoiceProps {
+import { Subgroups } from '../../../stores/garments';
+
+export interface GroupChoiceProps {
     match: Match;
-    choiceItem: OrderPathItem,
+    choiceItem: OrderPathItem;
+    subgroupsStore?: Subgroups;
     popOrderPathitem(): void;
     setSubgroupTitle(nextTitle: string): void;
     backLink: string;

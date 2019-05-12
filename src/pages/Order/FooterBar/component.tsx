@@ -10,6 +10,7 @@ import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 
 import './styles.styl';
+import { FooterBarProps } from './typings';
 
 type Props = FooterBarProps & { orderStore: IOrderStore };
 
@@ -94,6 +95,36 @@ class FooterBar extends React.Component<Props> {
                     <Route
                         path={routes.subgroupChoice}
                         component={(...props: any[]) => { // tslint:disable-line
+                            const garment: string = props[0].match.params.garment;
+                            const group: string = props[0].match.params.group;
+                            const subGroup: string = props[0].match.params.subgroup;
+
+                            const currentData = JSON.parse(JSON.stringify(this.props.subgroupsStore!.data));
+
+                            let link = `${routes.details}/shirt`;
+
+                            if (group === 'fabric_ref') {
+                                link = `${link}/design/${currentData.design[0].subsection_our_code}`;
+                            }
+
+                            if (group === 'design') {
+                                let currentIndex =
+                                    (currentData.design as Subgroup[])
+                                        .findIndex(item => item.subsection_our_code === subGroup);
+                                if (currentData.design[currentIndex + 1]) {
+                                    if (currentData.design[currentIndex + 1].subsection_our_code === 'initials_text') {
+                                        currentIndex++;
+                                    }
+                                    link = `${link}/design/${currentData.design[currentIndex + 1].subsection_our_code}`;
+                                } else {
+                                    link = `${link}/fitting/fitting/`;
+                                }
+                            }
+                            if (group) {
+                                link = `${link}`;
+                            }
+
+                            console.log(garment, group, subGroup); // tslint:disable-line
                             return (
                                 <Link
                                     to={`${routes.details}/${props[0].match.params.garment}`}
@@ -110,6 +141,7 @@ class FooterBar extends React.Component<Props> {
                                         }
                                         isUpdate={true}
                                         lang={lang}
+                                        link={link}
                                     >
                                         {loc[lang!].save}
                                     </SaveButton>

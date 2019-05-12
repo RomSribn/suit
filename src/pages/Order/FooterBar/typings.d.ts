@@ -1,7 +1,10 @@
-interface FooterBarProps {
+import { Subgroups } from '../../../stores/garments';
+
+export interface FooterBarProps {
     lang?: Lang;
     orderStore?: IOrderStore;
     popOrderPathitem?(): void;
+    subgroupsStore?: Subgroups;
     backLink?: string;
     mutuallyExclusivePopup?: MutuallyExclusive;
     orderId?: number;
@@ -9,7 +12,7 @@ interface FooterBarProps {
     setActiveItem?(item: GalleryStoreItem | null): void;
 }
 
-type SaveButtonInject = {
+export type SaveButtonInject = {
     app?: IAppStore,
     orderStore?: IOrderStore;
     subgroupData?: Subgroup;
@@ -20,9 +23,9 @@ type SaveButtonInject = {
         show: boolean
     }) => void
     setActiveOrderItem?: (item: GalleryStoreItem | null) => void
-}
+};
 
-type SaveButtonSelfProps = {
+export type SaveButtonSelfProps = {
     saveExistingOrder?: boolean;
     isUpdate?: boolean;
     match?: {
@@ -35,6 +38,7 @@ type SaveButtonSelfProps = {
     children?: React.ReactNode;
     saveCallback?: Function;
     lang?: string;
-}
+    link?: string;
+};
 
-type SaveButtonProps = SaveButtonInject & SaveButtonSelfProps
+export type SaveButtonProps = SaveButtonInject & SaveButtonSelfProps;

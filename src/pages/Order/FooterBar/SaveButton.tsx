@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { Redirect } from 'react-router';
 import { observer, inject } from 'mobx-react';
 import { SaveForm } from '../SaveForm';
 import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
-import { routes } from '../../../config/routes';
+// import { routes } from '../../../config/routes';
 import * as _ from 'lodash';
 import { SimpleModal } from '../../../components/SimpleModal';
 import { loc } from './loc';
+import { SaveButtonProps } from './typings';
 
 interface State {
   open: boolean;
   isExceptionPopupOpen: boolean;
-  redirectToOrders: boolean;
   showErrorModal: boolean;
 }
 @inject(({ app, order, routing, garments: { Subgroups } }, props) => {
@@ -37,7 +36,6 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     this.state = {
       open: false,
       isExceptionPopupOpen: false,
-      redirectToOrders: false,
       showErrorModal: false
     };
 
@@ -66,9 +64,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       this.updateOrder();
     } else if (this.props.saveExistingOrder) {
       this.props.orderStore!.saveOrder();
-      this.setState({
-        redirectToOrders: true
-      });
+
       saveCallback && saveCallback(); // tslint:disable-line
     } else {
       this.setState({ open: true });
@@ -154,17 +150,15 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
           .find((category: Subgroup) =>
             category.subsection_our_code === this.props!.match!.params!.subgroup!);
         const defaultItemValues = {};
-        if (defaultValues) {
-          Object.keys(defaultValues)
+        Object.keys(defaultValues)
             .filter((item) => !item.includes('manequin'))
             .map(filteredGarment =>
-              defaultValues[filteredGarment].reduce((ac: string[], i: string[]) => [...ac, i], [])
-                .map((garmentObject: Order) => Object.keys(garmentObject.design)
-                  .forEach(
-                    elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
-                  ))
+                defaultValues[filteredGarment].reduce((ac: string[], i: string[]) => [...ac, i], [])
+                    .map((garmentObject: Order) => Object.keys(garmentObject.design)
+                        .forEach(
+                            elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
+                        ))
             );
-        }
         const orderItems = {};
         if (orderStore!.order) {
           Object.keys(orderStore!.order)
@@ -259,17 +253,14 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
   render() {
     const {
       children,
-      lang
+      lang,
+      link
     } = this.props;
     const {
       showErrorModal,
       open
     } = this.state;
-    if (this.state.redirectToOrders) {
-      const orderId: number = _.get(this, 'props.orderStore.orderInfo.orderId', 0);
-      // TODO:  господи, прости
-      return <Redirect to={`${routes.orderList}?${orderId && 'active_order_id=' + orderId}`} />;
-    }
+    const orderId: number = _.get(this, 'props.orderStore.orderInfo.orderId', 0);
     const errorModalData = {
       desc: loc[lang!].errorMessage,
       buttons: [
@@ -290,6 +281,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         <Button
           onClick={this.onClick}
           theme="black"
+          link={link ? `${link}?${orderId && 'active_order_id=' + orderId}` : undefined}
         >{children}
         </Button>
         <PopUp onClose={this.onClose} open={open}>

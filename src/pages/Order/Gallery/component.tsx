@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import * as _ from 'lodash';
 import { services } from '../../../config/routes';
-import { Controll } from '../Filter';
 import { GalleryBar } from '../GalleryBar';
 
 import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
@@ -290,7 +289,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        {group === 'fabric_ref' && <Controll />}
                         { !load.success && !load.error
                         ? <div
                             className="preloader"

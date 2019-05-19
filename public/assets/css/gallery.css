@@ -86,10 +86,6 @@
 .gallery--colors .gallery__item:hover:after{border: .3333rem solid #fff; opacity: 1;}
 
 .gallery__filter-btn{
-    position: absolute;
-    z-index: 2;
-    top: 1.3333rem;
-    left: 1.3333rem;
     width: 2.6666rem;
     height: 2.6666rem;
     background: #ebebeb;

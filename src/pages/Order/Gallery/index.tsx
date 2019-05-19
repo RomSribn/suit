@@ -5,6 +5,7 @@ import { intersection } from 'lodash';
 import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
+import { Controll } from '../Filter';
 
 const galleryCache = {};
 
@@ -45,7 +46,7 @@ const galleryCache = {};
     };
 })
 @observer
-class Gallery extends React.Component<GalleryContainerProps> {
+class GalleryBlock extends React.Component<GalleryContainerProps> {
     componentWillUnmount() {
         const filterStore = this.props.filterStore!;
         filterStore.closeFilter();
@@ -128,6 +129,22 @@ class Gallery extends React.Component<GalleryContainerProps> {
                         activeOrderItem={this.props.activeOrderItem}
                     />
                 )
+        );
+    }
+}
+
+@inject()
+@observer
+class Gallery extends React.Component<GalleryContainerProps> {
+    render() {
+        const {
+            match: { params: { group } },
+        } = this.props;
+        return (
+            <>
+                {group === 'fabric_ref' && <Controll />}
+                <GalleryBlock {...this.props} />
+            </>
         );
     }
 }

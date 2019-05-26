@@ -59,6 +59,34 @@ class FooterBar extends React.Component<Props> {
           }
         );
       }
+    
+    handleExclsuive = (
+        isRemovable: boolean,
+        exceptionsForPopup: {
+          garmentKey: string,
+          elementKey: string,
+        }[],
+        orderStore: IOrderStore,
+        newValue: Order,
+        garment: string,
+        subgroup: string,
+        subgroupData: Subgroup
+      ) => {
+        if (isRemovable) {
+          exceptionsForPopup.forEach(exceptionForPopup => {
+            const { garmentKey, elementKey } = exceptionForPopup;
+            orderStore.clearException(garmentKey, elementKey, 'default');
+            orderStore.clearElement(garmentKey, elementKey, 'default');
+          });
+        } else {
+          exceptionsForPopup.forEach(exceptionForPopup => {
+            const { garmentKey, elementKey } = exceptionForPopup;
+            orderStore.clearException(garmentKey, elementKey, 'default');
+          });
+        }
+        this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
+        orderStore.setMutuallyExclusivePopup!({ show: false });
+      }
 
     render() {
         const {
@@ -93,6 +121,7 @@ class FooterBar extends React.Component<Props> {
                                                 Subgroups: this.props.Subgroups,
                                                 orderStore: this.props.orderStore,
                                                 setOrderCallback: this.handleSetOrder,
+                                                handleExclsuiveCallback: this.handleExclsuive,
                                             });
                                             this.onBackClick();
                                         }}

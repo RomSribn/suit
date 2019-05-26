@@ -110,7 +110,10 @@ class Widget extends PureComponent {
           mutuallyExclusiveItems.forEach((item) => {
             Object.keys(exceptions).forEach((garmentKey) => {
               Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-                if (exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)) {
+                if (
+                  exceptions[garmentKey][elementKey].exceptions &&
+                  exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
+                  ) {
                   allExceptions = allExceptions.filter((i) => {
                     if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
                         if (!this.props.assets.includes(defaultItemValues[elementKey])) {

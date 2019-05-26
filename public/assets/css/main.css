@@ -208,6 +208,7 @@
     .main__middle {
         padding: calc(1rem + 4px) 0 0 0;
         position: initial;
+        max-height: calc(100% - 10rem);
     }
     .main--white{
         background: rgba(255, 255, 255, 0.85);

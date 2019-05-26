@@ -81,7 +81,7 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
     };
 };
 
-class OrderStore implements IOrderStore {
+export class OrderStore implements IOrderStore {
     @observable orderInfo: OrderInfo | null = null;
     @observable exceptions: OrderItemException | null = null;
     @observable defaultExceptions: OrderItemException | null = null;

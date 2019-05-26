@@ -27,7 +27,7 @@ const makeInitionalOrderPath = (lang: Lang) => [{
   link: '/order/details/shirt',
 }];
 
-class App implements IAppStore {
+export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
   orderPath = observable.array<OrderPathItem>([]);

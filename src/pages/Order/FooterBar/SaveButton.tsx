@@ -136,9 +136,11 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         if (!newValue) {
           newValue = {};
         }
-        newValue[garment][0][group][subgroup] = {};
-        newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
-        newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+        if (subgroup !== 'initials_text') {
+          newValue[garment][0][group][subgroup] = {};
+          newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
+          newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+        }
 
         // initial values
         const exceptions = orderStore!.exceptions;

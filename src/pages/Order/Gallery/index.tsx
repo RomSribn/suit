@@ -6,6 +6,7 @@ import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
 import { Controll } from '../Filter';
+import { InitialsCustomInput } from '../Initials-custom-input';
 
 const galleryCache = {};
 
@@ -67,11 +68,15 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
             lang,
             setActiveOrderItem,
             setPreviewElement,
-            match: { params: { group } },
+            match: { params: { group, subgroup } },
             filterStore,
             match
         } = this.props;
         
+        if (group === 'design' && subgroup === 'initials_text') {
+            return <div style={{padding: '1.333rem 0 0 0', width: '100%'}}><InitialsCustomInput /></div>;
+        }
+
         const filters = filterStore.userFilters;
         
         const items = [...galleryStore.items].filter((galleryStoreItem: {}) => {

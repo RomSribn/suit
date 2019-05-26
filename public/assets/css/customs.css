@@ -55,6 +55,7 @@
     display: inline-block;
     font-size: .86666rem;
     color: #8a8a8a;
+    height: 100%;
 }
 
 .custom__status input {

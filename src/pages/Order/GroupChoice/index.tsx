@@ -25,7 +25,16 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             lang,
             subgroupsStore
         } = this.props;
-        const choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
+        
+        let choiceItemValue: string | undefined;
+        if (group === 'initials_text') {
+            // @ts-ignore
+            choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}`);
+        }
+
+        if (!choiceItemValue) {
+            choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
+        }
         const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 13
             ? choiceItemValue!.slice(0, 10) + '...'
             : choiceItemValue;

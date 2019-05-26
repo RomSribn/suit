@@ -111,9 +111,6 @@ class FooterBar extends React.Component<Props> {
                                     (currentData.design as Subgroup[])
                                         .findIndex(item => item.subsection_our_code === subGroup);
                                 if (currentData.design[currentIndex + 1]) {
-                                    if (currentData.design[currentIndex + 1].subsection_our_code === 'initials_text') {
-                                        currentIndex++;
-                                    }
                                     link = `${link}/design/${currentData.design[currentIndex + 1].subsection_our_code}`;
                                 } else {
                                     link = `${link}/fitting/fitting`;

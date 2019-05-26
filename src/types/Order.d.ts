@@ -5,6 +5,7 @@ interface IOrderStore {
     order: Order;
     isFetching: boolean;
     activeSubGroup: string;
+    prevActiveItem?: string | null;
     exceptions: OrderItemException | null;
     defaultExceptions: OrderItemException | null;
     mutuallyExclusivePopup: MutuallyExclusive | null,

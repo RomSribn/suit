@@ -10,6 +10,7 @@ export interface FooterBarProps {
     orderId?: number;
     routing?: any; // tslint:disable-line no-any
     setActiveItem?(item: GalleryStoreItem | null): void;
+    Subgroups?: any; // tslint:disable-line no-any
 }
 
 export type SaveButtonInject = {

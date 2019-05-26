@@ -82,7 +82,7 @@ class Widget extends PureComponent {
       let allExceptions = exceptions ?
         Object.keys(exceptions).reduce((ac, garmentKey) => {
           Object.keys(exceptions[garmentKey]).forEach(elementKey => {
-            if (elementKey !== subGroup) {
+            if (elementKey !== subGroup && exceptions[garmentKey][elementKey].exceptions) {
               ac.push(...exceptions[garmentKey][elementKey].exceptions)
             }
           })
@@ -326,7 +326,7 @@ export default class App extends Component {
         // Может случиться, если по дефолту у элемента нет заданного значения
         if (!params.find(param => (
           activeElement.our_code === param ||
-          activeElement.our_code === param.id
+          (param && (activeElement.our_code === param.id))
         ))) {
           // Добавляем его в к параметрам отображения
           params.push(activeElement.our_code);

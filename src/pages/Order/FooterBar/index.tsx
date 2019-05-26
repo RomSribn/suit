@@ -12,6 +12,7 @@ import { FooterBarProps } from './typings';
     orderId: order.orderInfo && order.orderInfo.orderId,
     routing,
     subgroupsStore: new Subgroups('shirt'),
+    Subgroups,
     backLink:
         '/' + trim(
         routing
@@ -38,7 +39,8 @@ class FooterBar extends React.Component<FooterBarProps> {
             mutuallyExclusivePopup,
             orderId,
             routing,
-            subgroupsStore
+            subgroupsStore,
+            Subgroups
         } = this.props;
         return (
             <Component
@@ -48,6 +50,7 @@ class FooterBar extends React.Component<FooterBarProps> {
                 popOrderPathitem={popOrderPathitem}
                 orderStore={orderStore!}
                 subgroupsStore={subgroupsStore!}
+                Subgroups={Subgroups}
                 orderId={orderId}
                 routing={routing!}
             />

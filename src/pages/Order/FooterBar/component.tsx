@@ -8,6 +8,7 @@ import { MutuallyExclusivePopup } from '../../../components/MutuallyExclusivePop
 import { PopUp } from '../../../containers/Popup';
 import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
+import { updateOrder } from './utils';
 
 import './styles.styl';
 import { FooterBarProps } from './typings';
@@ -23,13 +24,10 @@ class FooterBar extends React.Component<Props> {
     };
 
     onBackClick = () => {
-        const {
-            popOrderPathitem
-        } = this.props;
-        const orderStore = this.props.orderStore!;
-        const { setActiveItem } = orderStore;
+        const props = this.props;
+        const { setActiveItem } = props.orderStore;
         setActiveItem(null);
-        popOrderPathitem!();
+        props.popOrderPathitem!();
     }
     saveCallback = (linkToRedirect: string | undefined) => {
         const {
@@ -39,6 +37,29 @@ class FooterBar extends React.Component<Props> {
         routing.push(linkToRedirect);
         popOrderPathitem!();
     }
+
+    handleSetOrder = (
+        orderStore: IOrderStore,
+        newValue: Order,
+        garment: string,
+        subgroup: string,
+        subgroupData: Subgroup
+      ) => {
+        orderStore.setOrder(
+          newValue,
+          {
+            [garment]: {
+              [subgroup]: {
+                exceptions: orderStore.activeElement!.exception,
+                titleSubGroup: subgroupData.title!,
+                titleElement: orderStore.activeElement!.title,
+                is_item_clear: orderStore.activeElement!.is_item_clear
+              }
+            }
+          }
+        );
+      }
+
     render() {
         const {
             lang,
@@ -57,8 +78,8 @@ class FooterBar extends React.Component<Props> {
 
                 <Switch>
                     <Route
-                        path={routes.garment}
-                        component={() => {
+                        path={routes.subgroupChoice}
+                        component={(...args: any[]) => { // tslint:disable-line
                             return (
                                 <Link
                                     to={backLink}
@@ -66,6 +87,15 @@ class FooterBar extends React.Component<Props> {
                                     <Button
                                         theme="white"
                                         className="back-button"
+                                        onClick={() => {
+                                            updateOrder({
+                                                match: args[0].match,
+                                                Subgroups: this.props.Subgroups,
+                                                orderStore: this.props.orderStore,
+                                                setOrderCallback: this.handleSetOrder,
+                                            });
+                                            this.onBackClick();
+                                        }}
                                     >
                                         {loc[lang!].back}
                                     </Button>

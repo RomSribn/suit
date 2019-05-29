@@ -5,6 +5,8 @@ import { isMobile, isLandscape } from '../../../utils';
 interface Props {
     item: GalleryStoreItem;
     lang: string;
+    initialValue?: number;
+    setFitting: (value: number) => void;
 }
 type State = {
     valid: boolean;
@@ -32,12 +34,27 @@ class FittingItem extends React.PureComponent<Props, State> {
         }
     }
 
+    onBlur = () => {
+        const props =  this.props;
+        const state = this.state;
+        if (state.valid && state.value) {
+            props.setFitting(Number(state.value));
+        }
+    }
+
     constructor(props: Props) {
         super(props);
-        this.state = {
-            valid: false,
-            value: '',
-        };
+        if (props.initialValue) {
+            this.state = {
+                valid: true,
+                value: props.initialValue.toString(),
+            };
+        } else {
+            this.state = {
+                valid: false,
+                value: '',
+            };
+        }
     }
     render () {
         const {
@@ -62,6 +79,7 @@ class FittingItem extends React.PureComponent<Props, State> {
                         type="text"
                         value={this.state.value}
                         onChange={this.focuseOnLabel}
+                        onBlur={this.onBlur}
                         onInput={(e: any) => { e.preventDefault(); }}  // tslint:disable-line
                     /> 
                     <span className="size__output-lines-group">
@@ -79,10 +97,21 @@ class FittingItem extends React.PureComponent<Props, State> {
 
 class Fitting extends React.PureComponent<FittingProps> {
     render() {
-        const { items, lang } = this.props;
+        const { items, lang, orderStore } = this.props;
+        const setFitting = (id: string) => (value: number) => {orderStore!.setFitting('shirt', {id, value}); };
         return (
             <div className="sizes__wrap sizes">
-            {items.map(i => <FittingItem item={i} key={i.our_code} lang={lang} />)}
+            {items.map(
+                item => (
+                    <FittingItem 
+                        item={item}
+                        key={item.our_code}
+                        lang={lang}
+                        initialValue={orderStore!.getFitting('shirt')(item.our_code)}
+                        setFitting={setFitting(item.our_code)}
+                    />
+                )
+            )}
             </div>);
     }
 }

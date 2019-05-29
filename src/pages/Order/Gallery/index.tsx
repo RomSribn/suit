@@ -114,6 +114,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         key={galleryStore.items.toString()}
                         lang={lang}
                         items={items}
+                        orderStore={orderStore}
                     />
                 )
                 : (

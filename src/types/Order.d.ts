@@ -26,6 +26,8 @@ interface IOrderStore {
     getShirtInitials(): string;
     fetchOrder(orderId: string): void;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
+    setFitting: (garment: string, fitting: { id: string; value: number }) => void;
+    getFitting: (garment: string) => (fittingName: string) => number; 
 }
 
 interface Order {
@@ -76,6 +78,9 @@ interface OrderItem {
     design : {
         [key: string] : OrderItemInfo;
     } & { initials_text?: string };
+    fittings?: {
+       [key: string]: number;
+    };
     [key: string] : any;
 }
 

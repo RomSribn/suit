@@ -56,7 +56,12 @@ declare namespace Fuckup {
         garments: {
             [key: string]: {
                 fittingVersion: number;
-                // fittings;
+                fittings: {
+                    value: string;
+                    fitting: {
+                        our_code: string;
+                    };
+                }[];
                 mainFabric: DesignInfo;
                 items: {
                     value: string | null;

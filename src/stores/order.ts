@@ -1,6 +1,5 @@
-import { observable, action } from 'mobx';
+import { observable, action, get } from 'mobx';
 import * as _ from 'lodash';
-// import { ERRORS_CODES } from '../config/constants';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
@@ -33,6 +32,17 @@ const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
             };
             newGarment.design[tmpDesign.design.common.subsection_our_code] = newDesignValue;
         });
+
+        serverGarment
+            .fittings
+            .map(
+                fittingItem => ({value: fittingItem.value, ourCode: fittingItem.fitting.our_code})
+            ).forEach(item => {
+                if (!newGarment.fittings) {
+                    newGarment.fittings = {};
+                }
+                newGarment.fittings[item.ourCode] = Number(item.value);
+            });
         /**
          * Ублюдский хак из-за того, что по всей сторе сейчас
          * каждый из элементов одежды имеет массив
@@ -71,10 +81,20 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
                 });
                 return acc;
             }, []);
+
+    const fittings =
+        _.union(
+            ..._.values(order)
+            .map(item => Object.entries(item[0].fittings || {}))
+        ).reduce((acc, [fittingName, fittingValue]) => typeof fittingValue === 'number' ?
+            [...acc, {ourCode: fittingName, value: fittingValue}] :
+            acc,
+        []);
     return {
         customer,
         items,
         statusId: 2,
+        fittings,
         mainFabric: {
             ourCode: order.shirt[0].fabric_ref.fabric.our_code
         }
@@ -135,8 +155,17 @@ export class OrderStore implements IOrderStore {
         this.order = newValue;
     }
     @action
-    setFitting = (garment: string, fitting: { id: string; value: string }) => {
-        this.order[garment][0].fitting[fitting.id] = fitting.value;
+    setFitting = (garment: string, fitting: { id: string; value: number }) => {
+        const newOrder = {...this.order};
+        if (!newOrder[garment][0].fittings) {
+            newOrder[garment][0].fittings = {};
+        }
+        newOrder[garment][0].fittings[fitting.id] = fitting.value;
+        this.order = newOrder;
+    }
+    @get
+    getFitting = (garment: string) => (fittingName: string): number => {
+        return this.order[garment][0].fittings && this.order[garment][0].fittings[fittingName];
     }
     @action
     setGarmentValue(garment: string, value: any) { // tslint:disable-line

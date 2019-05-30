@@ -147,7 +147,7 @@ class Widget extends PureComponent {
           }, 500);
     }
 
-    if (prevProps.selected !== this.props.selected) {
+    if (this.props.selected && prevProps.selected !== this.props.selected) {
       this.widget3d.select(this.props.selected);
     }
   }

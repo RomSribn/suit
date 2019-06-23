@@ -1,0 +1,19 @@
+#jivo_chat_widget{
+	display: none;
+}
+
+#jivo_custom_widget{
+	position: fixed;
+	bottom: 2.5rem;
+	left: 2.5rem;
+	width: 50px;
+	height: 50px;
+	z-index: 999999999999;
+	cursor: pointer;
+	border-radius: 50px;
+	background: black url("/assets/chat_widget/logo.svg") no-repeat center;
+}
+
+/*!* если есть операторы в онлайне *!*/
+#jivo_custom_widget.jivo_online{
+}

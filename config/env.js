@@ -74,12 +74,13 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-        
+
         // custom environments ariables
         API_ROOT: process.env.CLOTHES_API || undefined,
         STATIC: `${publicUrl}/assets/`,
         STATIC_VIDEOS: `${publicUrl}/assets/video/`,
         STATIC_IMAGES: `${publicUrl}/assets/img/`,
+        CONSULT_WIDGET_ID: process.env.CONSULT_WIDGET_ID || 'нетю  :(',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

@@ -5,27 +5,35 @@ import { loc } from './loc';
 import { isMobile, isLandscape } from '../../../utils';
 import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
+import { CommonStores } from '../../../types/commonStores';
 
-@inject(({garments: { Subgroups }}) => ({
-    subgroupsStore: new Subgroups('shirt'),
-}))
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({garments: { Subgroups }}) => {
+    return {
+        subgroupsStore: new Subgroups('shirt'),
+    };
+})
 @observer
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
     componentDidMount() {
         this.props.setSubgroupTitle(this.props.choiceItem.value);
     }
-    backClick = () => {
-        this.props.popOrderPathitem();
+    backClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const backButtonElement = document.querySelector<HTMLButtonElement>('.button.back-button');
+        if (backButtonElement) {
+            backButtonElement.click();
+        }
     }
+
     render() {
         const {
             match: {params: { garment, subgroup, group }},
             order,
             backLink,
             lang,
-            subgroupsStore
+            subgroupsStore,
         } = this.props;
-        
+
         let choiceItemValue: string | undefined;
         if (group === 'initials_text') {
             // @ts-ignore
@@ -38,6 +46,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 13
             ? choiceItemValue!.slice(0, 10) + '...'
             : choiceItemValue;
+
         const subgroupName =
             subgroupsStore!.data![subgroup]
                 .find((item: Subgroup) => item.subsection_our_code === group).title[lang];

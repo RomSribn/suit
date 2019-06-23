@@ -102,6 +102,7 @@ class GalleryItem extends React.Component<P, S > {
             _.get(orderStore, 'activeElement.our_code', '') === id ||
             shownItem.our_code === id;
         const click = () => {
+            this.props.filterStore!.closeFilter();
             onClick();
         };
         return (

@@ -132,6 +132,16 @@ class FooterBar extends React.Component<Props> {
                             );
                         }}
                     />
+                    <Route path={routes.garment}>
+                        <Link to={backLink}>
+                            <Button
+                                theme="white"
+                                className="back-button"
+                            >
+                                {loc[lang!].back}
+                            </Button>
+                        </Link>
+                    </Route>
                     <Route
                         path={routes.details}
                         component={() => {

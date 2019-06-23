@@ -59,7 +59,7 @@ class FooterBar extends React.Component<Props> {
           }
         );
       }
-    
+
     handleExclsuive = (
         isRemovable: boolean,
         exceptionsForPopup: {
@@ -204,13 +204,7 @@ class FooterBar extends React.Component<Props> {
                         }}
                     />
                     <Route path={routes.garment}>
-                        <Link
-                            to={backLink}
-                        >
-                            <Button theme="black">
-                                {loc[lang!].done}
-                            </Button>
-                        </Link>
+                        <SaveButton>{loc[lang!].create}</SaveButton>
                     </Route>
 
                     <Route path={routes.details}>

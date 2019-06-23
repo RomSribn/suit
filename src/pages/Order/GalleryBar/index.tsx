@@ -82,7 +82,7 @@ class GalleryItem extends React.Component<P, S > {
         if (!this.state.load.success) {
             return null;
         }
-        // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна надо будет притрагиваиться
+        // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна не надо будет притрагиваиться
         // только при рефакторе всего проекта
         if (this.props.filterStore) {
             const filters = this.props.filterStore.userFilters;

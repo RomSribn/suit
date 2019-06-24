@@ -37,6 +37,7 @@ RUN rm -f package-lock.json
 
 
 RUN npm install
+COPY server.config.js server.config.js
 RUN npm run build
 
 RUN ls -d */ | grep -P -v "(build|server)" | xargs -d"\n" rm -r

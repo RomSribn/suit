@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../ConfirmPopup';
-import { routes } from '../../config/routes';
+import { API_ROOT, routes } from '../../config/routes';
 import { loc } from './loc';
 
 import './panelRowStyles.styl';
@@ -89,6 +89,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             nextStatusIndex = 1;
         }
         const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
+        const props = this.props;
         return (
             <div className="panel-row">
                 <form className="search">
@@ -176,7 +177,9 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                         <li className={itemClassName}>
                             <a
                                 className="controls__link controls__link--pdf"
-                                href="#"
+                                target="_blank"
+                                href={`${API_ROOT}/api/orders/${props.activeOrderId}/orderFile?` +
+                                    `very-insecure-token=${encodeURIComponent(props.userToken || '')}`}
                                 title="pdf"
                             />
                         </li>

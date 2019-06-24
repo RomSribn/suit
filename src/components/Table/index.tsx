@@ -29,6 +29,7 @@ interface TProps {
     ordersStore: OrderList.IOrderStore;
     lang: Lang;
     baseOrderId?: string;
+    userToken?: string;
 }
 
 interface TState {
@@ -46,7 +47,7 @@ type RowInfo = {
 } | undefined;
 
 const cell = (row: {value: string, [key: string]: string}) => <div className="orders__data">{row.value}</div>; // tslint:disable-line
-    
+
 class Table extends React.Component<TProps, TState> {
     private panelRow: React.RefObject<PanelRow>;
     constructor(props: TProps) {
@@ -226,6 +227,7 @@ class Table extends React.Component<TProps, TState> {
         return (
         <React.Fragment key="Orders table fragment">
             <PanelRow
+                userToken={this.props.userToken}
                 ref={this.panelRow}
                 orderInfo={selectedOrder}
                 orderStatuses={orderStatuses}
@@ -334,10 +336,10 @@ class Table extends React.Component<TProps, TState> {
                 ]}
                 data={orders}
             />
-            <DatePickerDropdown 
+            <DatePickerDropdown
                 lang={lang}
                 data={filterData}
-                show={showDatePickerFilter} 
+                show={showDatePickerFilter}
                 onClickOuterDatePickerFilter={this.onClickOuterDatePickerFilter}
             />
             <ListPickerDropdown

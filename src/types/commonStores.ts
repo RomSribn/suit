@@ -5,6 +5,13 @@ import { Subgroups } from '../stores/garments';
 export interface CommonStores {
     app: App;
     order: OrderStore;
+    ordersStore: OrderList.IOrderStore;
+    user: IUserStore;
+    routing: {
+        location: {
+            search: string;
+        }
+    };
     garments: {
         Subgroups: typeof Subgroups
     };

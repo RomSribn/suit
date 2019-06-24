@@ -23,6 +23,7 @@ interface PanelRowProps {
     orderInfo: TableOrderInfo | null;
     orderStatuses: OrderStatus[];
     acceptCallback?: (...arg: any[]) => any;
+    userToken?: string;
     ordersStore: OrderList.IOrderStore;
     lang: Lang;
     activeOrderId?: string | null;

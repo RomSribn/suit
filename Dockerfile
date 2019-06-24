@@ -1,6 +1,6 @@
 FROM node:8.16.0
 
-RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/application
 
 RUN mkdir -p ~/.ssh
 RUN chmod 777 ~/.ssh
@@ -25,7 +25,7 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
 # Define working directory and copy source
-WORKDIR /app
+WORKDIR /application
 COPY . .
 # Install dependencies and build whatever you have to build
 

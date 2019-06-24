@@ -166,10 +166,11 @@ class FooterBar extends React.Component<Props> {
                         component={(...props: any[]) => { // tslint:disable-line
                             const group: string = props[0].match.params.group;
                             const subGroup: string = props[0].match.params.subgroup;
+                            const garment: string = props[0].match.params.garment;
 
                             const currentData = JSON.parse(JSON.stringify(this.props.subgroupsStore!.data));
 
-                            let link = `${routes.details}/shirt`;
+                            let link = `${routes.details}/${garment}`;
 
                             if (group === 'fabric_ref') {
                                 link = `${link}/design/${currentData.design[0].subsection_our_code}`;
@@ -180,14 +181,34 @@ class FooterBar extends React.Component<Props> {
                                     (currentData.design as Subgroup[])
                                         .findIndex(item => item.subsection_our_code === subGroup);
                                 if (currentData.design[currentIndex + 1]) {
-                                    link = `${link}/design/${currentData.design[currentIndex + 1].subsection_our_code}`;
+                                    try {
+                                        const checkedValue: string = this.props.orderStore!.activeElement!.our_code;
+                                        if (currentData.design[currentIndex + 1]
+                                            .items
+                                            // tslint:disable-next-line
+                                            .every((item: any) => item.exception.includes(checkedValue))
+                                        ) {
+                                            if (currentData.design[currentIndex + 2]) {
+                                                link =
+                                                    `${link}/design/` +
+                                                    `${currentData.design[currentIndex + 2].subsection_our_code}`;
+                                            } else {
+                                                link = `${link}/fitting/fitting`;
+                                            }
+                                        } else {
+                                            link =
+                                                `${link}/design/` +
+                                                `${currentData.design[currentIndex + 1].subsection_our_code}`;
+                                        }
+                                    } catch (_) {
+                                        link =
+                                            `${link}/design/` +
+                                            `${currentData.design[currentIndex + 1].subsection_our_code}`;
+                                    }
+                                    }
                                 } else {
                                     link = `${link}/fitting/fitting`;
                                 }
-                            }
-                            if (group) {
-                                link = `${link}`;
-                            }
 
                             return (
                                 <Link

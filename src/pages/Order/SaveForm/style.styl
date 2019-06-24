@@ -1,0 +1,139 @@
+.order-form
+  display: flex
+  flex-direction: row
+
+  &__container
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 50rem
+    transform: translate(-50%, -50%)
+    z-index: 1000
+    background: url(/assets/img/leadform_background.jpg) no-repeat right
+    background-size: cover
+    padding: 4rem
+    color: #fff
+
+  &__content
+    height: 100%
+    display: flex
+    flex-direction: column
+
+    .foot-note
+      text-align: right
+      position: absolute
+      bottom: 1.04rem
+      right: 5.25rem
+      font-size: 90%
+
+    .buttons
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin: 0 0 0 2rem;
+
+      .button
+        line-height: 1.15rem;
+        padding: 6px 0;
+        &.white
+          color: #fff
+          margin-left: 2.3333rem
+
+        &.black
+          color: #000
+          background-color: #fff
+          border-color: #fff
+          margin-left: 0
+
+          &:hover
+            color: #fff
+            background-color: #000
+            border-color: #000
+
+  &__header
+    font-size: 1rem
+    font-weight: 500
+    text-transform: uppercase
+    line-height: 1
+    color: #fafafa
+
+  &__text
+    font-size: 0.86666rem
+    line-height: 1.5rem
+    color: #fff
+
+  &__input
+    width: 50%
+    padding: 8px 25px
+    font-size: 0.86666rem
+    margin: 0.6rem 0
+    border: 1px solid #fff
+    background-color: transparent
+    color: #fff
+
+    &::placeholder
+      opacity: 1
+
+    &:focus
+      outline: none
+
+  .frame .rect--2
+    stroke: #fff
+
+@media only screen and (max-width: 1240px)
+  .order-form__container
+    padding: 3.25rem
+
+@media only screen and (max-width: 991px)
+  .order-form__container
+    .button-bar.white
+      width: auto;
+
+@media only screen and (max-width: 600px)
+  .order-form
+    flex-direction column
+
+    &__content
+      justify-content center
+    &__input
+      width 100%
+
+    .button-bar
+      width 100%
+
+    .buttons
+      margin 0
+
+
+@media only screen and (max-width: 450px), only screen and (max-height: 450px)
+  .order-form__container
+    height: 100vh;
+    width: 100vw;
+  .order-form__content
+    width: auto
+  .order-form__container
+    .button-bar.white
+      .button
+        margin-left: 0
+
+@media only screen and (max-height: 450px)
+  .order-form__container
+    .button-bar.white
+      width 189px
+
+  @media only screen and (max-width: 450px)
+    .order-form__container
+      padding: 50% 3.5rem 2.5rem 3.5rem;
+
+    .order-form__content
+      width: auto
+      .foot-note
+        right: 30%;
+      .buttons
+        width: calc(100% - 2px);
+      .order-form
+        .button.black
+          width: calc(46vw - 1.333rem - 1.2rem);
+        .button.white
+          margin-left: 0
+          width: calc(44vw - 1.333rem - 1.2rem);

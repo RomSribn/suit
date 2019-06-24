@@ -36,7 +36,7 @@ RUN rm -rf node_modules
 RUN rm -f package-lock.json
 
 
-RUN npm install -- --max-old-space-size=900
+RUN npm install --max-old-space-size=900
 COPY server.config.js server.config.js
 RUN npm run build -- --max-old-space-size=900
 

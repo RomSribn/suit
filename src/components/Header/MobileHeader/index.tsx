@@ -10,6 +10,8 @@ type Props = {
   lang: string
 };
 
+const baseLink = String(process.env.BASE_SERVICE_LINK);
+
 export default ({ openMenu, title, setCrumbs, lang }: Props) => {
   return(
     <header className="headerWrapper">
@@ -21,7 +23,7 @@ export default ({ openMenu, title, setCrumbs, lang }: Props) => {
         <span>
           {/* Вставялем чтобы подхватились стили. Вообще похуй */}
           <span className="breadcrumbs">
-              <a className="breadcrumbs__crumb" href="http://gasuits.ru">{lang === 'ru' ? 'главная' : 'main'}</a>
+              <a className="breadcrumbs__crumb" href={baseLink}>{lang === 'ru' ? 'главная' : 'main'}</a>
               <span className="breadcrumbs__separator"> /&nbsp;</span>
           </span>
             {!isMobile() && <Breadcrumbs className="breadcrumbs__wrapper" setCrumbs={setCrumbs} separator=" / " />}

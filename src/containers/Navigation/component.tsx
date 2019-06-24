@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
@@ -10,17 +10,19 @@ import { loc } from './loc';
 
 import './styles.styl';
 
+const baseLink = String(process.env.BASE_SERVICE_LINK);
+
 interface HeaderProps {
 }
 const Header = (props: HeaderProps) => {
     return (
     <div className="navbar__header">
-        <Link
-            to={routes.index}
+        <a
+            href={baseLink}
             className="navbar__header"
         >
             <img className="logo" src={process.env.STATIC_IMAGES + `logo-white.svg`} />
-        </Link>
+        </a>
     </div>
     );
 };

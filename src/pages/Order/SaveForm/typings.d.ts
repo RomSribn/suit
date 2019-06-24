@@ -9,7 +9,7 @@ interface InjectedStores {
 
 type ContainerProps = Partial<InjectedStores> & CommonProps;
 
-type FormProps = InjectedStores & CommonProps; 
+type FormProps = InjectedStores & CommonProps;
 
 interface Loc {
     header: string;
@@ -21,6 +21,7 @@ interface Loc {
     };
     backText: string;
     sendOrder: string;
+    thanksText: string;
 }
 
 type Localization = Translations<Loc>;

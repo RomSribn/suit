@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Breadcrumbs, Crumbs } from 'react-breadcrumbs';
 
+const baseLink = String(process.env.BASE_SERVICE_LINK);
+
 class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: string}> {
     static defaultProps = {
         lang: 'en',
@@ -51,7 +53,7 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
             <span>
                 {/* Вставялем чтобы подхватились стили. Вообще похуй */}
                 <span className="breadcrumbs">
-                    <a className="breadcrumbs__crumb" href="http://gasuits.ru">{lang === 'ru' ? 'главная' : 'main'}</a>
+                    <a className="breadcrumbs__crumb" href={baseLink}>{lang === 'ru' ? 'главная' : 'main'}</a>
                     <span className="breadcrumbs__separator"> /&nbsp;</span>
                 </span>
 

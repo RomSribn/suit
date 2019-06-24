@@ -82,6 +82,8 @@ function getClientEnvironment(publicUrl) {
         STATIC_VIDEOS: `${publicUrl}/assets/video/`,
         STATIC_IMAGES: `${publicUrl}/assets/img/`,
         CONSULT_WIDGET_ID: serverConfig.env.CONSULT_WIDGET_ID || 'нетю  :(',
+        SALON_ID: serverConfig.env.SALON_ID,
+        BASE_SERVICE_LINK: serverConfig.env.BASE_SERVICE_LINK,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

@@ -6,8 +6,8 @@
     "start": "CONSULT_WIDGET_ID=KlNHIaLoy7 node scripts/start.js",
     "build": "NODE_ENV=production node scripts/build.js",
     "server:update:all": "npm run server:update:gasuits; npm run server:update:mysuits",
-    "server:update:gasuits": "CONSULT_WIDGET_ID=KlNHIaLoy7 SERVER=188.68.208.249 sh .deploy/update_server.sh",
-    "server:update:mysuits": "CONSULT_WIDGET_ID=LpjWK4OTHq SERVER=1              sh .deploy/update_server.sh",
+    "server:update:gasuits": "SERVER=188.68.208.249 sh .deploy/update_server.sh",
+    "server:update:mysuits": "SERVER=95.213.195.137 sh .deploy/update_server.sh",
     "integratino:start": "node integration/scripts/start.js",
     "integratino:build": "node integration/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

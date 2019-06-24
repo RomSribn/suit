@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
+const serverConfig = require('../server.config');
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -76,11 +77,11 @@ function getClientEnvironment(publicUrl) {
         PUBLIC_URL: publicUrl,
 
         // custom environments ariables
-        API_ROOT: process.env.CLOTHES_API || undefined,
+        API_ROOT: serverConfig.env.CLOTHES_API || undefined,
         STATIC: `${publicUrl}/assets/`,
         STATIC_VIDEOS: `${publicUrl}/assets/video/`,
         STATIC_IMAGES: `${publicUrl}/assets/img/`,
-        CONSULT_WIDGET_ID: process.env.CONSULT_WIDGET_ID || 'нетю  :(',
+        CONSULT_WIDGET_ID: serverConfig.env.CONSULT_WIDGET_ID || 'нетю  :(',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

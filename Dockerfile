@@ -9,11 +9,6 @@ RUN chmod 777 ~/.ssh
 ARG ssh_prv_key
 ARG ssh_pub_key
 ARG ssh_known_hosts
-ARG clothes_api
-ARG CONSULT_WIDGET_ID
-
-ENV CLOTHES_API="$clothes_api"
-ENV CONSULT_WIDGET_ID="$CONSULT_WIDGET_ID"
 
 RUN apt-get update && \
     apt-get install -y

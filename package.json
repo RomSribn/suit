@@ -7,7 +7,7 @@
     "build": "NODE_ENV=production node scripts/build.js",
     "server:update:all": "npm run server:update:gasuits; npm run server:update:mysuits",
     "server:update:gasuits": "SERVER=188.68.208.249 sh .deploy/update_server.sh",
-    "server:update:mysuits": "SERVER=95.213.195.137 sh .deploy/update_server.sh",
+    "server:update:mysuits": "SERVER=78.155.206.164 sh .deploy/update_server.sh",
     "integratino:start": "node integration/scripts/start.js",
     "integratino:build": "node integration/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

@@ -53,7 +53,7 @@ class Widget extends PureComponent {
       basePath: `/webgl_test/4igoom/`,
       apiPath: 'http://194.87.239.90:8081/api/',
       assetsPath: 'http://194.87.239.90/assets/models/',
-      salonId: 1,
+      salonId: process.env.SALON_API_ID,
       useMobilePositions: isMobile(),
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);

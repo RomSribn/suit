@@ -4,9 +4,9 @@ import history from '../history';
 // tslint:disable-next-line no-any
 type AnyFunction<A = any, B = any> = (firts?: A, second?: B) => any;
 
-/* tslint:disable no-any no-console */ 
+/* tslint:disable no-any no-console */
 export function callApi(
-    /* tslint:enable no-any */ 
+    /* tslint:enable no-any */
   config: Axios.RequestConfig,
   onRequest?: AnyFunction,
   onRequestSuccess?: AnyFunction,
@@ -30,13 +30,13 @@ export function callApi(
     ...config,
     params: {
       ...config.params,
-      salonId: 1
+      salonId: process.env.SALON_API_ID
     }
   };
 
   return axios(config).then((response): Axios.Response => {
     if (typeof onRequestSuccess === 'function') {
-      onRequestSuccess(response.data, response.headers);      
+      onRequestSuccess(response.data, response.headers);
     }
     return response as Axios.Response;
   }).catch((error) => {

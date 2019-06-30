@@ -21,7 +21,7 @@ const Header = (props: HeaderProps) => {
             href={baseLink}
             className="navbar__header"
         >
-            <img className="logo" src={process.env.STATIC_IMAGES + `logo-white.svg`} />
+            <img className="logo" src={process.env.STATIC_IMAGES + 'logo/' + process.env.SALON_ID + '.svg'} />
         </a>
     </div>
     );

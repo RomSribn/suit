@@ -29,6 +29,6 @@ type Localization = Translations<Loc>;
 type Field = {
     name: string,
     required?: boolean,
-    component: string,
+    component: 'input',
     type: string,
 };

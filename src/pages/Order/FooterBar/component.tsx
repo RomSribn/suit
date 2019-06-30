@@ -146,15 +146,14 @@ class FooterBar extends React.Component<Props> {
                         path={routes.details}
                         component={() => {
                             return (
-                                <span>
+                                <a href={process.env.BASE_SERVICE_LINK || '#'}>
                                     <Button
                                         theme="white"
                                         className="back-button"
-                                        disabled={true}
                                     >
                                         {loc[lang!].back}
                                     </Button>
-                                </span>
+                                </a>
                             );
                         }}
                     />

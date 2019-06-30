@@ -10,6 +10,8 @@ import './styles.demo.styl';
 
 const INITIALS = 'initials';
 
+const SALON_API_ID = process.env.SALON_API_ID;
+
 /**
  * Ух бля. Костылеми больше, костылем меньше. Уже абсолютно похуй, крч. Прости меня, будущий Я.
  * Основное назначение этой поебени - при первом рендере рендерить
@@ -52,8 +54,8 @@ class Widget extends PureComponent {
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
       apiPath: 'http://194.87.239.90:8081/api/',
-      assetsPath: 'http://194.87.239.90/assets/models/',
-      salonId: process.env.SALON_API_ID,
+      assetsPath: `http://194.87.239.90/assets/models/${SALON_API_ID}/`,
+      salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);

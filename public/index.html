@@ -21,7 +21,8 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Gent`s Atelier</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="//code.jivosite.com/widget.js" jv-id="KlNHIaLoy7" async></script>
   </head>
   <body>
     <!--[if lt IE 8]>
@@ -34,7 +35,6 @@
     </noscript>
     <div id="root" class="wrapper"></div>
     <div class="popup__portal"></div>
-    <script src="//code.jivosite.com/widget.js" jv-id="%CONSULT_WIDGET_ID%" async></script>
     <link href="/assets/chat_widget/jivosite.css" rel="stylesheet">
     <script src="/assets/chat_widget/jivosite.js" type="text/javascript"></script>
   </body>

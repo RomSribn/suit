@@ -86,6 +86,7 @@ function getClientEnvironment(publicUrl) {
         CONSULT_WIDGET_ID: serverConfig.env.CONSULT_WIDGET_ID || 'нетю  :(',
         SALON_ID: serverConfig.env.SALON_ID,
         BASE_SERVICE_LINK: serverConfig.env.BASE_SERVICE_LINK,
+        SALON_TITLE: serverConfig.env.SALON_TITLE,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

@@ -296,6 +296,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      title: env.raw.SALON_TITLE,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

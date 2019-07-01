@@ -1,5 +1,55 @@
 import * as _ from 'lodash';
 
+export const handleSetOrder = (
+    orderStore: IOrderStore,
+    newValue: Order,
+    garment: string,
+    subgroup: string,
+    subgroupData: Subgroup
+) => {
+    orderStore.setOrder(
+        newValue,
+        {
+            [garment]: {
+                [subgroup]: {
+                    exceptions: orderStore.activeElement!.exception,
+                    titleSubGroup: subgroupData.title!,
+                    titleElement: orderStore.activeElement!.title,
+                    is_item_clear: orderStore.activeElement!.is_item_clear
+                }
+            }
+        }
+    );
+};
+
+export const handleExclsuiveCallback = (
+    isRemovable: boolean,
+    exceptionsForPopup: {
+        garmentKey: string,
+        elementKey: string,
+    }[],
+    orderStore: IOrderStore,
+    newValue: Order,
+    garment: string,
+    subgroup: string,
+    subgroupData: Subgroup
+) => {
+    if (isRemovable) {
+        exceptionsForPopup.forEach(exceptionForPopup => {
+            const { garmentKey, elementKey } = exceptionForPopup;
+            orderStore.clearException(garmentKey, elementKey, 'default');
+            orderStore.clearElement(garmentKey, elementKey, 'default');
+        });
+    } else {
+        exceptionsForPopup.forEach(exceptionForPopup => {
+            const { garmentKey, elementKey } = exceptionForPopup;
+            orderStore.clearException(garmentKey, elementKey, 'default');
+        });
+    }
+    handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
+    orderStore.setMutuallyExclusivePopup!({ show: false });
+};
+
 interface Props {
     match: {
         params: {
@@ -10,31 +60,12 @@ interface Props {
     };
     Subgroups: any; // tslint:disable-line
     orderStore: IOrderStore;
-    setOrderCallback?: (
-        orderStore: IOrderStore,
-        newValue: Order,
-        garment: string,
-        subgroup: string,
-        subgroupData: Subgroup
-    ) => void;
-    handleExclsuiveCallback?: (
-        isRemovable: boolean,
-        exceptionsForPopup: {
-            garmentKey: string,
-            elementKey: string,
-        }[],
-        orderStore: IOrderStore,
-        newValue: Order,
-        garment: string,
-        subgroup: string,
-        subgroupData: Subgroup
-    ) => void;
 }
 
 const updateOrder = (props: Props) => {
     try {
         if (props.match) {
-          const { match, Subgroups, orderStore, setOrderCallback, handleExclsuiveCallback } = props;
+          const { match, Subgroups, orderStore } = props;
           const {
             garment,
             group,
@@ -48,7 +79,7 @@ const updateOrder = (props: Props) => {
             newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
             newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
           }
-  
+
           // initial values
           const exceptions = orderStore!.exceptions;
           const activeExceptions = orderStore!.activeElement!.exception || [];
@@ -98,11 +129,11 @@ const updateOrder = (props: Props) => {
                   ac.push(...exceptions[garmentKey][elementKey].exceptions);
                 }
               });
-  
+
               return ac;
             }, [])
             : [];
-  
+
           if (mutuallyExclusiveItems.length && exceptions) {
             const exceptionsForPopup: { garmentKey: string, elementKey: string }[] = [];
             // TODO: добавить id: exceptionsIds, чтобы избежать рыскания в вложенных циклах
@@ -112,7 +143,7 @@ const updateOrder = (props: Props) => {
                   allExceptions.forEach((exceptionCode) => {
                     const isExceptionItemExistInOrder = arrayItemsInOrder.find((key: string) =>
                       exceptions[garmentKey][elementKey].exceptions.includes(key));
-  
+
                     if (exceptions[garmentKey][elementKey].exceptions.includes(exceptionCode)
                       && isExceptionItemExistInOrder === exceptionCode) {
                       exceptionsForPopup.push({ garmentKey, elementKey });
@@ -121,7 +152,7 @@ const updateOrder = (props: Props) => {
                 }
               });
             });
-  
+
             if (exceptionsForPopup.length && handleExclsuiveCallback) {
               const isRemovable = true;
               handleExclsuiveCallback(
@@ -135,11 +166,9 @@ const updateOrder = (props: Props) => {
               );
             }
           } else {
-            if (setOrderCallback) {
-                setOrderCallback(orderStore!, newValue, garment, subgroup, subgroupData);
-            }
+              handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
           }
-  
+
         }
       } catch (_) {
         const { } = _;

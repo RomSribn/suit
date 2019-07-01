@@ -12,7 +12,7 @@ const galleryCache = {};
 
 @inject(({
     app,
-    garments: { GalleryStore },
+    garments: { GalleryStore, Subgroups },
     order,
     filterStore,
 }, nextProps: GalleryContainerProps) => {
@@ -43,6 +43,7 @@ const galleryCache = {};
         orderStore: order,
         galleryStore: galleryCache[cacheName],
         filterStore: filterStore,
+        Subgroups: Subgroups,
         ...nextProps,
     };
 })
@@ -100,7 +101,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
 
                     // Когда значения элемента по выбранному фильтру удовлетворяют ВСЕМ значениям фильтра
                     if (intersection(
-                            // Что можно привести к number, сравниваем как number, остальное как string 
+                            // Что можно привести к number, сравниваем как number, остальное как string
                             filterValues.map(val => isNaN(Number(val)) ? val : Number(val)),
                             valueToCompare.map((val: {value: string}) =>
                                 isNaN(Number(val.value)) ? val.value : Number(val.value)

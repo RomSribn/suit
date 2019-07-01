@@ -7,6 +7,7 @@ import { GalleryBar } from '../GalleryBar';
 import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 
 import './styles.styl';
+import { updateOrder } from '../FooterBar/utils';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
@@ -234,7 +235,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 elementInfo
             };
             setActiveOrderItem(newOrderItem);
-            if (this.state.activeElementIndex !== i && match) {
+            if (match) {
                 const {
                     garment,
                     group,
@@ -247,6 +248,13 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
                 newOrder[garment][0][group][subgroup].title = newOrderItem.title;
                 orderStore!.updateOrderInfo(newOrder);
+                const props = this.props;
+
+                updateOrder({
+                    match: props.match!,
+                    Subgroups: props.Subgroups,
+                    orderStore: props.orderStore!,
+                });
             }
         }
     }

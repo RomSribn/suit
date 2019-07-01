@@ -72,64 +72,12 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     }
   }
 
-  handleExclsuive = (
-    isRemovable: boolean,
-    exceptionsForPopup: {
-      garmentKey: string,
-      elementKey: string,
-    }[],
-    orderStore: IOrderStore,
-    newValue: Order,
-    garment: string,
-    subgroup: string,
-    subgroupData: Subgroup
-  ) => {
-    if (isRemovable) {
-      exceptionsForPopup.forEach(exceptionForPopup => {
-        const { garmentKey, elementKey } = exceptionForPopup;
-        orderStore.clearException(garmentKey, elementKey, 'default');
-        orderStore.clearElement(garmentKey, elementKey, 'default');
-      });
-    } else {
-      exceptionsForPopup.forEach(exceptionForPopup => {
-        const { garmentKey, elementKey } = exceptionForPopup;
-        orderStore.clearException(garmentKey, elementKey, 'default');
-      });
-    }
-    this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
-    this.props.setMutuallyExclusivePopup!({ show: false });
-  }
-
-  handleSetOrder = (
-    orderStore: IOrderStore,
-    newValue: Order,
-    garment: string,
-    subgroup: string,
-    subgroupData: Subgroup
-  ) => {
-    orderStore!.setOrder(
-      newValue,
-      {
-        [garment]: {
-          [subgroup]: {
-            exceptions: orderStore.activeElement!.exception,
-            titleSubGroup: subgroupData.title!,
-            titleElement: orderStore.activeElement!.title,
-            is_item_clear: orderStore.activeElement!.is_item_clear
-          }
-        }
-      }
-    );
-  }
-
   updateOrder = () => {
     const props = this.props;
     updateOrder({
       match: props.match!,
       Subgroups: props.Subgroups,
       orderStore: props.orderStore!,
-      setOrderCallback: this.handleSetOrder,
-      handleExclsuiveCallback: this.handleExclsuive,
     });
   }
 

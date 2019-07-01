@@ -15,6 +15,29 @@ import { FooterBarProps } from './typings';
 
 type Props = FooterBarProps & { orderStore: IOrderStore };
 
+const checkItemForExceptions  = (
+    allItems: {items: {exception: string[]}[]}[],
+    comparedValue: {items: {exception: string[]}[]},
+    activeChoices: string[],
+): boolean | undefined => {
+    if (!comparedValue) { return undefined; }
+
+    const nextExceptions: string[][] =
+        comparedValue.items
+            .map(item => item.exception);
+
+    let hasExceptionsBefore = false;
+
+    activeChoices.forEach(currentChoice => {
+        if (!hasExceptionsBefore &&
+            nextExceptions.every(ex => ex.includes(currentChoice))) {
+            hasExceptionsBefore = true;
+        }
+    });
+
+    return hasExceptionsBefore;
+};
+
 class FooterBar extends React.Component<Props> {
     static defaultProps = {
         goBack: () => undefined,
@@ -37,56 +60,6 @@ class FooterBar extends React.Component<Props> {
         routing.push(linkToRedirect);
         popOrderPathitem!();
     }
-
-    handleSetOrder = (
-        orderStore: IOrderStore,
-        newValue: Order,
-        garment: string,
-        subgroup: string,
-        subgroupData: Subgroup
-      ) => {
-        orderStore.setOrder(
-          newValue,
-          {
-            [garment]: {
-              [subgroup]: {
-                exceptions: orderStore.activeElement!.exception,
-                titleSubGroup: subgroupData.title!,
-                titleElement: orderStore.activeElement!.title,
-                is_item_clear: orderStore.activeElement!.is_item_clear
-              }
-            }
-          }
-        );
-      }
-
-    handleExclsuive = (
-        isRemovable: boolean,
-        exceptionsForPopup: {
-          garmentKey: string,
-          elementKey: string,
-        }[],
-        orderStore: IOrderStore,
-        newValue: Order,
-        garment: string,
-        subgroup: string,
-        subgroupData: Subgroup
-      ) => {
-        if (isRemovable) {
-          exceptionsForPopup.forEach(exceptionForPopup => {
-            const { garmentKey, elementKey } = exceptionForPopup;
-            orderStore.clearException(garmentKey, elementKey, 'default');
-            orderStore.clearElement(garmentKey, elementKey, 'default');
-          });
-        } else {
-          exceptionsForPopup.forEach(exceptionForPopup => {
-            const { garmentKey, elementKey } = exceptionForPopup;
-            orderStore.clearException(garmentKey, elementKey, 'default');
-          });
-        }
-        this.handleSetOrder(orderStore!, newValue, garment, subgroup, subgroupData);
-        orderStore.setMutuallyExclusivePopup!({ show: false });
-      }
 
     render() {
         const {
@@ -120,8 +93,6 @@ class FooterBar extends React.Component<Props> {
                                                 match: args[0].match,
                                                 Subgroups: this.props.Subgroups,
                                                 orderStore: this.props.orderStore,
-                                                setOrderCallback: this.handleSetOrder,
-                                                handleExclsuiveCallback: this.handleExclsuive,
                                             });
                                             this.onBackClick();
                                         }}
@@ -179,31 +150,32 @@ class FooterBar extends React.Component<Props> {
                                 let currentIndex =
                                     (currentData.design as Subgroup[])
                                         .findIndex(item => item.subsection_our_code === subGroup);
-                                if (currentData.design[currentIndex + 1]) {
-                                    try {
-                                        const checkedValue: string = this.props.orderStore!.activeElement!.our_code;
-                                        if (currentData.design[currentIndex + 1]
-                                            .items
-                                            // tslint:disable-next-line
-                                            .every((item: any) => item.exception.includes(checkedValue))
-                                        ) {
-                                            if (currentData.design[currentIndex + 2]) {
-                                                link =
-                                                    `${link}/design/` +
-                                                    `${currentData.design[currentIndex + 2].subsection_our_code}`;
-                                            } else {
-                                                link = `${link}/fitting/fitting`;
-                                            }
-                                        } else {
-                                            link =
-                                                `${link}/design/` +
-                                                `${currentData.design[currentIndex + 1].subsection_our_code}`;
-                                        }
-                                    } catch (_) {
-                                        link =
-                                            `${link}/design/` +
-                                            `${currentData.design[currentIndex + 1].subsection_our_code}`;
+
+                                const currentOrderChoices =
+                                    Object.values(this.props.orderStore.order[garment][0].design)
+                                        .filter(Boolean).map((s: {our_code: string}) => s.our_code);
+
+                                let nextItem = undefined;
+
+                                for (let i = (currentIndex + 1); i <= currentData.design.length; i++) {
+                                    if (nextItem !== undefined) {
+                                        break;
                                     }
+
+                                    const hasExceptionsBefore =
+                                        checkItemForExceptions(
+                                            currentData.design,
+                                            currentData.design[i],
+                                            currentOrderChoices);
+                                    if (hasExceptionsBefore === false) {
+                                        nextItem = currentData.design[i];
+                                    }
+                                }
+
+                                if (nextItem) {
+                                    link =
+                                        `${link}/design/` +
+                                        `${nextItem.subsection_our_code}`;
                                     } else {
                                         link = `${link}/fitting/fitting`;
                                     }

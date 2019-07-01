@@ -78,10 +78,6 @@ class Wrapper extends Component {
               return <Redirect to={routes.order} />;
             }}/>
             {
-              !dummyWasRendered &&
-              <Route path={`${routes.details}/:any`} component={ () =><Redirect to={routes.order} /> } />
-            }
-            {
               !userStore.isAuth && <Route path={`${routes.details}/:garment/fitting/fitting`} component={({match, location}) => {
                 return <Redirect to={`${routes.details}/${match.params.garment}${location.search}`}/>;
               }} />

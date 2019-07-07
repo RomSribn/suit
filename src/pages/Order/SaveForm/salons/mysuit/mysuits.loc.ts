@@ -1,7 +1,7 @@
 const translations: Localization = {
     en: {
         header: 'Stylist consultation',
-        infoText: 'Stylist will call you back and help to complete the order.',
+        infoText: 'Stylist will email you back and help to complete the order.',
         placeHolders: {
             name: 'Name',
             phone: 'Phone',
@@ -13,7 +13,7 @@ const translations: Localization = {
     },
     ru: {
         header: 'Консультация стилиста',
-        infoText: 'Стилист перезвонит вам и поможет завершить заказ.',
+        infoText: 'Стилист свяжется с вами и поможет завершить заказ.',
         placeHolders: {
             name: 'ФИО',
             phone: 'Телефон',

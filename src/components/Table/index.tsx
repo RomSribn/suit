@@ -10,13 +10,14 @@ import { ListPickerDropdown } from './ListPickerDropdown';
 
 import { loc } from './loc';
 import './styles.styl';
+import { getPhoneOrEmail } from './getPhoneOrEmail/salons';
 
-type TableDataItemStringFieds = 'order' | 'name' | 'fitting' | 'phone' | 'date';
-type Columns = TableDataItemStringFieds | 'status';
+export type TableDataItemStringFields = 'order' | 'name' | 'fitting' | 'phone' | 'date' | 'email';
+type Columns = TableDataItemStringFields | 'status';
 const orderStatuses: OrderStatus[] = ['TEMPORARY', 'NEW', 'IN_PROGRESS', 'DONE'];
 
 type TableDataItem = {
-    [key in TableDataItemStringFieds]: string;
+    [key in TableDataItemStringFields]: string;
 } & { status: OrderStatusInfo };
 type TableData = TableDataItem[];
 interface TProps {
@@ -270,13 +271,11 @@ class Table extends React.Component<TProps, TState> {
                         filterMethod: this.filterMethod,
                         Cell: cell
                     },
-                    {
-                        accessor: 'phone',
-                        Filter: () => <Filter text={columns.phone} />,
-                        filterable: true,
+                    getPhoneOrEmail({
+                        columnsText: columns,
+                        cell: cell,
                         filterMethod: this.filterMethod,
-                        Cell: cell
-                    },
+                    }),
                     {
                         Filter: () => <Filter text={columns.fitting} />,
                         filterable: true,

@@ -10,7 +10,8 @@ const prepareTableData: PrepareTableData = (orders, lang) => {
         fitting: 'First',
         phone: order.customer && order.customer.phone || '',
         status: order.status,
-        date: moment(order.date).format('DD/MM/YYYY')
+        date: moment(order.date).format('DD/MM/YYYY'),
+        email: order.customer && order.customer.email || '',
     }));
 };
 

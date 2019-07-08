@@ -33,10 +33,18 @@ interface FilterParams {
     text: string;
     type?: filterTypes;
     selectValues?: ListItem[];
-    onClickFilterItem?(params: FilterParams, inputRef: React.RefObject<HTMLDivElement>, setFilterValue?: SetFilterValueFunction): void;
     onChange?: (value: any) => void;
-    updatePickerData?(params: FilterParams, inputRef: React.RefObject<HTMLDivElement>, setFilterValue?: SetFilterValueFunction): void;
     isActive?: boolean;
+    onClickFilterItem?(
+        params: FilterParams,
+        inputRef: React.RefObject<HTMLDivElement>,
+        setFilterValue?: SetFilterValueFunction
+    ): void;
+    updatePickerData?(
+        params: FilterParams,
+        inputRef: React.RefObject<HTMLDivElement>,
+        setFilterValue?: SetFilterValueFunction
+    ): void;
 }
 
 interface ListItem {
@@ -48,7 +56,7 @@ interface FilterData {
     options?: ListItem[];
     setFilterValue: SetFilterValueFunction;
     title?: string;
-    inputRef: React.RefObject<HTMLDivElement>
+    inputRef: React.RefObject<HTMLDivElement>;
 }
 
 interface DatePickerFilterFields {
@@ -65,18 +73,17 @@ interface ActiveFilterValues {
     status?: string;
 }
 
-type SetFilterValueFunction = (value: string | DatePickerFilterFields) => void
+type SetFilterValueFunction = (value: string | DatePickerFilterFields) => void;
 
 type filterTypes = 'input' | 'date' | 'select' | 'empty';
 
 interface FilterMethodFilter {
-    id: string,
-    value: string,
-    [key: string]: string
+    id: string;
+    value: string;
+    [key: string]: string;
 }
 
 interface FilterMethodRow {
-    date: string,
-    [key: string]: string
+    date: string;
+    [key: string]: string;
 }
-

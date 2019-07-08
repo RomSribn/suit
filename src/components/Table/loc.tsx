@@ -4,7 +4,7 @@ type ConfirmActionTextParams = Record<'currentStatus' | 'nextStatus', string>;
 
 type Loc = {
     /** Наименовая колонок отоборажения */
-    columns:  Record<Columns, string>;
+    columns: Record<Columns, string>;
     /** Наименования статусов, доступных для фильтрации */
     statuses: Record<OrderStatus | 'ALL_STATUSES', string>;
     fabric: {
@@ -32,7 +32,8 @@ const loc: Translations<Loc> = {
             fitting: 'Fitting',
             phone: 'Phone',
             status: 'Status',
-            date: 'date'
+            date: 'date',
+            email: 'Email',
         },
         statuses: {
             TEMPORARY: 'Temporary',
@@ -59,7 +60,8 @@ const loc: Translations<Loc> = {
             fitting: 'Примерка',
             phone: 'Телефон',
             status: 'Статус',
-            date: 'дата'
+            date: 'дата',
+            email: 'Email',
         },
         statuses: {
             TEMPORARY: 'Временный',

@@ -44,24 +44,44 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
         const content  = state.showThanks
             ? (<span>{loc[lang].thanksText}</span>)
             : (
-            <>
-                {FIELDS.map((field) => (
-                    <Field
-                        className="order-form__input"
-                        name={field.name}
-                        required={Boolean(field.required)}
-                        component={field.component}
-                        type={field.type}
-                        placeholder={loc[lang].placeHolders[field.name]}
-                        key={`field-${field.name}`}
+                <>
+                    <div className="order-form">
+                        {FIELDS.map((field) => (
+                            <Field
+                                className="order-form__input"
+                                name={field.name}
+                                required={Boolean(field.required)}
+                                component={field.component}
+                                type={field.type}
+                                placeholder={loc[lang].placeHolders[field.name]}
+                                key={`field-${field.name}`}
+                            />
+                        ))}
+                        <div className="buttons">
+                            <Button type="submit" theme="black">
+                                {loc[lang].sendOrder}
+                            </Button>
+                        </div>
+                    </div>
+                    <input
+                        className="order-form__agreement"
+                        type="checkbox"
+                        required={true}
+                        id="order-confirmation"
+                        style={{
+                            marginRight: 10
+                        }}
                     />
-                ))}
-                <div className="buttons">
-                    <Button type="submit" theme="black">
-                        {loc[lang].sendOrder}
-                    </Button>
-                </div>
-            </>
+                    <label htmlFor="order-confirmation">
+                        <span className="order-confirmation__text">{loc[lang].licenseAgreement}</span>
+                        <a
+                            className="order-confirmation__link"
+                            href={`/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'}
+                            target="_blank"
+                        >{loc[lang].read}
+                        </a>
+                    </label>
+                </>
         );
 
         return (
@@ -77,7 +97,7 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                                 </div>
                                 <form
                                     onSubmit={handleSubmit}
-                                    className="order-form"
+                                    className=""
                                 >
                                     {content}
                                 </form>

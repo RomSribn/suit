@@ -3,7 +3,7 @@ interface CommonProps {
 }
 
 interface InjectedStores {
-    lang: string;
+    lang: Lang;
     orderStore: IOrderStore;
 }
 
@@ -22,6 +22,8 @@ interface Loc {
     backText: string;
     sendOrder: string;
     thanksText: string;
+    licenseAgreement: string;
+    read: string;
 }
 
 type Localization = Translations<Loc>;

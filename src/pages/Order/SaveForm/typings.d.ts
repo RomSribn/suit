@@ -23,7 +23,7 @@ interface Loc {
     sendOrder: string;
     thanksText: string;
     licenseAgreement: string;
-    read: string;
+    personalData: string;
 }
 
 type Localization = Translations<Loc>;

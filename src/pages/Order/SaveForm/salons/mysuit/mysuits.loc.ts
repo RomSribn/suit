@@ -10,8 +10,8 @@ const translations: Localization = {
         backText: 'back',
         sendOrder: 'get',
         thanksText: 'Thank you! We have received your data. Our stylist will contact you.',
-        licenseAgreement: 'Agree user with data processing',
-        read: 'read',
+        licenseAgreement: 'Agree user with',
+        personalData: 'data processing policy',
     },
     ru: {
         header: 'Консультация стилиста',
@@ -24,8 +24,8 @@ const translations: Localization = {
         backText: 'назад',
         sendOrder: 'получить',
         thanksText: 'Спасибо, получили ваши данные. В ближайшее время с вами свяжется наш стилист.',
-        licenseAgreement: 'Согласен(на) на обработку персональных данных',
-        read: 'прочитать',
+        licenseAgreement: 'Согласен(на) на обработку',
+        personalData: 'персональных данных',
     }
 };
 

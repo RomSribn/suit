@@ -77,7 +77,7 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                             className="order-confirmation__link"
                             href={`/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'}
                             target="_blank"
-                        >{loc[lang].read}
+                        >{loc[lang].personalData}
                         </a>
                     </label>
                 </>

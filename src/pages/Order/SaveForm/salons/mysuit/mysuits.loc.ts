@@ -1,7 +1,7 @@
 const translations: Localization = {
     en: {
         header: 'Stylist consultation',
-        infoText: 'Our stylist will send your order to the email and help to finish it.”',
+        infoText: 'Our stylist will send your order to the email and help to finish it.',
         placeHolders: {
             name: 'Name',
             phone: 'Phone',

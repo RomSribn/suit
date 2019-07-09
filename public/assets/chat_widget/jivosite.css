@@ -2,7 +2,7 @@
 	display: none;
 }
 
-#jivo_custom_widget{
+#jivo_custom_widget {
 	position: fixed;
 	bottom: 2.5rem;
 	left: 2.5rem;
@@ -13,6 +13,13 @@
 	border-radius: 50px;
 	background: black url("/assets/chat_widget/logo.svg") no-repeat center;
 	background-size: 50%;
+}
+
+@media only screen and (max-width: 450px) {
+	#jivo_custom_widget {
+		bottom: 1.5rem;
+		left: 1rem;
+	}
 }
 
 /*!* если есть операторы в онлайне *!*/

@@ -1,6 +1,6 @@
 const translations: Localization = {
     en: {
-        header: 'Stylist consultation',
+        header: 'Get order',
         infoText: 'Our stylist will send your order to the email and help to finish it.',
         placeHolders: {
             name: 'Name',
@@ -14,7 +14,7 @@ const translations: Localization = {
         personalData: 'data processing policy',
     },
     ru: {
-        header: 'Консультация стилиста',
+        header: 'Получить заказ',
         infoText: 'Стилист отправит заказ на почту и поможет его завершить.',
         placeHolders: {
             name: 'ФИО',

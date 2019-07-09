@@ -81,10 +81,10 @@ function getClientEnvironment(publicUrl) {
         STATIC: `${publicUrl}/assets/`,
         STATIC_VIDEOS: `${publicUrl}/assets/video/`,
         STATIC_IMAGES: `${publicUrl}/assets/img/`,
-        SALON_API_ID: serverConfig.env.SALON_API_ID || '-1',
         GALLERY_URL: serverConfig.env.GALLERY_URL,
         CONSULT_WIDGET_ID: serverConfig.env.CONSULT_WIDGET_ID || 'нетю  :(',
         SALON_ID: serverConfig.env.SALON_ID,
+        SALON_API_ID: serverConfig.env.SALON_API_ID || '-1',
         BASE_SERVICE_LINK: serverConfig.env.BASE_SERVICE_LINK,
         SALON_TITLE: serverConfig.env.SALON_TITLE,
       }

@@ -1,7 +1,7 @@
 const translations: Localization = {
     en: {
-        header: 'Get order',
-        infoText: 'Stylist will email you back and help to complete the order.',
+        header: 'Stylist consultation',
+        infoText: 'Our stylist will send your order to the email and help to finish it.”',
         placeHolders: {
             name: 'Name',
             phone: 'Phone',
@@ -9,13 +9,13 @@ const translations: Localization = {
         },
         backText: 'back',
         sendOrder: 'get',
-        thanksText: 'Our stylist will send the order to your email and help you finish it',
+        thanksText: 'Thank you! We have received your data. Our stylist will contact you.',
         licenseAgreement: 'Agree user with',
         personalData: 'data processing policy',
     },
     ru: {
-        header: 'Получить заказ',
-        infoText: 'Стилист свяжется с вами и поможет завершить заказ.',
+        header: 'Консультация стилиста',
+        infoText: 'Стилист отправит заказ на почту и поможет его завершить.',
         placeHolders: {
             name: 'ФИО',
             phone: 'Телефон',
@@ -23,7 +23,7 @@ const translations: Localization = {
         },
         backText: 'назад',
         sendOrder: 'получить',
-        thanksText: 'Стилист отправит заказ на почту и поможет его завершить.',
+        thanksText: 'Спасибо, получили ваши данные. В ближайшее время с вами свяжется наш стилист.',
         licenseAgreement: 'Согласен(на) на обработку',
         personalData: 'персональных данных',
     }

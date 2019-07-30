@@ -36,7 +36,7 @@ switch (salon) {
         break;
     }
     case 'kalasova': {
-        getPhoneOrEmail = require('./kalasova').getEmail;
+        getPhoneOrEmail = require('./kalasova').getPhone;
         break;
     }
     default: {

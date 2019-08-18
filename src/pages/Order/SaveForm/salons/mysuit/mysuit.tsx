@@ -63,24 +63,26 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                             </Button>
                         </div>
                     </div>
-                    <input
-                        className="order-form__agreement"
-                        type="checkbox"
-                        required={true}
-                        id="order-confirmation"
-                        style={{
-                            marginRight: 10
-                        }}
-                    />
-                    <label htmlFor="order-confirmation">
-                        <span className="order-confirmation__text">{loc[lang].licenseAgreement}</span>
-                        <a
-                            className="order-confirmation__link"
-                            href={`/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'}
-                            target="_blank"
-                        >{loc[lang].personalData}
-                        </a>
-                    </label>
+                    <div className="order-form__agreement-container">
+                        <input
+                            className="order-form__agreement"
+                            type="checkbox"
+                            required={true}
+                            id="order-confirmation"
+                            style={{
+                                marginRight: 10
+                            }}
+                        />
+                        <label htmlFor="order-confirmation">
+                            <span className="order-confirmation__text">{loc[lang].licenseAgreement}</span>
+                            <a
+                                className="order-confirmation__link"
+                                href={`/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'}
+                                target="_blank"
+                            >{loc[lang].personalData}
+                            </a>
+                        </label>
+                    </div>
                 </>
         );
 

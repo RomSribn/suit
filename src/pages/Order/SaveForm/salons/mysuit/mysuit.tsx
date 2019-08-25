@@ -4,6 +4,7 @@ import { translations as loc } from './mysuits.loc';
 import { Button } from '../../../../../components/Button';
 
 import './mysuits.styles.styl';
+import { Redirect } from 'react-router';
 
 const FIELDS: Field[] = [{
     name: 'email',
@@ -42,7 +43,12 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
         const state = this.state;
 
         const content  = state.showThanks
-            ? (<span>{loc[lang].thanksText}</span>)
+            ? (
+                <>
+                    <span>{loc[lang].thanksText}</span>
+                    <Redirect to="#thank_you"/>
+                </>
+            )
             : (
                 <>
                     <div className="order-form">

@@ -280,6 +280,7 @@ module.exports = {
       inject: true,
       title: env.raw.SALON_TITLE,
       template: paths.appHtml,
+      scripts_facebook: env.raw.SCRIPTS_FACEBOOK
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

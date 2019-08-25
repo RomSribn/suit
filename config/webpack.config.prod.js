@@ -297,6 +297,7 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       title: env.raw.SALON_TITLE,
+      scripts_facebook: env.raw.SCRIPTS_FACEBOOK,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

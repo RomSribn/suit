@@ -87,6 +87,7 @@ function getClientEnvironment(publicUrl) {
         SALON_API_ID: serverConfig.env.SALON_API_ID || '-1',
         BASE_SERVICE_LINK: serverConfig.env.BASE_SERVICE_LINK,
         SALON_TITLE: serverConfig.env.SALON_TITLE,
+        SCRIPTS_FACEBOOK: serverConfig.env.SCRIPTS_FACEBOOK || '',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

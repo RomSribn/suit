@@ -71,7 +71,7 @@ export class App implements IAppStore {
   }
 
 }
-const app = new App(navigator.language.indexOf('ru') !== -1 ? 'ru' : 'en' );
+const app = new App((navigator.languages || navigator.language).indexOf('ru') !== -1 ? 'ru' : 'en' );
 
 export {
   app,

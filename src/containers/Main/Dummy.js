@@ -7,6 +7,7 @@ import { currentItems } from '../../stores/garments/galleryStore';
 import { isMobile, isTablet, isIpadPro, listeners } from '../../utils';
 
 import './styles.demo.styl';
+import {API_ROOT} from '../../config/routes';
 
 const INITIALS = 'initials';
 
@@ -53,8 +54,8 @@ class Widget extends PureComponent {
 
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
-      apiPath: 'http://194.87.239.90:8081/api/',
-      assetsPath: `http://194.87.239.90/assets/models/${SALON_API_ID}/`,
+      apiPath: `${API_ROOT}/api/`,
+      assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
       onClickAsset: (...args) => {

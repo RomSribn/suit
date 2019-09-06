@@ -17,7 +17,7 @@ import { HeaderContainerProps } from './typings';
 @observer
 class Header extends React.Component<HeaderContainerProps> {
     get title() {
-        return get(this, 'appStore.orderPath[0].value', this.props.path!.split('/').slice(1).shift());
+        return get(this, 'props.appStore.orderPath[0].value', this.props.path!.split('/').slice(1).shift());
     }
 
     openMenu = () => {

@@ -80,13 +80,12 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                             }}
                         />
                         <label htmlFor="order-confirmation">
-                            <span className="order-confirmation__text">{loc[lang].licenseAgreement}</span>
-                            <a
+                            <span className="order-confirmation__text">{loc[lang].licenseAgreement} <a
                                 className="order-confirmation__link"
                                 href={`/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'}
                                 target="_blank"
                             >{loc[lang].personalData}
-                            </a>
+                            </a></span>
                         </label>
                     </div>
                 </>

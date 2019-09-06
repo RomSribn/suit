@@ -104,6 +104,7 @@ class Table extends React.Component<TProps, TState> {
                 (acc: FilterMethodFilter, cur: { id: string, value: string, [key: string]: string }) => {
                 acc[cur.id] = cur.value;
                 return acc;
+            // @ts-ignore
             }, {})
         });
     }

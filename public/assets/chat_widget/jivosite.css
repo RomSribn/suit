@@ -2,13 +2,17 @@
 	display: none;
 }
 
-#jivo_custom_widget {
+#jivo_custom_widget-container {
 	position: fixed;
 	bottom: 2.5rem;
 	left: 2.5rem;
 	width: 45px;
 	height: 45px;
-	z-index: 999999999999;
+	z-index: 9;
+}
+#jivo_custom_widget {
+	width: 100%;
+	height: 100%;
 	cursor: pointer;
 	border-radius: 50px;
 	background: black url("/assets/chat_widget/logo.svg") no-repeat center;

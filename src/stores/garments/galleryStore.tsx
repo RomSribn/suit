@@ -61,7 +61,7 @@ class GalleryStore implements GalleryStore {
                     i :
                     {
                         ...i,
-                        img_url_2d: 'http://194.87.239.90' + i.img_url_2d!.replace('/html', ''),
+                        img_url_2d: API_ROOT + i.img_url_2d!.replace('/html', ''),
                     };
             })
         ];

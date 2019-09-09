@@ -1,5 +1,7 @@
 const widgetId = 'jivo_custom_widget';
 
+const messagesContainerCN = '.messagesLabel_FQ';
+
 const cssStylesFromObject = (styleObject) => {
 	const styleString = (
 		Object.entries(styleObject).reduce((styleString, [propName, propValue]) => {
@@ -31,7 +33,7 @@ const unreadElementsCountBlockStyles = cssStylesFromObject({
 });
 
 const updateUnreadCount = () => {
-	const unreadCount = api.getUnreadMessagesCount ? api.getUnreadMessagesCount() : 0;
+	const unreadCount = Number((document.querySelector(messagesContainerCN) || {textContent: 0}).textContent);
 	unreadMessagesCountContainer.innerText = unreadCount;
 
 	const targetStyle = unreadCount === 0 ? 'display: none' : unreadElementsCountBlockStyles;
@@ -68,6 +70,10 @@ function jivo_onLoadCallback(){
 	
 	// Теперь можно показать ярлык пользователю
 	window.jivo_cstm_widget.style.display='block';
+
+	setInterval(() => {
+		updateUnreadCount();
+	}, 5000);
 }
 
 /*

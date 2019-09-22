@@ -69,9 +69,8 @@ export class App implements IAppStore {
   resetOrderPath = () => {
     this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
   }
-
 }
-const app = new App((navigator.languages || navigator.language).indexOf('ru') !== -1 ? 'ru' : 'en' );
+const app = new App('ru');
 
 export {
   app,

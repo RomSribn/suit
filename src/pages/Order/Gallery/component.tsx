@@ -130,7 +130,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             });
         };
     }
-    componentWillReceiveProps(nextProps: GalleryProps) {
+    componentWillReceiveProps(nextProps: GalleryProps, nextState: GalleryState) {
         const item = this.shownItem;
         if (
             _.isEmpty(this.props.activeElement) && item ||
@@ -142,6 +142,14 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             this.props.setActiveOrderItem(item);
         } else {
             this.updateActiveElement();
+        }
+    }
+
+    componentWillUpdate(nextProps: Readonly<GalleryProps>, nextState: Readonly<GalleryState>) {
+        if (this.state.load.success !== nextState.load.success) {
+            setTimeout(() => {
+                this.resizeHandler();
+            }, 300);
         }
     }
 

@@ -75,7 +75,7 @@ class Wrapper extends Component {
                 dummyWasRendered = true;
                 this.showSpinner();
               }
-              return <Redirect to={routes.order} />;
+              return <Redirect to={'order/details/shirt/fabric_ref/fabric'} />;
             }}/>
             {
               !userStore.isAuth && <Route path={`${routes.details}/:garment/fitting/fitting`} component={({match, location}) => {

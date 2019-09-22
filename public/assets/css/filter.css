@@ -149,11 +149,10 @@ input:checked + .filter__label-color:before{opacity: 1;}
         height: 100%;
     }
     .filter.open{
-        width: 13rem;
+        width: 90%;
         margin-right: 0;
     }
     .filter__wrap {
-        width: 13rem;
         padding: 1.8rem 0.6rem;
     }
 }

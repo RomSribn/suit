@@ -47,9 +47,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             ? choiceItemValue!.slice(0, 10) + '...'
             : choiceItemValue;
 
-        const subgroupName =
-            subgroupsStore!.data![subgroup]
-                .find((item: Subgroup) => item.subsection_our_code === group).title[lang];
+        const subgroupName = subgroupsStore!.data
+            ? subgroupsStore!.data[subgroup]
+                .find((item: Subgroup) => item.subsection_our_code === group).title[lang]
+            : '';
         return (
                 <Link to={backLink} onClick={this.backClick} className="custom custom--open">
                     <span className="custom__content">

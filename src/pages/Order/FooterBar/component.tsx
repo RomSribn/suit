@@ -143,7 +143,7 @@ class FooterBar extends React.Component<Props> {
                             let link = `${routes.details}/${garment}`;
 
                             if (group === 'fabric_ref') {
-                                link = `${link}/design/${currentData.design[0].subsection_our_code}`;
+                                link = currentData ? `${link}/design/${currentData.design[0].subsection_our_code}` : '';
                             }
 
                             if (group === 'design') {

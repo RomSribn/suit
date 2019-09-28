@@ -37,13 +37,21 @@ class Filter extends React.Component<_FilterProps> {
 }))
 @observer
 class Controll extends React.Component<_ControllProps> {
-    componentWillUnmount() {
+    closeFilter = () => {
         const props = this.props;
         if (props.filterStore) {
             props.filterStore.closeFilter();
             props.filterStore.clearFilters();
             props.filterStore.clearUserFilters();
         }
+    }
+
+    componentDidMount() {
+        setTimeout(() => this.closeFilter(), 5000);
+    }
+
+    componentWillUnmount() {
+        this.closeFilter();
     }
     render() {
         const {

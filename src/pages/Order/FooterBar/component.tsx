@@ -153,6 +153,35 @@ class FooterBar extends React.Component<Props> {
                     />
 
                     <Route
+                        path={routes.subgroupChoice}
+                        component={
+                            // tslint:disable-next-line no-any
+                            (props: any) => {
+                                return ((
+                                    <Link
+                                        to={`${routes.design.replace(':garment', props.match.params.garment)}`}
+                                    >
+                                        <SaveButton
+                                            {...props[0]}
+                                            saveCallback={
+                                                () => {
+                                                    this.saveCallback(
+                                                        `${routes.fitting}/${props.match.params.garment}`
+                                                    );
+                                                }
+                                            }
+                                            isUpdate={true}
+                                            lang={lang}
+                                        >
+                                            {loc[lang!].save}
+                                        </SaveButton>
+                                    </Link>
+                                ));
+                            }
+                        }
+                    />
+
+                    <Route
                         path={routes.design}
                         component={
                             // tslint:disable-next-line no-any

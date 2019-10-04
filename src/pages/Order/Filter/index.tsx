@@ -47,7 +47,13 @@ class Controll extends React.Component<_ControllProps> {
     }
 
     componentDidMount() {
-        setTimeout(() => this.closeFilter(), 5000);
+        const props = this.props;
+
+        setTimeout(() => {
+            if (props.filterStore) {
+                props.filterStore.closeFilter();
+            }
+        }, 5000);
     }
 
     componentWillUnmount() {

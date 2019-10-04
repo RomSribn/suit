@@ -85,28 +85,20 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
             return filtersKeys.reduce((acc, filterName) => {
                 const filterValues = filters[filterName];
                 if (filterValues &&
-                    filterValues.length &&
-                    // Если до этого не удовлетворило какому-либо из фитров, пропускаем
-                    acc
+                    filterValues.length
                 ) {
-                    const itemValue = galleryStoreItem[filterName];
-
-                    // Просто приводим значение к единому виду для сравнения:
-                    // {value: primitive}[]
-                    const valueToCompare = ('map' in itemValue
-                        ? itemValue
-                        : itemValue instanceof Object
-                            ? [itemValue]
-                            : [{value: itemValue}]) as any[]; // tslint:disable-line no-any
-
-                    // Когда значения элемента по выбранному фильтру удовлетворяют ВСЕМ значениям фильтра
-                    if (intersection(
-                            // Что можно привести к number, сравниваем как number, остальное как string
-                            filterValues.map(val => isNaN(Number(val)) ? val : Number(val)),
-                            valueToCompare.map((val: {value: string}) =>
-                                isNaN(Number(val.value)) ? val.value : Number(val.value)
-                            )
-                        ).length === filterValues.length) {
+                    if ( // И в хвост и в гриву
+                        filterValues.includes(String(galleryStoreItem[filterName].value)) ||
+                        filterValues.includes(String(galleryStoreItem[filterName])) ||
+                        !(galleryStoreItem[filterName] instanceof Object) &&
+                        filterValues.map(Number).includes(Number(galleryStoreItem[filterName])) ||
+                        // Так как это объекты mobx'a обычная проверка Array.isArray ну не сработает.
+                        // Используем костыль с проверкой на метод map
+                        galleryStoreItem[filterName].map &&
+                        intersection(
+                            filterValues, galleryStoreItem[filterName].map((val: {value: string}) => val.value)
+                        ).length
+                    ) {
                         return acc;
                     }
 

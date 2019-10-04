@@ -125,6 +125,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     return (
       <React.Fragment key="order save popup">
         <Button
+          className={this.props.className}
           onClick={this.onClick}
           theme="black"
           link={link ? `${link}?${orderId && 'active_order_id=' + orderId}` : undefined}

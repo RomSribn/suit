@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Breadcrumbs, Crumbs } from 'react-breadcrumbs';
+import { Navlinks } from './navlinks';
 
 const baseLink = String(process.env.BASE_SERVICE_LINK);
 
@@ -41,19 +42,21 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
         const {
             pageTitle
         } = this.state;
-        const {
-            lang
-        } = this.props;
+        const props = this.props;
         return (
         <div
             className="main__header-content"
             style={HeaderContent.style}
         >
-            {pageTitle && <h1 className="main__header-title">{pageTitle}</h1>}
+            {pageTitle && (
+                <h1 className="main__header-title">
+                    <Navlinks isAuth={props.isAuth} />
+                </h1>
+            )}
             <span>
                 {/* Вставялем чтобы подхватились стили. Вообще похуй */}
                 <span className="breadcrumbs">
-                    <a className="breadcrumbs__crumb" href={baseLink}>{lang === 'ru' ? 'главная' : 'main'}</a>
+                    <a className="breadcrumbs__crumb" href={baseLink}>{props.lang === 'ru' ? 'главная' : 'main'}</a>
                     <span className="breadcrumbs__separator"> /&nbsp;</span>
                 </span>
 

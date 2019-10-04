@@ -39,6 +39,7 @@ class Header extends React.Component<HeaderProps> {
                         lang={lang}
                         orderPath={appStore.orderPath}
                         cutOrderPath={appStore.cutOrderPath}
+                        isAuth={userStore.isAuth}
                     />
                 </div> :
                 <div className="header-wrapper-mobile">

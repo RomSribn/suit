@@ -38,6 +38,7 @@ export type SaveButtonSelfProps = {
         }
     };
     children?: React.ReactNode;
+    className?: string;
     saveCallback?: Function;
     lang?: string;
     link?: string;

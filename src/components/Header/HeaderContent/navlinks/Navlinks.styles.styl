@@ -1,0 +1,33 @@
+.navlinks
+  &__container
+    display flex
+
+    &:hover
+      .navlinks__item._active:not(:hover)
+        opacity 0.2
+
+  &__item
+    text-decoration none !important
+    color inherit !important
+    margin 0 10px 0 0 !important
+    opacity .2
+    width unset !important
+    line-height unset !important
+    background unset !important
+    font-size inherit !important
+    border none !important
+    font-weight inherit !important
+
+    &:hover
+      opacity 1
+
+    &:after
+      display inline
+      margin 0 0 0 10px
+      content ' >'
+
+    &:last-child:after
+     content ''
+
+    &._active
+      opacity 1

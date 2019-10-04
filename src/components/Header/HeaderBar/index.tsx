@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { LanguageControl } from '../../../components/LanguageContorl';
+// import { LanguageControl } from '../../../components/LanguageContorl';
 import { PopUp } from '../../../containers/Popup';
 import Login from '../../Login';
 
@@ -50,7 +50,7 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
         return (
             <div className="main__bar">
-                <LanguageControl theme="black" shortcut={true} />
+                {/*<LanguageControl theme="black" shortcut={true} />*/}
                 <Link to="#" onClick={this.profileLinkClick} className="profile-link">{userName}</Link>
                 <PopUp
                     open={this.state.showLoginForm}

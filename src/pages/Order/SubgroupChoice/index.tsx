@@ -2,6 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Switch, Route, Redirect } from 'react-router';
 import { SubgroupChoice as Component } from './component';
+import { routes } from '../routes';
 import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
@@ -103,27 +104,9 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             defaultValues
         } = this.props;
         const $store = SubgroupsStore.data as SubgroupsI;
-        const isLogin = this.props.userStore!.isAuth;
-        const fittingSection = !isLogin || !$store ? [] :
-            $store.fitting.map((v: Subgroup) => filterFields(
-                v,
-                'fitting',
-                lang!,
-                order!,
-                garment,
-                defaultValues
-            ));
+
         const data = $store
             ? [
-                // filterFields($store.fabric_ref, 'fabric_ref', lang!),
-                ...$store.fabric_ref.map((v: Subgroup) => filterFields(
-                    v,
-                    'fabric_ref',
-                    lang!,
-                    order!,
-                    garment,
-                    defaultValues
-                )),
                 ...$store.design.map((v: Subgroup) => filterFields(
                     v,
                     'design',
@@ -132,7 +115,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     garment,
                     defaultValues
                 )),
-                ...fittingSection]
+            ]
             : [];
         return (
             <Switch>
@@ -155,7 +138,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 />
                 <Route
                     exact={true}
-                    path={match.path}
+                    path={routes.design}
                 >
                     <Component lang={lang} match={match} data={data} />
                 </Route>

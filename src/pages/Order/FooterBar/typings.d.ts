@@ -2,15 +2,16 @@ import { Subgroups } from '../../../stores/garments';
 
 export interface FooterBarProps {
     lang?: Lang;
+    isAuth?: boolean;
     orderStore?: IOrderStore;
-    popOrderPathitem?(): void;
     subgroupsStore?: Subgroups;
     backLink?: string;
     mutuallyExclusivePopup?: MutuallyExclusive;
     orderId?: number;
     routing?: any; // tslint:disable-line no-any
-    setActiveItem?(item: GalleryStoreItem | null): void;
     Subgroups?: any; // tslint:disable-line no-any
+    popOrderPathitem?(): void;
+    setActiveItem?(item: GalleryStoreItem | null): void;
 }
 
 export type SaveButtonInject = {

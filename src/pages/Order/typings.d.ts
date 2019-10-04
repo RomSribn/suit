@@ -1,6 +1,6 @@
-type RoutesNames = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice';
+type RoutesNames = 'index' | 'details' | 'garment' | 'groupChoice' | 'subgroupChoice' | 'fabric' | 'design' | 'fitting';
 
-type OrderRoutes = Record<RoutesNames, string>
+type OrderRoutes = Record<RoutesNames, string>;
 interface OrderSectionInterface {
     routes: OrderRoutes;
 }

@@ -6,7 +6,10 @@ const makeRoutes: MakeRoutes = (indexRoute = '/order') => {
         details: `${indexRoute}/details`,
         garment: `${indexRoute}/details/:garment`,
         groupChoice: `${indexRoute}/details/:garment/:group`,
-        subgroupChoice: `${indexRoute}/details/:garment/:group/:subgroup`
+        subgroupChoice: `${indexRoute}/details/:garment/:group/:subgroup`,
+        fabric: `${indexRoute}/details/:garment/fabric_ref/fabric`,
+        design: `${indexRoute}/details/:garment/design`,
+        fitting: `${indexRoute}/details/:garment/fitting/fitting`,
     };
 };
 const routes = makeRoutes();

@@ -7,7 +7,7 @@ import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({garments: { Subgroups }}) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({app, garments: { Subgroups }}) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
     };

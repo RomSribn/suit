@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import * as classnames from 'classnames';
 import { getCombinedPathAndTitle } from '../routes';
 import CrumbRoute from '../../../utils/CrumbRoute';
@@ -53,6 +53,14 @@ class MainSection extends React.Component<MainSectionProps> {
                         )}
                     >
                         <Switch>
+                            <Route
+                                exact={true}
+                                path={routes.garment}
+                                // @ts-ignore
+                                component={(props) => ( // tslint:disable-line
+                                    <Redirect to={routes.fabric.replace(':garment', props.match.params.garment)}/>
+                                )}
+                            />
                             <CrumbRoute
                                 {...getCombinedPathAndTitle('garment')}
                                 component={SubgroupChoice}

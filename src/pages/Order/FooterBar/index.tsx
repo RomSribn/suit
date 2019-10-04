@@ -4,13 +4,14 @@ import { FooterBar as Component } from './component';
 import { trim } from '../../../config/routes';
 import { FooterBarProps } from './typings';
 
-@inject(({ routing, app, order, garments: { Subgroups }  }, nextProps) => ({
+@inject(({ routing, app, order, garments: { Subgroups }, user  }, nextProps) => ({
     lang: app.lang,
     orderStore: order,
     mutuallyExclusivePopup: order.mutuallyExclusivePopup,
     popOrderPathitem: app.popOrderPathItem,
     orderId: order.orderInfo && order.orderInfo.orderId,
     routing,
+    isAuth: user.isAuth,
     subgroupsStore: new Subgroups('shirt'),
     Subgroups,
     backLink:
@@ -40,11 +41,13 @@ class FooterBar extends React.Component<FooterBarProps> {
             orderId,
             routing,
             subgroupsStore,
-            Subgroups
+            Subgroups,
+            isAuth,
         } = this.props;
         return (
             <Component
                 lang={lang}
+                isAuth={isAuth}
                 backLink={backLink}
                 mutuallyExclusivePopup={mutuallyExclusivePopup}
                 popOrderPathitem={popOrderPathitem}

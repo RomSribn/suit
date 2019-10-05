@@ -44,6 +44,7 @@ class FooterBar extends React.Component<FooterBarProps> {
             Subgroups,
             isAuth,
         } = this.props;
+
         return (
             <Component
                 lang={lang}

@@ -153,6 +153,21 @@ class FooterBar extends React.Component<Props> {
                     />
 
                     <Route
+                        path={routes.fitting}
+                        component={() => (
+                            this.props.orderId ?
+                                <SaveButton
+                                    saveExistingOrder={true}
+                                >
+                                    {loc[lang!].update}
+                                </SaveButton> :
+                                <FadeIn>
+                                    <SaveButton>{loc[lang!].create}</SaveButton>
+                                </FadeIn>
+                        )}
+                    />
+
+                    <Route
                         path={routes.subgroupChoice}
                         component={
                             // tslint:disable-next-line no-any

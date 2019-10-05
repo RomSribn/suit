@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape } from '../../../utils';
 import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
+import { routes } from '../routes';
 
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({app, garments: { Subgroups }}) => {
     return {
@@ -51,14 +52,26 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             ? subgroupsStore!.data[subgroup]
                 .find((item: Subgroup) => item.subsection_our_code === group).title[lang]
             : '';
+        const content = (
+            <>
+                <span className="custom__content">
+                    <span className="custom__name">{subgroupName}:</span>
+                    <span className="custom__status">{itemValue}</span>
+                </span>
+                <span className="custom__control"/>
+            </>
+        );
         return (
-                <Link to={backLink} onClick={this.backClick} className="custom custom--open">
-                    <span className="custom__content">
-                        <span className="custom__name">{subgroupName}:</span>
-                        <span className="custom__status">{itemValue}</span>
-                    </span>
-                    <span className="custom__control"/>
-                </Link>
+                <Switch>
+                    <Route path={routes.fabric}>
+                        <div className="custom custom--open" style={{cursor: 'unset'}}>
+                            {content}
+                        </div>
+                    </Route>
+                    <Link to={backLink} onClick={this.backClick} className="custom custom--open">
+                        {content}
+                    </Link>
+                </Switch>
         );
     }
 }

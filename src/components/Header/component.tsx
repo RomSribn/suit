@@ -5,12 +5,32 @@ import MobileHeader from './MobileHeader';
 import './style.styl';
 import { HeaderProps } from './typings';
 
-import { isMobile } from '../../utils';
+const isMobile = () => document.body.offsetWidth <= 450;
 
-class Header extends React.Component<HeaderProps> {
+class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
     static defaultProps = {
         userName: undefined,
     };
+
+    state = {
+        isMobile: isMobile(),
+    };
+
+    listener = () => {
+        setTimeout(() => {
+            this.setState({
+                isMobile: isMobile(),
+            });
+        }, 10);
+    }
+
+    componentDidMount() {
+        window.addEventListener('orientationchange', this.listener);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('orientationchange', this.listener);
+    }
 
     render() {
         const {
@@ -24,10 +44,12 @@ class Header extends React.Component<HeaderProps> {
             title
         } = this.props;
 
+        const state = this.state;
+
         return (
             <div className="main__header">
             {
-                !isMobile() ?
+                !state.isMobile ?
                 <div className="header-wrapper">
                     <HeaderBar
                         lang={lang}

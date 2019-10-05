@@ -162,14 +162,12 @@ img{
 
 @media only screen and (max-width : 450px) {
     body {
-        max-height: 80vh;
         overflow: hidden;
     }
 }
 
 @media only screen and (max-height : 450px) {
     body {
-        max-height: 80vh;
         overflow: hidden;
     }
 }

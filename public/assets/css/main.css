@@ -200,7 +200,7 @@
     }
     .main__footer {
         flex-direction: column;
-        height: 8.4rem;
+        height: 100%;
         width: 100%;
         margin: 0 auto;
         justify-content: flex-start;

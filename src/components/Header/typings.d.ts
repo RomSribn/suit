@@ -1,19 +1,17 @@
 import { Crumbs } from 'react-breadcrumbs';
 interface HeaderBarProps {
     userStore: IUserStore;
-    lang: string;
+    lang: Lang;
     isAuth: boolean;
 }
 
 interface HeaderProps {
     appStore: IAppStore;
     userStore: IUserStore;
-    lang: string;
+    lang: Lang;
     path?: string;
     isAuth: boolean;
     openMenu: () => void;
-    setCrumbs: (crumbs: Crumbs) => Crumbs;
-    title: string;
 }
 
 interface HeaderContainerProps extends Partial<HeaderProps> {

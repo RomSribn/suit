@@ -2,8 +2,9 @@ import * as React from 'react';
 import { HeaderBar } from './HeaderBar';
 import { HeaderContent } from './HeaderContent';
 import MobileHeader from './MobileHeader';
-import './style.styl';
 import { HeaderProps } from './typings';
+
+import './style.styl';
 
 const isMobile = () => document.body.offsetWidth <= 450;
 
@@ -40,8 +41,6 @@ class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
             userStore,
             isAuth,
             openMenu,
-            setCrumbs,
-            title
         } = this.props;
 
         const state = this.state;
@@ -67,8 +66,6 @@ class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
                 <div className="header-wrapper-mobile">
                     <MobileHeader
                         openMenu={openMenu}
-                        title={title}
-                        setCrumbs={setCrumbs}
                         lang={lang}
                     />
                 </div>

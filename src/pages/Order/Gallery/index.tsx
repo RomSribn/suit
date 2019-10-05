@@ -26,7 +26,7 @@ const galleryCache = {};
         setPreviewElement,
         isExclusivePopupShowing,
         activeElement,
-        exceptions
+        exceptions,
     } = order;
 
     const cacheName = [garment, group, subgroup].toString();

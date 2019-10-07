@@ -44,7 +44,6 @@
     -ms-align-items: flex-start;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: calc(2.4rem + 4px) 0 0 0;
 }
 
 .main__bar{
@@ -206,9 +205,8 @@
         justify-content: flex-start;
     }
     .main__middle {
-        padding: calc(1rem + 4px) 0 0 0;
         position: initial;
-        max-height: calc(100% - 10rem);
+        /*max-height: calc(100% - 10rem);*/
     }
     .main--white{
         background: rgba(255, 255, 255, 0.85);
@@ -217,6 +215,6 @@
 
 @media only screen and (max-height: 450px) {
     .main__middle {
-        max-height: 67vh;
+        /*max-height: 67vh;*/
     }
 }

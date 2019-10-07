@@ -1,4 +1,3 @@
-import { Crumbs } from 'react-breadcrumbs';
 interface HeaderBarProps {
     userStore: IUserStore;
     lang: Lang;
@@ -19,3 +18,9 @@ interface HeaderContainerProps extends Partial<HeaderProps> {
     appStore?: IAppStore;
     location?: Location;
 }
+
+export {
+    HeaderProps,
+    HeaderContainerProps,
+    HeaderBarProps,
+};

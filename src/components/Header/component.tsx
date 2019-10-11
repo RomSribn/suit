@@ -22,7 +22,7 @@ class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
             this.setState({
                 isMobile: isMobile(),
             });
-        }, 10);
+        }, 300);
     }
 
     componentDidMount() {

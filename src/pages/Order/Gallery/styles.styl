@@ -1,5 +1,4 @@
 .gallery
-    flex-grow 1
     padding 1.3333rem 0 0 0
     display flex
     width 100%
@@ -49,19 +48,15 @@
         &-wrap
             width 100%
             position relative
-            @media only screen and (max-width: 450px), only screen and (max-height: 450px)
-                margin-bottom 1rem
 
         &-blc
-            width 100%
-            // хром начал уебищно работать и неправильно расчитывать
-            // размеры. въебем такой хак
-            height 80%
-            flex-grow 1
             display flex
             align-items stretch
             align-content stretch
             justify-content space-between
+            height 100%
+            width 100%
+            overflow hidden
 
 media-gallery-image-size(minWidth, imageHeight)
     @media only screen and (min-width: minWidth)

@@ -187,13 +187,12 @@ and (-webkit-min-device-pixel-ratio: 1)  {
 }
 @media only screen and (max-width: 450px), only screen and (max-height: 450px) {
     .sizes__wrap {
-        width: 94%;
-        margin: auto;
-        margin-top: 1.3333rem;
+        margin-top: 0;
         padding-right: 0;
+        overflow-x: hidden;
     }
     .size {
-        width: 94%;
+        width: 100%;
         margin: auto;
         margin-top: 1.3333rem;
         min-width: inherit;

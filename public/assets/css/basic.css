@@ -8,7 +8,6 @@ body{
     min-width: 310px; 
     height: 100%;
     position: relative;
-	overflow-x: hidden;
     font-stretch: condensed;
     opacity: 1;
     -webkit-font-smoothing: antialiased;
@@ -150,24 +149,8 @@ img{
 @media only screen and (max-width : 991px){
     html{font-size: 10px;}
 }
-/*
-@media only screen and (max-width : 801px){
-    html{font-size: 9px;}
-}
-*/
+
 @media only screen and (max-width : 767px){}
 @media only screen and (max-width : 479px){}
 @media only screen and (max-width : 359px){}
 @media only screen and (max-width : 320px){}
-
-@media only screen and (max-width : 450px) {
-    body {
-        overflow: hidden;
-    }
-}
-
-@media only screen and (max-height : 450px) {
-    body {
-        overflow: hidden;
-    }
-}

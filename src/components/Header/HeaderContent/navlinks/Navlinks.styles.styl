@@ -10,6 +10,9 @@
         color #000 !important
         font-weight 300 !important
 
+    @media only screen and (max-width: 880px)
+      font-size 0.95em
+
   &__item
     display flex
     text-decoration none !important
@@ -22,13 +25,18 @@
     font-size inherit !important
     font-weight 300 !important
 
+    &.button
+      margin 0 !important
+
     &:hover
       color #046b71 !important
 
     &:after
-      display inline
-      content '>'
-      padding 0 0 0 5px
+      display: flex;
+      content: '→';
+      font-size: 0.6em;
+      padding: 0 0 0 5px;
+      align-items: center;
 
     &:last-child:after
      content ''

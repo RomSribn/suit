@@ -6,21 +6,24 @@ import { HeaderProps } from './typings';
 
 import './style.styl';
 
-const isMobile = () => document.body.offsetWidth <= 450;
+const isMobile = () => document.body.offsetWidth <= 800;
+const isLandscape = () => parseInt(window.orientation.toString(), 10) !== 0;
 
-class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
+class Header extends React.Component<HeaderProps, {isMobile: boolean, isLandscape: boolean}> {
     static defaultProps = {
         userName: undefined,
     };
 
     state = {
         isMobile: isMobile(),
+        isLandscape: isLandscape(),
     };
 
     listener = () => {
         setTimeout(() => {
             this.setState({
                 isMobile: isMobile(),
+                isLandscape: isLandscape(),
             });
         }, 300);
     }
@@ -67,6 +70,7 @@ class Header extends React.Component<HeaderProps, {isMobile: boolean}> {
                     <MobileHeader
                         openMenu={openMenu}
                         lang={lang}
+                        isLandscape={state.isLandscape}
                     />
                 </div>
             }

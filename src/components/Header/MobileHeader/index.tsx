@@ -4,10 +4,12 @@ import { Route, Switch, RouteComponentProps } from 'react-router';
 import { routes } from '../../../pages/Order/routes';
 import { mobileHeaderTranslations } from './loc';
 import './style.styl';
+import { Navlinks } from '../HeaderContent/navlinks';
 
 type Props = {
   openMenu: () => void;
   lang: Lang;
+  isLandscape: boolean;
 };
 
 type Group = 'design' | 'fabric_ref' | 'fitting';
@@ -22,7 +24,7 @@ const makeNavLinkItem = (active: boolean) => (
     />
 );
 
-export default ({ openMenu, lang }: Props) => {
+export default ({ openMenu, lang, isLandscape }: Props) => {
   return(
     <header className="headerWrapper">
       <button className="open-menu" onClick={openMenu}>
@@ -30,37 +32,46 @@ export default ({ openMenu, lang }: Props) => {
       </button>
       <main className="content-wrapper">
         <h2 className="menu-title">
-            <Switch>
-                <Route
-                    path={routes.fabric}
-                    component={() =>
-                        <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].fabric}</span>}
-                />
-                <Route
-                    path={routes.design}
-                    component={() =>
-                        <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].design}</span>}
-                />
-                <Route
-                    path={routes.fitting}
-                    component={() =>
-                        <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].fitting}</span>}
-                />
-            </Switch>
+            {isLandscape ? <Navlinks /> : (
+                <>
+                    <Switch>
+                        <Route
+                            path={routes.fabric}
+                            component={() =>
+                                <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].fabric}</span>}
+                        />
+                        <Route
+                            path={routes.design}
+                            component={() =>
+                                <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].design}</span>}
+                        />
+                        <Route
+                            path={routes.fitting}
+                            component={() =>
+                                <span
+                                    className="navlinks-mobile__value"
+                                >
+                                    {mobileHeaderTranslations[lang].fitting}
+                                </span>
+                            }
+                        />
+                    </Switch>
 
-            <Route
-                path={routes.groupChoice}
-                component={
-                    (props: RouteComponentProps<{group: Group}>) => {
-                        return (
-                            <div className="navlinks-mobile__container">
-                                {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
-                                {makeNavLinkItem(props.match.params.group === 'design')}
-                                {makeNavLinkItem(props.match.params.group === 'fitting')}
-                            </div>
-                        );
-                    }}
-            />
+                    <Route
+                        path={routes.groupChoice}
+                        component={
+                            (props: RouteComponentProps<{group: Group}>) => {
+                                return (
+                                    <div className="navlinks-mobile__container">
+                                        {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
+                                        {makeNavLinkItem(props.match.params.group === 'design')}
+                                        {makeNavLinkItem(props.match.params.group === 'fitting')}
+                                    </div>
+                                );
+                            }}
+                    />
+                </>
+            )}
         </h2>
       </main>
 

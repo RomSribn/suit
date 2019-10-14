@@ -7,7 +7,7 @@ import { HeaderProps } from './typings';
 import './style.styl';
 
 const isMobile = () => document.body.offsetWidth <= 800;
-const isLandscape = () => parseInt(window.orientation.toString(), 10) !== 0;
+const isLandscape = () => parseInt((window.orientation  || 0).toString(), 10) !== 0;
 
 class Header extends React.Component<HeaderProps, {isMobile: boolean, isLandscape: boolean}> {
     static defaultProps = {

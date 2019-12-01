@@ -5,10 +5,11 @@
   "scripts": {
     "start": "CONSULT_WIDGET_ID=KlNHIaLoy7 node scripts/start.js",
     "build": "NODE_ENV=production node scripts/build.js",
-    "server:update:all": "npm run server:update:gasuits; npm run server:update:mysuits; npm run server:update:kalasova",
+    "server:update:all": "npm run server:update:gasuits; npm run server:update:mysuits; npm run server:update:kalasova, npm run server:update:suit",
     "server:update:gasuits": "SERVER=188.68.208.249 sh .deploy/update_server.sh",
     "server:update:mysuits": "SERVER=78.155.206.164 sh .deploy/update_server.sh",
     "server:update:kalasova": "SERVER=82.202.236.85 sh .deploy/update_server.sh",
+    "server:update:suit": "SERVER=5.253.61.54 sh .deploy/update_server.sh",
     "integratino:start": "node integration/scripts/start.js",
     "integratino:build": "node integration/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

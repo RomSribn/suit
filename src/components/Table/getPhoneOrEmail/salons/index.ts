@@ -39,6 +39,12 @@ switch (salon) {
         getPhoneOrEmail = require('./kalasova').getPhone;
         break;
     }
+
+    case 'suit': {
+        getPhoneOrEmail = require('./suit').getPhone;
+        break;
+    }
+
     default: {
         throw new Error('getPhoneOrEmail should be provided at component/Table/getPhoneOrEmail');
     }

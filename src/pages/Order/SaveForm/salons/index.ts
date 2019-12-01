@@ -19,6 +19,11 @@ switch (salon) {
         break;
     }
 
+    case 'suit': {
+        SaveFormComponent = require('./suit').SaveForm;
+        break;
+    }
+
     default: break;
 }
 

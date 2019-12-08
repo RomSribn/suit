@@ -33,7 +33,6 @@ RUN npm cache clean --force
 RUN rm -rf ~/.npm
 # In the project folder:
 RUN rm -rf node_modules
-RUN rm -f package-lock.json
 
 
 RUN npm install

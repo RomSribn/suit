@@ -36,6 +36,7 @@ RUN rm -rf node_modules
 
 
 RUN npm install
+
 COPY server.config.js server.config.js
 RUN npm run build
 

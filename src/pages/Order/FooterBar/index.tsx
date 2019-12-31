@@ -27,7 +27,7 @@ import { FooterBarProps } from './typings';
                  arr: string[]) => `${acc}/${i === arr.length - 1 ? '' : cur}`, ''),
         '/'
         ),
-    ...nextProps,
+    ...(nextProps as object),
 }))
 @observer
 class FooterBar extends React.Component<FooterBarProps> {

@@ -8,7 +8,7 @@ import { Main as Component } from './component';
     activeGarmentsStore: garments.activeGarments,
     setActiveGarment: garments.setActiveGarment,
     order: order.order,
-    ...nextProps,
+    ...(nextProps as object),
 }))
 @observer
 class Main extends React.Component<DetailsContainerProps> {

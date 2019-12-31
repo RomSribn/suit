@@ -10,7 +10,7 @@ import './styles.styl';
 @inject(({app, order}, nextProps) => ({
     lang: app.lang,
     order,
-    ...nextProps,
+    ...(nextProps as object),
 }))
 @observer
 class OrderInfo extends React.Component<COrderInfoProps> {

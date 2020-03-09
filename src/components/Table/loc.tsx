@@ -2,6 +2,8 @@ import { Columns } from './index';
 
 type ConfirmActionTextParams = Record<'currentStatus' | 'nextStatus', string>;
 
+type PanelRowControls = 'call' |'message' | 'create' | 'update' | 'edit' | 'delete' | 'pdf';
+
 type Loc = {
     /** Наименовая колонок отоборажения */
     columns: Record<Columns, string>;
@@ -22,6 +24,7 @@ type Loc = {
     submit: string;
     from: string;
     till: string;
+    controls: Record<PanelRowControls, string>
 };
 
 const loc: Translations<Loc> = {
@@ -51,7 +54,16 @@ const loc: Translations<Loc> = {
         clear: 'clear',
         submit: 'submit',
         from: 'From',
-        till: 'Till'
+        till: 'Till',
+        controls: {
+            call: 'Call',
+            message: 'Message',
+            create: 'Create based',
+            update: 'Update status',
+            edit: 'Edit',
+            delete: 'Delete',
+            pdf: 'PDF',
+        }
     },
     ru: {
         columns: {
@@ -78,7 +90,16 @@ const loc: Translations<Loc> = {
         clear: 'отчитсить',
         submit: 'отправить',
         from: 'От',
-        till: 'До'
+        till: 'До',
+        controls: {
+            call: 'Звонок',
+            message: 'Сообщение',
+            create: 'Создать на основе',
+            update: 'Обновить статус',
+            edit: 'Редактировать',
+            delete: 'Удалить',
+            pdf: 'PDF',
+        },
     }
 };
 

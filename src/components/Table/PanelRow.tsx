@@ -117,14 +117,14 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             <a
                                 className="controls__link controls__link--phone"
                                 href="#"
-                                title="звонок"
+                                title={loc[lang].controls.call}
                             />
                         </li>
                         <li className="controls__item disabled">
                             <a
                                 className="controls__link controls__link--msg"
                                 href="#"
-                                title="сообщения"
+                                title={loc[lang].controls.message}
                             />
                         </li>
                         <li className={itemClassName}>
@@ -134,7 +134,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                     pathname: `${routes.details}/shirt`,
                                     search: `order_id=${orderInfo && orderInfo.id || activeOrderId}`
                                 }}
-                                title=""
+                                title={loc[lang].controls.create}
                             />
                         </li>
                         <li className={itemClassName}>
@@ -150,6 +150,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             >
                                 <button
                                     className="controls__button controls__button--eye"
+                                    title={loc[lang].controls.update}
                                 />
                             </ConfirmPopup>
                         </li>
@@ -160,7 +161,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                     pathname: `${routes.details}/shirt`,
                                     search: `order_id=${orderInfo && orderInfo.id || activeOrderId}`
                                 }}
-                                title=""
+                                title={loc[lang].controls.edit}
                             />
                         </li>
                         <li className={itemClassName}>
@@ -170,7 +171,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             >
                                 <button
                                     className="controls__button controls__button--trash"
-                                    title="удалить"
+                                    title={loc[lang].controls.delete}
                                 />
                             </ConfirmPopup>
                         </li>
@@ -180,7 +181,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 target="_blank"
                                 href={`${API_ROOT}/api/orders/${props.activeOrderId}/orderFile?` +
                                     `very-insecure-token=${encodeURIComponent(props.userToken || '')}`}
-                                title="pdf"
+                                title={loc[lang].controls.pdf}
                             />
                         </li>
                     </ul>

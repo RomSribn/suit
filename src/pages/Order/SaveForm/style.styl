@@ -1,7 +1,17 @@
  .order-form
   display: flex
-  flex-direction: row
-   
+  flex-direction: column
+
+  &__item
+    position: relative
+    margin: 0.8rem 0
+
+  &__error
+    position: absolute;
+    padding-top: 3px;
+    font-size: 0.86666rem
+    color: red
+
   &__agreement-container
     display: flex
     margin: 1.2rem 0 0 0;
@@ -20,6 +30,7 @@
 
   &__content
     height: 100%
+    width: 50%
     display: flex
     flex-direction: column
 
@@ -34,7 +45,10 @@
       display: flex
       align-items: center
       justify-content: space-between
-      margin: 0 0 0 2rem;
+      margin-top: 0.8rem
+
+      .button-bar
+        width 100%
 
       .button
         line-height: 1.15rem;
@@ -44,6 +58,7 @@
           margin-left: 2.3333rem
 
         &.black
+          width: 100%
           color: #000
           background-color: #fff
           border-color: #fff
@@ -63,6 +78,7 @@
     color: #fafafa
 
   &__text
+    margin-bottom: 0.8rem
     line-height: 1.5rem
     color: #fff
 
@@ -70,7 +86,6 @@
     width: 100%
     padding: 8px 25px
     font-size: 0.86666rem
-    margin: 0.6rem 0
     border: 1px solid #fff
     background-color: transparent
     color: #fff
@@ -106,7 +121,7 @@
 
 @media only screen and (max-width: 600px)
   .order-form
-    flex-direction column
+    width: 100%
     margin: 0 0 8px 0
 
     &__content
@@ -125,6 +140,7 @@
   .order-form__container
     height: 100vh;
     width: 100vw;
+    overflow: auto
   .order-form__content
     width: auto
   .order-form__container

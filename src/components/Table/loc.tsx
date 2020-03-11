@@ -22,6 +22,8 @@ type Loc = {
     submit: string;
     from: string;
     till: string;
+    isConfirmed: string;
+    notConfirmed: string;
 };
 
 const loc: Translations<Loc> = {
@@ -29,6 +31,7 @@ const loc: Translations<Loc> = {
         columns: {
             order: ' Order',
             name: 'Name',
+            isConfirmed: 'Confirmed',
             fitting: 'Fitting',
             phone: 'Phone',
             status: 'Status',
@@ -51,12 +54,15 @@ const loc: Translations<Loc> = {
         clear: 'clear',
         submit: 'submit',
         from: 'From',
-        till: 'Till'
+        till: 'Till',
+        isConfirmed: 'Yes',
+        notConfirmed: 'No',
     },
     ru: {
         columns: {
             order: 'Номер заказа',
             name: 'ФИО',
+            isConfirmed: 'Подтвержден',
             fitting: 'Примерка',
             phone: 'Телефон',
             status: 'Статус',
@@ -78,7 +84,9 @@ const loc: Translations<Loc> = {
         clear: 'отчитсить',
         submit: 'отправить',
         from: 'От',
-        till: 'До'
+        till: 'До',
+        isConfirmed: 'Да',
+        notConfirmed: 'Нет',
     }
 };
 

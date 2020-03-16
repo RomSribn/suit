@@ -7,6 +7,7 @@ const prepareTableData: PrepareTableData = (orders, lang) => {
     return orders.map(order => ({
         order: order.orderId.toString(),
         name: order.customer && order.customer.name || '',
+        isConfirmed: order.customer && order.customer.isConfirmed || false,
         fitting: 'First',
         phone: order.customer && order.customer.phone || '',
         status: order.status,

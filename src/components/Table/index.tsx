@@ -13,12 +13,12 @@ import './styles.styl';
 import { getPhoneOrEmail } from './getPhoneOrEmail/salons';
 
 export type TableDataItemStringFields = 'order' | 'name' | 'fitting' | 'phone' | 'date' | 'email';
-type Columns = TableDataItemStringFields | 'status';
+type Columns = TableDataItemStringFields | 'status' | 'isConfirmed';
 const orderStatuses: OrderStatus[] = ['TEMPORARY', 'NEW', 'IN_PROGRESS', 'DONE'];
 
 type TableDataItem = {
     [key in TableDataItemStringFields]: string;
-} & { status: OrderStatusInfo };
+} & { status: OrderStatusInfo, isConfirmed: boolean };
 type TableData = TableDataItem[];
 interface TProps {
     orders: TableData;
@@ -310,6 +310,16 @@ class Table extends React.Component<TProps, TState> {
                         accessor: 'status',
                         Cell: (row: {value: {name: string}}) =>
                             <div className="orders__data">{statuses[row.value.name]}</div>
+                    },
+                    {
+                        accessor: 'isConfirmed',
+                        Filter: () => <Filter text={columns.isConfirmed} />,
+                        filterable: true,
+                        filterMethod: this.filterMethod,
+                        Cell: (row: {value: boolean}) =>
+                            <div className="orders__data">
+                                {row.value ? loc[lang].isConfirmed : loc[lang].notConfirmed}
+                            </div>
                     },
                     {
                         Filter: (props) => <Filter

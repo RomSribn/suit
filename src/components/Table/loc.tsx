@@ -24,7 +24,9 @@ type Loc = {
     submit: string;
     from: string;
     till: string;
-    controls: Record<PanelRowControls, string>
+    controls: Record<PanelRowControls, string>;
+    isConfirmed: string;
+    notConfirmed: string;
 };
 
 const loc: Translations<Loc> = {
@@ -32,6 +34,7 @@ const loc: Translations<Loc> = {
         columns: {
             order: ' Order',
             name: 'Name',
+            isConfirmed: 'Confirmed',
             fitting: 'Fitting',
             phone: 'Phone',
             status: 'Status',
@@ -63,12 +66,15 @@ const loc: Translations<Loc> = {
             edit: 'Edit',
             delete: 'Delete',
             pdf: 'PDF',
-        }
+        },
+        isConfirmed: 'Yes',
+        notConfirmed: 'No',
     },
     ru: {
         columns: {
             order: 'Номер заказа',
             name: 'ФИО',
+            isConfirmed: 'Подтвержден',
             fitting: 'Примерка',
             phone: 'Телефон',
             status: 'Статус',
@@ -100,6 +106,8 @@ const loc: Translations<Loc> = {
             delete: 'Удалить',
             pdf: 'PDF',
         },
+        isConfirmed: 'Да',
+        notConfirmed: 'Нет',
     }
 };
 

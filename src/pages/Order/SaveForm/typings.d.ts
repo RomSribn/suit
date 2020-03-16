@@ -24,6 +24,8 @@ interface Loc {
     thanksText: string;
     licenseAgreement: string;
     personalData: string;
+    required?: string;
+    phoneRequirements?: string;
 }
 
 type Localization = Translations<Loc>;
@@ -31,6 +33,9 @@ type Localization = Translations<Loc>;
 type Field = {
     name: string,
     required?: boolean,
-    component: 'input',
+    component?: 'input',
     type: string,
+    render?: (props: any) => React.ReactNode,
+    parse?: (value: any, name: string) => any,
+    validate?: (lang: string) => (value: string) => any,
 };

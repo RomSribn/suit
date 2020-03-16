@@ -5,13 +5,58 @@ import { Button } from '../../../../../components/Button';
 
 import './suit.styles.styl';
 import { Redirect } from 'react-router';
+import InputMask from 'react-input-mask';
+
+const validatePhone = (lang: string) => (value: string) => {
+    if (!value) {
+        return loc[lang].required;
+    }
+    if (value && value.length < 12) {
+        return loc[lang].phoneRequirements;
+    }
+};
 
 const FIELDS: Field[] = [{
     name: 'phone',
-    required: true,
-    component: 'input',
+    parse: (value: string) => value.replace(/[^+\d]/g, ''),
+    // tslint:disable-next-line:no-any
+    render: (props: any) => {
+        return (
+            <>
+                <InputMask
+                    disabled={false}
+                    mask="+7 (999) 999-99-99"
+                    {...props.input}
+                    className={props.className}
+                    placeholder={props.placeholder}
+                    required={true}
+                />
+                {props.meta.error && props.meta.touched && <div className="order-form__error">{props.meta.error}</div>}
+            </>
+        );
+    },
+    validate: validatePhone,
     type: 'phone',
-}];
+}, {
+    name: 'name',
+    type: 'text',
+    // tslint:disable-next-line:no-any
+    render: (props: any) => {
+        return (
+            <>
+                <input {...props.input} className={props.className} placeholder={props.placeholder} required={true}/>
+                {props.meta.error && props.meta.touched && <div className="order-form__error">{props.meta.error}</div>}
+            </>
+        );
+    },
+    validate: (lang: string) => (value: string) => (value ? null : loc[lang].required),
+}, {
+    name: 'email',
+    required: false,
+    component: 'input',
+    type: 'email',
+},
+];
 
 class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
     state = {
@@ -53,15 +98,21 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                 <>
                     <div className="order-form">
                         {FIELDS.map((field) => (
-                            <Field
-                                className="order-form__input"
-                                name={field.name}
-                                required={Boolean(field.required)}
-                                component={field.component}
-                                type={field.type}
-                                placeholder={loc[lang].placeHolders[field.name]}
-                                key={`field-${field.name}`}
-                            />
+                            <div className="order-form__item">
+                                <Field
+                                    className="order-form__input"
+                                    name={field.name}
+                                    required={Boolean(field.required)}
+                                    component={field.component}
+                                    type={field.type}
+                                    placeholder={loc[lang].placeHolders[field.name]}
+                                    key={`field-${field.name}`}
+                                    render={field.render}
+                                    parse={field.parse}
+                                    validate={field.validate && field.validate(lang)}
+                                />
+                            </div>
+
                         ))}
                         <div className="buttons">
                             <Button type="submit" theme="black">

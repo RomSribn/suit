@@ -12,6 +12,8 @@ const translations: Localization = {
         thanksText: 'Thank you! We have received your data. Our stylist will contact you.',
         licenseAgreement: 'Agree user with',
         personalData: 'data processing policy',
+        required: 'Have to be filled in',
+        phoneRequirements: 'Phone number must be 10 digits',
     },
     ru: {
         header: 'Консультация стилиста',
@@ -26,6 +28,8 @@ const translations: Localization = {
         thanksText: 'Спасибо, получили ваши данные. В ближайшее время с вами свяжется наш стилист.',
         licenseAgreement: 'Согласен(на) на обработку',
         personalData: 'персональных данных',
+        required: 'Необходимо заполнить',
+        phoneRequirements: 'Номер телефона должен состоять из 10 цифр',
     }
 };
 

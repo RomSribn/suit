@@ -2,7 +2,7 @@ import { Columns } from './index';
 
 type ConfirmActionTextParams = Record<'currentStatus' | 'nextStatus', string>;
 
-type PanelRowControls = 'call' |'message' | 'create' | 'update' | 'edit' | 'delete' | 'pdf';
+type PanelRowControls = 'call' |'message' | 'create' | 'update' | 'edit' | 'delete' | 'pdf' | 'confirmCustomer';
 
 type Loc = {
     /** Наименовая колонок отоборажения */
@@ -27,12 +27,20 @@ type Loc = {
     controls: Record<PanelRowControls, string>;
     isConfirmed: string;
     notConfirmed: string;
+    confirmInfo: string;
+    password: string;
+    login: string;
+    supportInfo: string;
+    /**
+     * Возвращает строку вида "создать профиль клиента {customerId}"
+     */
+    confirmCustomer(name: string | null): string;
 };
 
 const loc: Translations<Loc> = {
     en: {
         columns: {
-            order: ' Order',
+            id: 'Order number',
             name: 'Name',
             isConfirmed: 'Confirmed',
             fitting: 'Fitting',
@@ -66,13 +74,20 @@ const loc: Translations<Loc> = {
             edit: 'Edit',
             delete: 'Delete',
             pdf: 'PDF',
+            confirmCustomer: 'Create customer profile',
         },
         isConfirmed: 'Yes',
         notConfirmed: 'No',
-    },
+        confirmCustomer: (name: string) => `create customer profile ${name}`,
+        // tslint:disable-next-line:max-line-length
+        confirmInfo: 'The client\'s username and password have been sent to your email address. If there is no message, check the "Spam" folder',
+        password: 'Password',
+        login: 'Login',
+        supportInfo: 'Please, contact service support',
+        },
     ru: {
         columns: {
-            order: 'Номер заказа',
+            id: 'Номер заказа',
             name: 'ФИО',
             isConfirmed: 'Подтвержден',
             fitting: 'Примерка',
@@ -105,9 +120,15 @@ const loc: Translations<Loc> = {
             edit: 'Редактировать',
             delete: 'Удалить',
             pdf: 'PDF',
+            confirmCustomer: 'Создать профиль клиента',
         },
         isConfirmed: 'Да',
         notConfirmed: 'Нет',
+        confirmCustomer: (name: string) => `создать профиль клиента ${name}`,
+        confirmInfo: 'Отправили логин и пароль клиента Вам на почту. Возможно, письмо попало в "Спам".',
+        password: 'Пароль',
+        login: 'Логин',
+        supportInfo: 'Пожалуйста, обратитесь в поддержку сервиса',
     }
 };
 

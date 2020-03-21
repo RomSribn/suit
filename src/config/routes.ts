@@ -22,7 +22,7 @@ export const services = {
   orderDeliveryInfo: `${API_ROOT}/api/orders/orderDeliveryInfo`,
   login: `${API_ROOT}/api/auth/login`,
   logout: `${API_ROOT}/api/auth/logout`,
-
+  customers: `${API_ROOT}/api/customers`,
 };
 
 const routes = {

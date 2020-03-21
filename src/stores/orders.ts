@@ -88,6 +88,28 @@ class OrdersStore implements OrderList.IOrderStore {
     );
     }
 
+    @action
+    confirmCustomer = (orderId: number, customerId: number) => {
+        return callApi({
+                url: `${services.customers}/confirm/${customerId}`,
+                method: 'PUT'
+            },
+            () => { this.isFetching = true; },
+            () => {
+                const currentOrderIndex = this.orders.findIndex(item => item.orderId === orderId);
+                if (currentOrderIndex !== -1) {
+                    this.orders[currentOrderIndex] = {
+                        ...this.orders[currentOrderIndex],
+                        // @ts-ignore
+                        customer: { ...this.orders[currentOrderIndex].customer, isConfirmed: true },
+                    };
+                }
+                this.isFetching = false;
+            },
+            this._onError
+        );
+    }
+
     _onSuccess = (data: List) => {
         this.orders = observable.array(data.items);
         this.isFetching = false;

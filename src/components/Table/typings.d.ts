@@ -15,6 +15,8 @@ interface TableOrderInfo {
     fitting: string;
     status: OrderStatusInfo;
     date: string; // TODO: подумать как скрестить Date и string
+    customerId: number;
+    isConfirmed: boolean;
 }
 
 type OrderStatus = 'TEMPORARY' | 'NEW' | 'IN_PROGRESS' | 'DONE';

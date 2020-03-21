@@ -4,18 +4,23 @@ import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../ConfirmPopup';
 import { API_ROOT, routes } from '../../config/routes';
 import { loc } from './loc';
+import { SimpleModal } from '../SimpleModal';
 
 import './panelRowStyles.styl';
 
 interface PanelRowState {
     showControls: boolean;
+    showInfo: boolean;
+    info: string;
 }
 
 class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
-            showControls: Boolean(this.props.activeOrderId)
+            showControls: Boolean(this.props.activeOrderId),
+            showInfo: false,
+            info: '',
         };
     }
     triggerControls = (showControlsBoolValue?: boolean) => {
@@ -60,6 +65,44 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             ordersStore.deleteOrder(Number(orderId));
         }
     }
+
+    onConfirmCustomerClick = () => {
+        const {
+            ordersStore,
+            orderInfo,
+            acceptCallback,
+            lang,
+        } = this.props;
+        const orderId = orderInfo && orderInfo.id || this.props.activeOrderId;
+        const customerId = orderInfo && orderInfo.customerId;
+        const phone = orderInfo && orderInfo.phone || '';
+        if (orderId && customerId) {
+            ordersStore.confirmCustomer(Number(orderId), customerId)
+                .then(({ data }: Axios.Response) => {
+                        const info = data.emailSent
+                            ? loc[lang].confirmInfo
+                            : `${loc[lang].login}: ${phone} ${loc[lang].password}: ${data.password}`;
+                        this.setState({
+                            showControls: false,
+                            showInfo: true,
+                            info,
+                        });
+                        if (acceptCallback) {
+                            acceptCallback.call(this, data);
+                        }
+                })
+                .catch(() => {
+                    this.setState({
+                        showControls: false,
+                        showInfo: true,
+                        info: loc[lang].supportInfo,
+                    });
+                });
+        }
+    }
+
+    onCloseModal = () => this.setState({ showInfo : false, info: '' });
+
     render() {
         const {
             orderInfo,
@@ -174,6 +217,33 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                     title={loc[lang].controls.delete}
                                 />
                             </ConfirmPopup>
+                        </li>
+                        <li
+                            className={classNames('controls__item', { disabled: (orderInfo && orderInfo.isConfirmed) })}
+                        >
+                            <ConfirmPopup
+                                actionText={loc[lang].confirmCustomer(orderInfo && orderInfo.name)}
+                                onAcceptClick={this.onConfirmCustomerClick}
+                            >
+                                <button
+                                    className="controls__button controls__button--new-client"
+                                    title={loc[lang].controls.confirmCustomer}
+                                />
+                            </ConfirmPopup>
+                            <SimpleModal
+                                data={{
+                                    desc: this.state.info,
+                                    buttons: [{
+                                        key: 'repeat',
+                                        text: 'Ok',
+                                        theme: 'black',
+                                    }],
+                                }}
+                                show={this.state.showInfo}
+                                isSmall={true}
+                                isTransparent={true}
+                                callback={this.onCloseModal}
+                            />
                         </li>
                         <li className={itemClassName}>
                             <a

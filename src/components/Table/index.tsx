@@ -12,7 +12,7 @@ import { loc } from './loc';
 import './styles.styl';
 import { getPhoneOrEmail } from './getPhoneOrEmail/salons';
 
-export type TableDataItemStringFields = 'order' | 'name' | 'fitting' | 'phone' | 'date' | 'email';
+export type TableDataItemStringFields = 'id' | 'name' | 'fitting' | 'phone' | 'date' | 'email';
 type Columns = TableDataItemStringFields | 'status' | 'isConfirmed';
 const orderStatuses: OrderStatus[] = ['TEMPORARY', 'NEW', 'IN_PROGRESS', 'DONE'];
 
@@ -45,6 +45,7 @@ interface TState {
 type RowInfo = {
     /** Информация о заказе, сообранная по столбцам */
     row: TableOrderInfo;
+    original: TableOrderInfo;
 } | undefined;
 
 const cell = (row: {value: string, [key: string]: string}) => <div className="orders__data">{row.value}</div>; // tslint:disable-line
@@ -250,7 +251,7 @@ class Table extends React.Component<TProps, TState> {
                             this.panelRow && this.panelRow.current && this.panelRow.current.triggerControls(true); // tslint:disable-line
                             if (rowInfo) {
                                 this.setActiveOrderId(rowInfo.row.id);
-                                this.setActiveOrderInfo(rowInfo.row);
+                                this.setActiveOrderInfo(rowInfo.original);
                             }
                         },
                         className: classNames({ _active: activeOrderId === (rowInfo && rowInfo.row.id)})
@@ -258,9 +259,8 @@ class Table extends React.Component<TProps, TState> {
                 }}
                 columns={[
                     {
-                        accessor: 'order',
-                        id: 'id',
-                        Filter: () => <Filter text={columns.order} />,
+                        accessor: 'id',
+                        Filter: () => <Filter text={columns.id} />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: cell

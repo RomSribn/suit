@@ -2,7 +2,7 @@ const routesTranslations = {
     en: {
       order: 'order',
       panel: 'panel',
-      clientele: 'clients',
+      customersList: 'clients',
       orders: 'order list',
       calendar: 'calendar',
       tasks: 'tasks',

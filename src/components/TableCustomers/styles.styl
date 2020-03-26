@@ -1,0 +1,427 @@
+.customers
+    width 100%
+    border-collapse collapse
+    table-layout fixed
+    background-color #fff
+    display flex
+    flex-direction column
+
+
+    &.flex-content
+        max-height 100%
+
+        .rt-table
+            display flex
+            flex-direction column
+            max-height 100%
+
+    & .rt
+        &-thead
+            display block
+            padding-top 0.95rem
+            padding-bottom 0.95rem
+            padding-left 0.667rem
+            padding-right 0.667rem
+            border-bottom 1px solid rgba(149, 161, 177, 0.2)
+            color rgba(138, 138, 138, 0.4)
+            // Скрывай все дефолтные хедеры от react-table
+            // и рисуем вместо них только фильтры
+            &.-header
+                display none
+            .wrapper-dropdown
+                border none
+                background none
+
+                &:focus
+                    outline none
+        &-th:focus
+            outline none
+
+        &-thead .rt-tr
+            display: flex;
+            align-items: center;
+
+        &-tbody
+            display block
+            width 100%
+            overflow auto
+            padding 0.667rem
+            position relative
+            transition opacity 0.35s linear
+
+        &-tr-group
+            .rt-tr
+                cursor pointer
+                display flex
+                &:hover, &._active {
+                    background linear-gradient(to right, #436263,#436263 14px,#eceeee 14px, #eceeee)
+                }
+
+            .rt-tr .rt-td
+                display flex
+                align-items center
+        &-tr
+            display flex
+            width 100%
+
+.customers__title
+    &-text
+        text-transform capitalize
+        cursor: default
+        color #8A8A8A
+
+    .action-text-wrapper
+        &.active
+            .customers__title-text
+                color black
+
+.customers__title, .customers__data {
+    width: 16.6%;
+}
+.customers__title {
+    position: relative;
+    flex-grow: 1;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    padding-left: 1.24rem;
+    padding-right: 1.24rem;
+    text-align: left;
+    font-weight: normal;
+}
+.customers__title:first-child {
+    padding-left: 2.2rem;
+}
+.customers__title--filter {
+    padding-left: 0;
+    padding-right: 0;
+    width 100%
+}
+
+.customers__header tr {
+    display: flex;
+    align-items: center;
+}
+.customers__input {
+    border: none;
+    padding: 0;
+}
+.customers__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #8a8a8a;
+    opacity: 1;
+}
+.customers__input::-moz-placeholder { /* Firefox 19+ */
+    color: #8a8a8a;
+    opacity: 1;
+}
+.customers__input:-ms-input-placeholder { /* IE 10+ */
+    color: #8a8a8a;
+    opacity: 1;
+}
+.customers__input:-moz-placeholder { /* Firefox 18- */
+    color: #8a8a8a;
+    opacity: 1;
+}
+.customers__input:focus {
+    outline: none;
+}
+.customers__input:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #000;
+}
+.customers__input:focus::-moz-placeholder { /* Firefox 19+ */
+  color: #000;
+}
+.customers__input:focus:-ms-input-placeholder { /* IE 10+ */
+  color: #000;
+}
+.customers__input:focus:-moz-placeholder { /* Firefox 18- */
+  color: #000;
+}
+
+.customers__body--focus-out {
+    opacity: 0.5;
+}
+
+.customers__data {
+    flex-grow: 1;
+    padding: 1.4rem 1.24rem;
+    font-weight: 400;
+}
+.customers__data:first-child {
+    padding-left: 2.2rem;
+}
+.customers__date-range {
+    display: flex;
+    flex-direction: column;
+}
+.customers__date-range .btn-wrapper {
+    margin-top: 1.24rem;
+}
+
+.select-wrapper
+
+    .react-select
+
+        &__control
+            box-shadow none
+            border none
+            background-color transparent
+            cursor pointer
+
+            &--is-focused
+                box-shadow none
+                border-color transparent
+
+        &__indicators
+            display none
+
+        &__single-value
+            margin 0
+            overflow initial
+            color #8a8a8a
+
+            &:hover
+                color #000
+
+            &::after
+                content ""
+                position absolute
+                top 0.28rem
+                right -0.8rem
+                border-style solid
+                width 0.42rem
+                height 0.42rem
+                border-width 0 2px 2px 0
+                transform rotate(45deg)
+
+        &__value-container
+            padding-left 0
+
+        &__menu
+            top 2.3rem
+            left -1.24rem
+            border none
+            box-shadow 0 2px 8px 0 rgba(0, 0, 0, 0.17)
+
+        &__option
+            padding 0.8rem 1.24rem
+            color #8a8a8a
+
+            &--is-focused
+                background-color rgba(236, 238, 238, 0.5)
+
+            &--is-selected
+                background-color transparent
+
+        &__placeholder
+            margin 0
+            color #8a8a8a
+
+            &:hover
+                color #000
+
+            &::after
+                content ""
+                position absolute
+                top 0.28rem
+                right -0.8rem
+                border-style solid
+                width 0.42rem
+                height 0.42rem
+                border-width 0 2px 2px 0
+                transform rotate(45deg)
+
+.customers__date-picker
+    &__wrapper
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+
+    &__inner
+        background-color white
+        padding 0.5rem 0.8rem
+        box-shadow 0px 0px 15px 0px rgba(50, 50, 50, 0.25)
+        position absolute
+        display flex
+        flex 1
+        align-items center
+        flex-direction column
+        .DayPicker
+            font-size 0.72rem
+            &-wrapper
+                padding 0
+
+            &-Months
+                background: #F2F2F2
+
+            &-Month
+                background-color #EAEAEA
+                margin-top 0
+
+            &-Caption
+                border-top 1px #D5D5D5 solid
+                border-bottom: 1px #D4D4D4 solid;
+                color black
+                background-color: white
+                margin-left -1rem;
+                padding: 0.6rem 1.4rem
+                width 120%
+
+            &-Day
+                outline none
+                background-color white
+                border-radius 0
+                border 1px solid #F3F3F3
+                &:hover
+                    background-color black!important
+                    color white
+                    border-radius 0
+
+                &--today
+                    background-color #F2F2F2
+                    color black
+                    border-radius 0
+
+                &--selected
+                    background-color #F2F2F2
+                    color black
+                    &:hover
+                        background-color #F2F2F2
+
+            &-WeekDays
+                border 0
+                border-top 1px #d5d5d5 solid
+                background-color #F2F2F2
+
+            &-Weekday
+                color #323232
+                font-weight 700
+
+            &-NavButton
+                top 0.5em
+
+        .date-picker__title
+            display flex
+            align-self flex-start
+            &-text
+                font-size 1.2rem
+                color grey
+
+        .top-input-wrapper, .bottom-input-wrapper
+            width 13.0666rem
+            margin 0 1rem 0
+            .input-box
+                display flex
+                align-items center
+                justify-content space-between
+                margin-bottom 1.24rem
+                padding 0.58rem
+                border 1px solid #e6e6e6
+                font-weight 500
+                background-color #eceeed
+                color #000
+                &.active
+                    background-color transparent
+
+                &__input-label
+                    font-weight 500
+                    font-size 1.14rem
+
+                .labell-input-wrapper
+                    & .input-wrapper, & &__input-label
+                        display inline-block
+                        vertical-align baseline
+
+                    & .input-wrapper
+                        width calc(100% - 6rem)
+
+                &-input
+                    margin 0 0.4rem
+                    line-height 1rem
+                    font-size .8666rem
+                    font-weight normal
+                    color #8a8a8a
+                    background none
+                    border none
+                    outline none
+                    width: 6rem;
+
+                &_grey
+                    background-color #ECEEED
+
+                .datepicker__icon
+                    display block
+                    width 1.52rem
+                    height 1.52rem
+                    background url(/assets/img/calendar.svg) no-repeat
+        .top-input-wrapper
+            margin-top 0.8rem
+
+        .picker-wrapper
+            margin-bottom 0.5rem
+            height 0
+            transition height 0.3s linear
+            overflow hidden
+            &.active
+                height auto
+
+        .btns-wrapper
+            margin-top 1rem
+            display flex
+            flex 1
+            align-items center
+            justify-content center
+            flex-direction column
+            .btn-wrapper
+                margin 0.8rem 0
+                .button
+                    width 13.1rem
+                    .frame
+                        left 0
+                        right 0
+                        width calc(100% + 0px)
+
+.customers__list-picker
+    &__wrapper
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+
+    &__inner
+        background-color white
+        padding 1rem
+        box-shadow:0px 0px 15px 0px rgba(50, 50, 50, 0.25);
+        position absolute
+        display flex
+        flex 1
+        align-items center
+        flex-direction column
+        .list__title
+            display flex
+            align-self flex-start
+            &-text
+                font-size 1.2rem
+                color grey
+
+.customers__list-picker
+    &__inner
+        border-radius 2px
+        padding 0
+        .list-wrapper
+            margin-top 0.8rem
+            .list-item-wrapper
+                .list-item
+                    padding 0 5rem 0 1.24rem
+                    cursor pointer
+
+                    &:hover
+                        background-color rgba(236,238,238,0.5)
+
+                    &-text
+                        padding 0.8rem 1.24rem
+                        color #8a8a8a
+                        font-weight: 400;
+                        font-stretch: condensed;

@@ -93,7 +93,7 @@
 .navbar--white .main-menu__link{color: #151515;}
 .navbar--white .main-menu__link--order:before{background-image: url(../img/menu/black/order.svg);}
 .navbar--white .main-menu__link--panel:before{background-image: url(../img/menu/black/panel.svg);}
-.navbar--white .main-menu__link--clientele:before{background-image: url(../img/menu/black/clientele.svg);}
+.navbar--white .main-menu__link--customersList:before{background-image: url(../img/menu/black/clientele.svg);}
 .navbar--white .main-menu__link--ordersList:before{background-image: url(../img/menu/black/orders.svg);}
 .navbar--white .main-menu__link--calendar:before{background-image: url(../img/menu/black/calendar.svg);}
 .navbar--white .main-menu__link--tasks:before{background-image: url(../img/menu/black/tasks.svg);}

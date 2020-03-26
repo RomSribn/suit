@@ -11,6 +11,7 @@ import { ListOrders } from '../pages/ListOrders';
 import { PopUp } from '../containers/Popup'
 import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup'
 import Login from './Login'
+import {ListCustomers} from '../pages/ListCustomers'
 
 let dummyWasRendered = false;
 
@@ -104,6 +105,9 @@ class Wrapper extends Component {
                 <Switch>
                   <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
                     <ListOrders />
+                  </CrumbRoute>
+                  <CrumbRoute {...getCombinedPathAndTitle('customersList')}>
+                    <ListCustomers />
                   </CrumbRoute>
                 </Switch>
               );

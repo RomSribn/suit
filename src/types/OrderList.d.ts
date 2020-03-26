@@ -100,6 +100,10 @@ declare namespace OrderList {
         deleteOrder(
             orderId: number
         ): Promise<void | Axios.Response<{}>>;
+        confirmCustomer(
+            orderId: number,
+            customerId: number
+        ): Promise<any>;
     }
     type OrderItem = ServerData.OrderItem;
 }

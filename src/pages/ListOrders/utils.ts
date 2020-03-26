@@ -5,14 +5,15 @@ type PrepareTableData = (orders: OrderList.OrderItem[], lang: string) => TableDa
 
 const prepareTableData: PrepareTableData = (orders, lang) => {
     return orders.map(order => ({
-        order: order.orderId.toString(),
+        id: order.orderId.toString(),
         name: order.customer && order.customer.name || '',
-        isConfirmed: order.customer && order.customer.isConfirmed || false,
         fitting: 'First',
         phone: order.customer && order.customer.phone || '',
         status: order.status,
         date: moment(order.date).format('DD/MM/YYYY'),
         email: order.customer && order.customer.email || '',
+        isConfirmed: order.customer && order.customer.isConfirmed || false,
+        customerId: order.customer && order.customer.id,
     }));
 };
 

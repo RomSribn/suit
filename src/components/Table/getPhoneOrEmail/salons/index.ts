@@ -1,8 +1,9 @@
 import { Columns, TableDataItemStringFields } from '../../index';
+import { FilterRender } from 'react-table';
 
 type TableRawData = {
     accessor: TableDataItemStringFields,
-    Filter: () => JSX.Element,
+    Filter: FilterRender,
     filterable: boolean,
     filterMethod: (
         filter: { id: string, value: string, [key: string]: string },

@@ -278,7 +278,7 @@ class Table extends React.Component<TProps, TState> {
                         filterMethod: this.filterMethod,
                     }),
                     {
-                        Filter: () => <Filter text={columns.fitting} />,
+                        Filter: () => <Filter text={columns.fitting} type="disabled"/>,
                         filterable: true,
                         accessor: 'fitting',
                         Cell: cell
@@ -313,7 +313,7 @@ class Table extends React.Component<TProps, TState> {
                     },
                     {
                         accessor: 'isConfirmed',
-                        Filter: () => <Filter text={columns.isConfirmed} />,
+                        Filter: () => <Filter text={columns.isConfirmed} type="disabled" />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: (row: {value: boolean}) =>
@@ -324,7 +324,7 @@ class Table extends React.Component<TProps, TState> {
                     {
                         Filter: (props) => <Filter
                             text={columns.date}
-                            type="date"
+                            type="disabled"
                             isActive={showDatePickerFilter}
                             onClickFilterItem={this.onClickFilterItem}
                             updatePickerData={

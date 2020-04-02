@@ -76,6 +76,14 @@ class Filter extends React.Component<FilterParams> {
                     </div>
                 );
             }
+            case 'disabled': {
+                // выводим только заголовок фильтра
+                return (
+                    <div className={classNames(baseClass, baseClass + '--filter')}>
+                        <span className={`${baseClass}-text`}>{text}</span>
+                    </div>
+                );
+            }
             default: {
                 return (
                     <div className={classNames(baseClass, baseClass + '--filter')}>

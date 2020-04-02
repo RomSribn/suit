@@ -77,7 +77,7 @@ interface ActiveFilterValues {
 
 type SetFilterValueFunction = (value: string | DatePickerFilterFields) => void;
 
-type filterTypes = 'input' | 'date' | 'select' | 'empty';
+type filterTypes = 'input' | 'date' | 'select' | 'empty' | 'disabled';
 
 interface FilterMethodFilter {
     id: string;

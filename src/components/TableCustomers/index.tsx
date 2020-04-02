@@ -74,7 +74,7 @@ class TableCustomers extends React.Component<TProps, TState> {
     renderEmailFilter: FilterRender = (props) => {
         const { lang } = this.props;
         const { columns } = loc[lang];
-        return <Filter text={columns.email} {...props} />;
+        return <Filter text={columns.email} type="disabled" {...props} />;
     }
 
     renderPhoneFilter: FilterRender = (props) => {
@@ -86,13 +86,13 @@ class TableCustomers extends React.Component<TProps, TState> {
     renderPasswordFilter: FilterRender = (props) => {
         const { lang } = this.props;
         const { columns } = loc[lang];
-        return <Filter text={columns.password} {...props} />;
+        return <Filter text={columns.password} type="disabled" {...props} />;
     }
 
     renderLastOrderIdFilter: FilterRender = (props) => {
         const { lang } = this.props;
         const { columns } = loc[lang];
-        return <Filter text={columns.lastOrderId} {...props} />;
+        return <Filter text={columns.lastOrderId} type="disabled" {...props} />;
     }
 
     render() {
@@ -131,19 +131,21 @@ class TableCustomers extends React.Component<TProps, TState> {
                         accessor: 'name',
                         Filter: this.renderNameFilter,
                         filterable: true,
-                        Cell: cell,
+                        filterMethod: this.filterMethod,
+                        Cell: cell
                     },
                     {
                         accessor: 'phone',
                         Filter: this.renderPhoneFilter,
                         filterable: true,
-                        Cell: cell,
+                        filterMethod: this.filterMethod,
+                        Cell: cell
                     },
                     {
                         accessor: 'email',
                         Filter: this.renderEmailFilter,
                         filterable: true,
-                        Cell: cell,
+                        Cell: cell
                     },
                     {
                         accessor: 'password',

@@ -71,7 +71,8 @@ class Table extends React.Component<TProps, TState> {
         filter: { id: string, value: string, [key: string]: string },
         row: { date: string | { [key: string]: string & { name: string } } }
     ) => {
-        return filter.value === 'all' || row[filter.id].name.toLocaleLowerCase().includes(filter.value.toLowerCase());
+        const cellValue = filter.id === 'status' ? row[filter.id].name : row[filter.id];
+        return filter.value === 'all' || cellValue.toLocaleLowerCase().includes(filter.value.toLowerCase());
     }
 
     triggerShowListPickerFilter = () => {
@@ -260,14 +261,14 @@ class Table extends React.Component<TProps, TState> {
                 columns={[
                     {
                         accessor: 'id',
-                        Filter: () => <Filter text={columns.id} />,
+                        Filter: ({ onChange }) => <Filter text={columns.id} onChange={onChange} />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: cell
                     },
                     {
                         accessor: 'name',
-                        Filter: () => <Filter text={columns.name} />,
+                        Filter:  ({ onChange }) => <Filter text={columns.name} onChange={onChange} />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: cell

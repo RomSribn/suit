@@ -15,4 +15,5 @@ export interface CommonStores {
     garments: {
         Subgroups: typeof Subgroups
     };
+    customersStore: ICustomerStore;
 }

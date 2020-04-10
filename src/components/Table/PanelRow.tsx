@@ -246,31 +246,6 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             />
                         </li>
                         <li className={itemClassName}>
-                            <ConfirmPopup
-                                actionText={loc[lang].confirmCustomer(orderInfo && orderInfo.name)}
-                                onAcceptClick={this.onConfirmCustomerClick}
-                            >
-                                <button
-                                    className="controls__button controls__button--new-client"
-                                    title={loc[lang].controls.confirmCustomer}
-                                />
-                            </ConfirmPopup>
-                            <SimpleModal
-                                data={{
-                                    desc: this.state.info,
-                                    buttons: [{
-                                        key: 'repeat',
-                                        text: 'Ok',
-                                        theme: 'black',
-                                    }],
-                                }}
-                                show={this.state.showInfo}
-                                isSmall={true}
-                                isTransparent={true}
-                                callback={this.onCloseModal}
-                            />
-                        </li>
-                        <li className={itemClassName}>
                             <a
                                 className="controls__link controls__link--pdf"
                                 target="_blank"

@@ -3,7 +3,7 @@ interface Locale {
     navigation: {
         order: string;
         panel: string;
-        clientele: string;
+        customersList: string;
         ordersList: string;
         calendar: string;
         tasks: string;

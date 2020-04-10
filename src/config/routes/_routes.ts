@@ -3,7 +3,7 @@ const makeNavigationRoutes: MakeNavigationRoutes = () => ({
     index: '/',
     order: '/order',
     panel: '/panel',
-    clientele: '/clients',
+    customersList: '/customer/list',
     ordersList: '/order/list',
     calendar: '/calendar',
     tasks: '/tasks',

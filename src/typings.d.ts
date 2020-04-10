@@ -3,7 +3,7 @@ interface NavigationRoutes {
     index: string;
     order: string;
     panel: string;
-    clientele: string;
+    customersList: string;
     calendar: string;
     tasks: string;
     analytics: string;

@@ -5,6 +5,7 @@ import * as garments from './garments';
 import { order } from './order';
 import { ordersStore } from './orders';
 import { filterStore } from './filterStore';
+import customersStore from './customers';
 
 export default {
   app,
@@ -13,5 +14,6 @@ export default {
   routing,
   order,
   filterStore,
-  ordersStore
+  ordersStore,
+  customersStore,
 }

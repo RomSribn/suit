@@ -1,7 +1,7 @@
 interface Locale {
   order: string;
   panel: string;
-  clients: string;
+  customersList: string;
   orderList: string;
   calendar: string;
   tasks: string;
@@ -14,7 +14,7 @@ const makeLocale: MakeLocale<Locale> = {
   en: {
       order: 'order',
       panel: 'panel',
-      clients: 'clients',
+      customersList: 'clients',
       orderList: 'order list',
       calendar: 'calendar',
       tasks: 'tasks',
@@ -25,7 +25,7 @@ const makeLocale: MakeLocale<Locale> = {
   ru: {
       order: 'заказ',
       panel: 'панель',
-      clients: 'клиенты',
+      customersList: 'клиенты',
       orderList: 'список заказов',
       calendar: 'календарь',
       tasks: 'задачи',

@@ -29,8 +29,8 @@ const menuList: MenuLink[] = [
     url: '/panel'
   },
   {
-    name: 'clients',
-    url: '/clients'
+    name: 'customersList',
+    url: '/customer/list'
   },
   {
     name: 'orderList',

@@ -31,6 +31,7 @@ const routes = {
   orderList: '/order/list',
   login: '/login',
   index: '/',
+  customersList: '/customer/list',
 };
 
 type MakeNavigationRoutes = () => NavigationRoutes;
@@ -38,7 +39,7 @@ const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
   order: routes.order,
   panel: '/panel',
-  clientele: '/clients',
+  customersList: routes.customersList,
   calendar: '/calendar',
   tasks: '/tasks',
   analytics: '/analytics',
@@ -51,7 +52,7 @@ const routesTranslations = {
   en: {
     order: 'order',
     panel: 'panel',
-    clientele: 'clients',
+    customersList: 'clients',
     ordersList: 'order list',
     calendar: 'calendar',
     tasks: 'tasks',
@@ -61,7 +62,7 @@ const routesTranslations = {
   ru: {
     order: 'заказать',
     panel: 'панель',
-    clientele: 'клиенты',
+    customersList: 'клиенты',
     ordersList: 'заказы',
     calendar: 'календарь',
     tasks: 'задачи',
@@ -70,7 +71,7 @@ const routesTranslations = {
   },
 };
 
-type RootKey = 'index' | 'order' | 'panel' | 'clientele' | 'calendar'
+type RootKey = 'index' | 'order' | 'panel' | 'customersList' | 'calendar'
   | 'tasks' | 'analytics' | 'settings' | 'ordersList';
 
 const getCombinedPathAndTitle = (routeKey: RootKey) =>

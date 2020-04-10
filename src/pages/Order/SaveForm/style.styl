@@ -1,6 +1,7 @@
  .order-form
   display: flex
   flex-direction: column
+  width: 50%
 
   &__item
     position: relative
@@ -15,6 +16,7 @@
   &__agreement-container
     display: flex
     margin: 1.2rem 0 0 0;
+    width: 50%
 
   &__container
     position: absolute
@@ -28,9 +30,11 @@
     padding: 4rem
     color: #fff
 
+    &.black-bg
+      background: #000
+
   &__content
     height: 100%
-    width: 50%
     display: flex
     flex-direction: column
 
@@ -78,6 +82,7 @@
     color: #fafafa
 
   &__text
+    width: 50%
     margin-bottom: 0.8rem
     line-height: 1.5rem
     color: #fff
@@ -127,7 +132,9 @@
     &__content
       justify-content center
     &__input
-      width 100%
+    &__text
+    &__agreement-container
+      width: 100%
 
     .button-bar
       width 100%
@@ -158,7 +165,6 @@
       padding: 50% 3.5rem 2.5rem 3.5rem;
 
     .order-form__content
-      width: auto
       .foot-note
         right: 30%;
       .buttons

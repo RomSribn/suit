@@ -5,6 +5,7 @@ import { Button } from '../../../../../components/Button';
 import './kalasova.styles.styl';
 import { Redirect } from 'react-router';
 import InputMask from 'react-input-mask';
+import * as classnames from 'classnames';
 
 const validatePhone = (lang: string) => (value: string) => {
     if (!value) {
@@ -146,7 +147,12 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                 onSubmit={this.onSubmit}
                 render={({ handleSubmit }) => {
                     return (
-                        <div className="order-form__container">
+                        <div
+                            className={classnames(
+                                'order-form__container',
+                                { 'black-bg': state.showThanks },
+                            )}
+                        >
                             <div className="order-form__content">
                                 <div>
                                     <div className="order-form__header">{loc[lang].header}</div>

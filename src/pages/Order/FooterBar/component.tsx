@@ -154,7 +154,7 @@ class FooterBar extends React.Component<Props> {
 
                     <Route
                         path={routes.fitting}
-                        component={() => (
+                        render={() => (
                             this.props.orderId ?
                                 <SaveButton
                                     saveExistingOrder={true}
@@ -198,7 +198,7 @@ class FooterBar extends React.Component<Props> {
 
                     <Route
                         path={routes.design}
-                        component={
+                        render={
                             // tslint:disable-next-line no-any
                             (props: any) => {
                                 const isAuth = this.props.isAuth;

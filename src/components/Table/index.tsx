@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RTable from 'react-table';
+import RTable, { FilterRender } from 'react-table';
 import * as classNames from 'classnames';
 import * as moment from 'moment';
 
@@ -209,10 +209,70 @@ class Table extends React.Component<TProps, TState> {
         }
         return true;
     }
+
+    renderStatusFilter: FilterRender = (props) => {
+        const {
+            activeFilterValues,
+            showListPickerFilter
+        } = this.state;
+        const { lang } = this.props;
+        const {
+            columns,
+            statuses,
+            statuses: { ALL_STATUSES: allStatusesText },
+        } = loc[lang];
+        return (
+            <Filter
+                text={(activeFilterValues.status && loc[lang].statuses[activeFilterValues.status])
+                || columns.status}
+                type="select"
+                isActive={showListPickerFilter}
+                selectValues={[
+                    { value: 'all', text: allStatusesText },
+                    ...orderStatuses.map(status => ({ value: status, text: statuses[status] }))
+                ]}
+                onClickFilterItem={this.onClickFilterItem}
+                updatePickerData={
+                    (
+                        filterItemParams: FilterParams,
+                        inputRef: React.RefObject<HTMLDivElement>,
+                        setFilterValue?: (value: DatePickerFilterFields) => void
+                    ) => this.updatePickerData(
+                        this.preparePickerData(filterItemParams, inputRef, setFilterValue)
+                    )
+                }
+                onChange={props.onChange}
+            />
+        );
+    }
+
+    renderDateFilter: FilterRender = (props) => {
+        const { showDatePickerFilter } = this.state;
+        const { lang } = this.props;
+        const { columns } = loc[lang];
+        return (
+            <Filter
+                text={columns.date}
+                type="disabled"
+                isActive={showDatePickerFilter}
+                onClickFilterItem={this.onClickFilterItem}
+                updatePickerData={
+                    (
+                        filterItemParams: FilterParams,
+                        inputRef: React.RefObject<HTMLDivElement>,
+                        setFilterValue?: (value: DatePickerFilterFields) => void
+                    ) => this.updatePickerData(
+                        this.preparePickerData(filterItemParams, inputRef, setFilterValue)
+                    )
+                }
+                onChange={props.onChange}
+            />
+        );
+    }
+
     render() {
         const {
             activeOrderId,
-            activeFilterValues,
             selectedOrder,
             showDatePickerFilter,
             filterData,
@@ -225,7 +285,6 @@ class Table extends React.Component<TProps, TState> {
         const {
             columns,
             statuses,
-            statuses: { ALL_STATUSES: allStatusesText}
         } = loc[lang];
 
         return (
@@ -285,27 +344,7 @@ class Table extends React.Component<TProps, TState> {
                         Cell: cell
                     },
                     {
-                        Filter: (props) => <Filter
-                            text={(activeFilterValues.status && loc[lang].statuses[activeFilterValues.status])
-                                || columns.status}
-                            type="select"
-                            isActive={showListPickerFilter}
-                            selectValues={[
-                                { value: 'all', text: allStatusesText },
-                                ...orderStatuses.map(status => ({ value: status, text: statuses[status] }))
-                            ]}
-                            onClickFilterItem={this.onClickFilterItem}
-                            updatePickerData={
-                                (
-                                    filterItemParams: FilterParams,
-                                    inputRef: React.RefObject<HTMLDivElement>,
-                                    setFilterValue?: (value: DatePickerFilterFields) => void
-                                ) => this.updatePickerData(
-                                        this.preparePickerData(filterItemParams, inputRef, setFilterValue)
-                                    )
-                            }
-                            onChange={props.onChange}
-                        />,
+                        Filter: this.renderStatusFilter,
                         filterMethod: this.filterMethod,
                         filterable: true,
                         accessor: 'status',
@@ -323,22 +362,7 @@ class Table extends React.Component<TProps, TState> {
                             </div>
                     },
                     {
-                        Filter: (props) => <Filter
-                            text={columns.date}
-                            type="disabled"
-                            isActive={showDatePickerFilter}
-                            onClickFilterItem={this.onClickFilterItem}
-                            updatePickerData={
-                                (
-                                    filterItemParams: FilterParams,
-                                    inputRef: React.RefObject<HTMLDivElement>,
-                                    setFilterValue?: (value: DatePickerFilterFields) => void
-                                ) => this.updatePickerData(
-                                        this.preparePickerData(filterItemParams, inputRef, setFilterValue)
-                                    )
-                            }
-                            onChange={props.onChange}
-                        />,
+                        Filter: this.renderDateFilter,
                         filterMethod: this.datePickerFilterMethod,
                         filterable: true,
                         accessor: 'date',

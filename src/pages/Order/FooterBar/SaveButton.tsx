@@ -9,13 +9,14 @@ import { SimpleModal } from '../../../components/SimpleModal';
 import { loc } from './loc';
 import { SaveButtonProps } from './typings';
 import { updateOrder } from './utils';
+import { Redirect } from 'react-router';
 
 interface State {
   open: boolean;
   isExceptionPopupOpen: boolean;
   showErrorModal: boolean;
 }
-@inject(({ app, order, routing, garments: { Subgroups } }, props) => {
+@inject(({ app, order, routing, garments: { Subgroups }, user }, props) => {
   return ({
     app,
     orderStore: order,
@@ -23,6 +24,8 @@ interface State {
     setMutuallyExclusivePopup: order.setMutuallyExclusivePopup,
     activeOrderItem: order.activeElement,
     setActiveOrderItem: order.setActiveItem,
+    lang: app.lang,
+    profile: user.profile,
   });
 })
 
@@ -54,19 +57,34 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     const {
       saveCallback
     } = this.props;
-    this.setState({ open: false });
+    this.hidePopup();
     saveCallback && saveCallback() // tslint:disable-line
   }
+
+  hidePopup = () => {
+    this.setState({ open: false });
+  }
+
   onClick = () => {
     const {
-      saveCallback
+      saveCallback,
+      profile,
     } = this.props;
+    const isCustomer = profile && profile.role === 'CUSTOMER';
     if (this.props.isUpdate) {
       this.updateOrder();
     } else if (this.props.saveExistingOrder) {
       this.props.orderStore!.saveOrder();
 
       saveCallback && saveCallback(); // tslint:disable-line
+    } else if (isCustomer) {
+      const customer = { phone: profile!.user, name: '' };
+      this.props.orderStore!.saveOrder(customer)
+          .then(() => {
+            this.setState({
+              open: true,
+            }, () => setTimeout(this.hidePopup, 3000));
+          });
     } else {
       this.setState({ open: true });
     }
@@ -100,7 +118,8 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     const {
       children,
       lang,
-      link
+      link,
+      profile,
     } = this.props;
     const {
       showErrorModal,
@@ -122,6 +141,19 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         },
       ] as ButtonType[]
     };
+    const isCustomer = profile && profile.role === 'CUSTOMER';
+    const ThanksPopup = () => open ? (
+        <div className="order-form__container">
+          <div className="order-form__content">
+                <div>
+                  <div className="order-form__header">{loc[lang!].header}</div>
+                  <span>{loc[lang!].thanksText}</span>
+                  <Redirect to="#thank_you"/>
+                </div>
+          </div>
+        </div>
+    ) : null;
+
     return (
       <React.Fragment key="order save popup">
         <Button
@@ -132,7 +164,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         >{children}
         </Button>
         <PopUp onClose={this.onClose} open={open}>
-          <SaveForm close={this.onClose} />
+          {isCustomer ? <ThanksPopup /> : <SaveForm close={this.onClose} />}
         </PopUp>
         <SimpleModal
           isSmall={true}

@@ -34,6 +34,8 @@ interface PanelRowProps {
 interface FilterParams {
     text: string;
     type?: filterTypes;
+    name?: string;
+    inputValue?: string;
     selectValues?: ListItem[];
     onChange?: (value: any) => void;
     isActive?: boolean;

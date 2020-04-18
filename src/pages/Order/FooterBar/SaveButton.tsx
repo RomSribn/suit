@@ -145,12 +145,10 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
     const ThanksPopup = () => open ? (
         <div className="order-form__container">
           <div className="order-form__content">
-                <div>
-                  <div className="order-form__header">{loc[lang!].header}</div>
+                  <div className="order-form__header">{loc[lang!].thanksHeader}</div>
                   <span>{loc[lang!].thanksText}</span>
                   <Redirect to="#thank_you"/>
                 </div>
-          </div>
         </div>
     ) : null;
 

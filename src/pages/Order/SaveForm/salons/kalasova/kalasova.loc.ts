@@ -1,7 +1,7 @@
 const translations: Localization = {
     en: {
-        header: 'Stylist consultation',
-        infoText: 'Stylist will call you back and help to complete the order.',
+        header: 'Registration',
+        infoText: 'Do you already have a login and password? Sign in',
         placeHolders: {
             name: 'Name',
             phone: 'Phone',
@@ -9,15 +9,16 @@ const translations: Localization = {
         },
         backText: 'back',
         sendOrder: 'send',
-        thanksText: 'Thank you! We have received your data. Our stylist will contact you.',
+        thanksHeader: 'Thanks, order is accepted!',
+        thanksText: 'The administrator will check the order and contact you.',
         licenseAgreement: 'Agree user with',
         personalData: 'data processing policy',
         required: 'Have to be filled in',
         phoneRequirements: 'Phone number must be 10 digits',
     },
     ru: {
-        header: 'Консультация стилиста',
-        infoText: 'Согласовать заказ и время, чтобы снять мерки в ближайшем ателье или по Вашему адресу',
+        header: 'Регистрация',
+        infoText: 'У вас уже есть логин и пароль? Войти',
         placeHolders: {
             name: 'ФИО',
             phone: 'Телефон',
@@ -25,7 +26,8 @@ const translations: Localization = {
         },
         backText: 'назад',
         sendOrder: 'отправить',
-        thanksText: 'Спасибо, получили ваши данные. В ближайшее время с вами свяжется наш стилист.',
+        thanksHeader: 'Спасибо, заявка принята!',
+        thanksText: 'Администратор проверит заказ и свяжется с вами.',
         licenseAgreement: 'Согласен(на) на обработку',
         personalData: 'персональных данных',
         required: 'Необходимо заполнить',

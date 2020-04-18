@@ -9,7 +9,7 @@ interface Locale {
     okay: string;
     oops: string;
     done: string;
-    header: string;
+    thanksHeader: string;
     thanksText: string;
 }
 
@@ -24,8 +24,8 @@ const makeLocale = (): Translations<Locale> => ({
         okay: 'ok',
         oops: 'Oops',
         done: 'done',
-        header: 'Stylist consultation',
-        thanksText: 'Thank you! We have received your data. Our stylist will contact you.',
+        thanksHeader: 'Thanks, order is accepted!',
+        thanksText: 'The administrator will check the order and contact you.',
     },
     ru: {
         back: 'вернуться',
@@ -37,8 +37,8 @@ const makeLocale = (): Translations<Locale> => ({
         okay: 'хорошо',
         oops: 'Упс',
         done: 'готово',
-        header: 'Консультация стилиста',
-        thanksText: 'Спасибо, получили ваши данные. В ближайшее время с вами свяжется наш стилист.',
+        thanksHeader: 'Спасибо, заявка принята!',
+        thanksText: 'Администратор проверит заказ и свяжется с вами.',
     },
 });
 

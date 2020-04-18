@@ -118,7 +118,7 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, show
                 <>
                     <div className="order-form">
                         {FIELDS.map((field) => (
-                            <div className="order-form__item">
+                            <div className="order-form__item" key={`field-${field.name}`}>
                                 <Field
                                     className="order-form__input"
                                     name={field.name}
@@ -126,7 +126,6 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, show
                                     component={field.component}
                                     type={field.type}
                                     placeholder={loc[lang].placeHolders[field.name]}
-                                    key={`field-${field.name}`}
                                     render={field.render}
                                     parse={field.parse}
                                     validate={field.validate && field.validate(lang)}

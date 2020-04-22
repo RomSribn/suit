@@ -1,8 +1,7 @@
 const loc = {
     en: {
         title: 'Log in',
-        info: 'If you do not have a login and password, ask the administrator or technical support.' +
-            ' Forgot the password? Enter your email address.',
+        info: 'Do not have login and password? Send order and go through registration.',
         wrongCreds: 'Wrong login or password, try again',
         rememberMe: 'Remember me',
         back: 'back',
@@ -18,8 +17,7 @@ const loc = {
     },
     ru: {
         title: 'Авторизация',
-        info: 'Если у вас нет логина и пароля, запросите данные ' +
-            'у администратора салона или технической поддержки.',
+        info: 'У вас нет логина и пароля? Отправьте заказ и пройдите регистрацию.',
         wrongCreds: 'Неверные логин или пароль, попробуйте еще раз',
         rememberMe: 'Запомнить меня',
         back: 'назад',

@@ -110,7 +110,7 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, show
             // ? (<span>{loc[lang].thanksText}</span>)
             ? (
                 <>
-                    <span>{loc[lang].thanksText}</span>
+                    <span className="order-form__subtitle">{loc[lang].thanksText}</span>
                     <Redirect to="#thank_you"/>
                 </>
             )

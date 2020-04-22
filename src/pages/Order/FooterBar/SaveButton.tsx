@@ -146,7 +146,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
         <div className="order-form__container">
           <div className="order-form__content">
                   <div className="order-form__header">{loc[lang!].thanksHeader}</div>
-                  <span>{loc[lang!].thanksText}</span>
+                  <span className="order-form__subtitle">{loc[lang!].thanksText}</span>
                   <Redirect to="#thank_you"/>
                 </div>
         </div>

@@ -6,4 +6,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'normalize.css';
 import './App.styl';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+);

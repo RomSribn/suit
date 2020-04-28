@@ -19,7 +19,7 @@ export type SaveButtonInject = {
     orderStore?: IOrderStore;
     subgroupData?: Subgroup;
     Subgroups?: any; // tslint:disable-line no-any
-
+    profile?: Profile;
     setMutuallyExclusivePopup?: (callbackFunction: ((params: MutuallyExclusive) => void) |
     {
         show: boolean

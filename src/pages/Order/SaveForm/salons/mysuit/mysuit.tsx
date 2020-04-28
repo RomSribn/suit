@@ -7,6 +7,9 @@ import './mysuits.styles.styl';
 import { Redirect } from 'react-router';
 import InputMask from 'react-input-mask';
 import * as classnames from 'classnames';
+import { Link } from 'react-router-dom';
+import { PopUp } from '../../../../../containers/Popup';
+import Login from '../../../../../components/Login';
 
 const validatePhone = (lang: string) => (value: string) => {
     if (!value) {
@@ -59,9 +62,10 @@ const FIELDS: Field[] = [{
 },
 ];
 
-class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
+class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, showLoginForm?: boolean}> {
     state = {
-        showThanks: false
+        showThanks: false,
+        showLoginForm: false,
     };
     onSubmit = (userInfo: User) => {
         this.props.orderStore.saveOrder(userInfo)
@@ -81,6 +85,22 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
             });
     }
 
+    loginLinkClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (this.props.close) {
+            this.props.close();
+            setTimeout(() => {
+                this.setState({
+                    showLoginForm: true,
+                });
+            }, 300);
+        }
+    }
+
+    closeForm = () => {
+        this.setState({ showLoginForm: false });
+    }
+
     render() {
         const {
             lang
@@ -91,7 +111,7 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
             // ? (<span>{loc[lang].thanksText}</span>)
             ? (
                 <>
-                    <span>{loc[lang].thanksText}</span>
+                    <span className="order-form__subtitle">{loc[lang].thanksText}</span>
                     <Redirect to="#thank_you"/>
                 </>
             )
@@ -156,8 +176,21 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean}> {
                         >
                             <div className="order-form__content">
                                 <div>
-                                    <div className="order-form__header">{loc[lang].header}</div>
-                                    {!state.showThanks && <div className="order-form__text">{loc[lang].infoText}</div>}
+                                    <div className="order-form__header">
+                                        {state.showThanks ? loc[lang].thanksHeader : loc[lang].header}
+                                    </div>
+                                    {!state.showThanks && (
+                                        <div>
+                                            <Link to="#" onClick={this.loginLinkClick} className="order-form__text">
+                                                {loc[lang].infoText}
+                                            </Link>
+                                            <PopUp
+                                                open={this.state.showLoginForm}
+                                                onClose={this.closeForm}
+                                            ><Login loginCallback={this.closeForm} closeForm={this.closeForm} />
+                                            </PopUp>
+                                        </div>
+                                    )}
                                 </div>
                                 <form
                                     onSubmit={handleSubmit}

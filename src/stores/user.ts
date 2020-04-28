@@ -5,6 +5,7 @@ import { setUserInfo, resetUserInfo, getUserInfo } from '../utils/apiUtils';
 type responseUserData = {
   createDate: string;
   token: string;
+  role: string;
 };
 class UserClass implements IUserStore {
   @observable isAuth = false;
@@ -18,7 +19,8 @@ class UserClass implements IUserStore {
       this.isAuth = true;
       this.profile = {
         token: userInfo.token,
-        user: userInfo.user
+        user: userInfo.user,
+        role: userInfo.role,
       };
     }
   }
@@ -39,7 +41,8 @@ class UserClass implements IUserStore {
         const userInfo = {
           token: data.token,
           createDate: data.createDate,
-          user: userName
+          user: userName,
+          role: data.role,
         };
         setUserInfo(userInfo);
         this.isAuth = true;

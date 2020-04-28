@@ -10,6 +10,7 @@ type Profile = {
   createDate?: string;
   token: string;
   user: string;
+  role: string;
 } | null;
 
 interface IUserStore {

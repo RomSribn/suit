@@ -92,7 +92,8 @@ export function setUserInfo(userInfo) {
   localStorage.setItem(USER_INFO, JSON.stringify({
     user: userInfo.user,
     token:  userInfo.token,
-    createDate: userInfo.createDate
+    createDate: userInfo.createDate,
+    role: userInfo.role,
   }));
 }
 
@@ -151,4 +152,5 @@ export function loadUserProfile() {
  * @property {string} token - Пользовательский токен получаемся от api
  * @property {string} user - Имя пользователя
  * @property {Date | string} createDate - Дата создания пользователя. От api string
+ * @property {string} role - Роль пользователя 'CUSTOMER'|'STYLIST'
  */

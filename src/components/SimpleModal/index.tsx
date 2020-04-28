@@ -8,7 +8,7 @@ import './style.styl';
 class SimpleModal extends React.Component<SimpleModalProps, {}> {
   renderButtons = (buttons: ButtonType[]) => {
     return buttons && buttons.map((buttonObj: ButtonType) => (
-      <div className="button-wrapper">
+      <div className="button-wrapper" key={buttonObj!.key}>
         <Button
           onClick={() => this.onClickButton(buttonObj.key)}
           theme={buttonObj!.theme}

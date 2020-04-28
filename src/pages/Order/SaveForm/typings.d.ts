@@ -21,6 +21,7 @@ interface Loc {
     };
     backText: string;
     sendOrder: string;
+    thanksHeader?: string;
     thanksText: string;
     licenseAgreement: string;
     personalData: string;

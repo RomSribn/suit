@@ -64,7 +64,7 @@ const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string)
     } = group;
 
     return (
-        <div className="filter__group">
+        <div className="filter__group" key={title[lang]}>
             <div className="filter__groupheader">{title[lang]}:</div>
             <div className="filter__checkgroup">
                 {values.map((value, index) => (

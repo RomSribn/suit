@@ -6,11 +6,13 @@ interface User {
   isConfirmed?: boolean;
 }
 
+type Role = 'STYLIST' | 'CUSTOMER';
+
 type Profile = {
   createDate?: string;
   token: string;
   user: string;
-  role: string;
+  role: Role;
 } | null;
 
 interface IUserStore {

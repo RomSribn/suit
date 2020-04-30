@@ -152,5 +152,5 @@ export function loadUserProfile() {
  * @property {string} token - Пользовательский токен получаемся от api
  * @property {string} user - Имя пользователя
  * @property {Date | string} createDate - Дата создания пользователя. От api string
- * @property {string} role - Роль пользователя 'CUSTOMER'|'STYLIST'
+ * @property {'STYLIST' | 'CUSTOMER'} role - Роль пользователя
  */

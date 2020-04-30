@@ -5,7 +5,7 @@ import { setUserInfo, resetUserInfo, getUserInfo } from '../utils/apiUtils';
 type responseUserData = {
   createDate: string;
   token: string;
-  role: string;
+  role: Role;
 };
 class UserClass implements IUserStore {
   @observable isAuth = false;

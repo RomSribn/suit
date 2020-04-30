@@ -131,9 +131,16 @@ class Table extends React.Component<TProps, TState> {
                 });
             }
             case 'select':
-                return this.updatePickerData(this.preparePickerData(filterItemParams, inputRef, setFilterValue, () => {
-                    this.setHideListPickerFilter();
-                }), () => {
+                return this.updatePickerData(
+                    this.preparePickerData(filterItemParams, inputRef, setFilterValue, (value) => {
+                        this.setHideListPickerFilter();
+                        if (filterItemParams.name) {
+                           this.setState({ activeFilterValues: {
+                               ...this.state.activeFilterValues,
+                               [filterItemParams.name]: value,
+                           }});
+                        }
+                    }), () => {
                     this.setShowListPickerFilter();
                 });
             default:
@@ -144,7 +151,7 @@ class Table extends React.Component<TProps, TState> {
         filterItemParams: FilterParams,
         inputRef: React.RefObject<HTMLDivElement>,
         setFilterValue?: (value: DatePickerFilterFields) => void,
-        updateCallback?: () => void
+        updateCallback?: (value: string) => void
     ) => {
         const {
             filterData
@@ -156,7 +163,7 @@ class Table extends React.Component<TProps, TState> {
                     ? (value: any) => { // tslint:disable-line
                         setFilterValue(value);
                         setTimeout(() => {
-                            updateCallback && updateCallback(); // tslint:disable-line
+                            updateCallback && updateCallback(value); // tslint:disable-line
                         }, 50);
                     }
                     : (filterData! && filterData!.setFilterValue),
@@ -226,6 +233,7 @@ class Table extends React.Component<TProps, TState> {
                 text={(activeFilterValues.status && loc[lang].statuses[activeFilterValues.status])
                 || columns.status}
                 type="select"
+                name={props.column.id}
                 isActive={showListPickerFilter}
                 selectValues={[
                     { value: 'all', text: allStatusesText },
@@ -320,14 +328,22 @@ class Table extends React.Component<TProps, TState> {
                 columns={[
                     {
                         accessor: 'id',
-                        Filter: ({ onChange }) => <Filter text={columns.id} onChange={onChange} />,
+                        Filter: ({ filter, onChange }) => <Filter
+                            text={columns.id}
+                            inputValue={filter && filter.value || ''}
+                            onChange={onChange}
+                        />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: cell
                     },
                     {
                         accessor: 'name',
-                        Filter:  ({ onChange }) => <Filter text={columns.name} onChange={onChange} />,
+                        Filter: ({ filter, onChange }) => <Filter
+                            text={columns.name}
+                            inputValue={filter && filter.value || ''}
+                            onChange={onChange}
+                        />,
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: cell

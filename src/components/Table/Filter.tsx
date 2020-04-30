@@ -26,7 +26,8 @@ class Filter extends React.Component<FilterParams> {
             text,
             type,
             onClickFilterItem,
-            isActive
+            isActive,
+            inputValue,
         } = params;
         const baseClass = 'orders__title';
         switch (type) {
@@ -92,6 +93,7 @@ class Filter extends React.Component<FilterParams> {
                             onChange={event => onChange!(event.target.value)}
                             type="text"
                             placeholder={text}
+                            value={inputValue}
                         />
                     </div>
                 );

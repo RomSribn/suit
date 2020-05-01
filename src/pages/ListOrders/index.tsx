@@ -42,6 +42,7 @@ class ListOrders extends React.Component<ListOrdersProps> {
                 ordersStore={ordersStore}
                 userToken={this.props.userToken}
                 baseOrderId={this.props.baseOrderId}
+                role={this.props.role}
             />
         </div>
         );

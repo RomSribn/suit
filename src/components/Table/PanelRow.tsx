@@ -108,7 +108,8 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             orderInfo,
             orderStatuses,
             activeOrderId,
-            lang
+            lang,
+            role,
         } = this.props;
         const {
             showControls
@@ -133,6 +134,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
         }
         const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
         const props = this.props;
+        const isStylist = role === 'STYLIST';
         return (
             <div className="panel-row">
                 <form className="search">
@@ -181,23 +183,6 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             />
                         </li>
                         <li className={itemClassName}>
-                            <ConfirmPopup
-                                onAcceptClick={
-                                    this.onAcceptClickFabric(
-                                        { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
-                                    )}
-                                actionText={loc[lang].fabric.updateOrder({
-                                    currentStatus: currentStatus,
-                                    nextStatus
-                                })}
-                            >
-                                <button
-                                    className="controls__button controls__button--eye"
-                                    title={loc[lang].controls.update}
-                                />
-                            </ConfirmPopup>
-                        </li>
-                        <li className={itemClassName}>
                             <Link
                                 className="controls__link controls__link--edit"
                                 to={{
@@ -207,44 +192,70 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 title={loc[lang].controls.edit}
                             />
                         </li>
-                        <li className={itemClassName}>
-                            <ConfirmPopup
-                                actionText={loc[lang].fabric.delete(orderInfo && orderInfo.id || activeOrderId || '')}
-                                onAcceptClick={this.onDeleteClick}
-                            >
-                                <button
-                                    className="controls__button controls__button--trash"
-                                    title={loc[lang].controls.delete}
-                                />
-                            </ConfirmPopup>
-                        </li>
-                        <li
-                            className={classNames('controls__item', { disabled: (orderInfo && orderInfo.isConfirmed) })}
-                        >
-                            <ConfirmPopup
-                                actionText={loc[lang].confirmCustomer(orderInfo && orderInfo.name)}
-                                onAcceptClick={this.onConfirmCustomerClick}
-                            >
-                                <button
-                                    className="controls__button controls__button--new-client"
-                                    title={loc[lang].controls.confirmCustomer}
-                                />
-                            </ConfirmPopup>
-                            <SimpleModal
-                                data={{
-                                    desc: this.state.info,
-                                    buttons: [{
-                                        key: 'repeat',
-                                        text: 'Ok',
-                                        theme: 'black',
-                                    }],
-                                }}
-                                show={this.state.showInfo}
-                                isSmall={true}
-                                isTransparent={true}
-                                callback={this.onCloseModal}
-                            />
-                        </li>
+                        {isStylist && (
+                            <>
+                                <li className={itemClassName}>
+                                    <ConfirmPopup
+                                        onAcceptClick={
+                                            this.onAcceptClickFabric(
+                                                { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
+                                            )}
+                                        actionText={loc[lang].fabric.updateOrder({
+                                            currentStatus: currentStatus,
+                                            nextStatus
+                                        })}
+                                    >
+                                        <button
+                                            className="controls__button controls__button--eye"
+                                            title={loc[lang].controls.update}
+                                        />
+                                    </ConfirmPopup>
+                                </li>
+                                <li className={itemClassName}>
+                                    <ConfirmPopup
+                                        actionText={loc[lang].fabric.delete(
+                                            orderInfo && orderInfo.id || activeOrderId || ''
+                                        )}
+                                        onAcceptClick={this.onDeleteClick}
+                                    >
+                                        <button
+                                            className="controls__button controls__button--trash"
+                                            title={loc[lang].controls.delete}
+                                        />
+                                    </ConfirmPopup>
+                                </li>
+                                <li
+                                    className={classNames(
+                                        'controls__item',
+                                        { disabled: (orderInfo && orderInfo.isConfirmed) },
+                                        )}
+                                >
+                                    <ConfirmPopup
+                                        actionText={loc[lang].confirmCustomer(orderInfo && orderInfo.name)}
+                                        onAcceptClick={this.onConfirmCustomerClick}
+                                    >
+                                        <button
+                                            className="controls__button controls__button--new-client"
+                                            title={loc[lang].controls.confirmCustomer}
+                                        />
+                                    </ConfirmPopup>
+                                    <SimpleModal
+                                        data={{
+                                            desc: this.state.info,
+                                            buttons: [{
+                                                key: 'repeat',
+                                                text: 'Ok',
+                                                theme: 'black',
+                                            }],
+                                        }}
+                                        show={this.state.showInfo}
+                                        isSmall={true}
+                                        isTransparent={true}
+                                        callback={this.onCloseModal}
+                                    />
+                                </li>
+                            </>
+                        )}
                         <li className={itemClassName}>
                             <a
                                 className="controls__link controls__link--pdf"

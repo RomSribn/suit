@@ -29,6 +29,7 @@ interface PanelRowProps {
     ordersStore: OrderList.IOrderStore;
     lang: Lang;
     activeOrderId?: string | null;
+    role?: Role;
 }
 
 interface FilterParams {

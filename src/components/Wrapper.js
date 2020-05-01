@@ -43,8 +43,10 @@ class Wrapper extends Component {
       userStore
     } = this.props;
     const { lang, showMobileMenu, toggleMobileMenu, setLang }  = app;
-    const { logout, isAuth } = userStore;
+    const { logout, isAuth, profile } = userStore;
     const loggedIn = this.props.userStore.isAuth;
+    const role = userStore.profile && userStore.profile.role || null;
+    const isStylist = role === 'STYLIST';
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (<React.Fragment key="common wrapper with spinner">
       {this.state.showSpinner && <Spinner />}
@@ -61,6 +63,7 @@ class Wrapper extends Component {
                   sideEffects={{
                     logout: logout.bind(userStore)
                   }}
+                  role={role}
                 /> :
               <Login loginCallback={toggleMobileMenu} closeForm={toggleMobileMenu} />
             }
@@ -107,7 +110,7 @@ class Wrapper extends Component {
                     <ListOrders />
                   </CrumbRoute>
                   <CrumbRoute {...getCombinedPathAndTitle('customersList')}>
-                    <ListCustomers />
+                      {isStylist ? <ListCustomers /> : <Redirect to={routes.index} />}
                   </CrumbRoute>
                 </Switch>
               );

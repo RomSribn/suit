@@ -53,6 +53,19 @@ class OrdersStore implements OrderList.IOrderStore {
     }
 
     @action
+    fetchCustomerOrders: Fetch<List> = () => {
+        this.error = null;
+
+        return callApi({
+                method: 'GET',
+                url: services.customerOrders,
+            },
+            () => { this.isFetching = true; },
+            this._onSuccess,
+            this._onError);
+    }
+
+    @action
     updateOrder = (order: OrderList.OrderItem) => {
         return callApi({
             method: 'PUT',

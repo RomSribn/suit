@@ -12,18 +12,24 @@ import { CommonStores } from '../../types/commonStores';
     app
 }) => {
     const userToken = user.profile && user.profile.token || 'no-token';
+    const role = user.profile && user.profile.role || null;
     return ({
         ordersStore,
         appStore: app,
         baseOrderId: parseQuery(routing.location.search).active_order_id,
         userToken,
+        role,
     });
 })
 @observer
 class ListOrders extends React.Component<ListOrdersProps> {
     constructor(props: ListOrdersProps) {
         super(props);
-        this.props.ordersStore!.fetch();
+        const fetchByRole = {
+            STYLIST: this.props.ordersStore!.fetch,
+            CUSTOMER: this.props.ordersStore!.fetchCustomerOrders,
+        };
+        fetchByRole[this.props.role!]();
     }
     render() {
         const ordersStore = this.props.ordersStore!;

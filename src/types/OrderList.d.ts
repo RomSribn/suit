@@ -94,6 +94,7 @@ declare namespace OrderList {
         isFetching: boolean;
         orders: ServerData.OrderItem[];
         fetch(): Promise<void | Axios.Response<Data>>;
+        fetchCustomerOrders(): Promise<void | Axios.Response<Data>>;
         updateOrder(
             order: ServerData.OrderItem
         ): Promise<void | Axios.Response<{}>>;

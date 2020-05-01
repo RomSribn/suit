@@ -19,10 +19,14 @@ export function callApi(
     JSON.parse(localStorage.getItem('AuthUser')!)
   )) {
     const user = JSON.parse(localStorage.getItem('AuthUser')!);
+    const tokenType = {
+      CUSTOMER: 'customer-token',
+      STYLIST: 'stylist-token',
+    };
     config.headers = {
       ...config.headers,
       'x-auth-token': user.token,
-      'stylist-token': user.token
+      [tokenType[user.role]]: user.token,
     };
   }
   // TODO: rmeove this hardcoded shit

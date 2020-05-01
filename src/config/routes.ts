@@ -23,6 +23,7 @@ export const services = {
   login: `${API_ROOT}/api/auth/login`,
   logout: `${API_ROOT}/api/auth/logout`,
   customers: `${API_ROOT}/api/customers`,
+  customerOrders: `${API_ROOT}/api/customers/orders`,
 };
 
 const routes = {

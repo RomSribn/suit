@@ -26,7 +26,8 @@ const prepareDataForFuckupPut: Fuckup.PrepareDataForServer = (data) => {
         fittings,
         statusId: data.status.statusId,
         mainFabric: { ourCode: data.garments.shirt.mainFabric.our_code },
-        items
+        items,
+        customer: data.customer,
     };
 };
 

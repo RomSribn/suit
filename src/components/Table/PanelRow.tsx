@@ -135,6 +135,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
         const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
         const props = this.props;
         const isStylist = role === 'STYLIST';
+        const isCustomer = role === 'CUSTOMER';
         return (
             <div className="panel-row">
                 <form className="search">
@@ -182,7 +183,13 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 title={loc[lang].controls.create}
                             />
                         </li>
-                        <li className={itemClassName}>
+                        <li
+                            className={classNames(
+                                'controls__item',
+                                { disabled: isCustomer && orderInfo && orderInfo.status.name !== 'NEW' &&
+                                        orderInfo.status.name !== 'TEMPORARY' },
+                            )}
+                        >
                             <Link
                                 className="controls__link controls__link--edit"
                                 to={{

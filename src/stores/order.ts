@@ -340,6 +340,10 @@ export class OrderStore implements IOrderStore {
             this._onError);
     }
     @action
+    clearOrderInfo = () => {
+        this.orderInfo = null;
+    }
+    @action
     saveOrder = (customerInfo?: User) => {
         const { orderInfo } = this;
         const method = orderInfo && orderInfo.orderId ? 'PUT' : 'POST';

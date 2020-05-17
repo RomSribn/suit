@@ -14,9 +14,11 @@ interface IOrderStore {
     clearException: (garment: string, subGroup: string, actionType: ClearElementActionType) => void;
     setMutuallyExclusivePopup: (callbackFunction: any) => void;
     activeElement: GalleryStoreItem | null;
-    setActiveItem(item: GalleryStoreItem | null): void;
     previewElement: ActivePreviewElement | null;
     error: object | null;
+    setFitting: (garment: string, fitting: { id: string; value: number }) => void;
+    getFitting: (garment: string) => (fittingName: string) => number;
+    setActiveItem(item: GalleryStoreItem | null): void;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order, exception?: OrderItemException): void;
     saveOrder(customerInfo?: User): Promise<any>;
@@ -24,10 +26,9 @@ interface IOrderStore {
     toggleHiddenElement(element: string): void;
     setShirtInitials(initials: string): void;
     getShirtInitials(): string;
-    fetchOrder(orderId: string): void;
+    fetchOrder(orderId: string): Promise<any>;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
-    setFitting: (garment: string, fitting: { id: string; value: number }) => void;
-    getFitting: (garment: string) => (fittingName: string) => number; 
+    clearOrderInfo(): void;
 }
 
 interface Order {

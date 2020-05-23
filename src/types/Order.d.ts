@@ -38,6 +38,7 @@ interface OrderInfo {
     orderId: number;
     deliveryDays: number;
     price: Translations<string>;
+    customer: User;
 }
 
 interface OrderItemInfo {

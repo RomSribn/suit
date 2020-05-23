@@ -334,7 +334,8 @@ export class OrderStore implements IOrderStore {
                 this.orderInfo = {
                     orderId: data.orderId,
                     deliveryDays: data.deliveryDays,
-                    price: data.price
+                    price: data.price,
+                    customer: data.customer,
                 };
             },
             this._onError);
@@ -347,7 +348,7 @@ export class OrderStore implements IOrderStore {
         return callApi({
             url: services.orders + id,
             method,
-            data: prepareOrder(this.order, customerInfo),
+            data: prepareOrder(this.order, customerInfo ||  orderInfo!.customer),
         },
             (): null => null,
             (info: OrderInfo) => {

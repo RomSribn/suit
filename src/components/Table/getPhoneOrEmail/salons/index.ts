@@ -19,6 +19,7 @@ type GetPhoneOrEmailParameters = {
         filter: { id: string, value: string, [key: string]: string },
         row: { date: string | { [key: string]: string & { name: string } } }
     ) => boolean;
+    show: boolean;
 };
 
 export type GetPhoneOrEmail = (data: GetPhoneOrEmailParameters) => TableRawData;

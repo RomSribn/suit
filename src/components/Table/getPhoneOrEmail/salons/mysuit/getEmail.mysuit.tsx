@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Filter } from '../../../Filter';
 import { GetPhoneOrEmail } from '../index';
 
-export const getEmail: GetPhoneOrEmail = ({columnsText, cell, filterMethod}) => ({
+export const getEmail: GetPhoneOrEmail = ({columnsText, cell, filterMethod, show}) => ({
     accessor: 'email',
     Filter: ({ filter, onChange }) => (
         <Filter
@@ -12,5 +12,6 @@ export const getEmail: GetPhoneOrEmail = ({columnsText, cell, filterMethod}) => 
         />),
     filterable: true,
     filterMethod: filterMethod,
-    Cell: cell
+    Cell: cell,
+    show,
 });

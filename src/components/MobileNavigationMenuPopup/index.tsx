@@ -10,7 +10,8 @@ type Props = {
   currentLang: string,
   closeMenu: () => void,
   setLang: (lang: string) => void,
-  sideEffects: [() => void]
+  sideEffects: [() => void],
+  role?: Role,
 };
 
 type MenuLink = {
@@ -59,7 +60,13 @@ const menuList: MenuLink[] = [
   },
 ];
 
-export default ({ currentLang = 'en', closeMenu, setLang, sideEffects }: Props) => (
+export default ({ currentLang = 'en', closeMenu, setLang, sideEffects, role }: Props) => {
+  const customerMenuList = menuList.filter(item => !['customersList', 'tasks', 'analytics'].includes(item.name));
+  const menuItemsByRole = {
+    STYLIST: menuList,
+    CUSTOMER: customerMenuList,
+  };
+  return (
   <div className="mobile-menu">
     <header className="mobile-menu-header">
       <button className="close-button" onClick={closeMenu}>
@@ -69,7 +76,7 @@ export default ({ currentLang = 'en', closeMenu, setLang, sideEffects }: Props) 
     <main className="mobile-menu-main">
       <nav className="navigation-list">
       {
-        menuList.map((navItem) => (
+        menuItemsByRole[role!].map((navItem) => (
           <Switch>
             <Route
                 key={navItem.name}
@@ -119,4 +126,4 @@ export default ({ currentLang = 'en', closeMenu, setLang, sideEffects }: Props) 
       </ul>
     </footer>
   </div>
-);
+); };

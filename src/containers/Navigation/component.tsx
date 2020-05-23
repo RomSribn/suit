@@ -81,6 +81,7 @@ interface NavigationProps {
     isLogin?: boolean;
     lang: string;
     isOrderPage: boolean;
+    role?: Role;
 }
 interface NavigationState {
     showActiveClassName: boolean;
@@ -110,8 +111,15 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         const {
             lang,
             isLogin,
-            isOrderPage
+            isOrderPage,
+            role,
         } = this.props;
+        const stylistNavLinks =  Object.keys(loc[lang].navigation);
+        const customerNavLinks = ['order', 'panel', 'ordersList', 'calendar', 'settings'];
+        const navLinksByRole = {
+            STYLIST: stylistNavLinks,
+            CUSTOMER: customerNavLinks,
+        };
         return (
         <div
             className={classNames(
@@ -132,7 +140,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                     >
                         <ul>
                             {makeNavigationLinks(
-                                Object.keys(loc[lang].navigation),
+                                navLinksByRole[role!],
                                 this.state.showActiveClassName,
                                 lang)}
                         </ul>

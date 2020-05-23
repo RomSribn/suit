@@ -31,6 +31,7 @@ interface TProps {
     lang: Lang;
     baseOrderId?: string;
     userToken?: string;
+    role?: Role;
 }
 
 interface TState {
@@ -289,6 +290,7 @@ class Table extends React.Component<TProps, TState> {
         const {
             lang,
             orders,
+            role
         } = this.props;
         const {
             columns,
@@ -306,6 +308,7 @@ class Table extends React.Component<TProps, TState> {
                 lang={lang}
                 activeOrderId={this.state.activeOrderId}
                 acceptCallback={this.resetActiveInfo}
+                role={role}
             />
             <RTable
                 className={classNames('orders', 'flex-content', {orders_blured: showDatePickerFilter})}
@@ -346,12 +349,14 @@ class Table extends React.Component<TProps, TState> {
                         />,
                         filterable: true,
                         filterMethod: this.filterMethod,
-                        Cell: cell
+                        Cell: cell,
+                        show: role === 'STYLIST',
                     },
                     getPhoneOrEmail({
                         columnsText: columns,
                         cell: cell,
                         filterMethod: this.filterMethod,
+                        show: role === 'STYLIST',
                     }),
                     {
                         Filter: () => <Filter text={columns.fitting} type="disabled"/>,
@@ -375,7 +380,8 @@ class Table extends React.Component<TProps, TState> {
                         Cell: (row: {value: boolean}) =>
                             <div className="orders__data">
                                 {row.value ? loc[lang].isConfirmed : loc[lang].notConfirmed}
-                            </div>
+                            </div>,
+                        show: role === 'STYLIST',
                     },
                     {
                         Filter: this.renderDateFilter,

@@ -3,4 +3,5 @@ interface ListOrdersProps {
     appStore?: IAppStore;
     baseOrderId?: string;
     userToken?: string;
+    role?: Role;
 }

@@ -26,7 +26,8 @@ const prepareDataForFuckupPut: Fuckup.PrepareDataForServer = (data) => {
         fittings,
         statusId: data.status.statusId,
         mainFabric: { ourCode: data.garments.shirt.mainFabric.our_code },
-        items
+        items,
+        customer: data.customer,
     };
 };
 
@@ -50,6 +51,19 @@ class OrdersStore implements OrderList.IOrderStore {
         () => { this.isFetching = true; },
         this._onSuccess,
         this._onError);
+    }
+
+    @action
+    fetchCustomerOrders: Fetch<List> = () => {
+        this.error = null;
+
+        return callApi({
+                method: 'GET',
+                url: services.customerOrders,
+            },
+            () => { this.isFetching = true; },
+            this._onSuccess,
+            this._onError);
     }
 
     @action

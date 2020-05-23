@@ -9,6 +9,7 @@ import { PopUp } from '../../../containers/Popup';
 import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 import { updateOrder } from './utils';
+import { routes as configRoutes } from '../../../config/routes';
 
 import './styles.styl';
 import { FooterBarProps } from './typings';
@@ -156,11 +157,15 @@ class FooterBar extends React.Component<Props> {
                         path={routes.fitting}
                         render={() => (
                             this.props.orderId ?
-                                <SaveButton
-                                    saveExistingOrder={true}
+                                <Link
+                                    to={configRoutes.orderList}
                                 >
-                                    {loc[lang!].update}
-                                </SaveButton> :
+                                    <SaveButton
+                                        saveExistingOrder={true}
+                                    >
+                                        {loc[lang!].update}
+                                    </SaveButton>
+                                </Link> :
                                 <FadeIn>
                                     <SaveButton>{loc[lang!].create}</SaveButton>
                                 </FadeIn>

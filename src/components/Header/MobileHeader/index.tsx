@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import { Route, Switch, RouteComponentProps } from 'react-router';
 import { routes } from '../../../pages/Order/routes';
+import { routes as configRoutes } from '../../../config/routes';
 import { mobileHeaderTranslations } from './loc';
 import './style.styl';
 import { Navlinks } from '../HeaderContent/navlinks';
@@ -54,6 +55,13 @@ export default ({ openMenu, lang, isLandscape }: Props) => {
                                     {mobileHeaderTranslations[lang].fitting}
                                 </span>
                             }
+                        />
+                        <Route
+                            path={configRoutes.orderList}
+                            component={() =>
+                                <span className="navlinks-mobile__value">
+                                    {mobileHeaderTranslations[lang].orderList}
+                                </span>}
                         />
                     </Switch>
 

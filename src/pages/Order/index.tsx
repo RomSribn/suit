@@ -53,6 +53,7 @@ class Container extends React.Component<any>{ //tslint:disable-line
             return null;
         }
         const query = parseQuery(this.props.routingStore.location.search);
+        const isOnBase = query.onbase === 'true';
         if (orderStore.isEmptyOrder()) {
             if (query.order_id) {
                 orderStore.fetchInitialOrder(
@@ -60,7 +61,12 @@ class Container extends React.Component<any>{ //tslint:disable-line
                     (garments) => garmentsStore.setChosenGarments(garments)
                 )
                 .then(() => {
-                    orderStore.fetchOrder(query.order_id);
+                    orderStore.fetchOrder(query.order_id)
+                        .then(() => {
+                            if (isOnBase) {
+                                orderStore.clearOrderInfo();
+                            }
+                        });
                 });
             } else {
                 orderStore.fetchInitialOrder(
@@ -71,7 +77,14 @@ class Container extends React.Component<any>{ //tslint:disable-line
             return null;
         } else {
             if (query.order_id && query.order_id !== String((orderStore.orderInfo && orderStore.orderInfo.orderId))) {
-                orderStore.fetchOrder(query.order_id);
+                orderStore.fetchOrder(query.order_id)
+                    .then(() => {
+                        if (isOnBase) {
+                            orderStore.clearOrderInfo();
+                        }
+                    });
+            } else if (isOnBase) {
+                orderStore.clearOrderInfo();
             }
         }
         return <Order {...this.props} />;

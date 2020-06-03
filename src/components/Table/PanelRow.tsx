@@ -178,7 +178,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 className="controls__link controls__link--refresh"
                                 to={{
                                     pathname: `${routes.details}/shirt`,
-                                    search: `order_id=${orderInfo && orderInfo.id || activeOrderId}`
+                                    search: `order_id=${orderInfo && orderInfo.id || activeOrderId}&onbase=true`
                                 }}
                                 title={loc[lang].controls.create}
                             />

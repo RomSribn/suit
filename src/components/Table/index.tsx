@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RTable, { FilterRender } from 'react-table';
+import RTable, { CellInfo, FilterRender } from 'react-table';
 import * as classNames from 'classnames';
 import * as moment from 'moment';
 
@@ -48,8 +48,6 @@ type RowInfo = {
     row: TableOrderInfo;
     original: TableOrderInfo;
 } | undefined;
-
-const cell = (row: {value: string, [key: string]: string}) => <div className="orders__data">{row.value}</div>; // tslint:disable-line
 
 class Table extends React.Component<TProps, TState> {
     private panelRow: React.RefObject<PanelRow>;
@@ -279,6 +277,17 @@ class Table extends React.Component<TProps, TState> {
         );
     }
 
+    renderCell = (props: CellInfo) => {
+        const { lang } = this.props;
+        const { columns } = loc[lang];
+        return (
+            <>
+                <div className="orders__title-mob">{columns[props.column.id || '']}</div>
+                <div className="orders__data">{props.value}</div>
+            </>
+        );
+    }
+
     render() {
         const {
             activeOrderId,
@@ -338,7 +347,7 @@ class Table extends React.Component<TProps, TState> {
                         />,
                         filterable: true,
                         filterMethod: this.filterMethod,
-                        Cell: cell
+                        Cell: this.renderCell,
                     },
                     {
                         accessor: 'name',
@@ -349,12 +358,12 @@ class Table extends React.Component<TProps, TState> {
                         />,
                         filterable: true,
                         filterMethod: this.filterMethod,
-                        Cell: cell,
+                        Cell: this.renderCell,
                         show: role === 'STYLIST',
                     },
                     getPhoneOrEmail({
                         columnsText: columns,
-                        cell: cell,
+                        cell: this.renderCell,
                         filterMethod: this.filterMethod,
                         show: role === 'STYLIST',
                     }),
@@ -362,7 +371,7 @@ class Table extends React.Component<TProps, TState> {
                         Filter: () => <Filter text={columns.fitting} type="disabled"/>,
                         filterable: true,
                         accessor: 'fitting',
-                        Cell: cell
+                        Cell: this.renderCell,
                     },
                     {
                         Filter: this.renderStatusFilter,
@@ -370,7 +379,10 @@ class Table extends React.Component<TProps, TState> {
                         filterable: true,
                         accessor: 'status',
                         Cell: (row: {value: {name: string}}) =>
-                            <div className="orders__data">{statuses[row.value.name]}</div>
+                            <>
+                                <div className="orders__title-mob">{columns.status}</div>
+                                <div className="orders__data">{statuses[row.value.name]}</div>
+                            </>,
                     },
                     {
                         accessor: 'isConfirmed',
@@ -378,9 +390,12 @@ class Table extends React.Component<TProps, TState> {
                         filterable: true,
                         filterMethod: this.filterMethod,
                         Cell: (row: {value: boolean}) =>
-                            <div className="orders__data">
-                                {row.value ? loc[lang].isConfirmed : loc[lang].notConfirmed}
-                            </div>,
+                            <>
+                                <div className="orders__title-mob">{columns.isConfirmed}</div>
+                                <div className="orders__data">
+                                    {row.value ? loc[lang].isConfirmed : loc[lang].notConfirmed}
+                                </div>
+                            </>,
                         show: role === 'STYLIST',
                     },
                     {
@@ -388,7 +403,7 @@ class Table extends React.Component<TProps, TState> {
                         filterMethod: this.datePickerFilterMethod,
                         filterable: true,
                         accessor: 'date',
-                        Cell: cell
+                        Cell: this.renderCell,
                     }
                 ]}
                 data={orders}

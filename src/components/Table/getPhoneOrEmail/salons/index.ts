@@ -1,5 +1,5 @@
 import { Columns, TableDataItemStringFields } from '../../index';
-import { FilterRender } from 'react-table';
+import { CellInfo, FilterRender } from 'react-table';
 
 type TableRawData = {
     accessor: TableDataItemStringFields,
@@ -9,7 +9,7 @@ type TableRawData = {
         filter: { id: string, value: string, [key: string]: string },
         row: { date: string | { [key: string]: string & { name: string } } }
     ) => boolean,
-    Cell: (row: {value: string, [key: string]: string}) => JSX.Element;
+    Cell: (props: CellInfo) => JSX.Element;
 };
 
 type GetPhoneOrEmailParameters = {

@@ -1,18 +1,15 @@
 .orders
     width 100%
-    border-collapse collapse
-    table-layout fixed
     background-color #fff
     display flex
     flex-direction column
-
+    overflow auto
 
     &.flex-content
         max-height 100%
 
         .rt-table
-            display flex
-            flex-direction column
+            display: table
             max-height 100%
 
     & .rt
@@ -28,6 +25,8 @@
             // и рисуем вместо них только фильтры
             &.-header
                 display none
+            &.-filters
+                min-width 0!important
             .wrapper-dropdown
                 border none
                 background none
@@ -43,8 +42,7 @@
 
         &-tbody
             display block
-            width 100%
-            overflow auto
+            min-width 0!important
             padding 0.667rem
             position relative
             transition opacity 0.35s linear
@@ -143,11 +141,8 @@
 
 .orders__data {
     flex-grow: 1;
-    padding: 1.4rem 1.24rem;
+    padding: 1.4rem 1.24rem 1.4rem 2.2rem;
     font-weight: 400;
-}
-.orders__data:first-child {
-    padding-left: 2.2rem;
 }
 .orders__date-range {
     display: flex;
@@ -156,6 +151,11 @@
 .orders__date-range .btn-wrapper {
     margin-top: 1.24rem;
 }
+.orders__title-mob
+    display none
+    margin-bottom 5px
+    color #8a8a8a
+    font-weight 500
 
 .select-wrapper
 
@@ -428,3 +428,44 @@
                         font-weight: 400;
                         font-stretch: condensed;
                         font-weight: 400;
+
+
+@media only screen and (max-width: 450px)
+    .orders
+        margin-bottom -1.5rem
+
+        .rt-thead.-filters
+            display none
+
+        .rt-tr-group
+            margin-bottom 10px
+            &:last-child
+                margin-bottom 0
+
+            .rt-tr
+                flex-direction column
+                padding 0.867rem
+                border 1px solid rgba(149,161,177,0.2)
+                border-radius 4px
+                &:hover,
+                &._active
+                    background none
+                    border-left 2px solid #436263
+
+            .rt-tr .rt-td
+                display block
+                margin-bottom 10px
+                &:last-child
+                    margin-bottom 0
+
+
+    .controls
+        left 0
+        &__item
+            width 100%
+
+    .orders__data
+        padding 0
+
+    .orders__title-mob
+        display block

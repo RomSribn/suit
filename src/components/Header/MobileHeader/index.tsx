@@ -63,6 +63,13 @@ export default ({ openMenu, lang, isLandscape }: Props) => {
                                     {mobileHeaderTranslations[lang].orderList}
                                 </span>}
                         />
+                        <Route
+                            path={configRoutes.customersList}
+                            component={() =>
+                                <span className="navlinks-mobile__value">
+                                    {mobileHeaderTranslations[lang].customersList}
+                                </span>}
+                        />
                     </Switch>
 
                     <Route

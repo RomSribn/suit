@@ -3,6 +3,7 @@ interface Translations {
     design: string;
     fitting: string;
     orderList: string;
+    customersList: string;
 }
 
 const mobileHeaderTranslations: Record<Lang, Translations> = {
@@ -11,12 +12,14 @@ const mobileHeaderTranslations: Record<Lang, Translations> = {
         design: 'дизайн',
         fitting: 'мерки',
         orderList: 'заказы',
+        customersList: 'клиенты',
     },
     en: {
         fabric: 'fabric',
         design: 'design',
         fitting: 'fitting',
         orderList: 'orders',
+        customersList: 'customers',
     },
 };
 

@@ -17,7 +17,7 @@ type FilterFields = (
     garment: string,
     defaultValues?: OrderItem
 ) => SubgroupChoiceItem;
-const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaultValues) => {
+export const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaultValues) => {
     let status;
     let ourCode = null;
     let defaultCode = null;

@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { findKey } from 'lodash';
 import { Navlinks } from './navlinks';
+import { navigationRoutes, routesTranslations } from '../../../config/routes';
 
 class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: string}> {
     static defaultProps = {
@@ -28,14 +30,20 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
     render() {
         const {
         } = this.state;
-        const props = this.props;
+        const { path, lang, isAuth } = this.props;
+        const routeName = findKey(navigationRoutes, v => v === path ) || '';
         return (
         <div
             className="main__header-content"
             style={HeaderContent.style}
         >
             <h1 className="main__header-title">
-                <Navlinks isAuth={props.isAuth} />
+                {path.includes('/order/details') ?
+                    <Navlinks isAuth={isAuth} /> :
+                    <span className="navlinks__item">
+                        {routesTranslations[lang][routeName]}
+                    </span>
+                }
             </h1>
         </div>);
     }

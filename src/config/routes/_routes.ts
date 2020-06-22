@@ -6,7 +6,7 @@ const makeNavigationRoutes: MakeNavigationRoutes = () => ({
     customersList: '/customer/list',
     ordersList: '/order/list',
     calendar: '/calendar',
-    tasks: '/tasks',
+    store: '/store',
     analytics: '/analytics',
     settings: '/settings',
   });

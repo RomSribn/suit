@@ -4,7 +4,7 @@ interface Locale {
   customersList: string;
   orderList: string;
   calendar: string;
-  tasks: string;
+  store: string;
   analytics: string;
   settings: string;
   logOut: string;
@@ -17,7 +17,7 @@ const makeLocale: MakeLocale<Locale> = {
       customersList: 'clients',
       orderList: 'order list',
       calendar: 'calendar',
-      tasks: 'tasks',
+      store: 'store',
       analytics: 'analytics',
       settings: 'settings',
       logOut: 'log out'
@@ -28,7 +28,7 @@ const makeLocale: MakeLocale<Locale> = {
       customersList: 'клиенты',
       orderList: 'список заказов',
       calendar: 'календарь',
-      tasks: 'задачи',
+      store: 'магазин',
       analytics: 'аналитика',
       settings: 'настройки',
       logOut: 'выйти'

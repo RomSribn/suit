@@ -5,7 +5,7 @@ interface NavigationRoutes {
     panel: string;
     customersList: string;
     calendar: string;
-    tasks: string;
+    store: string;
     analytics: string;
     settings: string;
     ordersList: string;

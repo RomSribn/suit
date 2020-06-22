@@ -6,7 +6,7 @@ interface Locale {
         customersList: string;
         ordersList: string;
         calendar: string;
-        tasks: string;
+        store: string;
         analytics: string;
         settings: string;
     };

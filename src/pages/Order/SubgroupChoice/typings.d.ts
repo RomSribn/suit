@@ -9,6 +9,8 @@ interface SubgroupChoiceProps {
     choiceItem?: OrderPathItem;
     backLink?: string;
     userStore?: IUserStore;
+    history?: any;
+    location?: any;
     fetchGarments?(): void;
     setSubgroupTitle?(): void;
     popOrderPathitem?(): void;

@@ -136,7 +136,7 @@
     -o-transition: .35s ease;
     transition: .35s ease; */
 }
-.main__header-title span{color: #8a8a8a;}
+.main__header-title .header-text{color: #000;}
 .main__header-title i{
     position: relative;
     top: -2px;

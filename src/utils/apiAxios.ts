@@ -26,8 +26,11 @@ export function callApi(
     config.headers = {
       ...config.headers,
       'x-auth-token': user.token,
-      [tokenType[user.role]]: user.token,
     };
+    const tokenName = tokenType[user.role];
+    if (tokenName) {
+      config.headers[tokenName] = user.token;
+    }
   }
   // TODO: rmeove this hardcoded shit
   config = {

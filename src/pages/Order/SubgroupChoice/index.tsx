@@ -7,6 +7,8 @@ import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
 
+let scrollData: {[key: string]: number} = {};
+
 type FilterFields = (
     item: Subgroup,
     subgroup: string,
@@ -90,6 +92,43 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     }))
 @observer
 class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
+    getSnapshotBeforeUpdate(prevProps: SubgroupChoiceProps) {
+        // save scroll position for design block
+        const {
+            history: { action },
+            location: { pathname }
+        } = prevProps;
+        if (action !== 'POP' && pathname.includes('design')) {
+            const choiceItemsEl = document.querySelector('.customs.customs--short');
+            scrollData = {
+                ...scrollData,
+                [pathname]: choiceItemsEl && choiceItemsEl.scrollTop || 0,
+            };
+        } else {
+            scrollData = {
+                [pathname]: 0,
+            };
+        }
+        return null;
+    }
+
+    componentDidUpdate() {
+        const {
+            history: { action },
+            location: { pathname }
+        } = this.props;
+        if (action === 'PUSH' && scrollData[pathname]) {
+            const choiceItemsEl = document.querySelector('.customs.customs--short');
+            if (choiceItemsEl) {
+                // restore scroll position for design block
+                choiceItemsEl.scrollTo({
+                    left: 0,
+                    top: scrollData[pathname],
+                });
+            }
+        }
+    }
+
     render() {
         const {
             lang,

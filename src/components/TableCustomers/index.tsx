@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RTable, { FilterRender } from 'react-table';
+import RTable, { CellInfo, FilterRender } from 'react-table';
 import * as classNames from 'classnames';
 
 import  { PanelRow } from './PanelRow';
@@ -37,8 +37,6 @@ type RowInfo = {
     /** Информация о клиенте, собранная по столбцам */
     original: TableCustomerInfo;
 } | undefined;
-
-const cell = (row: {value: string, [key: string]: string}) => <div className="customers__data">{row.value}</div>; // tslint:disable-line
 
 class TableCustomers extends React.Component<TProps, TState> {
     private panelRow: React.RefObject<PanelRow>;
@@ -95,12 +93,25 @@ class TableCustomers extends React.Component<TProps, TState> {
         return <Filter text={columns.lastOrderId} type="disabled" {...props} />;
     }
 
+    renderCell = (props: CellInfo) => {
+        const { lang } = this.props;
+        const { columns } = loc[lang];
+        return (
+            <>
+                <div className="customers__title-mob">{columns[props.column.id || '']}</div>
+                <div className="customers__data">{props.value}</div>
+            </>
+        );
+    }
+
     render() {
         const { activeCustomerId } = this.state;
         const {
             lang,
             customers,
         } = this.props;
+
+        const { columns } = loc[lang];
 
         return (
         <React.Fragment key="Customers table fragment">
@@ -132,32 +143,42 @@ class TableCustomers extends React.Component<TProps, TState> {
                         Filter: this.renderNameFilter,
                         filterable: true,
                         filterMethod: this.filterMethod,
-                        Cell: cell
+                        Cell: this.renderCell,
                     },
                     {
                         accessor: 'phone',
                         Filter: this.renderPhoneFilter,
                         filterable: true,
                         filterMethod: this.filterMethod,
-                        Cell: cell
+                        Cell: this.renderCell,
                     },
                     {
                         accessor: 'email',
                         Filter: this.renderEmailFilter,
                         filterable: true,
-                        Cell: cell
+                        Cell: this.renderCell,
                     },
                     {
                         accessor: 'password',
                         Filter: this.renderPasswordFilter,
                         filterable: true,
-                        Cell: () => <div className="customers__data">******</div>,
+                        Cell: () => (
+                            <>
+                                <div className="orders__title-mob">{columns.password}</div>
+                                <div className="customers__data">******</div>
+                            </>
+                        ),
                     },
                     {
                         accessor: 'lastOrderId',
                         Filter: this.renderLastOrderIdFilter,
                         filterable: true,
-                        Cell: () => <div className="customers__data">shirt</div>,
+                        Cell: () => (
+                            <>
+                                <div className="orders__title-mob">{columns.lastOrderId}</div>
+                                <div className="customers__data">shirt</div>
+                            </>
+                        ),
                     },
                 ]}
                 data={customers}

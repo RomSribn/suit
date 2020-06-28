@@ -42,8 +42,8 @@ const menuList: MenuLink[] = [
     url: '/calendar'
   },
   {
-    name: 'tasks',
-    url: '/tasks'
+    name: 'store',
+    url: '/store'
   },
   {
     name: 'analytics',
@@ -61,7 +61,7 @@ const menuList: MenuLink[] = [
 ];
 
 export default ({ currentLang = 'en', closeMenu, setLang, sideEffects, role }: Props) => {
-  const customerMenuList = menuList.filter(item => !['customersList', 'tasks', 'analytics'].includes(item.name));
+  const customerMenuList = menuList.filter(item => !['customersList', 'store', 'analytics'].includes(item.name));
   const menuItemsByRole = {
     STYLIST: menuList,
     CUSTOMER: customerMenuList,

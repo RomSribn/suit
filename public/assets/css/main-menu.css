@@ -52,7 +52,7 @@
 .main-menu__link--clientele:before{background-image: url(../img/menu/white/clientele.svg);}
 .main-menu__link--ordersList:before{background-image: url(../img/menu/white/orders.svg);}
 .main-menu__link--calendar:before{background-image: url(../img/menu/white/calendar.svg);}
-.main-menu__link--tasks:before{background-image: url(../img/menu/white/tasks.svg);}
+.main-menu__link--store:before{background-image: url(../img/menu/white/tasks.svg);}
 .main-menu__link--analytics:before{background-image: url(../img/menu/white/analytics.svg);}
 .main-menu__link--settings:before{background-image: url(../img/menu/white/settings.svg);}
 
@@ -96,7 +96,7 @@
 .navbar--white .main-menu__link--customersList:before{background-image: url(../img/menu/black/clientele.svg);}
 .navbar--white .main-menu__link--ordersList:before{background-image: url(../img/menu/black/orders.svg);}
 .navbar--white .main-menu__link--calendar:before{background-image: url(../img/menu/black/calendar.svg);}
-.navbar--white .main-menu__link--tasks:before{background-image: url(../img/menu/black/tasks.svg);}
+.navbar--white .main-menu__link--store:before{background-image: url(../img/menu/black/tasks.svg);}
 .navbar--white .main-menu__link--analytics:before{background-image: url(../img/menu/black/analytics.svg);}
 .navbar--white .main-menu__link--settings:before{background-image: url(../img/menu/black/settings.svg);}
 

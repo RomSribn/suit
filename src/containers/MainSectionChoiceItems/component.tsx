@@ -33,8 +33,17 @@ const Common = (props: CommonProps) => {
                 choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
         }
     };
+
+    const commonClasses = classNames(
+        'custom',
+        {
+            'custom__no-pointer': noCursorPointer,
+            'custom--chosen': renderClearButton(item),
+        }
+    );
+
     return (
-        <div className={classNames('custom', { 'custom__no-pointer': noCursorPointer})}>
+        <div className={commonClasses}>
             <span className="custom__content">
                 <span
                     className="custom__name"

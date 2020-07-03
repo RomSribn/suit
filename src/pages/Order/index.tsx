@@ -35,10 +35,11 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
     }
 }
 
-@inject(({ order, garments, routing }) => ({
+@inject(({ order, garments, routing, app }) => ({
     orderStore: order,
     garmentsStore: garments.garments,
-    routingStore: routing
+    routingStore: routing,
+    clearVisitedChoiceItems: app.clearVisitedChoiceItems,
 }))
 @observer
 class Container extends React.Component<any>{ //tslint:disable-line
@@ -65,6 +66,7 @@ class Container extends React.Component<any>{ //tslint:disable-line
                         .then(() => {
                             if (isOnBase) {
                                 orderStore.clearOrderInfo();
+                                this.props.clearVisitedChoiceItems();
                             }
                         });
                 });
@@ -81,10 +83,12 @@ class Container extends React.Component<any>{ //tslint:disable-line
                     .then(() => {
                         if (isOnBase) {
                             orderStore.clearOrderInfo();
+                            this.props.clearVisitedChoiceItems();
                         }
                     });
             } else if (isOnBase) {
                 orderStore.clearOrderInfo();
+                this.props.clearVisitedChoiceItems();
             }
         }
         return <Order {...this.props} />;

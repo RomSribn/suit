@@ -23,12 +23,14 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
         const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
         const afterGarmentChoice = (/\/order\/.*\/.*/i.test(location.pathname));
         const isIndexPage = false;
+        const isFabricPage = (/\/order\/details\/.*\/.*\/fabric/i.test(location.pathname));
 
         return (
             <MainSection
                 afterGarmentChoice={afterGarmentChoice}
                 isIndexPage={isIndexPage}
                 detailsDeep={detailsDeep}
+                isFabricPage={isFabricPage}
                 routes={routes}
             />
         );

@@ -26,8 +26,10 @@ interface _ControllProps {
     type?: string;
     onCLick?: () => void;
     closeFilter?: () => void;
+    filterStore?: IFilterStore;
+    filterCount?: number;
+    lang?: string;
     toggleOpen?(): void;
-    filterStore?: IFilterStore
 }
 interface DefaultControllProps {
     isOpen: boolean;

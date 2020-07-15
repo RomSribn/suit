@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { FilterComponent } from './Filter';
 import { Controll as ControllComponent } from './Controll';
+import { size,  keys, sum } from 'lodash';
 
 @inject(({ filterStore, app }) => ({
     isOpen: filterStore.isOpen,
@@ -29,11 +30,12 @@ class Filter extends React.Component<_FilterProps> {
     }
 }
 
-@inject(({ filterStore }) => ({
+@inject(({ filterStore, app }) => ({
     filterStore: filterStore,
     isOpen: filterStore.isOpen,
     toggleOpen: filterStore.toggleOpen,
     closeFilter: filterStore.closeFilter,
+    lang: app.lang,
 }))
 @observer
 class Controll extends React.Component<_ControllProps> {
@@ -64,14 +66,22 @@ class Controll extends React.Component<_ControllProps> {
             isOpen,
             toggleOpen,
             type,
-            filterStore
+            filterStore,
+            lang,
         } = this.props;
+        const filterCount = filterStore && sum(
+            keys(filterStore.userFilters)
+                .map((key: string) => size(filterStore.userFilters[key]))
+        );
+
         return (
             <ControllComponent
                 filterStore={filterStore}
                 isOpen={isOpen!}
                 onCLick={toggleOpen!}
                 type={type!}
+                lang={lang}
+                filterCount={filterCount}
             />);
     }
 }

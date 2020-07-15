@@ -1,10 +1,13 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import { loc } from './loc';
 
 class Controll extends React.PureComponent<ControllProps> {
     static defaultProps = {
         isOpen: false,
         type: '',
+        filterCount: 0,
+        lang: 'ru',
         onCLick: () => null,
     };
 
@@ -17,7 +20,9 @@ class Controll extends React.PureComponent<ControllProps> {
     render() {
         const {
             onCLick,
-            isOpen
+            isOpen,
+            filterCount,
+            lang,
         } = this.props;
         return (
             <button
@@ -28,7 +33,7 @@ class Controll extends React.PureComponent<ControllProps> {
                 onClick={onCLick}
                 title="filter"
             >
-                <span /> <span /> <span />
+                {loc[lang!].filters} ({filterCount})
             </button>
         );
     }

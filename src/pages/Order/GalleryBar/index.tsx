@@ -229,6 +229,10 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     handleScroll = (event: ScrollEvent) => {
         event.persist();
         this.throttledHandleScroll(event);
+        const galleryFooter = this.props.galleryFooterRef.current;
+        if (isMobile() && galleryFooter) {
+            this.props.hideFooter();
+        }
     }
 
     showExceptionPopup = (titleSubGroup: string, titleElement: Translations<string> | null) => (

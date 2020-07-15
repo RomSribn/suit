@@ -1,11 +1,14 @@
 interface GalleryBarProps {
     items: GalleryStoreItems,
     app?: IAppStore,
-    setActiveElementIndex(i: number, action?: string): () => void;
-    setPreviewElementIndex(elementIndex: number, action?: 'enter'): void;
     shownItem: GalleryStoreItem;
     isMouseOverElement: boolean;
     activeElementIndex: number;
+    galleryFooterRef: React.RefObject<HTMLDivElement>;
+    setActiveElementIndex(i: number, action?: string): () => void;
+    setPreviewElementIndex(elementIndex: number, action?: 'enter'): void;
+    showFooter(): void;
+    hideFooter(): void;
 }
 
 interface Child {

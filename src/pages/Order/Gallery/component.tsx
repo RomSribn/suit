@@ -297,40 +297,13 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             description = description.substring(0, descriptionSize).trim() + '...';
         }
         const {
-            img_url_2d: image,
             price,
             our_code: code,
         } = item;
         return (
-            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
+            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric_ref' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        { !load.success && !load.error
-                        ? <div
-                            className="preloader"
-                            style={{
-                                background: 'rgba(0,0,0, .2)',
-                                zIndex: 999999999,
-                            }}
-                        >
-                        <div className="preloader__progbar">
-                            <div className="preloader__progline loaded"/>
-                        </div>
-                        </div>
-                        : load.success ?
-                        <div
-                            className="gallery__img"
-                            id="js-gallery-img"
-                            ref={this.imageRef}
-                        >
-                            <img
-                                className="image"
-                                src={image}
-                                alt="gallery image"
-                            />
-                        </div>
-                        : null
-                         }
                         <div ref={this.galleryBarWrapperRef} className="gallery__bar-wrapper">
                             <GalleryBar
                                 items={items}

@@ -14,6 +14,7 @@ interface P {
     onMouseEnter(): void;
     onMouseLeave(): void;
     incremetLoadedCount(): void;
+    showFooter(): void;
 }
 
 interface S extends ImageLoadState {
@@ -73,7 +74,8 @@ class GalleryItem extends React.Component<P, S > {
             onMouseEnter,
             onMouseLeave,
             shownItem,
-            onClick
+            onClick,
+            showFooter,
         } = this.props;
         const {
             img_url_2d: image,
@@ -104,6 +106,9 @@ class GalleryItem extends React.Component<P, S > {
         const click = () => {
             this.props.filterStore!.closeFilter();
             onClick();
+            if (isMobile()) {
+                showFooter();
+            }
         };
         return (
             <div
@@ -136,6 +141,7 @@ type makeGalleryItems = (
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
+    showFooter: () => void,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -145,6 +151,7 @@ const makeGalleryItems: makeGalleryItems = (
     shownItem,
     incremetLoadedCount,
     isMouseOverElement,
+    showFooter,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -167,6 +174,7 @@ const makeGalleryItems: makeGalleryItems = (
                     setPreviewElementIndex(-1, 'leave');
                 }}
                 incremetLoadedCount={incremetLoadedCount}
+                showFooter={showFooter}
             />);
     });
     galleryItemsCache[cache] = result;
@@ -252,6 +260,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             setPreviewElementIndex,
             shownItem,
             isMouseOverElement,
+            showFooter,
         } = this.props;
         const {
             renderedElementsCount,
@@ -276,6 +285,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                     shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,
+                    showFooter,
                 )}
                 </div>
             </div>

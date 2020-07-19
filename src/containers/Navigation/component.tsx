@@ -14,7 +14,7 @@ const baseLink = String(process.env.BASE_SERVICE_LINK);
 
 interface HeaderProps {
 }
-const Header = (props: HeaderProps) => {
+export const Header = (props: HeaderProps) => {
     return (
     <div className="navbar__header">
         <a

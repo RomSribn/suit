@@ -8,6 +8,7 @@ import { DemoSection } from '../../components/SectionDemo';
 import { parseQuery } from '../../utils/common';
 import { Fitting } from '../Order/Fitting/component';
 import { SubgroupChoice } from '../../pages/Order/SubgroupChoice/component';
+import { Header } from '../../containers/Navigation/component';
 import { API_ROOT } from '../../config/routes';
 import { loc } from './loc';
 import './styles.styl';
@@ -92,6 +93,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
 
         return (
             <div className="pdf-page">
+                <Header/>
                 <div className="demo">
                     <DemoSection onDummyLoad={() => console.log('loaded')} /> {/* tslint:disable-line:no-console */}
                 </div>

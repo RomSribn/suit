@@ -26,7 +26,7 @@ interface IOrderStore {
     toggleHiddenElement(element: string): void;
     setShirtInitials(initials: string): void;
     getShirtInitials(): string;
-    fetchOrder(orderId: string, sutoken?: string): Promise<any>;
+    fetchOrder(orderId: string, superUserToken?: string): Promise<any>;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
     clearOrderInfo(): void;
 }

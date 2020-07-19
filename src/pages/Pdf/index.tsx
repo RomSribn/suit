@@ -51,7 +51,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
                     (garments: any) => garmentsStore.setChosenGarments(garments)
                 )
                     .then(() => {
-                        orderStore.fetchOrder(query.order_id, query.sutoken);
+                        orderStore.fetchOrder(query.order_id, query['super-user-token']);
                     });
             }
         }

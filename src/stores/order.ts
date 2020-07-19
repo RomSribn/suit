@@ -321,15 +321,15 @@ export class OrderStore implements IOrderStore {
             this._onError);
     }
     @action
-    fetchOrder = (orderId: string, sutoken?: string) => {
+    fetchOrder = (orderId: string, superUserToken?: string) => {
         this.error = null;
         const config = {
             method: 'GET',
             url: `${services.orders}/${orderId}`,
         } as Axios.RequestConfig;
 
-        if (sutoken) {
-            config.headers = { sutoken };
+        if (superUserToken) {
+            config.headers = { 'super-user-token': superUserToken };
         }
 
         return callApi(

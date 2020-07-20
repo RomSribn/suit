@@ -19,7 +19,6 @@ class MainSection extends React.Component<MainSectionProps> {
             isIndexPage,
             detailsDeep,
             afterGarmentChoice,
-            isFabricPage,
             routes : mainSectinoRoutes
         } = this.props;
 
@@ -38,7 +37,7 @@ class MainSection extends React.Component<MainSectionProps> {
                         routes={mainSectinoRoutes}
                         catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
                     />
-                    {!isFabricPage && <div
+                    <div
                         className={classnames(
                             {
                                 customs: !isIndexPage,
@@ -68,7 +67,7 @@ class MainSection extends React.Component<MainSectionProps> {
                             />
                             <Route path={routes.details} component={Details} />
                         </Switch>
-                    </div>}
+                    </div>
                     <Switch>
                         <CrumbRoute
                             {...getCombinedPathAndTitle('subgroupChoice')}

@@ -1,9 +1,9 @@
 .main__middle
     .gallery__filter-btn
-        font-size: 1rem;
-        color: #000;
-        font-weight: 400;
-        text-transform: uppercase;
+            position: absolute;
+            z-index: 2;
+            top: 5.3333rem;
+            left: 1.3333rem;
 
 @media only screen and (max-width: 450px), only screen and (max-height: 450px)
     .main__middle
@@ -19,4 +19,13 @@
                 height unset
 
         .gallery__filter-btn
-            font-size: 0.75rem;
+            top: 10.3333rem;
+            left: 2.3333rem;
+
+
+
+@media only screen and (max-width: 450px) and (orientation: landscape),
+only screen and (max-height: 450px) and (orientation: landscape)
+  .main__middle
+    .gallery__filter-btn
+        top 9.3333rem;

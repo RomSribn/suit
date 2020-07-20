@@ -8,18 +8,15 @@ import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 
 import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
-import { FadeIn } from '../../../containers/Transitions';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;
     mouseOverElement: boolean;
-    isFooterVisible: boolean;
 }
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     private imageRef: React.RefObject<HTMLDivElement>;
     private galleryBarWrapperRef: React.RefObject<HTMLDivElement>;
-    private galleryFooterRef: React.RefObject<HTMLDivElement>;
     private resizeSubscriptionIndex: number | null;
     private resizeCalled = false;
     constructor(props: GalleryProps) {
@@ -44,7 +41,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
         this.imageRef = React.createRef();
         this.galleryBarWrapperRef = React.createRef();
-        this.galleryFooterRef = React.createRef();
         this.resizeSubscriptionIndex = null;
         this.state = {
             activeElementIndex: (activeIndex === -1 || !activeIndex) ? 0 : activeIndex,
@@ -54,7 +50,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 error: null,
             },
             mouseOverElement: false,
-            isFooterVisible: true,
         };
     }
     componentWillMount() {
@@ -271,15 +266,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             }
         }
     }
-
-    showFooter = () => {
-        this.setState({ isFooterVisible: true });
-    }
-
-    hideFooter = () => {
-        this.setState({ isFooterVisible: false });
-    }
-
     render() {
         const {
             items,
@@ -311,13 +297,40 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             description = description.substring(0, descriptionSize).trim() + '...';
         }
         const {
+            img_url_2d: image,
             price,
             our_code: code,
         } = item;
         return (
-            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric_ref' })}>
+            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
+                        { !load.success && !load.error
+                        ? <div
+                            className="preloader"
+                            style={{
+                                background: 'rgba(0,0,0, .2)',
+                                zIndex: 999999999,
+                            }}
+                        >
+                        <div className="preloader__progbar">
+                            <div className="preloader__progline loaded"/>
+                        </div>
+                        </div>
+                        : load.success ?
+                        <div
+                            className="gallery__img"
+                            id="js-gallery-img"
+                            ref={this.imageRef}
+                        >
+                            <img
+                                className="image"
+                                src={image}
+                                alt="gallery image"
+                            />
+                        </div>
+                        : null
+                         }
                         <div ref={this.galleryBarWrapperRef} className="gallery__bar-wrapper">
                             <GalleryBar
                                 items={items}
@@ -326,32 +339,25 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                 setActiveElementIndex={this.setActiveElementIndex}
                                 setPreviewElementIndex={this.setPreviewElementIndex}
                                 isMouseOverElement={mouseOverElement}
-                                galleryFooterRef={this.galleryFooterRef}
-                                showFooter={this.showFooter}
-                                hideFooter={this.hideFooter}
                             />
                         </div>
                     </div>
                 </div>
-                <FadeIn>
-                    {this.state.isFooterVisible && (
-                        <div className="gallery__footer" ref={this.galleryFooterRef}>
-                            <div className="gallery__footer-header">
-                                <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                                {!isMobile() &&
-                                <div className="gallery__footer--articul">₽{price.ru}{code && (' / ' + code)}</div>
-                                }
-                            </div>
-                            <div className="gallery__footer--txt">
-                                <p className="gallery__footer--txt-clamp">
-                                    {    description ||
+                <div className="gallery__footer">
+                    <div className="gallery__footer-header">
+                        <h2 className="gallery__footer--title">{title || 'title'}</h2>
+                        {!isMobile() &&
+                            <div className="gallery__footer--articul">₽{price.ru}{code && (' / ' + code)}</div>
+                        }
+                    </div>
+                    <div className="gallery__footer--txt">
+                        <p className="gallery__footer--txt-clamp">
+                            {    description ||
                                     'deafult description text'
-                                    }
-                                </p>
-                            </div>
-                        </div>
-                    )}
-                </FadeIn>
+                            }
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }

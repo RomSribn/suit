@@ -1,31 +1,35 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import * as _ from 'lodash';
-import cn from 'classnames';
 import * as moment from 'moment';
 
 import { DemoSection } from '../../components/SectionDemo';
 import { parseQuery } from '../../utils/common';
-import { Fitting } from '../Order/Fitting/component';
-import { SubgroupChoice } from '../../pages/Order/SubgroupChoice/component';
 import { Header } from '../../containers/Navigation/component';
-import { API_ROOT } from '../../config/routes';
 import { loc } from './loc';
 import './styles.styl';
 
-const InfoRow = ({name, data, open, subitem}: InfoRowProps) => {
-    return (
-        <div className="customs customs--short">
-            <div className={cn({'custom': true, 'custom--open': open, 'customs--subitem': subitem})}>
-                <span className="custom__content">
-                    <span className="custom__name">{name}: </span>
-                    <span className="custom__status">{data}</span>
-                </span>
-                {!subitem && <span className="custom__control"/>}
-            </div>
+const InfoRow = ({name}: InfoRowProps) => (
+    <div className="customs customs--short">
+        <div className="custom custom--open">
+            <span className="custom__content">
+                <span className="custom__name">{name}:</span>
+            </span>
+            <span className="custom__control"/>
         </div>
-    );
-};
+    </div>
+);
+
+const Label = ({name, value}: LabelProps) => <div className="info-block__item">{name} {value}</div>;
+
+const InfoSubSection = ({title, data}: InfoSubSectionProps) => (
+    <div className="info-block">
+        <div className="info-block__title">{title}</div>
+        <div className="info-block__details">
+            {data.map((item) => <Label key={name} name={item.name} value={item.value}/>)}
+        </div>
+    </div>
+);
 
 @inject(({ app, order, routing,  garments: { GalleryStore, garments, Subgroups } }) => ({
     lang: app.lang,
@@ -59,89 +63,71 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
 
     render() {
         const { lang, orderStore, fittingStore, SubgroupsStore, orderInfo, order } = this.props;
+        if (!orderInfo.orderId) {
+            return null;
+        }
+
         const designSubgroup = _.get(SubgroupsStore, `data.design`, []);
         const designSubgroupItems = [...designSubgroup];
-        const fittingItems = [...fittingStore.items] || [];
         const designItems = _.get(orderStore, `order.shirt[0].design`, {});
 
-        const subgroupChoiceData = Object.keys(designItems).map((key) => {
+        const designBlockData = Object.keys(designItems).map((key) => {
             const itemWithSubsectionCode = _.find(designSubgroupItems, { 'subsection_our_code': key }) || {};
             return {
-                link: `design/${key}`,
-                linkName: _.get(itemWithSubsectionCode, `title[${lang}]`, ''),
+                name: _.get(itemWithSubsectionCode, `title[${lang}]`, ''),
                 id: key,
-                ourCode: designItems[key].our_code,
-                isSubclear: false,
-                isInput: false,
-                status: designItems[key].title[lang]
+                value: designItems[key].title[lang],
             };
-        }
-        );
-
-        const hiddenItems = ['initials_style', 'initials_color', 'buttonholes_color'];
-        const imgUrls = Object.keys(designItems).reduce((acc: string[], item: string) => {
-            if (hiddenItems.includes(item) || !designItems[item].img_url_2d) {
-                return acc;
-            }
-            const imgUrl2d = designItems[item].img_url_2d.replace('/html', '');
-            return [...acc, API_ROOT + imgUrl2d];
-        }, []);
+        });
 
         const fabric = _.get(orderStore, `order.shirt[0].fabric_ref.fabric.title[${lang}]`, null);
         const {customer, orderId, price, date, deliveryDays} = orderInfo;
         const deliveryDate = moment(date).add(deliveryDays, 'days').format('DD.MM.YYYY');
 
+        const generalInfo = [{
+            name: loc[lang].name,
+            value: customer && customer.name || '',
+        }, {
+            name: loc[lang].orderId,
+            value: orderId || '',
+        }, {
+            name: loc[lang].date,
+            value: deliveryDate || '',
+        }, {
+            name: loc[lang].price || '',
+            value: price && price.ru || '',
+        }];
+
+        const fittingItems = [...fittingStore.items] || [];
+        const fittingsInfo = order.shirt && orderStore && fittingItems.reduce((acc: string[], item) => {
+            const name = item.title[lang];
+            const value = orderStore!.getFitting('shirt')(item.our_code);
+            if (name && value) {
+                return [...acc, { name, value }];
+            }
+            return acc;
+        }, []);
+
         return (
             <div className="pdf-page">
-                <Header/>
-                <div className="demo">
-                    <DemoSection onDummyLoad={() => console.log('loaded')} /> {/* tslint:disable-line:no-console */}
+                <div className="navbar navbar--white">
+                    <Header/>
                 </div>
+                <DemoSection onDummyLoad={() => console.log('loaded')}/> {/* tslint:disable-line:no-console */}
                 <div className="main main--white">
-                    <InfoRow name={loc[lang].general} open={true} />
-                    {customer && (
-                        <>
-                            <InfoRow name={loc[lang].name} data={customer.name} subitem={true} />
-                            <InfoRow name={loc[lang].phone} data={customer.phone} subitem={true} />
-                            <InfoRow name={loc[lang].email} data={customer.email} subitem={true} />
-                            <InfoRow name={loc[lang].orderId} data={orderId} subitem={true} />
-                            <InfoRow name={loc[lang].date} data={deliveryDate} subitem={true} />
-                            <InfoRow name={loc[lang].price} data={price.ru} subitem={true} />
-                        </>
-                    )}
-                    {fabric && <InfoRow name={loc[lang].fabric} data={fabric} />}
-                    {subgroupChoiceData && (
-                        <div style={{width: '100%'}}>
-                            <SubgroupChoice
-                                lang={lang}
-                                data={subgroupChoiceData}
-                                match={{params: {}, isExact: true, path: '', url: ''}}
-                            />
-                        </div>
-                    )}
+                    <InfoRow name={loc[lang].info}/>
+                    <div className="info-block__wrapper">
+                        <InfoSubSection data={generalInfo} title={loc[lang].general}/>
+                        {order.shirt && orderStore && fittingsInfo.length > 0 && (
+                            <InfoSubSection data={fittingsInfo} title={loc[lang].fitting}/>
+                        )}
+                    </div>
 
-                    {imgUrls && (
-                        <div className="gallery__bar-cont">
-                            {imgUrls.map(url => (
-                                <div key={url} className="gallery__item-blc">
-                                    <div className="gallery__item">
-                                        <img src={url} alt="pic"/>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-                    {order.shirt && (
-                        <>
-                            <InfoRow name={loc[lang].fitting} open={true} />
-                            <Fitting
-                                lang={lang}
-                                items={fittingItems}
-                                orderStore={orderStore}
-                            />
-                        </>
-                    )}
+                    <InfoRow name={loc[lang].shirt}/>
+                    <div className="info-block__wrapper">
+                        <InfoSubSection title={loc[lang].fabric} data={[{name: '', value: fabric}]}/>
+                        {designBlockData && <InfoSubSection title={loc[lang].design} data={designBlockData}/>}
+                    </div>
                 </div>
             </div>
         );

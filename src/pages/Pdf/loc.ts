@@ -18,9 +18,12 @@ const makeLocale: MakeLocale<Locale> = () => ({
         orderId: 'order id',
         date: 'delivery date',
         price: 'price',
-        general: 'general info',
+        general: 'general',
+        info: 'info',
         fabric: 'fabric',
+        design: 'design',
         fitting: 'fitting',
+        shirt: 'shirt',
     },
     ru: {
         name: 'ФИО',
@@ -29,9 +32,13 @@ const makeLocale: MakeLocale<Locale> = () => ({
         orderId: 'номер заказа',
         date: 'дата доставки',
         price: 'стоимость заказа',
-        general: 'общие данные',
+        general: 'общие',
+        info: 'данные',
         fabric: 'ткань',
+        design: 'дизайн',
         fitting: 'мерки',
+        shirt: 'сорочка',
+
     },
 });
 

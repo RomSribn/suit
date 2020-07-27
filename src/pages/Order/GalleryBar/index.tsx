@@ -10,6 +10,8 @@ interface P {
     shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
     filterStore?: IFilterStore;
+    zoomId: string | null;
+    setZoomId: (id: string) => void;
     onClick(): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
@@ -102,6 +104,7 @@ class GalleryItem extends React.Component<P, S > {
             _.get(orderStore, 'activeElement.our_code', '') === id ||
             shownItem.our_code === id;
         const click = () => {
+            this.props.setZoomId(id);
             this.props.filterStore!.closeFilter();
             onClick();
         };
@@ -122,6 +125,7 @@ class GalleryItem extends React.Component<P, S > {
                     )}
                 >
                     <img src={image} alt={`${id}`} />
+                    {!isMobile() && this.props.zoomId === id && <span className="zoom-icon"/>}
                 </div>
             </div>
         );
@@ -136,6 +140,8 @@ type makeGalleryItems = (
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
+    zoomId: string | null,
+    setZoomId: (id: string) => void,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -145,11 +151,14 @@ const makeGalleryItems: makeGalleryItems = (
     shownItem,
     incremetLoadedCount,
     isMouseOverElement,
+    zoomId,
+    setZoomId,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
         return acc;
-    }, []).join('') + shownItem.our_code;
+    }, []).join('') + shownItem.our_code + zoomId;
+
     if (galleryItemsCache[cache]) {
         return galleryItemsCache[cache];
     }
@@ -167,6 +176,8 @@ const makeGalleryItems: makeGalleryItems = (
                     setPreviewElementIndex(-1, 'leave');
                 }}
                 incremetLoadedCount={incremetLoadedCount}
+                zoomId={zoomId}
+                setZoomId={setZoomId}
             />);
     });
     galleryItemsCache[cache] = result;
@@ -180,6 +191,7 @@ type State = {
     isShowedExceptionPopup: boolean;
     titleSubGroup: string;
     titleElement: Translations<string> | null;
+    zoomId: string | null;
 };
 
 class GalleryBar extends React.Component<GalleryBarProps, State> {
@@ -199,7 +211,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             renderedElementsCount: 35,
             isShowedExceptionPopup: false,
             titleSubGroup: '',
-            titleElement: null
+            titleElement: null,
+            zoomId: null,
         };
         this.props.setPreviewElementIndex(this.props.activeElementIndex || 0, 'enter');
         this.galleryBar = React.createRef();
@@ -241,6 +254,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
 
     hideExceptionPopup = () => this.setState({ isShowedExceptionPopup: false });
 
+    setZoomId = (id: string) => this.setState({zoomId: id});
+
     render() {
         const {
             items,
@@ -272,6 +287,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                     shownItem,
                     this.incremetLoadedCount,
                     isMouseOverElement,
+                    this.state.zoomId,
+                    this.setZoomId,
                 )}
                 </div>
             </div>

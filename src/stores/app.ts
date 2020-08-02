@@ -30,6 +30,7 @@ const makeInitionalOrderPath = (lang: Lang) => [{
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
+  @observable visitedChoiceItems = observable.array<string>();
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
@@ -69,6 +70,24 @@ export class App implements IAppStore {
   resetOrderPath = () => {
     this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
   }
+
+  @action
+  addVisitedChoiceItem = (name: string) => {
+    if (!this.visitedChoiceItems.includes(name)) {
+      this.visitedChoiceItems.push(name);
+    }
+  }
+
+  @action
+  removeVisitedChoiceItem = (name: string) => {
+    this.visitedChoiceItems.remove(name);
+  }
+
+  @action
+  clearVisitedChoiceItems = () => {
+    this.visitedChoiceItems.clear();
+  }
+
 }
 const app = new App('ru');
 

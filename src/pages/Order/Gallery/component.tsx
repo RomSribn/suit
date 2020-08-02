@@ -8,12 +8,14 @@ import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 
 import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
+import { Button } from '../../../components/Button';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
     previewElementIndex: number;
     mouseOverElement: boolean;
 }
+
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     private imageRef: React.RefObject<HTMLDivElement>;
     private galleryBarWrapperRef: React.RefObject<HTMLDivElement>;
@@ -298,8 +300,8 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
         const {
             img_url_2d: image,
-            price,
-            our_code: code,
+            // price,
+            // our_code: code,
         } = item;
         return (
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
@@ -347,7 +349,16 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
                         {!isMobile() &&
-                            <div className="gallery__footer--articul">₽{price.ru}{code && (' / ' + code)}</div>
+                            <div className="gallery__footer--articul">
+                                {this.props.app &&
+                                <Button 
+                                    onClick={this.props.app.toggleSwiperPopup} 
+                                    className="gallery__footer--detailButton"
+                                >
+                                    Детали
+                                </Button>
+                                }
+                            </div>
                         }
                     </div>
                     <div className="gallery__footer--txt">

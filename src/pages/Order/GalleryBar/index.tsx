@@ -4,8 +4,11 @@ import { inject, observer } from 'mobx-react';
 import * as classnames from 'classnames';
 
 import { isMobile, isLandscape } from '../../../utils';
+import { PopUp } from '../../../containers/Popup';
+import { SwiperPopup } from '../../../components/SwiperPopup/SwiperPopup';
 
 interface P {
+    app?: IAppStore;
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
@@ -18,28 +21,29 @@ interface P {
     incremetLoadedCount(): void;
 }
 
-interface S extends ImageLoadState {
-
+interface GalleryItemState extends ImageLoadState {
 }
 
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
 @inject(({
     order,
-    filterStore
+    filterStore,
+    app
 }) => ({
         orderStore: order,
-        filterStore
+        filterStore,
+        app
     })
 )
 @observer
-class GalleryItem extends React.Component<P, S > {
+class GalleryItem extends React.Component<P, GalleryItemState > {
     constructor(props: P) {
         super(props);
         this.state = {
             load: {
-                error: null,
-                success: null,
-            }
+            error: null,
+            success: null,
+            },
         };
     }
     componentDidMount() {
@@ -77,6 +81,7 @@ class GalleryItem extends React.Component<P, S > {
             shownItem,
             onClick
         } = this.props;
+
         const {
             img_url_2d: image,
             our_code: id,
@@ -108,7 +113,12 @@ class GalleryItem extends React.Component<P, S > {
             this.props.filterStore!.closeFilter();
             onClick();
         };
+        if (this.props.app && active) {
+            this.props.app!.setSwiperPopupData(this.props.item);
+        }
         return (
+            <>{
+                this.props.app &&
             <div
                 onClick={click}
                 onMouseEnter={onMouseEnter}
@@ -125,9 +135,11 @@ class GalleryItem extends React.Component<P, S > {
                     )}
                 >
                     <img src={image} alt={`${id}`} />
-                    {!isMobile() && this.props.zoomId === id && <span className="zoom-icon"/>}
+                        {!isMobile() && this.props.zoomId === id && 
+                        <span onClick={this.props.app.toggleSwiperPopup} className="zoom-icon"/>}
                 </div>
             </div>
+            }</>
         );
     }
 }
@@ -194,6 +206,13 @@ type State = {
     zoomId: string | null;
 };
 
+@inject(({
+    app
+}) => ({
+    app
+})
+)
+@observer
 class GalleryBar extends React.Component<GalleryBarProps, State> {
     loadedCount = 0;
     isScrolling = false;
@@ -265,7 +284,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             isMouseOverElement,
         } = this.props;
         const {
-            renderedElementsCount,
+            renderedElementsCount
         } = this.state;
         const activeItems =
         renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
@@ -275,6 +294,14 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 onScroll={this.handleScroll}
                 id="js-bar-wrap"
             >
+                {this.props.app && this.props.app.swiperPopupData &&
+                    <PopUp open={this.props.app.showSwiperPopup}>
+                        <SwiperPopup 
+                            item={this.props.app.swiperPopupData} 
+                            closeButton={this.props.app.toggleSwiperPopup} 
+                        />
+                    </PopUp>
+                }
                 <div
                     ref={this.galleryBar}
                     className="gallery__bar-cont"

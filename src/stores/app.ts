@@ -30,6 +30,8 @@ const makeInitionalOrderPath = (lang: Lang) => [{
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
+  @observable showSwiperPopup = false;
+  @observable swiperPopupData = {};
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
@@ -68,6 +70,16 @@ export class App implements IAppStore {
   @action
   resetOrderPath = () => {
     this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
+  }
+
+  @action
+  toggleSwiperPopup = () => {
+    this.showSwiperPopup = !this.showSwiperPopup;
+  }
+
+  @action
+  setSwiperPopupData = (value: {}) => {
+    this.swiperPopupData = value;
   }
 }
 const app = new App('ru');

@@ -48,6 +48,11 @@
     font-size: 1rem;
     line-height: 1.4;
 }
+.gallery__footer--detailButton.button.black:hover {
+    background: #8a8a8a;
+    border-color: #8a8a8a;
+    color: #000;
+}
 .gallery__footer--txt-clamp{
     /* обрезаем текст и выставляем троеточие если в блоке больше 2 строк, в firefox без троеточия*/
 	/* альтернативы

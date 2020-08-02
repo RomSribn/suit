@@ -35,6 +35,7 @@ const galleryCache = {};
     }
 
     return {
+        app,
         setActiveOrderItem: setActiveItem,
         setPreviewElement,
         isExclusivePopupShowing,
@@ -134,6 +135,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         activeElement={orderStore.activeElement}
                         previewElement={orderStore.previewElement}
                         activeOrderItem={this.props.activeOrderItem}
+                        app={this.props.app}
                     />
                 )
         );

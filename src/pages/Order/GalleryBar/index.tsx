@@ -140,7 +140,7 @@ type makeGalleryItems = (
     shownItem: GalleryStoreItem,
     incremetLoadedCount: () => void,
     isMouseOverElement: boolean,
-    zoomId: string | null,
+    zoomId: string,
     setZoomId: (id: string) => void,
 ) => React.ReactNode[];
 
@@ -191,7 +191,7 @@ type State = {
     isShowedExceptionPopup: boolean;
     titleSubGroup: string;
     titleElement: Translations<string> | null;
-    zoomId: string | null;
+    zoomId: string;
 };
 
 class GalleryBar extends React.Component<GalleryBarProps, State> {
@@ -212,7 +212,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             isShowedExceptionPopup: false,
             titleSubGroup: '',
             titleElement: null,
-            zoomId: null,
+            zoomId: this.props.items[this.props.activeElementIndex].our_code,
         };
         this.props.setPreviewElementIndex(this.props.activeElementIndex || 0, 'enter');
         this.galleryBar = React.createRef();

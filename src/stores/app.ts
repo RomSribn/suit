@@ -32,6 +32,7 @@ export class App implements IAppStore {
   @observable showMobileMenu = false;
   @observable showSwiperPopup = false;
   @observable swiperPopupData = {};
+  @observable visitedChoiceItems = observable.array<string>();
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
@@ -73,6 +74,23 @@ export class App implements IAppStore {
   }
 
   @action
+  addVisitedChoiceItem = (name: string) => {
+    if (!this.visitedChoiceItems.includes(name)) {
+      this.visitedChoiceItems.push(name);
+    }
+  }
+
+  @action
+  removeVisitedChoiceItem = (name: string) => {
+    this.visitedChoiceItems.remove(name);
+  }
+
+  @action
+  clearVisitedChoiceItems = () => {
+    this.visitedChoiceItems.clear();
+  }
+
+  @action 
   toggleSwiperPopup = () => {
     this.showSwiperPopup = !this.showSwiperPopup;
   }
@@ -81,6 +99,7 @@ export class App implements IAppStore {
   setSwiperPopupData = (value: {}) => {
     this.swiperPopupData = value;
   }
+
 }
 const app = new App('ru');
 

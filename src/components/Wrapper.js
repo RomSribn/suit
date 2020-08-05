@@ -12,6 +12,7 @@ import { PopUp } from '../containers/Popup'
 import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup'
 import Login from './Login'
 import {ListCustomers} from '../pages/ListCustomers'
+import Pdf from '../pages/Pdf'
 
 let dummyWasRendered = false;
 
@@ -40,13 +41,18 @@ class Wrapper extends Component {
   render() {
     const {
       app,
-      userStore
+      userStore,
+      location,
     } = this.props;
     const { lang, showMobileMenu, toggleMobileMenu, setLang }  = app;
     const { logout, isAuth, profile } = userStore;
     const loggedIn = this.props.userStore.isAuth;
     const role = userStore.profile && userStore.profile.role || null;
     const isStylist = role === 'STYLIST';
+
+    if (location.pathname === '/pdf') {
+      return <Route path='/pdf' render={(props) => <Pdf {...props } {...this.props} />} />
+    }
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (<React.Fragment key="common wrapper with spinner">
       {this.state.showSpinner && <Spinner />}

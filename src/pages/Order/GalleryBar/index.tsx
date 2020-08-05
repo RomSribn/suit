@@ -116,6 +116,14 @@ class GalleryItem extends React.Component<P, GalleryItemState > {
         if (this.props.app && active) {
             this.props.app!.setSwiperPopupData(this.props.item);
         }
+
+        const toggleSwipe = () => {
+            // tslint:disable-next-line:no-console
+            console.log('working');
+            // this.props.app && 
+            this.props.app!.toggleSwiperPopup();
+        };
+
         return (
             <>{
                 this.props.app &&
@@ -135,8 +143,8 @@ class GalleryItem extends React.Component<P, GalleryItemState > {
                     )}
                 >
                     <img src={image} alt={`${id}`} />
-                        {!isMobile() && this.props.zoomId === id && 
-                        <span onClick={this.props.app.toggleSwiperPopup} className="zoom-icon"/>}
+                        {!isMobile() && this.props.zoomId === id && this.props.app && 
+                            <span onClick={toggleSwipe} className="zoom-icon"/>}
                 </div>
             </div>
             }</>

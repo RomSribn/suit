@@ -304,10 +304,10 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             // our_code: code,
         } = item;
         return (
-            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric' })}>
+            <div className={classnames('gallery', { 'gallery--colors': group === 'fabric_ref' })}>
                 <div className="gallery__prev-blc">
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        { !load.success && !load.error
+                        { !isMobile() && !load.success && !load.error
                         ? <div
                             className="preloader"
                             style={{
@@ -319,7 +319,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                             <div className="preloader__progline loaded"/>
                         </div>
                         </div>
-                        : load.success ?
+                        : !isMobile() && load.success ?
                         <div
                             className="gallery__img"
                             id="js-gallery-img"
@@ -355,7 +355,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                     onClick={this.props.app.toggleSwiperPopup} 
                                     className="gallery__footer--detailButton"
                                 >
-                                    Детали
+                                    Подробно
                                 </Button>
                                 }
                             </div>

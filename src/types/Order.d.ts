@@ -26,7 +26,7 @@ interface IOrderStore {
     toggleHiddenElement(element: string): void;
     setShirtInitials(initials: string): void;
     getShirtInitials(): string;
-    fetchOrder(orderId: string): Promise<any>;
+    fetchOrder(orderId: string, superUserToken?: string): Promise<any>;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
     clearOrderInfo(): void;
 }
@@ -40,12 +40,14 @@ interface OrderInfo {
     deliveryDays: number;
     price: Translations<string>;
     customer: User;
+    date: string;
 }
 
 interface OrderItemInfo {
     our_code: string;
     is_subclear?: boolean;
     title: Translations<string>;
+    img_url_2d?: string;
 }
 
 interface OrderItemElement {

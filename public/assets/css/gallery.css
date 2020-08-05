@@ -43,15 +43,33 @@
     font-size: .8666rem;
     color: #8a8a8a;
 }
+
+.gallery__footer--articul > span > button {
+    text-decoration: underline !important;
+    text-transform: capitalize !important;
+    font-size: .8666rem !important;
+    /* background-color: #acacac !important;
+     */
+    background-color: transparent !important;
+    width: 100px !important;
+    padding: 0px 0px !important;
+    border: none !important;
+    color: #8a8a8a !important;
+}
+
+.text-block__price span{
+    margin-right: 5px;
+}
+
 .gallery__footer--txt{
     overflow: hidden; /*необходим для gallery__footer--txt-clamp*/
     font-size: 1rem;
     line-height: 1.4;
 }
 .gallery__footer--detailButton.button.black:hover {
-    background: #8a8a8a;
-    border-color: #8a8a8a;
-    color: #000;
+    /* background: #8a8a8a !important;
+    border-color: #8a8a8a !important; */
+    color: #000 !important;
 }
 .gallery__footer--txt-clamp{
     /* обрезаем текст и выставляем троеточие если в блоке больше 2 строк, в firefox без троеточия*/

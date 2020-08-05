@@ -28,7 +28,8 @@ const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
             const tmpDesign = { ...designItem };
             const newDesignValue: OrderItemInfo = {
                 our_code: tmpDesign.design.our_code,
-                title: tmpDesign.design.title
+                title: tmpDesign.design.title,
+                img_url_2d: tmpDesign.design.img_url_2d,
             };
             newGarment.design[tmpDesign.design.common.subsection_our_code] = newDesignValue;
         });
@@ -320,12 +321,20 @@ export class OrderStore implements IOrderStore {
             this._onError);
     }
     @action
-    fetchOrder = (orderId: string) => {
+    fetchOrder = (orderId: string, superUserToken?: string) => {
         this.error = null;
-        return callApi({
+        const config = {
             method: 'GET',
-            url: `${services.orders}/${orderId}`
-        }, () => { this.isFetching = true; },
+            url: `${services.orders}/${orderId}`,
+        } as Axios.RequestConfig;
+
+        if (superUserToken) {
+            config.headers = { 'super-user-token': superUserToken };
+        }
+
+        return callApi(
+            config,
+            () => { this.isFetching = true; },
             (data: Fuckup.OrderFromServer) => {
                 this.order = {
                     ...this.order,
@@ -336,6 +345,7 @@ export class OrderStore implements IOrderStore {
                     deliveryDays: data.deliveryDays,
                     price: data.price,
                     customer: data.customer,
+                    date: data.date,
                 };
             },
             this._onError);

@@ -12,6 +12,8 @@ SwiperCore.use([Pagination, Thumbs]);
 const SwiperPopup = (props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
+  // console.log(props.item)
+
   return (
     <div className="swiper-popup-container">
       <div className="swipe-block">
@@ -41,13 +43,15 @@ const SwiperPopup = (props) => {
         <div className="text-block__title">
           {props.item.title && props.item.title.ru}
         </div>
-        <a href="/">Вернуться в магазин</a>
+        <div className="text-block__breadcrumbs">
+          <a href="/">Заказать</a><span>/</span><a onClick={props.closeButton}>Сорочка</a><span>/</span><a onClick={props.closeButton}>Ткань</a>
+        </div>
         <div className="text-block__price">
-          {props.item.price && props.item.price.title.ru}
+          <span>₽</span>{props.item.price && props.item.price.title.ru}
         </div>
 
         {/* Тут ваша импортированая кнопка */}
-        <Button onClick={props.closeButton}>Выбрать ткань</Button>
+        <Button className="text-block__button" onClick={props.closeButton}>Ткань выбрана</Button>
 
         <div className="text-block__info">
           <h2>Информация о товаре</h2>

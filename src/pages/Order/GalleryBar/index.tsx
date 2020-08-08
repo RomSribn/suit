@@ -125,7 +125,11 @@ class GalleryItem extends React.Component<P, S > {
                     )}
                 >
                     <img src={image} alt={`${id}`} />
-                    {!isMobile() && this.props.zoomId === id && <span className="zoom-icon"/>}
+                    {!isMobile() &&
+                    this.props.zoomId === id &&
+                    this.props.item.elementInfo.subGroup === 'fabric' && (
+                        <span className="zoom-icon" />
+                    )}
                 </div>
             </div>
         );

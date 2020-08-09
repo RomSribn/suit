@@ -9,7 +9,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-transform: capitalize
+  text-transform: capitalize;
+}
+
+.swipe-block {
+  display: flex;
+  flex-direction: row-reverse;
 }
 @media only screen and (max-width: 450px) {
   .swiper-popup-container {
@@ -70,7 +75,7 @@
 .swiper-slide.swiper-slide-thumb-active > img {
   /* outline: 3px solid #000;
   outline-offset: -3px; */
-  border: .3333rem solid #fff;
+  border: 0.3333rem solid #fff;
 }
 
 @media only screen and (max-width: 450px) {
@@ -175,10 +180,10 @@
   left: 8px;
 }
 
-.text-block__breadcrumbs span{
+.text-block__breadcrumbs span {
   margin: 0 5px;
 }
-.text-block__breadcrumbs a{
+.text-block__breadcrumbs a {
   cursor: pointer;
 }
 

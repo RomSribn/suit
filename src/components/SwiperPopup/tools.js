@@ -10,7 +10,7 @@ export const createPackOfSlides = (imagesArray) => {
 
   for (let i = 0; i < imagesArray.length; i++) {
     pack.push(
-      <SwiperSlide key={`Slide-num-${i}`}>
+      <SwiperSlide style={{ border: 'none' }} key={`Slide-num-${i}`}>
         <img
           className="swiper-image__slide"
           src={urlNormilizer3000(imagesArray[i])}

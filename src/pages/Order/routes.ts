@@ -2,7 +2,7 @@ type MakeRoutes = (indexRoute?: string) => OrderRoutes;
 
 const makeRoutes: MakeRoutes = (indexRoute = '/order') => {
     return {
-        index: `${indexRoute}/details`,
+        index: '/order',
         details: `${indexRoute}/details`,
         garment: `${indexRoute}/details/:garment`,
         groupChoice: `${indexRoute}/details/:garment/:group`,

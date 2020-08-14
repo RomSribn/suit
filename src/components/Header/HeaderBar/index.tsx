@@ -47,11 +47,23 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
             userStore,
             lang
         } = this.props;
+        const isRealIndexPage = window.location.pathname === '/order';
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
         return (
             <div className="main__bar">
                 {/*<LanguageControl theme="black" shortcut={true} />*/}
-                <Link to="#" onClick={this.profileLinkClick} className="profile-link">{userName}</Link>
+                <Link
+                    to="#"
+                    style={isRealIndexPage ?
+                        {
+                            color: 'white',
+                        } :
+                        {}}
+                    onClick={this.profileLinkClick}
+                    className={`profile-link ${isRealIndexPage && 'profile-link--index-page-modify'}`}
+                >
+                    {userName}
+                </Link>
                 <PopUp
                     open={this.state.showLoginForm}
                     onClose={this.closeForm}

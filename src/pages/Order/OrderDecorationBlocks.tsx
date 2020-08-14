@@ -1,4 +1,4 @@
-import * as React  from 'react';
+import * as React from 'react';
 
 const Demo = () => (
     <div className="main-page-title">
@@ -17,7 +17,7 @@ const Demo = () => (
                 id="js-word-2"
             >
                 <img src={process.env.STATIC_IMAGES + 'main-slogan/suit.svg'} alt="meets" />
-            </div>                        
+            </div>
             <div
                 className="main-page-title__row"
                 id="js-word-3"
@@ -31,13 +31,13 @@ const Demo = () => (
     </div>);
 class Paralax extends React.PureComponent {
     listener: (e: MouseEvent) => void;
-    componentDidMount () {
+    componentDidMount() {
         if (document.getElementById('js-paralax-bg')) {
             const paralaxBlc = document.getElementById('js-paralax-bg') as HTMLElement,
                 paralaxImg = document.getElementById('js-paralax-img') as HTMLElement,
                 paralaxRect = document.getElementById('js-paralax-rect') as HTMLElement,
                 word1 = document.getElementById('js-word-1') as HTMLElement,
-                word3 = document.getElementById('js-word-3')  as HTMLElement,
+                word3 = document.getElementById('js-word-3') as HTMLElement,
                 boxerCenterX = paralaxBlc.offsetLeft + (paralaxBlc.offsetWidth / 2),
                 boxerCenterY = paralaxBlc.offsetTop + (paralaxBlc.offsetHeight / 2);
 
@@ -50,18 +50,18 @@ class Paralax extends React.PureComponent {
             };
             const listener = (e: MouseEvent) => {
                 let mousePos = getMousePos(e.clientX, e.clientY),
-                distX = mousePos.x - boxerCenterX,
-                distY = mousePos.y - boxerCenterY;
+                    distX = mousePos.x - boxerCenterX,
+                    distY = mousePos.y - boxerCenterY;
                 paralaxRect.style.marginRight = `${distX / 40}px`;
                 paralaxRect.style.marginBottom = `${distY / 40}px`;
                 paralaxImg.style.transform =
                     `translate(0px, 0px) matrix(1, 0, 0, 1, ${-distX / 50}, ${-distY / 50})`;
                 // "translate(0px, 0px) matrix(1, 0, 0, 1, " + -(distX/50) + ", " + -(distY/50) + ")";
 
-                word1.style.transform = `translateX(${-distX / 50}px)`;                    
+                word1.style.transform = `translateX(${-distX / 50}px)`;
                 // word1.style.transform = "translateX(" + -(distX/50) + "px)";
 
-                word1.style.transform = `translateX(${-distX / 50}px)`;                
+                word1.style.transform = `translateX(${-distX / 50}px)`;
                 // word1.style.transform = "translateX(" + distX/50 + "px)";
 
                 word3.style.transform = `translateX(${-distX / 50}px)`;
@@ -69,7 +69,7 @@ class Paralax extends React.PureComponent {
             };
             this.listener = listener;
             document.body.addEventListener('mousemove', listener);
-                
+
         }
     }
     componentWillUnmount() {

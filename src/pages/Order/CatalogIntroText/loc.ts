@@ -8,14 +8,18 @@ interface Locale {
 const makeLocale: MakeLocale<Locale> = () => ({
     en: {
         introText: {
-            first: 'Choose garments you need and press Submit button.',
-            second: 'It will let you set every garment up'
+            first: 'Choose garments and press Submit button.',
+            second: 'It will let you set every garment up',
+            forHim: 'For him',
+            forHer: 'forHer'
         },
     },
     ru: {
         introText: {
-            first: 'Выберите необходимые изделия и нажмите кнопку принять.',
+            first: 'Выберите изделия и нажмите "продолжить"',
             second: 'Это позволит вам настроить каждую часть изделия.',
+            forHim: 'Для него',
+            forHer: 'Для нее'
         },
     },
 });

@@ -14,9 +14,13 @@ const CatalogIntroText = (props: Props) => {
             transitionLeaveTimeout={TRANSITION_DUARAION}
         >
             <div className="catalog__intro-txt" key={lang}>
-                {loc[lang!].introText.first}
-                <br />
-                {loc[lang!].introText.second}
+                <p>{loc[lang!].introText.first}</p>
+
+                <p>{loc[lang!].introText.second}</p>
+            </div>
+            <div className="catalog__gender-block">
+                <button>{loc[lang!].introText.forHim}</button>
+                <button disabled={true}>{loc[lang!].introText.forHer}</button>
             </div>
         </ReactCSSTransitionGroup>
     );

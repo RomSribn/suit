@@ -3,7 +3,7 @@ import { findKey } from 'lodash';
 import { Navlinks } from './navlinks';
 import { navigationRoutes, routesTranslations } from '../../../config/routes';
 
-class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: string}> {
+class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: string }> {
     static defaultProps = {
         lang: 'en',
     };
@@ -31,21 +31,22 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
         const {
         } = this.state;
         const { path, lang, isAuth } = this.props;
-        const routeName = findKey(navigationRoutes, v => v === path ) || '';
+        const routeName = findKey(navigationRoutes, v => v === path) || '';
+        const isRealIndexPage = window.location.pathname === '/order';
         return (
-        <div
-            className="main__header-content"
-            style={HeaderContent.style}
-        >
-            <h1 className="main__header-title">
-                {path.includes('/order/details') ?
-                    <Navlinks isAuth={isAuth} /> :
-                    <span className="header-text">
-                        {routesTranslations[lang][routeName]}
-                    </span>
-                }
-            </h1>
-        </div>);
+            <div
+                className="main__header-content"
+                style={HeaderContent.style}
+            >
+                <h1 className="main__header-title">
+                    {path.includes('/order/details') ?
+                        <Navlinks isAuth={isAuth} /> :
+
+                        !isRealIndexPage && <span className="header-text">
+                            {routesTranslations[lang][routeName]}
+                        </span>}
+                </h1>
+            </div>);
     }
 }
 

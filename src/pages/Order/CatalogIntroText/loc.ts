@@ -11,7 +11,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
             first: 'Choose garments and press Submit button.',
             second: 'It will let you set every garment up',
             forHim: 'For him',
-            forHer: 'forHer'
+            forHer: 'For her'
         },
     },
     ru: {

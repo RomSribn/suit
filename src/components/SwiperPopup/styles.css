@@ -24,17 +24,23 @@
 .swiper-container {
   margin-bottom: 5px;
   /* width: 415px; */
-  width: 715px;
+  /* width: 715px; */
+  /* width: 750px; */
+  width: 855px;
 }
 
 .swiper-image__slide {
   /* width: 415px; */
-  width: 715px;
+  /* width: 715px; */
+  /* width: 750px; */
+    width: 855px;
 }
 
 .swiper-image__thumb {
   /* width: 100px; */
-  width: 175px;
+  /* width: 175px; */
+  /* width: 183.75px; */
+  width: 210px;
 }
 @media only screen and (max-width: 450px) {
   .swiper-container {

@@ -7,9 +7,9 @@ import { HeaderProps } from './typings';
 import './style.styl';
 
 const isMobile = () => document.body.offsetWidth <= 800;
-const isLandscape = () => parseInt((window.orientation  || 0).toString(), 10) !== 0;
+const isLandscape = () => parseInt((window.orientation || 0).toString(), 10) !== 0;
 
-class Header extends React.Component<HeaderProps, {isMobile: boolean, isLandscape: boolean}> {
+class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandscape: boolean }> {
     static defaultProps = {
         userName: undefined,
     };
@@ -50,30 +50,35 @@ class Header extends React.Component<HeaderProps, {isMobile: boolean, isLandscap
 
         return (
             <div className="main__header">
-            {
-                !state.isMobile ?
-                <div className="header-wrapper">
-                    <HeaderBar
-                        lang={lang}
-                        userStore={userStore}
-                        isAuth={isAuth}
-                    />
-                    <HeaderContent
-                        path={path!}
-                        lang={lang}
-                        orderPath={appStore.orderPath}
-                        cutOrderPath={appStore.cutOrderPath}
-                        isAuth={userStore.isAuth}
-                    />
-                </div> :
-                <div className="header-wrapper-mobile">
-                    <MobileHeader
-                        openMenu={openMenu}
-                        lang={lang}
-                        isLandscape={state.isLandscape}
-                    />
-                </div>
-            }
+                {
+                    !state.isMobile ?
+                        <div className="header-wrapper">
+                            <HeaderBar
+                                lang={lang}
+                                userStore={userStore}
+                                isAuth={isAuth}
+                            />
+                            <HeaderContent
+                                path={path!}
+                                lang={lang}
+                                orderPath={appStore.orderPath}
+                                cutOrderPath={appStore.cutOrderPath}
+                                isAuth={userStore.isAuth}
+                            />
+                        </div> :
+                        <div className="header-wrapper-mobile">
+                            <MobileHeader
+                                openMenu={openMenu}
+                                lang={lang}
+                                isLandscape={state.isLandscape}
+                            />
+                            <HeaderBar
+                                lang={lang}
+                                userStore={userStore}
+                                isAuth={isAuth}
+                            />
+                        </div>
+                }
             </div>);
     }
 }

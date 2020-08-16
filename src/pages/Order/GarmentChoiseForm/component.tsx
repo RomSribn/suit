@@ -8,7 +8,7 @@ import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
-// import { isMobile } from '../../../utils';
+import { isMobile } from '../../../utils';
 
 type MakeCatalogItems = (
     g: Garments,
@@ -229,7 +229,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     {isIndexPage &&
                         <div className="catalog__submit-bar">
                             <FadeIn>
-                                <Link
+                                {!isMobile() ? <Link
                                     to="order/details/shirt/fabric_ref/fabric"
                                     key={lang}
                                     onClick={this.makeOrder}
@@ -255,7 +255,19 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                             />
                                         </svg>
                                     </div>
-                                </Link>
+                                </Link> :
+                                    <Link
+                                        to="order/details/shirt/fabric_ref/fabric"
+                                        key={lang}
+                                        onClick={this.makeOrder}
+                                        style={{
+                                            width: '100%',
+                                            height: 'unset'
+                                        }}
+                                        className="catalog__submit--mobile catalog__item-decoration"
+                                    >
+                                        {loc[lang!].submit}
+                                    </Link>}
                             </FadeIn>
                         </div>
                     }

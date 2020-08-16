@@ -147,6 +147,19 @@
     font-weight: 500;
     margin-left: 2px;
 }
+.catalog__submit--mobile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    background-color: black;
+    color: white;
+    padding: 25px;
+    z-index: 999;
+}
 .catalog__submit-lines-group{
     position: absolute;
     float: right;
@@ -219,7 +232,9 @@
     }
 
     .catalog__item-decoration {
-        font-size: .75rem;
+        /* font-size: .75rem; */
+        font-size: 1.4rem;
+        width: 160px;
     }
     .catalog__form-wrap {
         justify-content: space-between;
@@ -229,5 +244,9 @@
     }
     .catalog__item:not(:last-child) {
         padding: 0 2.8vw 0 0px;
+    }
+
+    .catalog__intro-txt {
+        margin-bottom: 6rem;
     }
 }

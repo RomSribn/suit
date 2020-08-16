@@ -8,9 +8,9 @@ import './style.styl';
 import { Navlinks } from '../HeaderContent/navlinks';
 
 type Props = {
-  openMenu: () => void;
-  lang: Lang;
-  isLandscape: boolean;
+    openMenu: () => void;
+    lang: Lang;
+    isLandscape: boolean;
 };
 
 type Group = 'design' | 'fabric_ref' | 'fitting';
@@ -26,71 +26,84 @@ const makeNavLinkItem = (active: boolean) => (
 );
 
 export default ({ openMenu, lang, isLandscape }: Props) => {
-  return(
-    <header className="headerWrapper">
-      <button className="open-menu" onClick={openMenu}>
-        <img src={process.env.STATIC_IMAGES + `./tools/black/menu-button.svg`} alt="" className="open-element-img" />
-      </button>
-      <main className="content-wrapper">
-        <h2 className="menu-title">
-            {isLandscape ? <Navlinks /> : (
-                <>
-                    <Switch>
-                        <Route
-                            path={routes.fabric}
-                            component={() =>
-                                <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].fabric}</span>}
-                        />
-                        <Route
-                            path={routes.design}
-                            component={() =>
-                                <span className="navlinks-mobile__value">{mobileHeaderTranslations[lang].design}</span>}
-                        />
-                        <Route
-                            path={routes.fitting}
-                            component={() =>
-                                <span
-                                    className="navlinks-mobile__value"
-                                >
-                                    {mobileHeaderTranslations[lang].fitting}
-                                </span>
-                            }
-                        />
-                        <Route
-                            path={configRoutes.orderList}
-                            component={() =>
-                                <span className="navlinks-mobile__value">
-                                    {mobileHeaderTranslations[lang].orderList}
-                                </span>}
-                        />
-                        <Route
-                            path={configRoutes.customersList}
-                            component={() =>
-                                <span className="navlinks-mobile__value">
-                                    {mobileHeaderTranslations[lang].customersList}
-                                </span>}
-                        />
-                    </Switch>
+    return (
+        <header className="headerWrapper">
+            <button className="open-menu" onClick={openMenu}>
+                <img
+                    src={process.env.STATIC_IMAGES +
+                        `./tools/black/menu-button${window.location.pathname === '/order' ? '_white' : ''}.svg`}
+                    alt=""
+                    className="open-element-img"
+                />
+            </button>
+            <main className="content-wrapper">
+                <h2 className="menu-title">
+                    {isLandscape ? <Navlinks /> : (
+                        <>
+                            <Switch>
+                                <Route
+                                    path={routes.fabric}
+                                    component={() =>
+                                        <span className="navlinks-mobile__value">
+                                            {mobileHeaderTranslations[lang].fabric}
+                                        </span>}
+                                />
+                                <Route
+                                    path={routes.design}
+                                    component={() =>
+                                        <span className="navlinks-mobile__value">
+                                            {mobileHeaderTranslations[lang].design}
+                                        </span>}
+                                />
+                                <Route
+                                    path={routes.fitting}
+                                    component={() =>
+                                        <span
+                                            className="navlinks-mobile__value"
+                                        >
+                                            {mobileHeaderTranslations[lang].fitting}
+                                        </span>
+                                    }
+                                />
+                                <Route
+                                    path={configRoutes.orderList}
+                                    component={() =>
+                                        <span className="navlinks-mobile__value">
+                                            {mobileHeaderTranslations[lang].orderList}
+                                        </span>}
+                                />
+                                <Route
+                                    path={configRoutes.customersList}
+                                    component={() =>
+                                        <span className="navlinks-mobile__value">
+                                            {mobileHeaderTranslations[lang].customersList}
+                                        </span>}
+                                />
+                            </Switch>
 
-                    <Route
-                        path={routes.groupChoice}
-                        component={
-                            (props: RouteComponentProps<{group: Group}>) => {
-                                return (
-                                    <div className="navlinks-mobile__container">
-                                        {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
-                                        {makeNavLinkItem(props.match.params.group === 'design')}
-                                        {makeNavLinkItem(props.match.params.group === 'fitting')}
-                                    </div>
-                                );
-                            }}
-                    />
-                </>
-            )}
-        </h2>
-      </main>
+                            <Route
+                                path={routes.groupChoice}
+                                component={
+                                    (props: RouteComponentProps<{ group: Group }>) => {
+                                        return (
+                                            <div className="navlinks-mobile__container">
+                                                {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
+                                                {makeNavLinkItem(props.match.params.group === 'design')}
+                                                {makeNavLinkItem(props.match.params.group === 'fitting')}
+                                            </div>
+                                        );
+                                    }}
+                            />
+                        </>
+                    )}
+                </h2>
+            </main>
 
-      <img src={process.env.STATIC_IMAGES + `./tools/black/icn-3d.svg`} alt="" className="decorative-element-img" />
-    </header>
-  );
+            <img
+                src={process.env.STATIC_IMAGES + `./tools/black/icn-3d.svg`}
+                alt=""
+                className="decorative-element-img"
+            />
+        </header>
+    );
 };

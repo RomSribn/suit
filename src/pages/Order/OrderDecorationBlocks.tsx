@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { isMobile } from '../../utils';
 
 const Demo = () => (
-    <div className="main-page-title">
+    <div style={isMobile() ? { display: 'none' } : {}} className="main-page-title">
         <div className="main-page-title__wrap">
             <div
                 className="main-page-title__row"
@@ -92,10 +93,15 @@ class Paralax extends React.PureComponent {
                         <source src={process.env.STATIC + 'video/video.ogv'} type="video/ogg" />
                     </video>
                 </div>
-                <svg id="js-paralax-rect" className="paralax-bg__rect">
-                    <rect width="177" height="100" />
-                    <rect width="177" height="100" />
-                </svg>
+                {!isMobile() ?
+                    <svg id="js-paralax-rect" className="paralax-bg__rect">
+                        <rect width="177" height="100" />
+                        <rect width="177" height="100" />
+                    </svg> : <svg id="js-paralax-rect" className="paralax-bg__rect">
+                        <rect width="277" height="200" />
+                        <rect width="277" height="200" />
+                    </svg>
+                }
             </div>);
     }
 }

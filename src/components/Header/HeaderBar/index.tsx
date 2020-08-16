@@ -6,6 +6,7 @@ import Login from '../../Login';
 
 import './styles.styl';
 import { HeaderBarProps } from '../typings';
+import { isMobile } from '../../../utils';
 
 const loginText = {
     en: 'Log In',
@@ -62,7 +63,7 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
                     onClick={this.profileLinkClick}
                     className={`profile-link ${isRealIndexPage && 'profile-link--index-page-modify'}`}
                 >
-                    {userName}
+                    {!isMobile() && userName}
                 </Link>
                 <PopUp
                     open={this.state.showLoginForm}

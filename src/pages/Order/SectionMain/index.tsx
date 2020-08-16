@@ -34,7 +34,6 @@ class MainSection extends React.Component<MainSectionProps> {
                         justifyContent: !detailsDeep
                             ? 'flex-start'
                             : 'center',
-
                     } : {
                             display: 'flex',
                             flexDirection: 'row',
@@ -72,7 +71,9 @@ class MainSection extends React.Component<MainSectionProps> {
                                 path={routes.garment}
                                 // @ts-ignore
                                 component={(props) => ( // tslint:disable-line
-                                    <Redirect to={routes.fabric.replace(':garment', props.match.params.garment)} />
+                                    <Redirect
+                                        to={routes.fabric.replace(':garment', props.match.params.garment)}
+                                    />
                                 )}
                             />
                             <CrumbRoute

@@ -31,7 +31,7 @@ export default ({ openMenu, lang, isLandscape }: Props) => {
             <button className="open-menu" onClick={openMenu}>
                 <img
                     src={process.env.STATIC_IMAGES +
-                        `./tools/black/menu-button${window.location.pathname === '/order' ? '_white' : ''}.svg`}
+                        `./tools/${window.location.pathname === '/order' ? 'white' : 'black'}/menu-button.svg`}
                     alt=""
                     className="open-element-img"
                 />

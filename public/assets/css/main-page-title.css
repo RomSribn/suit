@@ -6,6 +6,11 @@
     width: 100%;
     opacity: .6;
 }
+@media (min-width: 450px) and (max-width: 768px) {
+    .main-page-title { 
+    width: unset;
+    }
+}
 .main-page-title__wrap{
     max-width: 32.2666rem;
     margin: 0 auto;

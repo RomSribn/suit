@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { isMobile } from '../../utils';
+import { isMobile, isTablet } from '../../utils';
 
 const Demo = () => (
     <div style={isMobile() ? { display: 'none' } : {}} className="main-page-title">
-        <div className="main-page-title__wrap">
+        <div style={isTablet() ? { width: '150px' } : {}} className="main-page-title__wrap">
             <div
                 className="main-page-title__row"
                 id="js-word-1"
             >
-                <img
+                {!isTablet() ? <img
                     src={process.env.STATIC_IMAGES + 'main-slogan/meets.svg'}
                     alt="suit"
-                />
+                /> : null}
             </div>
             <div
                 className="main-page-title__row"
                 id="js-word-2"
             >
-                <img src={process.env.STATIC_IMAGES + 'main-slogan/suit.svg'} alt="meets" />
+                {!isTablet() ? <img src={process.env.STATIC_IMAGES + 'main-slogan/suit.svg'} alt="meets" /> : null}
             </div>
             <div
                 className="main-page-title__row"
                 id="js-word-3"
             >
-                <img
+                {!isTablet() ? <img
                     src={process.env.STATIC_IMAGES + 'main-slogan/fashion.svg'}
                     alt="fashion"
-                />
+                /> : null}
             </div>
         </div>
     </div>);

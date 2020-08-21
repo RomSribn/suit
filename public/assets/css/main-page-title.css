@@ -10,6 +10,12 @@
     .main-page-title { 
     width: unset;
     }
+    .main-page-title__wrap{
+        width: 150px;
+    }
+    .main-page-title__slogan-parts{
+        display: none;
+    }
 }
 .main-page-title__wrap{
     max-width: 32.2666rem;

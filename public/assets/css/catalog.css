@@ -15,7 +15,8 @@
     position: relative;
 }
 .catalog__intro-txt p{ 
-    font-size: 30px;
+    /* font-size: 30px; */
+    font-size: 2rem;
     opacity: 1;
     font-weight: 400;
     color: white;
@@ -45,6 +46,7 @@
     background-color: transparent;
     border: none;
     color: white;
+    font-size: 15px;
 }
 .catalog__gender-block > button:nth-child(2){
     opacity: .5;
@@ -64,6 +66,7 @@
 
 .catalog__form{margin: 0;}
 .catalog__form-wrap{
+    width: 45rem;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -81,23 +84,26 @@
 }
 .catalog--top-position .catalog__form-wrap{margin-bottom: 0;}
 .catalog__item{
-    display: block;
-    margin: 0 0 1.3333rem 0;
+    /* display: block; */
+    /* margin: 0 0 1.3333rem 0; */
     position: relative;
-    height: 2.6666rem;
-    display: flex;
-    flex: 1;
+    /* height: 2.6666rem; */
+    /* display: flex; */
+    /* flex: 1; */
+    width: 14.45rem;
 }
-.catalog__item:not(:last-child) {
+/* .catalog__item:not(:last-child) {
     padding: 0 2rem 0 0px;
-}
+} */
 .catalog__item:nth-child(4n+4){margin-right: 0;}
 .catalog__item input{display: none;}
 .catalog__item-decoration{
     display: block;
-    width: 100%;
-    height: 100%;
-    -webkit-transition: .35s ease;
+    /* width: 100%; */
+    /* height: 100%; */
+    /* width: 240px; */
+    /* height: 40px; */
+    /* -webkit-transition: .35s ease; */
     -o-transition: .35s ease;
     transition: .35s ease;
     background: #a3b2b3;
@@ -236,16 +242,20 @@
         /* font-size: .75rem; */
         /* font-size: 1.4rem; */
         font-size: 1rem;
-        width: 160px;
+        /* width: 160px; */
+        /* width: calc((100% - 4rem) / 4  - 4px);
+height: calc(2.6666rem - 4px); */
     }
     .catalog__form-wrap {
         justify-content: space-between;
+        width: 100%;
     }
     .catalog__item {
         width: calc((100% - 1rem) / 2);
     }
     .catalog__item:not(:last-child) {
-        padding: 0 2.8vw 0 0px;
+        /* padding: 0 2.8vw 0 0px; */
+        margin-bottom: 1rem;
     }
 
     .catalog__intro-txt {
@@ -255,5 +265,14 @@
 @media (max-height: 400px) {
         .main__middle {
         margin-top: 0px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .catalog__form-wrap {
+    width: 44rem;
+    }
+    .catalog__item {
+            width: 13.55rem;
     }
 }

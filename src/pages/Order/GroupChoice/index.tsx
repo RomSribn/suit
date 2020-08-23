@@ -12,7 +12,7 @@ import { Controll } from '../Filter';
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
-        app
+        app // @ts-ignore
     };
 })
 @observer

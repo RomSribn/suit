@@ -5,7 +5,7 @@ import { intersection } from 'lodash';
 import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
-import { Controll } from '../Filter';
+// import { Controll } from '../Filter';
 import { InitialsCustomInput } from '../Initials-custom-input';
 
 const galleryCache = {};
@@ -76,7 +76,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
         } = this.props;
 
         if (group === 'design' && subgroup === 'initials_text') {
-            return <div style={{padding: '1.333rem 0 0 0', width: '100%'}}><InitialsCustomInput /></div>;
+            return <div style={{ padding: '1.333rem 0 0 0', width: '100%' }}><InitialsCustomInput /></div>;
         }
 
         const filters = filterStore.userFilters;
@@ -97,7 +97,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         // Используем костыль с проверкой на метод map
                         galleryStoreItem[filterName].map &&
                         intersection(
-                            filterValues, galleryStoreItem[filterName].map((val: {value: string}) => val.value)
+                            filterValues, galleryStoreItem[filterName].map((val: { value: string }) => val.value)
                         ).length
                     ) {
                         return acc;
@@ -110,7 +110,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
         });
 
         return (
-                group === 'fitting'
+            group === 'fitting'
                 ? (
                     <Fitting
                         key={galleryStore.items.toString()}
@@ -146,12 +146,12 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
     render() {
-        const {
-            match: { params: { group } },
-        } = this.props;
+        // const {
+        //     match: { params: { group } },
+        // } = this.props;
         return (
             <>
-                {group === 'fabric_ref' && <Controll />}
+                {/* {group === 'fabric_ref' && <Controll />} */}
                 <GalleryBlock {...this.props} />
             </>
         );

@@ -7,8 +7,9 @@ import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
 import { routes } from '../routes';
+import { Controll } from '../Filter';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({app, garments: { Subgroups }}) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
     };
@@ -28,7 +29,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
 
     render() {
         const {
-            match: {params: { garment, subgroup, group }},
+            match: { params: { garment, subgroup, group } },
             order,
             backLink,
             lang,
@@ -58,20 +59,27 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     <span className="custom__name">{subgroupName}:</span>
                     <span className="custom__status">{itemValue}</span>
                 </span>
-                <span className="custom__control"/>
+                {/* <span className="custom__control"/> */}
             </>
         );
         return (
-                <Switch>
-                    <Route path={routes.fabric}>
-                        <div className="custom custom--open" style={{cursor: 'unset'}}>
-                            {content}
-                        </div>
-                    </Route>
-                    <Link to={backLink} onClick={this.backClick} className="custom custom--open">
+            <Switch>
+                <Route path={routes.fabric}>
+                    <div className="custom custom--open" style={{ cursor: 'unset' }}>
                         {content}
-                    </Link>
-                </Switch>
+                        <div className="custom__control_new">
+                            <div className="control__searchBar">
+                                <input type="text" />
+                            </div>
+                            < Controll />
+                        </div>
+                    </div>
+                </Route>
+                <Link to={backLink} onClick={this.backClick} className="custom custom--open">
+                    {content}
+
+                </Link>
+            </Switch>
         );
     }
 }

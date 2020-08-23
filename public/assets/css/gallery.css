@@ -133,9 +133,9 @@
     /* left: 50%; */
     margin-left: -.86665rem;
 }
-.gallery__filter-btn span:nth-child(1){top: .7666rem;}
-.gallery__filter-btn span:nth-child(2){top: 1.3666rem;}
-.gallery__filter-btn span:nth-child(3){top: 1.9666rem;}
+.gallery__filter-btn span:nth-child(1){top: .8666rem;}
+.gallery__filter-btn span:nth-child(2){top: 1.4666rem;}
+.gallery__filter-btn span:nth-child(3){top: 2.0666rem;}
 .gallery__filter-btn span:after{
     content: '';
     display: block;
@@ -155,6 +155,9 @@
 
 .gallery__filter-btn.open {
     background-color: #d6d6d6;
+}
+.gallery__filter-btn {
+    margin: auto;
 }
 /* .gallery__filter-btn.open span:after{opacity: 0;}
 .gallery__filter-btn.open span:nth-child(2){display: none;}

@@ -8,12 +8,30 @@
     display: flex;
 }
 .control__searchBar {
-    display: none;
+    /* display: none; */
 }
 .customs--no-scroll{
     overflow: hidden;
     padding: 0;
 }
+
+.search__fabric {
+    animation: unset;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+}
+
+.search__fabric {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s linear 0.3s;
+}
+.search__fabric.show {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
 .customs--short{
     flex-grow: 0;
     overflow-y: auto;

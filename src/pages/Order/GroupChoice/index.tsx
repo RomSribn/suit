@@ -12,10 +12,14 @@ import { Controll } from '../Filter';
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
+        app
     };
 })
 @observer
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
+    state = {
+        isSearchBarOpened: false
+    };
     componentDidMount() {
         this.props.setSubgroupTitle(this.props.choiceItem.value);
     }
@@ -65,12 +69,61 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
             <Switch>
                 <Route path={routes.fabric}>
-                    <div className="custom custom--open" style={{ cursor: 'unset' }}>
+                    <div className="custom custom--open" style={{ overflowX: 'hidden', cursor: 'unset' }}>
                         {content}
                         <div className="custom__control_new">
-                            <div className="control__searchBar">
-                                <input type="text" />
-                            </div>
+                            <form
+                                style={{
+                                    display: isMobile() ? 'none' : 'block',
+                                    cursor: 'pointer',
+                                    transition: '0.5s',
+                                    transform: this.state.isSearchBarOpened ?
+                                        'unset' : 'translateX(82%)'
+                                }}
+                                className="search"
+                            >
+                                <div style={{ background: 'transparent' }} className="search__control">
+                                    <span
+                                        className="search__icon"
+                                        onClick={() => {
+                                            this.setState({
+                                                isSearchBarOpened:
+                                                    true
+                                            });
+                                        }}
+                                    />
+                                    <input
+                                        style={{
+                                            background: 'transparent',
+                                            visibility: this.state.isSearchBarOpened ? 'visible' : 'hidden'
+                                        }}
+                                        type="search"
+                                        maxLength={150}
+                                        autoComplete="off"
+                                        // @ts-ignore
+                                        onChange={(e) => this.props.app.setCurrentSearchValue(e.target.value)}
+                                        // @ts-ignore
+                                        className="search__input"
+                                        placeholder={'Поиск ...'}
+                                        onFocus={() => this.setState({ showControls: false })}
+                                        onBlur={() => this.setState({ showControls: true })}
+                                    />
+                                    <span
+                                        className={`icon-close search__clear search__fabric 
+                                        ${this.state.isSearchBarOpened ? 'show' : ''}`}
+                                        title="Clear"
+                                        onClick={() => {
+                                            this.setState({
+                                                isSearchBarOpened:
+                                                    false
+                                            });
+                                        }}
+                                        style={{
+                                            width: '40px'
+                                        }}
+                                    />
+                                </div>
+                            </form>
                             < Controll />
                         </div>
                     </div>

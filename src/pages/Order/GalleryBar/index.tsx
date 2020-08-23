@@ -30,19 +30,19 @@ interface GalleryItemState extends ImageLoadState {
     filterStore,
     app
 }) => ({
-        orderStore: order,
-        filterStore,
-        app
-    })
+    orderStore: order,
+    filterStore,
+    app
+})
 )
 @observer
-class GalleryItem extends React.Component<P, GalleryItemState > {
+class GalleryItem extends React.Component<P, GalleryItemState> {
     constructor(props: P) {
         super(props);
         this.state = {
             load: {
-            error: null,
-            success: null,
+                error: null,
+                success: null,
             },
         };
     }
@@ -118,35 +118,33 @@ class GalleryItem extends React.Component<P, GalleryItemState > {
         }
 
         const toggleSwipe = () => {
-            // tslint:disable-next-line:no-console
-            console.log('working');
-            // this.props.app && 
             this.props.app!.toggleSwiperPopup();
         };
-
+        console.log(this.props.app!.currentSearchValue) // tslint:disable-line
         return (
             <>{
-                this.props.app &&
-            <div
-                onClick={click}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                className={classnames(
-                    'gallery__item-blc',
-                    { landscape:  isMobile() && isLandscape() }
-                )}
-            >
+                this.props.app && this.props.app.currentSearchValue &&
+                id.includes(this.props.app.currentSearchValue.toLowerCase()) &&
                 <div
+                    onClick={click}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
                     className={classnames(
-                        'gallery__item',
-                        { active }
+                        'gallery__item-blc',
+                        { landscape: isMobile() && isLandscape() }
                     )}
                 >
-                    <img src={image} alt={`${id}`} />
-                        {!isMobile() && this.props.zoomId === id && this.props.app && 
-                            <span onClick={toggleSwipe} className="zoom-icon"/>}
+                    <div
+                        className={classnames(
+                            'gallery__item',
+                            { active }
+                        )}
+                    >
+                        <img src={image} alt={`${id}`} />
+                        {!isMobile() && this.props.zoomId === id && this.props.app &&
+                            <span onClick={toggleSwipe} className="zoom-icon" />}
+                    </div>
                 </div>
-            </div>
             }</>
         );
     }
@@ -281,7 +279,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
 
     hideExceptionPopup = () => this.setState({ isShowedExceptionPopup: false });
 
-    setZoomId = (id: string) => this.setState({zoomId: id});
+    setZoomId = (id: string) => this.setState({ zoomId: id });
 
     render() {
         const {
@@ -295,7 +293,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             renderedElementsCount
         } = this.state;
         const activeItems =
-        renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
+            renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
         return (
             <div
                 className="gallery__bar"
@@ -304,9 +302,9 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             >
                 {this.props.app && this.props.app.swiperPopupData &&
                     <PopUp open={this.props.app.showSwiperPopup}>
-                        <SwiperPopup 
-                            item={this.props.app.swiperPopupData} 
-                            closeButton={this.props.app.toggleSwiperPopup} 
+                        <SwiperPopup
+                            item={this.props.app.swiperPopupData}
+                            closeButton={this.props.app.toggleSwiperPopup}
                         />
                     </PopUp>
                 }
@@ -315,16 +313,16 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                     className="gallery__bar-cont"
                     id="js-bar-container"
                 >
-                {makeGalleryItems(
-                    activeItems,
-                    setActiveElementIndex,
-                    setPreviewElementIndex,
-                    shownItem,
-                    this.incremetLoadedCount,
-                    isMouseOverElement,
-                    this.state.zoomId,
-                    this.setZoomId,
-                )}
+                    {makeGalleryItems(
+                        activeItems,
+                        setActiveElementIndex,
+                        setPreviewElementIndex,
+                        shownItem,
+                        this.incremetLoadedCount,
+                        isMouseOverElement,
+                        this.state.zoomId,
+                        this.setZoomId,
+                    )}
                 </div>
             </div>
         );

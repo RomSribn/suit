@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-type LocaleTextFields = 'index'|'order'|'garments'|'shirt';
+type LocaleTextFields = 'index' | 'order' | 'garments' | 'shirt';
 
 type Locale = Record<LocaleTextFields, string>;
 
@@ -33,12 +33,22 @@ export class App implements IAppStore {
   @observable showSwiperPopup = false;
   @observable swiperPopupData = {};
   @observable visitedChoiceItems = observable.array<string>();
+  @observable currentSearchValue = 'fab';
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
     this.lang = newLang;
     this.orderPath.push(...makeInitionalOrderPath(newLang));
+  }
+
+  @action
+  setCurrentSearchValue = (text: string) => {
+    if (text === '') {
+      this.currentSearchValue = 'fab';
+    } else {
+      this.currentSearchValue = text;
+    }
   }
 
   @action
@@ -90,7 +100,7 @@ export class App implements IAppStore {
     this.visitedChoiceItems.clear();
   }
 
-  @action 
+  @action
   toggleSwiperPopup = () => {
     this.showSwiperPopup = !this.showSwiperPopup;
   }

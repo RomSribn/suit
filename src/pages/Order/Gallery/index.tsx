@@ -120,23 +120,33 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                     />
                 )
                 : (
-                    <Component
-                        key={(items || [])
-                            .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
-                        lang={lang}
-                        match={match}
-                        setActiveOrderItem={setActiveOrderItem}
-                        setPreviewElement={setPreviewElement}
-                        items={items}
-                        galleryStore={galleryStore}
-                        group={group}
-                        filterStore={filterStore}
-                        orderStore={orderStore}
-                        activeElement={orderStore.activeElement}
-                        previewElement={orderStore.previewElement}
-                        activeOrderItem={this.props.activeOrderItem}
-                        app={this.props.app}
-                    />
+                    <div
+                        style={
+                            {
+                                display: 'contents',
+                                visibility: this.props.app && this.props.app.searchedItemsCount ?
+                                    'visible' : 'hidden'
+                            }
+                        }
+                    >
+                        <Component
+                            key={(items || [])
+                                .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
+                            lang={lang}
+                            match={match}
+                            setActiveOrderItem={setActiveOrderItem}
+                            setPreviewElement={setPreviewElement}
+                            items={items}
+                            galleryStore={galleryStore}
+                            group={group}
+                            filterStore={filterStore}
+                            orderStore={orderStore}
+                            activeElement={orderStore.activeElement}
+                            previewElement={orderStore.previewElement}
+                            activeOrderItem={this.props.activeOrderItem}
+                            app={this.props.app}
+                        />
+                    </div>
                 )
         );
     }

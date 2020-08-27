@@ -9,17 +9,17 @@ import { CommonStores } from '../../../types/commonStores';
 import { routes } from '../routes';
 import { Controll } from '../Filter';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, garments: { Subgroups } }) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, filterStore, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
-        app // @ts-ignore
+        // @ts-ignore
+        app,
+        // @ts-ignore
+        filterStore
     };
 })
 @observer
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
-    state = {
-        isSearchBarOpened: false
-    };
     componentDidMount() {
         this.props.setSubgroupTitle(this.props.choiceItem.value);
     }
@@ -77,25 +77,29 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     display: isMobile() ? 'none' : 'block',
                                     cursor: 'pointer',
                                     transition: '0.5s',
-                                    transform: this.state.isSearchBarOpened ?
+                                    // @ts-ignore
+                                    transform: this.props.app.isSearchBarOpened ?
                                         'unset' : 'translateX(82%)'
                                 }}
                                 className="search"
                             >
                                 <div style={{ background: 'transparent' }} className="search__control">
                                     <span
+                                        style={{
+                                            zIndex: this.props.filterStore &&
+                                                this.props.filterStore.isOpen ? -1 : 9999
+                                        }}
                                         className="search__icon"
                                         onClick={() => {
-                                            this.setState({
-                                                isSearchBarOpened:
-                                                    true
-                                            });
+                                            // @ts-ignore
+                                            this.props.app.toggleIsSearchBarOpened(true);
                                         }}
                                     />
                                     <input
                                         style={{
                                             background: 'transparent',
-                                            visibility: this.state.isSearchBarOpened ? 'visible' : 'hidden'
+                                            // @ts-ignore
+                                            visibility: this.props.app.isSearchBarOpened ? 'visible' : 'hidden'
                                         }}
                                         type="search"
                                         maxLength={150}
@@ -105,18 +109,17 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         // @ts-ignore
                                         className="search__input"
                                         placeholder={'Поиск ...'}
-                                        onFocus={() => this.setState({ showControls: false })}
-                                        onBlur={() => this.setState({ showControls: true })}
                                     />
                                     <span
                                         className={`icon-close search__clear search__fabric 
-                                        ${this.state.isSearchBarOpened ? 'show' : ''}`}
+                                        
+                                        ${
+                                            // @ts-ignore
+                                            this.props.app.isSearchBarOpened ? 'show' : ''}`}
                                         title="Clear"
                                         onClick={() => {
-                                            this.setState({
-                                                isSearchBarOpened:
-                                                    false
-                                            });
+                                            // @ts-ignore
+                                            this.props.app.toggleIsSearchBarOpened(false);
                                         }}
                                         style={{
                                             width: '40px'

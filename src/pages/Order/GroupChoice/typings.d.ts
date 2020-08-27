@@ -1,6 +1,8 @@
 import { Subgroups } from '../../../stores/garments';
 
 export interface GroupChoiceProps {
+    app: IAppStore;
+    filterStore: IFilterStore;
     match: Match;
     choiceItem: OrderPathItem;
     subgroupsStore?: Subgroups;

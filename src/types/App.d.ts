@@ -13,8 +13,12 @@ interface IAppStore {
   visitedChoiceItems: string[];
   clearVisitedChoiceItems: () => void;
   showSwiperPopup: boolean;
+  isSearchBarOpened: boolean;
   swiperPopupData: {};
+  searchedItemsCount: number;
+  changeSearchedItemsCount: () => void;
   toggleSwiperPopup: () => void;
+  toggleIsSearchBarOpened: () => void;
   setSwiperPopupData: (value: {}) => void;
   setCurrentSearchValue: (text: string) => void;
 }

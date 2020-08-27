@@ -29,11 +29,12 @@ class Filter extends React.Component<_FilterProps> {
     }
 }
 
-@inject(({ filterStore }) => ({
+@inject(({ filterStore, app }) => ({
     filterStore: filterStore,
     isOpen: filterStore.isOpen,
     toggleOpen: filterStore.toggleOpen,
     closeFilter: filterStore.closeFilter,
+    isSearchBarOpened: app.isSearchBarOpened
 }))
 @observer
 class Controll extends React.Component<_ControllProps> {
@@ -64,11 +65,13 @@ class Controll extends React.Component<_ControllProps> {
             isOpen,
             toggleOpen,
             type,
-            filterStore
+            filterStore,
+            isSearchBarOpened
         } = this.props;
         return (
             <ControllComponent
                 filterStore={filterStore}
+                isSearchBarOpened={isSearchBarOpened!}
                 isOpen={isOpen!}
                 onCLick={toggleOpen!}
                 type={type!}

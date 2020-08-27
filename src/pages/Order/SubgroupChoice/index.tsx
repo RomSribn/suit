@@ -7,7 +7,7 @@ import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
 
-let scrollData: {[key: string]: number} = {};
+let scrollData: { [key: string]: number } = {};
 
 type FilterFields = (
     item: Subgroup,
@@ -39,7 +39,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
             }
         } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
             ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
-            defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
+            defaultCode = defaultValues!.fabric_ref![item.subsection_our_code].our_code;
         }
     } catch (_) {
         status = loc[lang].noStatus;
@@ -64,10 +64,10 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     {
         app,
         user,
-        garments: {Subgroups},
+        garments: { Subgroups },
         order,
         routing:
-        {location: { pathname }} },
+        { location: { pathname } } },
     nextProps: SubgroupChoiceProps) => ({
         lang: app.lang,
         SubgroupsStore: new Subgroups(nextProps.match.params.garment),
@@ -163,6 +163,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     render={(props) => {
                         const _match = props.match;
                         return (
+                            // @ts-ignore
                             <GroupChoice
                                 match={_match}
                                 popOrderPathitem={popOrderPathitem!}

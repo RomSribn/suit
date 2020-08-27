@@ -7,10 +7,12 @@ import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
 import { routes } from '../routes';
+import './styles.styl';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({app, garments: { Subgroups }}) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, garments: { Subgroups }}) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
+        orderStore: order,
     };
 })
 @observer
@@ -26,6 +28,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         }
     }
 
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.orderStore!.setPartOfShirtToggle(e.target.value);
+    }
+
     render() {
         const {
             match: {params: { garment, subgroup, group }},
@@ -33,7 +39,13 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             backLink,
             lang,
             subgroupsStore,
+            orderStore,
         } = this.props;
+        let itemsWithOwnFabric: Subgroup[] = [];
+        if (subgroupsStore!.data) {
+            itemsWithOwnFabric = subgroupsStore!.data.design
+                .filter((s) => s.is_allowOwnFabric);
+        }
 
         let choiceItemValue: string | undefined;
         if (group === 'initials_text') {
@@ -61,11 +73,37 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                 <span className="custom__control"/>
             </>
         );
+        const partOfShirtToggleItems = [
+            {
+                subsection_our_code: 'all',
+                title: { en: 'all', ru: 'все' },
+            },
+            ...itemsWithOwnFabric,
+        ];
+
         return (
                 <Switch>
                     <Route path={routes.fabric}>
                         <div className="custom custom--open" style={{cursor: 'unset'}}>
                             {content}
+                            <div className="toggle">
+                                {partOfShirtToggleItems.map(item =>
+                                    <span key={item.subsection_our_code} className="toggle__item">
+                                    <input
+                                        className="toggle__input"
+                                        type="radio"
+                                        name="allowed_own_fabric"
+                                        id={item.subsection_our_code}
+                                        value={item.subsection_our_code}
+                                        checked={orderStore!.partOfShirtToggle === item.subsection_our_code}
+                                        onChange={this.handleChange}
+                                    />
+                                    <label className="toggle__label" htmlFor={item.subsection_our_code} >
+                                        {loc[lang].for} {item.title[lang]}
+                                    </label>
+                                </span>
+                                )}
+                            </div>
                         </div>
                     </Route>
                     <Link to={backLink} onClick={this.backClick} className="custom custom--open">

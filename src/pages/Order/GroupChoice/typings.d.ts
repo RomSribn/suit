@@ -9,4 +9,5 @@ export interface GroupChoiceProps {
     backLink: string;
     order: Order;
     lang: string;
+    orderStore?: IOrderStore;
 }

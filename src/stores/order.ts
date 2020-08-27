@@ -30,6 +30,7 @@ const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
                 our_code: tmpDesign.design.our_code,
                 title: tmpDesign.design.title,
                 img_url_2d: tmpDesign.design.img_url_2d,
+                additionalFabric: tmpDesign.additionalFabric && tmpDesign.additionalFabric.our_code || null,
             };
             newGarment.design[tmpDesign.design.common.subsection_our_code] = newDesignValue;
         });
@@ -75,7 +76,8 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
                             acc.push({
                                 design: {
                                     ourCode: item.our_code
-                                }
+                                },
+                                additionalFabric: item.additionalFabric ? { ourCode: item.additionalFabric } : null,
                             });
                         }
                     }
@@ -116,6 +118,7 @@ export class OrderStore implements IOrderStore {
     @observable isFetching = false;
     prevActiveItem?: string | null = null;
     @observable error: object | null = null;
+    @observable partOfShirtToggle = 'all';
 
     isEmptyOrder = () => _.isEmpty(this.order);
 
@@ -385,7 +388,18 @@ export class OrderStore implements IOrderStore {
         const newOrder = cloneOrderObject(order);
         if (this.activeElement && this.activeElement.elementInfo) {
             if (this.activeElement.elementInfo.subGroup === 'fabric') {
-                newOrder.shirt[0].fabric_ref.fabric.our_code = this.activeElement.our_code;
+                if (this.partOfShirtToggle === 'all') {
+                    // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                    newOrder.shirt[0].fabric_ref.fabric.our_code = this.activeElement.our_code;
+                    _.forEach(newOrder.shirt[0].design, (item) => {
+                        if (item.additionalFabric) {
+                            item.additionalFabric = null;
+                        }
+                    });
+                } else {
+                    // устанавливаем доп ткань для части рубашки из активного элемента
+                    newOrder.shirt[0].design[this.partOfShirtToggle].additionalFabric = this.activeElement.our_code;
+                }
             } else {
                 newOrder
                 [this.activeElement.elementInfo.garment][0]
@@ -463,6 +477,11 @@ export class OrderStore implements IOrderStore {
     _onError = (e: Error) => {
         this.error = e;
         this.isFetching = false;
+    }
+
+    @action
+    setPartOfShirtToggle = (value: string) => {
+        this.partOfShirtToggle = value;
     }
 }
 

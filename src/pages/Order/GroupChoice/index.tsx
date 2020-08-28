@@ -12,9 +12,7 @@ import { Controll } from '../Filter';
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, filterStore, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
-        // @ts-ignore
         app,
-        // @ts-ignore
         filterStore
     };
 })
@@ -77,8 +75,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     display: isMobile() ? 'none' : 'block',
                                     cursor: 'pointer',
                                     transition: '0.5s',
-                                    // @ts-ignore
-                                    transform: this.props.app.isSearchBarOpened ?
+                                    transform: this.props.app && this.props.app.isSearchBarOpened ?
                                         'unset' : 'translateX(82%)'
                                 }}
                                 className="search"
@@ -91,22 +88,20 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         }}
                                         className="search__icon"
                                         onClick={() => {
-                                            // @ts-ignore
-                                            this.props.app.toggleIsSearchBarOpened(true);
+                                            this.props.app!.toggleIsSearchBarOpened();
                                         }}
                                     />
                                     <input
                                         style={{
                                             background: 'transparent',
-                                            // @ts-ignore
-                                            visibility: this.props.app.isSearchBarOpened ? 'visible' : 'hidden'
+                                            visibility: this.props.app && this.props.app.isSearchBarOpened
+                                                ? 'visible' : 'hidden'
                                         }}
                                         type="search"
                                         maxLength={150}
                                         autoComplete="off"
-                                        // @ts-ignore
-                                        onChange={(e) => this.props.app.setCurrentSearchValue(e.target.value)}
-                                        // @ts-ignore
+                                        onChange={(e) => this.props.app
+                                            && this.props.app.setCurrentSearchValue(e.target.value)}
                                         className="search__input"
                                         placeholder={'Поиск ...'}
                                     />
@@ -114,12 +109,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         className={`icon-close search__clear search__fabric 
                                         
                                         ${
-                                            // @ts-ignore
-                                            this.props.app.isSearchBarOpened ? 'show' : ''}`}
+                                            this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
                                         title="Clear"
                                         onClick={() => {
-                                            // @ts-ignore
-                                            this.props.app.toggleIsSearchBarOpened(false);
+                                            this.props.app!.toggleIsSearchBarOpened();
                                         }}
                                         style={{
                                             width: '40px'

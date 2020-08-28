@@ -4,7 +4,7 @@ import { Subgroups } from '../stores/garments';
 
 export interface CommonStores {
     app: IAppStore;
-    filterStore: IFilterStore;
+    filterStore?: IAppStore;
     order: OrderStore;
     ordersStore: OrderList.IOrderStore;
     user: IUserStore;

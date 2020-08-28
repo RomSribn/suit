@@ -163,7 +163,6 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     render={(props) => {
                         const _match = props.match;
                         return (
-                            // @ts-ignore
                             <GroupChoice
                                 match={_match}
                                 popOrderPathitem={popOrderPathitem!}

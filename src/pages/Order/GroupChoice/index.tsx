@@ -76,7 +76,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     cursor: 'pointer',
                                     transition: '0.5s',
                                     transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                        'unset' : 'translateX(82%)'
+                                        'unset' : 'translateX(74%)'
                                 }}
                                 className="search"
                             >

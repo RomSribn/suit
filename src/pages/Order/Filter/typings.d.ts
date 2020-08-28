@@ -30,6 +30,7 @@ interface _ControllProps {
     toggleOpen?(): void;
     filterStore?: IFilterStore;
     app?: IAppStore;
+    toggleIsSearchBarOpened?: () => void;
 }
 interface DefaultControllProps {
     isSearchBarOpened: boolean;
@@ -38,6 +39,7 @@ interface DefaultControllProps {
     onCLick: () => void;
     filterStore?: {};
     app?: {};
+    toggleIsSearchBarOpened?: () => void;
 }
 
 type ControllProps = _ControllProps & DefaultControllProps;

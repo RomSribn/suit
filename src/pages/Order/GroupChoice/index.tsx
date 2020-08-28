@@ -83,12 +83,14 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                 <div style={{ background: 'transparent' }} className="search__control">
                                     <span
                                         style={{
-                                            zIndex: this.props.filterStore &&
-                                                this.props.filterStore.isOpen ? -1 : 9999
+                                            zIndex: 9999
                                         }}
                                         className="search__icon"
                                         onClick={() => {
                                             this.props.app!.toggleIsSearchBarOpened();
+                                            if (this.props.filterStore!.isOpen) {
+                                                this.props.filterStore!.toggleOpen();
+                                            }
                                         }}
                                     />
                                     <input

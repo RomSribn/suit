@@ -5,8 +5,9 @@ import MobileHeader from './MobileHeader';
 import { HeaderProps } from './typings';
 
 import './style.styl';
+import { isMobile } from '../../utils';
 
-const isMobile = () => document.body.offsetWidth <= 800;
+// const isMobile = () => document.body.offsetWidth <= 800;
 const isLandscape = () => parseInt((window.orientation || 0).toString(), 10) !== 0;
 
 class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandscape: boolean }> {

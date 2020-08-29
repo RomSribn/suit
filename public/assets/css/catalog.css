@@ -197,7 +197,7 @@
     z-index: 2;
 }
 
-@media only screen and (max-width: 1336px) {
+@media only screen and (max-width: 1366px) {
     .catalog__submit-frame{
 
     width: 187px;

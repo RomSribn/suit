@@ -24,9 +24,8 @@ export const Header = (props: HeaderProps) => {
             >
                 <img
                     className="logo"
-                    src={process.env.STATIC_IMAGES + 'logo/' +
-                        process.env.SALON_ID +
-                        `${isRealIndexPage ? '_white' : ''}` + '.svg'}
+                    src={!isRealIndexPage ? process.env.STATIC_IMAGES + 'logo/' +
+                        process.env.SALON_ID + '.svg' : 'https://ordersystem.ru/assets/img/logo/suit_white.svg'}
                 />
             </a>
         </div>

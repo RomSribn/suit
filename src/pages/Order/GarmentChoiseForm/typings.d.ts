@@ -1,7 +1,5 @@
 interface GarmentChoiceFormProps {
-    catalogFormClassName?: string;
     lang?: Lang;
-    isIndexPage?: boolean;
     garments?: Garments;
     activeGarments?: string[];
     fetchGarments?(): void;
@@ -9,5 +7,4 @@ interface GarmentChoiceFormProps {
     path?: string;
     makeOrder?(garments: string[]): void;
     pushOrderPathitem?(item: OrderPathItem): void;
-    routes: OrderRoutes;
 }

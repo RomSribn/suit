@@ -26,6 +26,7 @@
 }
 .catalog__form{margin: 0;}
 .catalog__form-wrap{
+    margin-top: 1.3333rem;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;

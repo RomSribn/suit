@@ -4,7 +4,7 @@ import * as classnames from 'classnames';
 import { getCombinedPathAndTitle } from '../routes';
 import CrumbRoute from '../../../utils/CrumbRoute';
 import { Filter } from '../Filter';
-import { GarmentChoise } from '../GarmentChoiseForm';
+// import { GarmentChoise } from '../GarmentChoiseForm';
 import { Main as Details } from '../Details';
 import { Gallery } from '../Gallery';
 import { SubgroupChoice } from '../SubgroupChoice';
@@ -18,12 +18,12 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
-            afterGarmentChoice,
-            routes : mainSectinoRoutes
+            // afterGarmentChoice,
+            // routes: mainSectinoRoutes
         } = this.props;
 
         return (
-        <React.Fragment key="order main content">
+            <React.Fragment key="order main content">
                 <div
                     className="main__middle"
                     style={{
@@ -33,10 +33,11 @@ class MainSection extends React.Component<MainSectionProps> {
                     }}
                 >
                     <Filter />
-                    <GarmentChoise
+                    {/* ORDER129 */}
+                    {/* <GarmentChoise
                         routes={mainSectinoRoutes}
                         catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
-                    />
+                    /> */}
                     <div
                         className={classnames(
                             {
@@ -58,7 +59,7 @@ class MainSection extends React.Component<MainSectionProps> {
                                 path={routes.garment}
                                 // @ts-ignore
                                 component={(props) => ( // tslint:disable-line
-                                    <Redirect to={routes.fabric.replace(':garment', props.match.params.garment)}/>
+                                    <Redirect to={routes.fabric.replace(':garment', props.match.params.garment)} />
                                 )}
                             />
                             <CrumbRoute
@@ -76,7 +77,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     </Switch>
                 </div>
                 <Footer />
-        </React.Fragment>
+            </React.Fragment>
         );
     }
 }

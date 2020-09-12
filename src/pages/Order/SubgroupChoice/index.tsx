@@ -7,7 +7,7 @@ import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
 
-let scrollData: {[key: string]: number} = {};
+let scrollData: { [key: string]: number } = {};
 
 type FilterFields = (
     item: Subgroup,
@@ -39,7 +39,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
             }
         } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
             ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
-            defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
+            defaultCode = defaultValues!.fabric_ref![item.subsection_our_code].our_code;
         }
     } catch (_) {
         status = loc[lang].noStatus;
@@ -64,15 +64,16 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     {
         app,
         user,
-        garments: {Subgroups},
+        garments: { Subgroups },
         order,
         routing:
-        {location: { pathname }} },
+        { location: { pathname } } },
     nextProps: SubgroupChoiceProps) => ({
         lang: app.lang,
         SubgroupsStore: new Subgroups(nextProps.match.params.garment),
         order: order.order,
-        defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment][0] : {},
+        // defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment] : {},
+        defaultValues: nextProps.match.params.garment, // <--- Нет идей зачем это, поставил заглуш
         userStore: user,
         activeExceptions: order.exceptions,
         setSubgroupTitle: order.setSubgroupTitle,

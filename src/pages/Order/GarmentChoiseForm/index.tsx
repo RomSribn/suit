@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { GarmentChoise as GarmentChoiseComponent } from './component';
 
-@inject(({app, garments: { garments }, routing, order}) => {
+@inject(({ app, garments: { garments }, routing, order }) => {
     return {
         lang: app.lang,
         pushOrderPathitem: app.pushOrderPathItem,
@@ -22,7 +22,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
     render() {
         const {
             lang,
-            catalogFormClassName,
             garments,
             activeGarments,
             toggleGarment,
@@ -30,20 +29,16 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             fetchGarments,
             makeOrder,
             pushOrderPathitem,
-            routes,
         } = this.props;
         return (
             <GarmentChoiseComponent
                 lang={lang}
-                catalogFormClassName={catalogFormClassName}
                 garments={garments}
                 fetchGarments={fetchGarments}
                 activeGarments={activeGarments}
                 toggleGarment={toggleGarment}
                 path={path}
                 makeOrder={makeOrder}
-                routes={routes}
-                isIndexPage={path === routes.index}
                 pushOrderPathitem={pushOrderPathitem}
             />
         );

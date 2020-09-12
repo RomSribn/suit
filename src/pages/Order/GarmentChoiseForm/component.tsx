@@ -8,13 +8,13 @@ import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
-import { isMobile } from '../../../utils';
+import history from '../../../history';
 
 type MakeCatalogItems = (
     g: Garments,
     lang: string,
     activeGarments: string[],
-    toggle: (g: string) => (e: any ) => void) => React.ReactNode[]; // tslint:disable-line
+    toggle: (g: string) => (e: any) => void) => React.ReactNode[]; // tslint:disable-line
 const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, toggle) => Object
     .keys(garments)
     .map(garment => {
@@ -25,22 +25,26 @@ const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, togg
                     name="goods"
                     checked={activeGarments.includes(garment)}
                     value={garment}
-                    // onClick={(e) => { e.preventDefault(); }}
+                    onClick={(e) => {
+                        history
+                            .push(window.location.pathname
+                                .replace(
+                                    activeGarments[0]
+                                    , garment));
+                    }}
                     onChange={toggle(garment)}
                 />
 
                 <span className="catalog__item-decoration">
-                <FadeIn>
-                    <span key={lang}>
-                    {
-                        garments[garment].titles
-                            ? garments[garment].titles![lang]
-                                ? garments[garment].titles![lang]
-                                : garment
-                            : loc[lang!].garmentsHardcodes[garments[garment].id] || garments[garment].name
-                    }
-                </span>
-                </FadeIn>
+                    <FadeIn>
+                        <span key={lang}>
+                            {
+                                garments[garment] &&
+                                garments[garment][`name${lang.charAt(0).toUpperCase() + lang.slice(1)}`]
+                                || garments[garment].name
+                            }
+                        </span>
+                    </FadeIn>
                 </span>
 
             </label>
@@ -55,7 +59,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         lang: 'en',
         garments: {},
         fetchGarments: () => undefined,
-        toggleGarment: () => () => {}, // tslint:disable-line
+        toggleGarment: () => () => { }, // tslint:disable-line
         pushOrderPathitem: () => undefined,
     };
     constructor(props: GarmentChoiceFormProps) {
@@ -121,29 +125,27 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
     toggle = (garment: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             this.activate(garment);
-         } else {
-             this.remove(garment);
-         }
+        } else {
+            this.remove(garment);
+        }
     }
     render() {
         const {
             lang,
             garments,
-            catalogFormClassName,
             activeGarments,
-            isIndexPage,
         } = this.props;
         return (
             <div
                 className={classNames(
-                'catalog',
-                {
-                    ['catalog--top-position']: !isIndexPage,
-                },
+                    'catalog',
+
+                    'catalog--top-position',
+
                 )}
-                style={ !isIndexPage ? {
+                style={{
                     marginBottom: 0,
-                } : {}}
+                }}
             >
                 <PopUp
                     open={this.state.showUnavailablePopup}
@@ -162,31 +164,28 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     >
                         <div style={{ marginBottom: '2rem' }}>{loc[lang!].unavailablePopupText}</div>
                         <Button
-                            onClick={() => this.setState({showUnavailablePopup: false})}
+                            onClick={() => this.setState({ showUnavailablePopup: false })}
                         >ok
                         </Button>
                     </div>
                 </PopUp>
 
                 <form
-                    className={`catalog__form ${catalogFormClassName}`}
-                    style={
-                        isIndexPage
-                         ? {}
-                         : {
-                            maxHeight: this.state.garmentChoiceFormHeight,
-                            transition: 'max-height .3s',
-                            overflow: 'hidden',
-                            }
+                    className={`catalog__form`}
+                    style={{
+                        maxHeight: this.state.garmentChoiceFormHeight,
+                        transition: 'max-height .3s',
+                        overflow: 'hidden',
+                    }
                     }
                 >
-                    {   isIndexPage &&
-                        <CatalogIntroText lang={lang!}/>
+                    {false && // <-- done in ORDER129
+                        <CatalogIntroText lang={lang!} />
                     }
                     <div className="catalog__form-wrap">
                         {makeCatalogItems(garments!, lang!, activeGarments!, this.toggle)}
                         {/* TODO заглушки пока нет разделов, помимо рубашки */}
-                        <label
+                        {/* <label
                             className="catalog__item"
                             onClick={() => this.setState({showUnavailablePopup: true})}
                         >
@@ -224,9 +223,9 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                         </span>
                                     </span>
                                 </label>
-                        }
+                        } */}
                     </div>
-                    {   isIndexPage &&
+                    {false && // <-- done in ORDER129
                         <div className="catalog__submit-bar">
                             <FadeIn>
                                 <Link

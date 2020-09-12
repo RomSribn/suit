@@ -29,9 +29,9 @@ class GarmentsStore {
       method: 'GET',
       url: `${API_ROOT}/${services.garments}`,
     },
-    () => { this.isFetching = true; },
-    this.garmentsLoaded,
-    (e: Error) => this.error);
+      () => { this.isFetching = true; },
+      this.garmentsLoaded,
+      (e: Error) => this.error);
   }
   garmentsLoaded = (data: GarmentsFromServer) => {
     const reduceCallback: GarmentsFromServerToGarmentsObject = (acc, cur) => {
@@ -39,7 +39,7 @@ class GarmentsStore {
         id,
       } = cur;
       acc[id] = cur;
-      return acc; 
+      return acc;
     };
     const list = data.reduce(reduceCallback, {});
     this.garmentsList = list;
@@ -47,15 +47,18 @@ class GarmentsStore {
   }
   @action
   toggleGarment = (garment: string) => (_action: string) => {
-    if (this.activeGarments.length < 2) {
-      return;
-    }
+    // Старая заглушка
+    // if (this.activeGarments.length < 2) {
+    //   return;
+    // }
     if (_action === ADD) {
-      if (this.activeGarments.findIndex(el => garment === el ) === -1) {
+      this.activeGarments = observable.array();
+      if (this.activeGarments.findIndex(el => garment === el) === -1) {
         this.activeGarments.push(garment);
       }
-    } else if ( _action === REMOVE) {
-        this.activeGarments.remove(garment);
+    } else if (_action === REMOVE) {
+      // this.activeGarments.remove(garment);
+      return;
     } else {
       // tslint:disable-next-line no-console
       console.error(`You have provided ${_action}-action which is not one of
@@ -68,12 +71,12 @@ class GarmentsStore {
     if (!clickedGarment) {
       clickedGarment = new GarmentStore(garment, this);
     }
-    this.active = garment;    
+    this.active = garment;
   }
 
   @action
   setChosenGarments = (garments: string[]) => {
-      this.activeGarments = observable.array(garments);
+    this.activeGarments = observable.array(garments);
   }
 }
 

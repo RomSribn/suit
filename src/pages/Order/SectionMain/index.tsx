@@ -10,6 +10,7 @@ import { Gallery } from '../Gallery';
 import { SubgroupChoice } from '../SubgroupChoice';
 import { Footer } from '../Footer';
 import { routes } from '../routes';
+import { routes as defaultRoutes } from '../../../config/routes';
 
 import './styles.styl';
 import { Demo } from '../OrderDecorationBlocks';
@@ -23,8 +24,9 @@ class MainSection extends React.Component<MainSectionProps> {
             routes: mainSectinoRoutes
         } = this.props;
 
-        const isRealIndexPage = window.location.pathname === '/order'; // isIndexPage из пропсов работает неправильно.
-        // Напишите уже бл регламент по роутам
+        const isRealIndexPage =
+            window.location.pathname ===
+            defaultRoutes.mainPage; // isIndexPage из пропсов работает неправильно.
 
         return (
             <React.Fragment key="order main content">
@@ -39,7 +41,6 @@ class MainSection extends React.Component<MainSectionProps> {
                             flexDirection: 'row',
                             alignItems: 'center',
                             marginTop: '100px',
-                            // marginLeft: '100px',
                             justifyContent: 'space-around'
                         }}
                 >

@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
 
 import { navigationRoutes as routes } from '../../config/routes';
+import { routes as defaultRoutes } from '../../config/routes';
 import { loc } from './loc';
 
 import './styles.styl';
@@ -15,7 +16,7 @@ const baseLink = String(process.env.BASE_SERVICE_LINK);
 interface HeaderProps {
 }
 export const Header = (props: HeaderProps) => {
-    const isRealIndexPage = window.location.pathname === '/order';
+    const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
     return (
         <div className="navbar__header">
             <a

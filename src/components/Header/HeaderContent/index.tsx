@@ -2,6 +2,7 @@ import * as React from 'react';
 import { findKey } from 'lodash';
 import { Navlinks } from './navlinks';
 import { navigationRoutes, routesTranslations } from '../../../config/routes';
+import { routes } from '../../../config/routes';
 
 class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: string }> {
     static defaultProps = {
@@ -32,7 +33,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
         } = this.state;
         const { path, lang, isAuth } = this.props;
         const routeName = findKey(navigationRoutes, v => v === path) || '';
-        const isRealIndexPage = window.location.pathname === '/order';
+        const isRealIndexPage = path === routes.mainPage;
         return (
             <div
                 className="main__header-content"

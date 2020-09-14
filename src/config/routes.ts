@@ -32,6 +32,7 @@ const routes = {
   orderList: '/order/list',
   login: '/login',
   index: '/',
+  mainPage: '/order',
   customersList: '/customer/list',
 };
 

@@ -11,4 +11,8 @@ interface IAppStore {
     removeVisitedChoiceItem: (name: string) => void;
     visitedChoiceItems: string[];
     clearVisitedChoiceItems: () => void;
+    showSwiperPopup: boolean;
+    swiperPopupData: {};
+    toggleSwiperPopup: () => void;
+    setSwiperPopupData: (value: {}) => void;
   }

@@ -1,4 +1,5 @@
 interface GalleryProps {
+    app?: IAppStore;
     lang: string;
     items: GalleryStoreItems,
     // TODO: сделать нормальную типизацию для галлереи

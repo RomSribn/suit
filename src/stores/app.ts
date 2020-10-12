@@ -30,6 +30,8 @@ const makeInitionalOrderPath = (lang: Lang) => [{
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
+  @observable showSwiperPopup = false;
+  @observable swiperPopupData = {};
   @observable visitedChoiceItems = observable.array<string>();
   orderPath = observable.array<OrderPathItem>([]);
 
@@ -86,6 +88,16 @@ export class App implements IAppStore {
   @action
   clearVisitedChoiceItems = () => {
     this.visitedChoiceItems.clear();
+  }
+
+  @action 
+  toggleSwiperPopup = () => {
+    this.showSwiperPopup = !this.showSwiperPopup;
+  }
+
+  @action
+  setSwiperPopupData = (value: {}) => {
+    this.swiperPopupData = value;
   }
 
 }

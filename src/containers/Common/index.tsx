@@ -24,14 +24,17 @@ class Common extends React.Component<CommonProps> {
     render() {
         const isDetailsPage =
             this.props.routingStore!.location.pathname.includes(routes.details);
+
+        const isIndexPage = window.location.pathname === '/order';
         return (
             <div className="application" >
                 {/* <Paralax /> */}
-                { window.location.pathname !== '/login' &&
+                {window.location.pathname !== '/login' &&
                     <Navigation />
                 }
                 <div className="content">
                     <div
+                        style={isIndexPage ? { width: '100%' } : {}}
                         className={classnames(
                             'main',
                             'main--white',
@@ -45,6 +48,7 @@ class Common extends React.Component<CommonProps> {
                     <DemoSection
                         onDummyLoad={this.props.onDummyLoad}
                     />
+
                 </div>
             </div>
         );

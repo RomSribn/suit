@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-// import { LanguageControl } from '../../../components/LanguageContorl';
 import { PopUp } from '../../../containers/Popup';
 import Login from '../../Login';
 
 import './styles.styl';
 import { HeaderBarProps } from '../typings';
+import { isMobile } from '../../../utils';
+import { routes } from '../../../config/routes';
 
 const loginText = {
     en: 'Log In',
@@ -47,11 +48,22 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
             userStore,
             lang
         } = this.props;
+        const isRealIndexPage = window.location.pathname === routes.mainPage;
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
         return (
             <div className="main__bar">
-                {/*<LanguageControl theme="black" shortcut={true} />*/}
-                <Link to="#" onClick={this.profileLinkClick} className="profile-link">{userName}</Link>
+                <Link
+                    to="#"
+                    style={isRealIndexPage ?
+                        {
+                            color: 'white',
+                        } :
+                        {}}
+                    onClick={this.profileLinkClick}
+                    className={`profile-link ${isRealIndexPage && 'profile-link--index-page-modify'}`}
+                >
+                    {!isMobile() && userName}
+                </Link>
                 <PopUp
                     open={this.state.showLoginForm}
                     onClose={this.closeForm}

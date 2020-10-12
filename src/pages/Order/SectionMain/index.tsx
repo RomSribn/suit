@@ -10,8 +10,10 @@ import { Gallery } from '../Gallery';
 import { SubgroupChoice } from '../SubgroupChoice';
 import { Footer } from '../Footer';
 import { routes } from '../routes';
+import { routes as defaultRoutes } from '../../../config/routes';
 
 import './styles.styl';
+import { Demo } from '../OrderDecorationBlocks';
 
 class MainSection extends React.Component<MainSectionProps> {
     render() {
@@ -19,25 +21,37 @@ class MainSection extends React.Component<MainSectionProps> {
             isIndexPage,
             detailsDeep,
             afterGarmentChoice,
-            routes : mainSectinoRoutes
+            routes: mainSectinoRoutes
         } = this.props;
 
+        const isRealIndexPage =
+            window.location.pathname ===
+            defaultRoutes.mainPage; // isIndexPage из пропсов работает неправильно.
+
         return (
-        <React.Fragment key="order main content">
+            <React.Fragment key="order main content">
                 <div
                     className="main__middle"
-                    style={{
+                    style={!isRealIndexPage ? {
                         justifyContent: !detailsDeep
                             ? 'flex-start'
-                            : 'center'
-                    }}
+                            : 'center',
+                    } : {
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginTop: '100px',
+                            justifyContent: 'space-around'
+                        }}
                 >
                     <Filter />
+                    {isRealIndexPage && <Demo />}
                     <GarmentChoise
                         routes={mainSectinoRoutes}
                         catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
                     />
                     <div
+                        style={isRealIndexPage ? { display: 'none' } : {}}
                         className={classnames(
                             {
                                 customs: !isIndexPage,
@@ -58,7 +72,9 @@ class MainSection extends React.Component<MainSectionProps> {
                                 path={routes.garment}
                                 // @ts-ignore
                                 component={(props) => ( // tslint:disable-line
-                                    <Redirect to={routes.fabric.replace(':garment', props.match.params.garment)}/>
+                                    <Redirect
+                                        to={routes.fabric.replace(':garment', props.match.params.garment)}
+                                    />
                                 )}
                             />
                             <CrumbRoute
@@ -76,7 +92,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     </Switch>
                 </div>
                 <Footer />
-        </React.Fragment>
+            </React.Fragment>
         );
     }
 }

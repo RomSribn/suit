@@ -47,25 +47,26 @@ class FooterBar extends React.Component<Props> {
         return (
             <div className="footer-btn-bar footer-btn-bar__mobile">
                 <PopUp open={mutuallyExclusivePopup && mutuallyExclusivePopup!.show}>
-                  {
-                    mutuallyExclusivePopup && mutuallyExclusivePopup!.show ?
-                    <MutuallyExclusivePopup lang={lang!} {...mutuallyExclusivePopup!} /> :
-                    null
-                  }
+                    {
+                        mutuallyExclusivePopup && mutuallyExclusivePopup!.show ?
+                            <MutuallyExclusivePopup lang={lang!} {...mutuallyExclusivePopup!} /> :
+                            null
+                    }
                 </PopUp>
 
                 <Switch>
                     <Route
                         path={routes.fabric}
                         component={() => (
-                            <a href={process.env.BASE_SERVICE_LINK || '#'} target="blank">
+                            // <a href={process.env.BASE_SERVICE_LINK || '#'} target="blank">
+                            <Link to={'/order'}>
                                 <Button
                                     theme="white"
                                     className="back-button"
                                 >
                                     {loc[lang!].back}
                                 </Button>
-                            </a>)}
+                            </Link>)}
                     />
                     <Route
                         path={routes.fitting}
@@ -75,12 +76,12 @@ class FooterBar extends React.Component<Props> {
                                     theme="white"
                                     className="back-button"
                                     onClick={() => {
-                                            updateOrder({
-                                                match: props.match,
-                                                Subgroups: this.props.Subgroups,
-                                                orderStore: this.props.orderStore,
-                                            });
-                                        }}
+                                        updateOrder({
+                                            match: props.match,
+                                            Subgroups: this.props.Subgroups,
+                                            orderStore: this.props.orderStore,
+                                        });
+                                    }}
                                 >
                                     {loc[lang!].back}
                                 </Button>
@@ -130,27 +131,27 @@ class FooterBar extends React.Component<Props> {
                     <Route
                         path={routes.fabric}
                         component={
-                        // tslint:disable-next-line no-any
-                        (props: any) => (
-                        <Link
-                            to={`${routes.design.replace(':garment', props.match.params.garment)}`}
-                        >
-                            <SaveButton
-                                {...props[0]}
-                                saveCallback={
-                                    () => {
-                                        this.saveCallback(
-                                            `${routes.details}/${props.match.params.garment}`
-                                        );
-                                    }
-                                }
-                                isUpdate={true}
-                                lang={lang}
-                            >
-                                {loc[lang!].save}
-                            </SaveButton>
-                        </Link>
-                    )}
+                            // tslint:disable-next-line no-any
+                            (props: any) => (
+                                <Link
+                                    to={`${routes.design.replace(':garment', props.match.params.garment)}`}
+                                >
+                                    <SaveButton
+                                        {...props[0]}
+                                        saveCallback={
+                                            () => {
+                                                this.saveCallback(
+                                                    `${routes.details}/${props.match.params.garment}`
+                                                );
+                                            }
+                                        }
+                                        isUpdate={true}
+                                        lang={lang}
+                                    >
+                                        {loc[lang!].save}
+                                    </SaveButton>
+                                </Link>
+                            )}
                     />
 
                     <Route
@@ -238,16 +239,16 @@ class FooterBar extends React.Component<Props> {
                     </Route>
 
                     <Route path={routes.details}>
-                    {   this.props.orderId ?
-                        <SaveButton
-                            saveExistingOrder={true}
-                        >
-                            {loc[lang!].update}
-                        </SaveButton> :
-                        <FadeIn>
-                            <SaveButton>{loc[lang!].create}</SaveButton>
-                        </FadeIn>
-                    }
+                        {this.props.orderId ?
+                            <SaveButton
+                                saveExistingOrder={true}
+                            >
+                                {loc[lang!].update}
+                            </SaveButton> :
+                            <FadeIn>
+                                <SaveButton>{loc[lang!].create}</SaveButton>
+                            </FadeIn>
+                        }
                     </Route>
                 </Switch>
             </div>

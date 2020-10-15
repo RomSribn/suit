@@ -12,6 +12,8 @@ import { GarmentChoise as GarmentChoiseComponent } from './component';
             garments.toggleGarment(action)(garment);
         },
         activeGarments: [...garments.activeGarments],
+        currentActiveGarment: garments.currentActiveGarment,
+        setCurrentActiveGarment: garments.setCurrentActiveGarment,
         path: routing.location.pathname,
         order: order.order,
         makeOrder: order.fetchInitialOrder,
@@ -29,9 +31,15 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             fetchGarments,
             makeOrder,
             pushOrderPathitem,
+            isNavigationGarments,
+            currentActiveGarment,
+            setCurrentActiveGarment
         } = this.props;
         return (
             <GarmentChoiseComponent
+                setCurrentActiveGarment={setCurrentActiveGarment}
+                isNavigationGarments={isNavigationGarments}
+                currentActiveGarment={currentActiveGarment}
                 lang={lang}
                 garments={garments}
                 fetchGarments={fetchGarments}

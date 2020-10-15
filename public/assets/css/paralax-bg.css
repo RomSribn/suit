@@ -120,6 +120,23 @@
     }
 }
 
+@media only screen and (max-width: 450px){
+    .paralax-bg__rect{
+    bottom: 115vh;
+    right: -0vw;
+    width: 210vw;
+    height: 120vh;
+    -webkit-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    -webkit-transform-origin: 100% 100%;
+    -moz-transform-origin: 100% 100%;
+    -ms-transform-origin: 100% 100%;
+    -o-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+}
 
 
 

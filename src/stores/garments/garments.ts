@@ -18,6 +18,7 @@ type GarmentsFromServerToGarmentsObject = (
 
 class GarmentsStore {
   @observable.shallow garmentsList = {};
+  @observable currentActiveGarment = ''; // Активный гермент, что сейчас отображается в адрессной строке
   @observable activeGarments = observable.array();
   @observable active = '';
   @observable isFetching = false;
@@ -48,22 +49,29 @@ class GarmentsStore {
   @action
   toggleGarment = (garment: string) => (_action: string) => {
     // Старая заглушка
-    // if (this.activeGarments.length < 2) {
+    // if (this.activeGarments.length < 3) {
     //   return;
     // }
     if (_action === ADD) {
-      this.activeGarments = observable.array();
+      // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
+      console.log(this.activeGarments); // tslint:disable-line
       if (this.activeGarments.findIndex(el => garment === el) === -1) {
-        this.activeGarments.push(garment);
+      this.activeGarments.push(garment);
       }
     } else if (_action === REMOVE) {
-      // this.activeGarments.remove(garment);
+      console.log('before',this.activeGarments); // tslint:disable-line
+      this.activeGarments.remove(garment);
+      console.log('after', this.activeGarments); // tslint:disable-line
       return;
     } else {
       // tslint:disable-next-line no-console
       console.error(`You have provided ${_action}-action which is not one of
       ${ADD} or ${REMOVE}`);
     }
+  }
+  @action
+  setCurrentActiveGarment = (garment: string) => {
+    this.currentActiveGarment = garment;
   }
   @action
   setActiveGarment = (garment: string) => {

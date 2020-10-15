@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { SwiperSlide } from 'swiper/react';
 import { API_ROOT } from '../../config/routes';
 
-export const urlNormilizer3000 = (localUrl) =>
+export const urlNormilizer3000 = (localUrl: string) =>
   API_ROOT + localUrl.replace('/html', '');
 
-export const createPackOfSlides = (imagesArray) => {
+export const createPackOfSlides = (imagesArray: string) => {
   const pack = [];
 
   for (let i = 0; i < imagesArray.length; i++) {
@@ -23,7 +23,7 @@ export const createPackOfSlides = (imagesArray) => {
   return pack;
 };
 
-export const createPackOfThumbs = (imagesArray) => {
+export const createPackOfThumbs = (imagesArray: string) => {
   const pack = [];
 
   for (let i = 0; i < imagesArray.length; i++) {

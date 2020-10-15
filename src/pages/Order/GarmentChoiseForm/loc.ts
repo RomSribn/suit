@@ -31,10 +31,10 @@ const makeLocale: MakeLocale<Locale> = () => ({
     },
     ru: {
         choiceText: {
-            first: 'Выберите необходимые изделия и нажмите кнопку принять.',
+            first: 'Выберите необходимые изделия и нажмите кнопку продолжить.',
             second: 'Это позволит вам настроить каждую часть изделия.',
         },
-        submit: 'принять',
+        submit: 'продолжить',
         pathItemValue: 'изделия',
         garmentsHardcodes: {
             shirt: 'рубашка',

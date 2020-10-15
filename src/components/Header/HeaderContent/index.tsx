@@ -3,6 +3,7 @@ import { findKey } from 'lodash';
 import { Navlinks } from './navlinks';
 import { navigationRoutes, routesTranslations } from '../../../config/routes';
 import { inject, observer } from 'mobx-react';
+import { routes } from '../../../config/routes';
 
 @inject(({ garments: { garments } }) => {
     return {
@@ -10,6 +11,7 @@ import { inject, observer } from 'mobx-react';
     };
 })
 @observer
+
 class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: string }> {
     static defaultProps = {
         lang: 'en',
@@ -39,6 +41,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
         } = this.state;
         const { path, lang, isAuth, activeGarments } = this.props;
         const routeName = findKey(navigationRoutes, v => v === path) || '';
+        const isRealIndexPage = path === routes.mainPage;
         return (
             <div
                 className="main__header-content"
@@ -47,7 +50,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
                 <h1 className="main__header-title">
                     {path.includes('/order/details') ?
                         <Navlinks garment={activeGarments && activeGarments[0] || 'shirt'} isAuth={isAuth} /> :
-                        <span className="header-text">
+                        !isRealIndexPage && <span className="header-text">
                             {routesTranslations[lang][routeName]}
                         </span>
                     }

@@ -44,7 +44,7 @@ class Wrapper extends Component {
       userStore,
       location,
     } = this.props;
-    const { lang, showMobileMenu, toggleMobileMenu, setLang, toggleLoginForm, showLoginForm } = app;
+    const { lang, showMobileMenu, toggleMobileMenu, setLang } = app;
     const { logout, isAuth, profile } = userStore;
     const loggedIn = this.props.userStore.isAuth;
     const role = userStore.profile && userStore.profile.role || null;
@@ -61,18 +61,17 @@ class Wrapper extends Component {
       >
         <PopUp open={showMobileMenu}>
           {
-            showMobileMenu && showLoginForm ?
-              <Login loginCallback={toggleLoginForm} closeForm={toggleLoginForm} /> : <MobileNavigationMenuPopup
+            showMobileMenu && isAuth ?
+              <MobileNavigationMenuPopup
                 currentLang={lang}
                 closeMenu={toggleMobileMenu}
-                toggleLoginForm={toggleLoginForm}
                 setLang={setLang}
                 sideEffects={{
                   logout: logout.bind(userStore)
                 }}
                 role={role}
-              />
-
+              /> :
+              <Login loginCallback={toggleMobileMenu} closeForm={toggleMobileMenu} />
           }
         </PopUp>
         <Route path={routes.order} exact={true} render={() => {
@@ -86,7 +85,7 @@ class Wrapper extends Component {
               dummyWasRendered = true;
               this.showSpinner();
             }
-            return <Redirect to={'order/details/shirt/fabric_ref/fabric'} />;
+            return <Redirect to={'/order'} />;
           }} />
           {
             !userStore.isAuth && <Route path={`${routes.details}/:garment/fitting/fitting`} component={({ match, location }) => {

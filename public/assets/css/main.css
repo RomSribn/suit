@@ -24,6 +24,7 @@
     align-items: flex-end;
 }
 .main__middle{
+    z-index: 999;
     position: relative;
     height: 50%;
     width: 100%;
@@ -80,6 +81,9 @@
     background-size: contain;
     color: #fff;
     font-size: .8666rem;
+}
+.profile-link--index-page-modify {
+    background: url(../img/bar-nav/white/user.svg) 0 center no-repeat !important;
 }
 .chopcard{
     position: relative;

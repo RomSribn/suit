@@ -9,7 +9,7 @@ const makeRoutes: MakeRoutes = (indexRoute = '/order') => {
         subgroupChoice: `${indexRoute}/details/:garment/:group/:subgroup`,
         fabric: `${indexRoute}/details/:garment/fabric_ref/fabric`,
         design: `${indexRoute}/details/:garment/design`,
-        fitting: `${indexRoute}/details/:garment/fitting/fitting`,
+        fitting: `${indexRoute}/details/:garment/fitting`,
     };
 };
 const routes = makeRoutes();

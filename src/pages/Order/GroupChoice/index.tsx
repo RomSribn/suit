@@ -42,12 +42,14 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         }
 
         if (!choiceItemValue) {
-            choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
+            choiceItemValue =
+            _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
         }
         const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 13
             ? choiceItemValue!.slice(0, 10) + '...'
             : choiceItemValue;
-
+        // console.log('subStore.data', subgroupsStore!.data![subgroup]); // tslint:disable-line
+        // console.log('group', group); // tslint:disable-line
         const subgroupName = subgroupsStore!.data
             ? subgroupsStore!.data[subgroup]
                 .find((item: Subgroup) => item.subsection_our_code === group).title[lang]

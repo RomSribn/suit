@@ -8,12 +8,12 @@ import { routes } from '../../config/routes';
 import './style.styl';
 import { GarmentChoise } from '../../pages/Order/GarmentChoiseForm/';
 
-const isRealIndexPage = () => window.location.pathname === routes.mainPage;
+const isOrderDetails = () => window.location.pathname.includes(routes.details);
+const isNotDesignPart = () => !window.location.pathname.includes('design/');
 const isMobile = () => document.body.offsetWidth <= 800;
 const isLandscape = () => parseInt((window.orientation || 0).toString(), 10) !== 0;
 
-class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandscape: boolean, 
-    isRealIndexPage: boolean }> {
+class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandscape: boolean }> {
     static defaultProps = {
         userName: undefined,
     };
@@ -21,7 +21,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
     state = {
         isMobile: isMobile(),
         isLandscape: isLandscape(),
-        isRealIndexPage: isRealIndexPage(),
+        // isRealIndexPage: isRealIndexPage(),
     };
 
     listener = () => {
@@ -29,7 +29,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
           this.setState({
             isMobile: isMobile(),
             isLandscape: isLandscape(),
-            isRealIndexPage: isRealIndexPage(),
+            // isRealIndexPage: isRealIndexPage(),
           });
         }, 300);
     }
@@ -53,10 +53,10 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
         } = this.props;
 
         const state = this.state;
-        console.log(isRealIndexPage()); // tslint:disable-line
+        // console.log(isRealIndexPage()); // tslint:disable-line
 
         return (
-            <div className="main__header">
+            <div style={isNotDesignPart() ? {} : {marginBottom: '1.5rem'}} className="main__header">
                 {
                     !state.isMobile ?
                         <div className="header-wrapper">
@@ -72,7 +72,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
                                 cutOrderPath={appStore.cutOrderPath}
                                 isAuth={userStore.isAuth}
                             />
-                            {!isRealIndexPage() && <GarmentChoise isNavigationGarments={true} />}
+                            {isOrderDetails() && isNotDesignPart() && <GarmentChoise isNavigationGarments={true} />}
                         </div> :
                         <div className="header-wrapper-mobile">
                             <MobileHeader

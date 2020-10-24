@@ -48,7 +48,7 @@ class Subgroups {
         Promise.all([
             this.fetchSubroup(garment, 'design'),
             this.fetchSubroup(garment, 'fabric_ref'),
-            this.fetchSubroup(garment, 'fitting')
+            this.fetchSubroup('shirt', 'fitting')
         ]).then((values: Subgroup[][]) => {
             const data = {
                 design: values[0],

@@ -35,15 +35,17 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             subgroupsStore,
         } = this.props;
 
+        const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
+
         let choiceItemValue: string | undefined;
         if (group === 'initials_text') {
             // @ts-ignore
-            choiceItemValue = _.get(order, `${garment}[0].${subgroup}.${group}`);
+            choiceItemValue = _.get(order, `${fixedGarment}[0].${subgroup}.${group}`);
         }
 
         if (!choiceItemValue) {
             choiceItemValue =
-            _.get(order, `${garment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
+            _.get(order, `${fixedGarment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
         }
         const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 13
             ? choiceItemValue!.slice(0, 10) + '...'
@@ -70,9 +72,13 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             {content}
                         </div>
                     </Route>
+                    {subgroup === 'fitting' ? 
+                    <Link to={backLink}  className="custom custom--open">
+                        {content}
+                    </Link> : 
                     <Link to={backLink} onClick={this.backClick} className="custom custom--open">
                         {content}
-                    </Link>
+                    </Link>}
                 </Switch>
         );
     }

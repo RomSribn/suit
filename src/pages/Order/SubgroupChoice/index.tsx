@@ -99,7 +99,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             history: { action },
             location: { pathname }
         } = prevProps;
-        if (action !== 'POP' && pathname.includes('design')) {
+        if (action !== 'POP' && pathname.includes('design') || pathname.includes('fitting')) {
             const choiceItemsEl = document.querySelector('.customs.customs--short');
             scrollData = {
                 ...scrollData,
@@ -157,6 +157,19 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 )),
             ]
             : [];
+
+        const dataFitting = $store
+            ? [
+                ...$store.fitting.map((v: Subgroup) => filterFields(
+                    v,
+                    'fitting',
+                    lang!,
+                    order!,
+                    'shirt',
+                    defaultValues
+                )),
+            ]
+            : [];
         return (
             <Switch>
                 <Route
@@ -181,6 +194,12 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     path={routes.design}
                 >
                     <Component lang={lang} match={match} data={data} />
+                </Route>
+                <Route
+                    exact={true}
+                    path={routes.fitting}
+                >
+                    <Component lang={lang} match={match} data={dataFitting} />
                 </Route>
                 <Redirect to={match.url} />
             </Switch>);

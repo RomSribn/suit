@@ -27,7 +27,7 @@ type MenuLink = {
 const menuList: MenuLink[] = [
   {
     name: 'order',
-    url: '/order/details/shirt'
+    url: '/order'
   },
   {
     name: 'panel',

@@ -7,7 +7,7 @@ import { routes } from '../../../config/routes';
 
 @inject(({ garments: { garments } }) => {
     return {
-        activeGarments: [...garments.activeGarments],
+        activeGarment: garments.currentActiveGarment,
     };
 })
 @observer
@@ -39,7 +39,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
     render() {
         const {
         } = this.state;
-        const { path, lang, isAuth, activeGarments } = this.props;
+        const { path, lang, isAuth, activeGarment } = this.props;
         const routeName = findKey(navigationRoutes, v => v === path) || '';
         const isRealIndexPage = path === routes.mainPage;
         return (
@@ -49,7 +49,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
             >
                 <h1 className="main__header-title">
                     {path.includes('/order/details') ?
-                        <Navlinks garment={activeGarments && activeGarments[0] || 'shirt'} isAuth={isAuth} /> :
+                        <Navlinks garment={activeGarment!} isAuth={isAuth} /> :
                         !isRealIndexPage && <span className="header-text">
                             {routesTranslations[lang][routeName]}
                         </span>

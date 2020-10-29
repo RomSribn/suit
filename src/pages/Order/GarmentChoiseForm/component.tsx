@@ -226,7 +226,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                         <div className="catalog__submit-bar">
                             <FadeIn>
                                 {!isMobile() ? <Link
-                                    to="order/details/shirt/fabric_ref/fabric"
+                                    to={`order/details/${currentActiveGarment}/fabric_ref/fabric`}
                                     key={lang}
                                     onClick={this.makeOrder}
                                     className="catalog__submit"
@@ -253,7 +253,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                     </div>
                                 </Link> :
                                     <Link
-                                        to="order/details/shirt/fabric_ref/fabric"
+                                        to={`order/details/${currentActiveGarment}/fabric_ref/fabric`}
                                         key={lang}
                                         onClick={this.makeOrder}
                                         style={{

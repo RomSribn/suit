@@ -18,8 +18,8 @@ type GarmentsFromServerToGarmentsObject = (
 
 class GarmentsStore {
   @observable.shallow garmentsList = {};
-  @observable currentActiveGarment = ''; // Активный гермент, что сейчас отображается в адрессной строке
   @observable activeGarments = observable.array();
+  @observable currentActiveGarment = ''; // Гермент, что сейчас отображается в адрессной строке
   @observable active = '';
   @observable isFetching = false;
   @observable error = {};
@@ -54,14 +54,13 @@ class GarmentsStore {
     // }
     if (_action === ADD) {
       // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
-      console.log(this.activeGarments); // tslint:disable-line
       if (this.activeGarments.findIndex(el => garment === el) === -1) {
       this.activeGarments.push(garment);
+      this.currentActiveGarment = this.activeGarments[0];
       }
     } else if (_action === REMOVE) {
-      console.log('before',this.activeGarments); // tslint:disable-line
       this.activeGarments.remove(garment);
-      console.log('after', this.activeGarments); // tslint:disable-line
+      this.currentActiveGarment = this.activeGarments[0];
       return;
     } else {
       // tslint:disable-next-line no-console
@@ -84,7 +83,9 @@ class GarmentsStore {
 
   @action
   setChosenGarments = (garments: string[]) => {
-    this.activeGarments = observable.array(garments);
+    const garmentsArray = observable.array(garments);
+    this.activeGarments = garmentsArray;
+    this.currentActiveGarment = garmentsArray[0];
   }
 }
 

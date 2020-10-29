@@ -4,5 +4,5 @@ interface HeaderContentProps {
     orderPath: OrderPath;
     cutOrderPath(value: string): void;
     isAuth?: boolean;
-    activeGarments?: string[];
+    activeGarment?: string;
 }

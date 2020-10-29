@@ -19,7 +19,7 @@ const NavlinksComponent: React.FunctionComponent<NavlinksComponentProps> = ({ is
             <NavlinksItemComponent to={garmentSet(routes.design)}>
                 дизайн
             </NavlinksItemComponent>
-            <NavlinksItemComponent to={garmentSet(routes.fitting)} forbidden={isAuth}>
+            <NavlinksItemComponent to={garmentSet(routes.fitting)} forbidden={!isAuth}>
                 мерки
             </NavlinksItemComponent>
         </div>

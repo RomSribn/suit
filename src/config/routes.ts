@@ -29,7 +29,7 @@ export const services = {
 const routes = {
   details: `/order/details`,
   order: '/order/details',
-  orderList: '/order/list',
+  orderList: '/orders/list',
   login: '/login',
   index: '/',
   mainPage: '/order',

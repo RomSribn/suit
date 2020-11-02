@@ -118,15 +118,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         }
 
         const toggleSwipe = () => {
-            // tslint:disable-next-line:no-console
-            console.log('working');
-            // this.props.app && 
             this.props.app!.toggleSwiperPopup();
         };
-
         return (
             <>{
-                this.props.app &&
+                this.props.app && (window.location.pathname.includes('design') ?
+                (true) : (
+                this.props.app.currentSearchValue &&
+                id.includes(this.props.app.currentSearchValue.toLowerCase()) )) &&
                 <div
                     onClick={click}
                     onMouseEnter={onMouseEnter}
@@ -143,6 +142,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                         )}
                     >
                         <img src={image} alt={`${id}`} />
+                        {this.props.app && this.props.app.changeSearchedItemsCount()}
                         {!isMobile() && this.props.zoomId === id && this.props.app &&
                             <span onClick={toggleSwipe} className="zoom-icon" />}
                     </div>
@@ -183,6 +183,7 @@ const makeGalleryItems: makeGalleryItems = (
         return galleryItemsCache[cache];
     }
     const result = items.map((item, elementIndex) => {
+        console.log('XXX', item); // tslint:disable-line
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}
@@ -296,7 +297,6 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         } = this.state;
         const activeItems =
             renderedElementsCount > items.length ? items : items.slice(0, renderedElementsCount);
-
         return (
             <div
                 className="gallery__bar"

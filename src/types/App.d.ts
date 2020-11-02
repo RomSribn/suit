@@ -1,6 +1,7 @@
 interface IAppStore {
   lang: Lang;
   orderPath: OrderPathItem[];
+  currentSearchValue: string;
   setLang: (lang: string) => void;
   pushOrderPathItem: (item: OrderPathItem) => void;
   popOrderPathItem: EmptyFunction;
@@ -17,4 +18,9 @@ interface IAppStore {
   toggleSwiperPopup: () => void;
   setSwiperPopupData: (value: {}) => void;
   toggleLoginForm: () => void;
+  isSearchBarOpened: boolean;
+  searchedItemsCount: number;
+  changeSearchedItemsCount: () => void;
+  toggleIsSearchBarOpened: () => void;
+  setCurrentSearchValue: (text: string) => void;
 }

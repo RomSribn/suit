@@ -9,6 +9,7 @@ import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
 import { Button } from '../../../components/Button';
+// import { observer } from 'mobx-react';
 
 interface GalleryState extends ImageLoadState {
     activeElementIndex: number;
@@ -16,6 +17,7 @@ interface GalleryState extends ImageLoadState {
     mouseOverElement: boolean;
 }
 
+// @observer
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     private imageRef: React.RefObject<HTMLDivElement>;
     private galleryBarWrapperRef: React.RefObject<HTMLDivElement>;
@@ -51,9 +53,10 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 success: null,
                 error: null,
             },
-            mouseOverElement: false,
+            mouseOverElement: false
         };
     }
+
     componentWillMount() {
         this.props.filterStore.loadFilters(services.shirtFilters);
     }
@@ -81,7 +84,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
 
         if (_.isEmpty(item)) {
-            const codeInOrder: string|null =
+            const codeInOrder: string | null =
                 _.get(orderStore, `order.${garment}[0].${group}.${subGroup}.our_code`, null);
             item = items.find(i => i.our_code === codeInOrder);
         }
@@ -167,7 +170,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             isLandscapeInitial ?
                 /** У элемента превью элемента есть отступ 5px */
                 `width: calc(100% - ${(ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0)}px);` : ''
-            );
+        );
 
         if (ref) {
             ref.setAttribute('style', '');
@@ -185,8 +188,8 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 /** У элемента превью элемента есть отступ 5px + 2 бордеры с обеих сторон по 1px */
                 `width: calc(100% - ${(ref && ref.offsetWidth ? ref.offsetWidth + 7 : 0)}px);` :
                 `height: calc(100% - ${
-                    (ref ? ref.offsetHeight : 0) ? (this.galleryBarWrapperRef.current.offsetWidth + 10) : 0}px);`
-            );
+                (ref ? ref.offsetHeight : 0) ? (this.galleryBarWrapperRef.current.offsetWidth + 10) : 0}px);`
+        );
     }
 
     componentDidMount() {
@@ -226,7 +229,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         }
     }
 
-    setActiveElementIndex = (i: number, action: string = 'click', link = '' ) => () => {
+    setActiveElementIndex = (i: number, action: string = 'click', link = '') => () => {
         const elementInfo = {
             garment: this.props.galleryStore.garment,
             // TODO: разобраться с путаницей наименований
@@ -293,9 +296,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         let description = item.description[lang];
         const descriptionSize = 153;
         if (description.length > descriptionSize) {
-        // if ((description) && (description.length > descriptionSize)) {
-        // если description == null, без проверки "if ((description) &&..." будет ошибка
-        // в TS для description тип string указан, так что скорее всего лишнее
+            // if ((description) && (description.length > descriptionSize)) {
+            // если description == null, без проверки "if ((description) &&..." будет ошибка
+            // в TS для description тип string указан, так что скорее всего лишнее
             description = description.substring(0, descriptionSize).trim() + '...';
         }
         const {
@@ -303,36 +306,45 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             // price,
             // our_code: code,
         } = item;
+
         return (
             <div className={classnames('gallery', { 'gallery--colors': group === 'fabric_ref' })}>
-                <div className="gallery__prev-blc">
+                <div
+                    className="gallery__prev-blc"
+                >
                     <div className="gallery__prev-wrap clearfix" id="js-gallery-wrap">
-                        { !isMobile() && !load.success && !load.error
-                        ? <div
-                            className="preloader"
-                            style={{
-                                background: 'rgba(0,0,0, .2)',
-                                zIndex: 999999999,
-                            }}
-                        >
-                        <div className="preloader__progbar">
-                            <div className="preloader__progline loaded"/>
-                        </div>
-                        </div>
-                        : !isMobile() && load.success ?
-                        <div
-                            className="gallery__img"
-                            id="js-gallery-img"
-                            ref={this.imageRef}
-                        >
-                            <img
-                                className="image"
-                                src={image}
-                                alt="gallery image"
-                            />
-                        </div>
-                        : null
-                         }
+                        {!isMobile() && !load.success && !load.error
+                            ? <div
+                                className="preloader"
+                                style={{
+                                    background: 'rgba(0,0,0, .2)',
+                                    zIndex: 999999999,
+                                }}
+                            >
+                                <div className="preloader__progbar">
+                                    <div className="preloader__progline loaded" />
+                                </div>
+                            </div>
+                            : !isMobile() && load.success ?
+                                <div
+                                    style={
+                                        {
+                                            visibility: this.props.app && this.props.app.searchedItemsCount ?
+                                                'visible' : 'hidden'
+                                        }
+                                    }
+                                    className="gallery__img"
+                                    id="js-gallery-img"
+                                    ref={this.imageRef}
+                                >
+                                    < img
+                                        className="image"
+                                        src={image}
+                                        alt="gallery image"
+                                    />
+                                </div>
+                                : null
+                        }
                         <div ref={this.galleryBarWrapperRef} className="gallery__bar-wrapper">
                             <GalleryBar
                                 items={items}
@@ -351,20 +363,20 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                         {!isMobile() &&
                             <div className="gallery__footer--articul">
                                 {this.props.app &&
-                                <Button 
-                                    onClick={this.props.app.toggleSwiperPopup} 
-                                    className="gallery__footer--detailButton"
-                                >
-                                    Подробно
-                                </Button>
+                                    <Button
+                                        onClick={this.props.app.toggleSwiperPopup}
+                                        className="gallery__footer--detailButton"
+                                    >
+                                        Подробно
+                                    </Button>
                                 }
                             </div>
                         }
                     </div>
                     <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">
-                            {    description ||
-                                    'deafult description text'
+                            {description ||
+                                'deafult description text'
                             }
                         </p>
                     </div>

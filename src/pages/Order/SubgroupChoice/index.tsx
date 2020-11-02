@@ -73,7 +73,8 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
         SubgroupsStore: new Subgroups(nextProps.match.params.garment),
         order: order.order,
         // defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment] : {},
-        defaultValues: nextProps.match.params.garment, // <--- Нет идей зачем это, поставил заглуш
+        defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment][0] : {},
+        // defaultValues: nextProps.match.params.garment, // <--- Нет идей зачем это, поставил заглуш
         userStore: user,
         activeExceptions: order.exceptions,
         setSubgroupTitle: order.setSubgroupTitle,

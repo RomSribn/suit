@@ -77,7 +77,7 @@ const SwiperPopup = (props: SwiperPopupProps) => {
         </div>
       </div>
       <div
-        className="btn gallery__filter-btn close-swiper-popup"
+        className="btn close-swiper-popup"
         onClick={props.closeButton}
       />
     </div>

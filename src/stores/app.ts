@@ -34,12 +34,30 @@ export class App implements IAppStore {
   @observable swiperPopupData = {};
   @observable visitedChoiceItems = observable.array<string>();
   @observable showLoginForm = false;
+  @observable currentSearchValue = 'fab';
+  @observable isSearchBarOpened = false;
+  @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
     this.lang = newLang;
     this.orderPath.push(...makeInitionalOrderPath(newLang));
+  }
+
+  @action
+  setCurrentSearchValue = (text: string) => {
+    if (text === '') {
+      this.currentSearchValue = 'fab';
+    } else {
+      this.searchedItemsCount = 0;
+      this.currentSearchValue = text;
+    }
+  }
+
+  @action
+  changeSearchedItemsCount = () => {
+    this.searchedItemsCount = 2;
   }
 
   @action
@@ -50,6 +68,11 @@ export class App implements IAppStore {
   @action
   toggleLoginForm = () => {
     this.showLoginForm = !this.showLoginForm;
+  }
+
+  @action
+  toggleIsSearchBarOpened = () => {
+    this.isSearchBarOpened = !this.isSearchBarOpened;
   }
 
   @action

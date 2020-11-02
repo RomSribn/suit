@@ -343,7 +343,12 @@
 }
 
 @media (width: 1024px) {
-        .catalog__submit-lines-group {
+    .catalog__submit-frame, .catalog__item{
+
+    width: 12.45rem;
+
+}
+    .catalog__submit-lines-group {
         display: none;
 }
 }

@@ -34,7 +34,7 @@ export class App implements IAppStore {
   @observable swiperPopupData = {};
   @observable visitedChoiceItems = observable.array<string>();
   @observable showLoginForm = false;
-  @observable currentSearchValue = 'fab';
+  @observable currentSearchValue = ' ';
   @observable isSearchBarOpened = false;
   @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
@@ -48,7 +48,7 @@ export class App implements IAppStore {
   @action
   setCurrentSearchValue = (text: string) => {
     if (text === '') {
-      this.currentSearchValue = 'fab';
+      this.currentSearchValue = ' ';
     } else {
       this.searchedItemsCount = 0;
       this.currentSearchValue = text;

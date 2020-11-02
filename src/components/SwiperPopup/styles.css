@@ -264,3 +264,12 @@
     width: 7.2vw;
   }
 }
+
+@media (min-width: 768px) and (max-width: 1024px){
+  .swiper-container {
+    width: 59.55vw;
+}
+.swiper-image__thumb {
+    width: 14.16vw;
+  }
+}

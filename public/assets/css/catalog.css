@@ -317,7 +317,26 @@
 @media only screen and (min-width: 1024px) and (max-width: 1366px) {
     .catalog__submit-frame, .catalog__item{
 
-    width: 14.45rem;
+    width: 12.45rem;
+    margin-bottom: 10px;
+}
+}
 
+@media (width: 768px) {
+
+    .catalog__submit-frame, .catalog__item{
+
+    width: 10.45rem;
+
+}
+    .catalog__submit-lines-group {
+        display: none;
+}
+
+}
+
+@media (width: 1024px) {
+        .catalog__submit-lines-group {
+        display: none;
 }
 }

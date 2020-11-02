@@ -71,7 +71,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
             <Switch>
                 <Route path={routes.fabric}>
-                    <div className="custom custom--open" style={{ overflowX: 'hidden', cursor: 'unset' }}>
+                    <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
                         {content}
                         <div className="custom__control_new">
                             <form

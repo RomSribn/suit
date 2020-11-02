@@ -85,6 +85,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         const {
             img_url_2d: image,
             our_code: id,
+            title
         } = this.props.item;
         if (!this.state.load.success) {
             return null;
@@ -120,34 +121,40 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         const toggleSwipe = () => {
             this.props.app!.toggleSwiperPopup();
         };
+
         return (
-            <>{
-                this.props.app && (window.location.pathname.includes('design') ?
-                (true) : (
-                this.props.app.currentSearchValue &&
-                id.includes(this.props.app.currentSearchValue.toLowerCase()) )) &&
+            <>
+            {this.props.app &&
+                (window.location.pathname.includes('design')
+                ? true
+                : ( this.props.app.currentSearchValue &&
+                    id.includes(
+                        this.props.app.currentSearchValue.toLowerCase()
+                    ) ||
+                    title.en.toLowerCase().includes(
+                        this.props.app.currentSearchValue.toLowerCase()
+                    ))) && (
                 <div
-                    onClick={click}
-                    onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave}
-                    className={classnames(
-                        'gallery__item-blc',
-                        { landscape: isMobile() && isLandscape() }
-                    )}
+                  onClick={click}
+                  onMouseEnter={onMouseEnter}
+                  onMouseLeave={onMouseLeave}
+                  className={classnames('gallery__item-blc', {
+                    landscape: isMobile() && isLandscape(),
+                  })}
                 >
-                    <div
-                        className={classnames(
-                            'gallery__item',
-                            { active }
-                        )}
-                    >
-                        <img src={image} alt={`${id}`} />
-                        {this.props.app && this.props.app.changeSearchedItemsCount()}
-                        {!isMobile() && this.props.zoomId === id && this.props.app &&
-                            <span onClick={toggleSwipe} className="zoom-icon" />}
-                    </div>
+                  <div className={classnames('gallery__item', { active })}>
+                    <img src={image} alt={`${id}`} />
+                    {this.props.app &&
+                      this.props.app.changeSearchedItemsCount()}
+                    {!isMobile() &&
+                      this.props.zoomId === id &&
+                      this.props.app && (
+                        <span onClick={toggleSwipe} className="zoom-icon" />
+                      )}
+                  </div>
                 </div>
-            }</>
+              )}
+          </>
         );
     }
 }

@@ -23,17 +23,23 @@ type FilterItemProps = FilterValue & DefaultFilterItemProps
 
 interface _ControllProps {
     isOpen?: boolean;
+    isSearchBarOpened?: boolean;
     type?: string;
     onCLick?: () => void;
     closeFilter?: () => void;
     toggleOpen?(): void;
-    filterStore?: IFilterStore
+    filterStore?: IFilterStore;
+    app?: IAppStore;
+    toggleIsSearchBarOpened?: () => void;
 }
 interface DefaultControllProps {
+    isSearchBarOpened: boolean;
     isOpen: boolean;
     type: string;
     onCLick: () => void;
     filterStore?: {};
+    app?: {};
+    toggleIsSearchBarOpened?: () => void;
 }
 
 type ControllProps = _ControllProps & DefaultControllProps;

@@ -20,8 +20,6 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
-            afterGarmentChoice,
-            routes: mainSectinoRoutes
         } = this.props;
 
         const isRealIndexPage =
@@ -46,10 +44,7 @@ class MainSection extends React.Component<MainSectionProps> {
                 >
                     <Filter />
                     {isRealIndexPage && <Demo />}
-                    <GarmentChoise
-                        routes={mainSectinoRoutes}
-                        catalogFormClassName={classnames({ 'zero-max-height': afterGarmentChoice })}
-                    />
+                    {isRealIndexPage && <GarmentChoise isNavigationGarments={false} />}
                     <div
                         style={isRealIndexPage ? { display: 'none' } : {}}
                         className={classnames(

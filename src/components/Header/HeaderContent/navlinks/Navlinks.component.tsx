@@ -6,18 +6,20 @@ import './Navlinks.styles.styl';
 
 interface NavlinksComponentProps {
     isAuth?: boolean;
+    garment: string;
 }
 
-const NavlinksComponent: React.FunctionComponent<NavlinksComponentProps> = (props) => {
+const NavlinksComponent: React.FunctionComponent<NavlinksComponentProps> = ({ isAuth, garment }) => {
+    const garmentSet = (link: string) => link.replace(':garment', garment);
     return (
         <div className="navlinks__container">
-            <NavlinksItemComponent to={routes.fabric}>
+            <NavlinksItemComponent to={garmentSet(routes.fabric)}>
                 ткань
             </NavlinksItemComponent>
-            <NavlinksItemComponent to={routes.design}>
+            <NavlinksItemComponent to={garmentSet(routes.design)}>
                 дизайн
             </NavlinksItemComponent>
-            <NavlinksItemComponent to={routes.fitting} forbidden={!props.isAuth}>
+            <NavlinksItemComponent to={garmentSet(routes.fitting)} forbidden={!isAuth}>
                 мерки
             </NavlinksItemComponent>
         </div>

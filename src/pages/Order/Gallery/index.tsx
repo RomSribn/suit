@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import { intersection } from 'lodash';
 import { Gallery as Component } from './component';
 import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
-import { Controll } from '../Filter';
+// import { Controll } from '../Filter';
 import { InitialsCustomInput } from '../Initials-custom-input';
 
 const galleryCache = {};
@@ -76,41 +75,12 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
         } = this.props;
 
         if (group === 'design' && subgroup === 'initials_text') {
-            return <div style={{padding: '1.333rem 0 0 0', width: '100%'}}><InitialsCustomInput /></div>;
+            return <div style={{ padding: '1.333rem 0 0 0', width: '100%' }}><InitialsCustomInput /></div>;
         }
-
-        const filters = filterStore.userFilters;
-
-        const items = [...galleryStore.items].filter((galleryStoreItem: {}) => {
-            const filtersKeys = Object.keys(filters);
-            return filtersKeys.reduce((acc, filterName) => {
-                const filterValues = filters[filterName];
-                if (filterValues &&
-                    filterValues.length
-                ) {
-                    if ( // И в хвост и в гриву
-                        filterValues.includes(String(galleryStoreItem[filterName].value)) ||
-                        filterValues.includes(String(galleryStoreItem[filterName])) ||
-                        !(galleryStoreItem[filterName] instanceof Object) &&
-                        filterValues.map(Number).includes(Number(galleryStoreItem[filterName])) ||
-                        // Так как это объекты mobx'a обычная проверка Array.isArray ну не сработает.
-                        // Используем костыль с проверкой на метод map
-                        galleryStoreItem[filterName].map &&
-                        intersection(
-                            filterValues, galleryStoreItem[filterName].map((val: {value: string}) => val.value)
-                        ).length
-                    ) {
-                        return acc;
-                    }
-
-                    return false;
-                }
-                return acc;
-            }, true);
-        });
+        const items = [...galleryStore.items];
 
         return (
-                group === 'fitting'
+            group === 'fitting'
                 ? (
                     <Fitting
                         key={galleryStore.items.toString()}
@@ -120,23 +90,33 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                     />
                 )
                 : (
-                    <Component
-                        key={(items || [])
-                            .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
-                        lang={lang}
-                        match={match}
-                        setActiveOrderItem={setActiveOrderItem}
-                        setPreviewElement={setPreviewElement}
-                        items={items}
-                        galleryStore={galleryStore}
-                        group={group}
-                        filterStore={filterStore}
-                        orderStore={orderStore}
-                        activeElement={orderStore.activeElement}
-                        previewElement={orderStore.previewElement}
-                        activeOrderItem={this.props.activeOrderItem}
-                        app={this.props.app}
-                    />
+                    <div
+                        style={
+                            {
+                                display: 'contents',
+                                visibility: this.props.app && this.props.app.searchedItemsCount ?
+                                    'visible' : 'hidden'
+                            }
+                        }
+                    >
+                        <Component
+                            key={(items || [])
+                                .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
+                            lang={lang}
+                            match={match}
+                            setActiveOrderItem={setActiveOrderItem}
+                            setPreviewElement={setPreviewElement}
+                            items={items}
+                            galleryStore={galleryStore}
+                            group={group}
+                            filterStore={filterStore}
+                            orderStore={orderStore}
+                            activeElement={orderStore.activeElement}
+                            previewElement={orderStore.previewElement}
+                            activeOrderItem={this.props.activeOrderItem}
+                            app={this.props.app}
+                        />
+                    </div>
                 )
         );
     }
@@ -146,12 +126,12 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
     render() {
-        const {
-            match: { params: { group } },
-        } = this.props;
+        // const {
+        //     match: { params: { group } },
+        // } = this.props;
         return (
             <>
-                {group === 'fabric_ref' && <Controll />}
+                {/* {group === 'fabric_ref' && <Controll />} */}
                 <GalleryBlock {...this.props} />
             </>
         );

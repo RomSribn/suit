@@ -1,6 +1,8 @@
 import { Subgroups } from '../../../stores/garments';
 
 export interface GroupChoiceProps {
+    app?: IAppStore;
+    filterStore?: IFilterStore;
     match: Match;
     choiceItem: OrderPathItem;
     subgroupsStore?: Subgroups;
@@ -9,4 +11,7 @@ export interface GroupChoiceProps {
     backLink: string;
     order: Order;
     lang: string;
+    garments?: {
+        Subgroups: typeof Subgroups
+    };
 }

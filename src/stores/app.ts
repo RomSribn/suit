@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-type LocaleTextFields = 'index'|'order'|'garments'|'shirt';
+type LocaleTextFields = 'index' | 'order' | 'garments' | 'shirt';
 
 type Locale = Record<LocaleTextFields, string>;
 
@@ -33,6 +33,10 @@ export class App implements IAppStore {
   @observable showSwiperPopup = false;
   @observable swiperPopupData = {};
   @observable visitedChoiceItems = observable.array<string>();
+  @observable showLoginForm = false;
+  @observable currentSearchValue = ' ';
+  @observable isSearchBarOpened = false;
+  @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
@@ -42,8 +46,33 @@ export class App implements IAppStore {
   }
 
   @action
+  setCurrentSearchValue = (text: string) => {
+    if (text === '') {
+      this.currentSearchValue = ' ';
+    } else {
+      this.searchedItemsCount = 0;
+      this.currentSearchValue = text;
+    }
+  }
+
+  @action
+  changeSearchedItemsCount = () => {
+    this.searchedItemsCount = 2;
+  }
+
+  @action
   toggleMobileMenu = () => {
     this.showMobileMenu = !this.showMobileMenu;
+  }
+
+  @action
+  toggleLoginForm = () => {
+    this.showLoginForm = !this.showLoginForm;
+  }
+
+  @action
+  toggleIsSearchBarOpened = () => {
+    this.isSearchBarOpened = !this.isSearchBarOpened;
   }
 
   @action
@@ -90,7 +119,7 @@ export class App implements IAppStore {
     this.visitedChoiceItems.clear();
   }
 
-  @action 
+  @action
   toggleSwiperPopup = () => {
     this.showSwiperPopup = !this.showSwiperPopup;
   }

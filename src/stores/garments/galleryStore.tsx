@@ -19,7 +19,7 @@ class GalleryStore implements GalleryStore {
         subGroup: string,
         group: string,
     ) {
-        this.garment = garment;
+        this.garment = subGroup === 'fitting' ? 'shirt' : garment;
         this.subGroup = subGroup;
         this.group = group;
         this.fetch();

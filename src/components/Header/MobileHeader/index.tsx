@@ -6,11 +6,14 @@ import { routes as configRoutes } from '../../../config/routes';
 import { mobileHeaderTranslations } from './loc';
 import './style.styl';
 import { Navlinks } from '../HeaderContent/navlinks';
+import { inject, observer } from 'mobx-react';
 
 type Props = {
-    openMenu: () => void;
-    lang: Lang;
-    isLandscape: boolean;
+  openMenu: () => void;
+  lang: Lang;
+  isLandscape: boolean;
+  isAuth?: boolean;
+  activeGarments?: string[];
 };
 
 type Group = 'design' | 'fabric_ref' | 'fitting';
@@ -25,7 +28,11 @@ const makeNavLinkItem = (active: boolean) => (
     />
 );
 
-export default ({ openMenu, lang, isLandscape }: Props) => {
+export default inject(({ garments: { garments } }) => {
+    return {
+        activeGarments: [...garments.activeGarments],
+    };
+})(observer(({ openMenu, lang, isLandscape, isAuth,  activeGarments}: Props) => {
     return (
         <header className="headerWrapper">
             <button className="open-menu" onClick={openMenu}>
@@ -36,9 +43,15 @@ export default ({ openMenu, lang, isLandscape }: Props) => {
                     className="open-element-img"
                 />
             </button>
-            <main style={{ display: 'none' }} className="content-wrapper">
+            <main className="content-wrapper">
                 <h2 className="menu-title">
-                    {isLandscape ? <Navlinks /> : (
+                    {isLandscape ? 
+                        <Navlinks 
+                            garment={activeGarments && activeGarments[0] || 'shirt'} 
+                            isAuth={isAuth} 
+                        /> : (
+                        // Проп прокину в другом таске, пока будет заглушка
+                        // И зачем вообще анонимная функа ПРОКИНУТА ДЕФОЛТОМ
                         <>
                             <Switch>
                                 <Route
@@ -106,4 +119,4 @@ export default ({ openMenu, lang, isLandscape }: Props) => {
             />
         </header>
     );
-};
+}));

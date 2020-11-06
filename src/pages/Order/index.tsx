@@ -4,6 +4,10 @@ import { MainSection } from './SectionMain';
 import { makeRoutes } from './routes';
 import { parseQuery } from '../../utils/common';
 import { listeners } from '../../utils';
+// import { DemoSection } from '../../components/SectionDemo';
+import { Route } from 'react-router-dom';
+import { Paralax } from './OrderDecorationBlocks';
+
 let wasRendered = false;
 
 class Order extends React.PureComponent<any> { //tslint:disable-line
@@ -18,27 +22,31 @@ class Order extends React.PureComponent<any> { //tslint:disable-line
         const {
             location,
             match,
-         } = this.props;
+        } = this.props;
         const routes = makeRoutes(match.url);
         const detailsDeep = !(/\/order\/details\/.*\/.*/i.test(location.pathname));
         const afterGarmentChoice = (/\/order\/.*\/.*/i.test(location.pathname));
         const isIndexPage = false;
 
         return (
-            <MainSection
-                afterGarmentChoice={afterGarmentChoice}
-                isIndexPage={isIndexPage}
-                detailsDeep={detailsDeep}
-                routes={routes}
-            />
+            <>
+                <MainSection
+                    afterGarmentChoice={afterGarmentChoice}
+                    isIndexPage={isIndexPage}
+                    detailsDeep={detailsDeep}
+                    routes={routes}
+                />
+                <Route exact={true} path={routes.index} component={Paralax} />
+            </>
         );
     }
 }
 
-@inject(({ order, garments, routing }) => ({
+@inject(({ order, garments, routing, app }) => ({
     orderStore: order,
     garmentsStore: garments.garments,
-    routingStore: routing
+    routingStore: routing,
+    clearVisitedChoiceItems: app.clearVisitedChoiceItems,
 }))
 @observer
 class Container extends React.Component<any>{ //tslint:disable-line
@@ -60,14 +68,15 @@ class Container extends React.Component<any>{ //tslint:disable-line
                     Object.keys(garmentsStore.garmentsList),
                     (garments) => garmentsStore.setChosenGarments(garments)
                 )
-                .then(() => {
-                    orderStore.fetchOrder(query.order_id)
-                        .then(() => {
-                            if (isOnBase) {
-                                orderStore.clearOrderInfo();
-                            }
-                        });
-                });
+                    .then(() => {
+                        orderStore.fetchOrder(query.order_id)
+                            .then(() => {
+                                if (isOnBase) {
+                                    orderStore.clearOrderInfo();
+                                    this.props.clearVisitedChoiceItems();
+                                }
+                            });
+                    });
             } else {
                 orderStore.fetchInitialOrder(
                     Object.keys(garmentsStore.garmentsList),
@@ -81,10 +90,12 @@ class Container extends React.Component<any>{ //tslint:disable-line
                     .then(() => {
                         if (isOnBase) {
                             orderStore.clearOrderInfo();
+                            this.props.clearVisitedChoiceItems();
                         }
                     });
             } else if (isOnBase) {
                 orderStore.clearOrderInfo();
+                this.props.clearVisitedChoiceItems();
             }
         }
         return <Order {...this.props} />;

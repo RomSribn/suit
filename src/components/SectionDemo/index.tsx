@@ -6,9 +6,9 @@ import './style.styl';
 
 const DemoSection = (props: any) => { // tslint:disable-line no-any
     return (
-    <div className="demo" >
-        <DemoDummy onDummyLoad={props.onDummyLoad} />
-    </div>);
+        <div className="demo" >
+            <DemoDummy onDummyLoad={props.onDummyLoad} />
+        </div>);
 };
 
 export {

@@ -8,30 +8,42 @@ interface Locale {
   analytics: string;
   settings: string;
   logOut: string;
+  forHim: string;
+  forHer: string;
+  logIn: string;
+  chat: string;
 }
 
 const makeLocale: MakeLocale<Locale> = {
   en: {
-      order: 'order',
-      panel: 'panel',
-      customersList: 'clients',
-      orderList: 'order list',
-      calendar: 'calendar',
-      store: 'store',
-      analytics: 'analytics',
-      settings: 'settings',
-      logOut: 'log out'
+    order: 'order',
+    panel: 'panel',
+    customersList: 'clients',
+    orderList: 'order list',
+    calendar: 'calendar',
+    store: 'store',
+    analytics: 'analytics',
+    settings: 'settings',
+    logOut: 'log out',
+    logIn: 'log in',
+    forHim: 'for him',
+    forHer: 'for her',
+    chat: 'chat',
   },
   ru: {
-      order: 'заказ',
-      panel: 'панель',
-      customersList: 'клиенты',
-      orderList: 'список заказов',
-      calendar: 'календарь',
-      store: 'магазин',
-      analytics: 'аналитика',
-      settings: 'настройки',
-      logOut: 'выйти'
+    order: 'заказать',
+    panel: 'панель',
+    customersList: 'клиенты',
+    orderList: 'список заказов',
+    calendar: 'календарь',
+    store: 'магазин',
+    analytics: 'аналитика',
+    settings: 'настройки',
+    logOut: 'выйти',
+    logIn: 'войти',
+    forHim: 'для него',
+    forHer: 'для нее',
+    chat: 'чат',
   },
 };
 

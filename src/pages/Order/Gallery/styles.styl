@@ -57,6 +57,20 @@
             height 100%
             width 100%
             overflow hidden
+    .zoom-icon
+        z-index: 999
+        position absolute
+        top 5%
+        right 5%
+        width 20%
+        height 20%
+        background-image url("../../../assets/images/svg/zoom.svg")
+        background-repeat no-repeat
+        background-size 100%
+        opacity 0.7
+        transition opacity 0.2s linear
+        &:hover
+            opacity 1
 
 media-gallery-image-size(minWidth, imageHeight)
     @media only screen and (min-width: minWidth)

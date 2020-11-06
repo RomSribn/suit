@@ -5,7 +5,6 @@
   display: block;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .mobile-menu {
@@ -15,15 +14,32 @@
 .navigation-list {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
+    margin-left: 30px; 
 
   .navigation-item {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
-    text-transform: uppercase;
+    text-transform: capitalize;
     margin: 0.6vh;
+    margin-left: 0px;
     color: #000;
+    display: flex;
+    justify-content: space-between;
+
+    .arrow {
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-bottom: 2px;
+    margin-right: 20px
+}
+
+    .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
 
     &:visited {
       color: #000;
@@ -36,6 +52,7 @@
   align-items: flex-end;
   justify-content: flex-end;
   margin: 20px;
+      margin-top: auto;
 }
 
 .lang-list a:first-child {
@@ -55,7 +72,13 @@
   }  
 }
 
+.mobile-menu-main {
+  margin-top: 30px
+}
+
 .mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
   & .close-button {
     background: transparent;
     border: none;
@@ -65,3 +88,24 @@
     } 
   }  
 }
+
+.mobile-menu-header__gender-block {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+  a {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0.6vh;
+    color: #000;
+    border-bottom: 2px solid #ffffff;
+    line-height: 36px;
+    margin-left: 30px;
+    &.active {
+        border-color: #000;
+      }
+  }
+}
+

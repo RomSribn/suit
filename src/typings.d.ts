@@ -40,6 +40,7 @@ type MakeLocale<Locale> = Translations<Locale> | (() => Translations<Locale>);
 interface OrderPathItem {
   value: string;
   link?: string;
+  id?: string;
 }
 
 type OrderPath = OrderPathItem[];

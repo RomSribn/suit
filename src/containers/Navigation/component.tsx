@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
 
 import { navigationRoutes as routes } from '../../config/routes';
+import { routes as defaultRoutes } from '../../config/routes';
 import { loc } from './loc';
 
 import './styles.styl';
@@ -14,16 +15,21 @@ const baseLink = String(process.env.BASE_SERVICE_LINK);
 
 interface HeaderProps {
 }
-const Header = (props: HeaderProps) => {
+export const Header = (props: HeaderProps) => {
+    const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
     return (
-    <div className="navbar__header">
-        <a
-            href={baseLink}
-            className="navbar__header"
-        >
-            <img className="logo" src={process.env.STATIC_IMAGES + 'logo/' + process.env.SALON_ID + '.svg'} />
-        </a>
-    </div>
+        <div className="navbar__header">
+            <a
+                href={baseLink}
+                className="navbar__header"
+            >
+                <img
+                    className="logo"
+                    src={!isRealIndexPage ? process.env.STATIC_IMAGES + 'logo/' +
+                        process.env.SALON_ID + '.svg' : 'https://ordersystem.ru/assets/img/logo/suit_white.svg'}
+                />
+            </a>
+        </div>
     );
 };
 
@@ -33,37 +39,37 @@ interface NavigationItemProps {
     showActiveClassName: boolean;
 }
 class NavigationItem extends React.Component<NavigationItemProps> {
-    render () {
+    render() {
         const {
             linkName,
             lang,
             showActiveClassName,
-         } = this.props;
+        } = this.props;
         return (
-        <li>
-            <NavLink
-                activeClassName={showActiveClassName ? 'active' : ''}
-                className={classNames(
-                    'main-menu__link ',
-                    `main-menu__link--${linkName}`,
+            <li>
+                <NavLink
+                    activeClassName={showActiveClassName ? 'active' : ''}
+                    className={classNames(
+                        'main-menu__link ',
+                        `main-menu__link--${linkName}`,
                     )}
-                to={routes[linkName]}
-            >
-            <ReactCSSTransitionGroup
-                transitionName="fade-in-absolute"
-                transitionEnterTimeout={TRANSITION_DUARAION}
-                transitionLeaveTimeout={TRANSITION_DUARAION}
-            >
-                <span key={lang}>{loc[lang].navigation[linkName]}</span>
-            </ReactCSSTransitionGroup>
+                    to={routes[linkName]}
+                >
+                    <ReactCSSTransitionGroup
+                        transitionName="fade-in-absolute"
+                        transitionEnterTimeout={TRANSITION_DUARAION}
+                        transitionLeaveTimeout={TRANSITION_DUARAION}
+                    >
+                        <span key={lang}>{loc[lang].navigation[linkName]}</span>
+                    </ReactCSSTransitionGroup>
 
-            </NavLink>
-        </li>);
+                </NavLink>
+            </li>);
     }
 }
 
 type MakeNavigationLinks =
-       (linkNames: string[],
+    (linkNames: string[],
         showActiveClassName: boolean,
         lang: string) => React.ReactElement<NavigationItemProps>[];
 const makeNavigationLinks: MakeNavigationLinks = (linkNames, showActiveClassName, lang = 'en') => {
@@ -111,44 +117,43 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         const {
             lang,
             isLogin,
-            isOrderPage,
             role,
         } = this.props;
-        const stylistNavLinks =  Object.keys(loc[lang].navigation);
+        const stylistNavLinks = Object.keys(loc[lang].navigation);
         const customerNavLinks = ['order', 'panel', 'ordersList', 'calendar', 'settings'];
         const navLinksByRole = {
             STYLIST: stylistNavLinks,
             CUSTOMER: customerNavLinks,
         };
         return (
-        <div
-            className={classNames(
-                'navbar',
-                {
-                    'navbar--white': true,
-                    'navbar--transparent': isOrderPage
+            <div
+                className={classNames(
+                    'navbar',
+                    {
+                        'navbar--white': window.location.pathname !== '/order',
+                        'navbar--transparent': window.location.pathname === '/order'
+                    }
+                )}
+            >
+                <Header />
+                {isLogin &&
+                    <div className="navbar__middle">
+                        <nav
+                            className={`main-menu`}
+                            onMouseEnter={this.mouseEnter}
+                            onMouseLeave={this.mouseLeave}
+                        >
+                            <ul>
+                                {makeNavigationLinks(
+                                    navLinksByRole[role!],
+                                    this.state.showActiveClassName,
+                                    lang)}
+                            </ul>
+                        </nav>
+                    </div>
                 }
-            )}
-        >
-            <Header />
-            {isLogin &&
-                <div className="navbar__middle">
-                    <nav
-                        className={`main-menu`}
-                        onMouseEnter={this.mouseEnter}
-                        onMouseLeave={this.mouseLeave}
-                    >
-                        <ul>
-                            {makeNavigationLinks(
-                                navLinksByRole[role!],
-                                this.state.showActiveClassName,
-                                lang)}
-                        </ul>
-                    </nav>
-                </div>
-            }
-            <Footer lang={lang}/>
-        </div>);
+                <Footer lang={lang} />
+            </div>);
     }
 }
 

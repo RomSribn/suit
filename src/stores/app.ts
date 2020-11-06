@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-type LocaleTextFields = 'index'|'order'|'garments'|'shirt';
+type LocaleTextFields = 'index' | 'order' | 'garments' | 'shirt';
 
 type Locale = Record<LocaleTextFields, string>;
 
@@ -30,6 +30,13 @@ const makeInitionalOrderPath = (lang: Lang) => [{
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
+  @observable showSwiperPopup = false;
+  @observable swiperPopupData = {};
+  @observable visitedChoiceItems = observable.array<string>();
+  @observable showLoginForm = false;
+  @observable currentSearchValue = ' ';
+  @observable isSearchBarOpened = false;
+  @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
@@ -39,8 +46,33 @@ export class App implements IAppStore {
   }
 
   @action
+  setCurrentSearchValue = (text: string) => {
+    if (text === '') {
+      this.currentSearchValue = ' ';
+    } else {
+      this.searchedItemsCount = 0;
+      this.currentSearchValue = text;
+    }
+  }
+
+  @action
+  changeSearchedItemsCount = () => {
+    this.searchedItemsCount = 2;
+  }
+
+  @action
   toggleMobileMenu = () => {
     this.showMobileMenu = !this.showMobileMenu;
+  }
+
+  @action
+  toggleLoginForm = () => {
+    this.showLoginForm = !this.showLoginForm;
+  }
+
+  @action
+  toggleIsSearchBarOpened = () => {
+    this.isSearchBarOpened = !this.isSearchBarOpened;
   }
 
   @action
@@ -69,6 +101,34 @@ export class App implements IAppStore {
   resetOrderPath = () => {
     this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
   }
+
+  @action
+  addVisitedChoiceItem = (name: string) => {
+    if (!this.visitedChoiceItems.includes(name)) {
+      this.visitedChoiceItems.push(name);
+    }
+  }
+
+  @action
+  removeVisitedChoiceItem = (name: string) => {
+    this.visitedChoiceItems.remove(name);
+  }
+
+  @action
+  clearVisitedChoiceItems = () => {
+    this.visitedChoiceItems.clear();
+  }
+
+  @action
+  toggleSwiperPopup = () => {
+    this.showSwiperPopup = !this.showSwiperPopup;
+  }
+
+  @action
+  setSwiperPopupData = (value: {}) => {
+    this.swiperPopupData = value;
+  }
+
 }
 const app = new App('ru');
 

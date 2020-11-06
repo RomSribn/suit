@@ -1,0 +1,44 @@
+.pdf-page
+  .demo
+    width 50%
+  .navbar
+    z-index 0
+  .customs
+    margin-bottom 1.333rem
+  .sizes
+    overflow-y initial
+    padding-right 0
+    margin-top 0
+  .size:nth-child(2n)
+    margin-right 0
+  .info-block
+    display flex
+    width 100%
+    padding-top 10px
+    border-bottom 1px solid #ddd
+    &:first-child
+      padding-top 0
+    &:last-child
+      border-bottom: none
+    &__wrapper
+      width 100%
+    &__item
+      display inline-block
+      max-width 100%
+      align-items center
+      padding 4px 8px
+      margin-right 4px
+      margin-bottom 8px
+      border-radius 3px
+      background-color #eceeee
+      color #8a8a8a
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+    &__title
+      width 15%
+      color #444
+      padding-left 1.3333rem
+      text-transform capitalize
+    &__details
+      width 85%

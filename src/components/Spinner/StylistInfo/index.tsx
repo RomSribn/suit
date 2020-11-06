@@ -7,6 +7,7 @@ import { CommonStores } from '../../../types/commonStores';
 
 const injector = <T extends CommonStores>(stores: T) => {
     return {
+        // @ts-ignore
         lang: stores.app.lang
     };
 };

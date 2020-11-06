@@ -1,6 +1,8 @@
 const widgetId = 'jivo_custom_widget';
 
 const messagesContainerCN = '.messagesLabel_FQ';
+const isMobile = () => document.querySelector('html').offsetWidth <= 450
+	|| document.querySelector('html').offsetHeight <= 450;
 
 const cssStylesFromObject = (styleObject) => {
 	const styleString = (
@@ -32,8 +34,9 @@ const unreadElementsCountBlockStyles = cssStylesFromObject({
 	'font-weight': 500,
 });
 
+
 const updateUnreadCount = () => {
-	const unreadCount = Number((document.querySelector(messagesContainerCN) || {textContent: 0}).textContent);
+	const unreadCount = Number((document.querySelector(messagesContainerCN) || { textContent: 0 }).textContent);
 	unreadMessagesCountContainer.innerText = unreadCount;
 
 	const targetStyle = unreadCount === 0 ? 'display: none' : unreadElementsCountBlockStyles;
@@ -45,7 +48,7 @@ const updateUnreadCount = () => {
 	Коллбек-функция, вызывается сразу после того, как
 	JivoSite окончательно загрузился
 */
-function jivo_onLoadCallback(){
+function jivo_onLoadCallback() {
 	api = window.jivo_api;
 	const widgetContainer = document.createElement('div');
 	widgetContainer.setAttribute('id', 'jivo_custom_widget-container');
@@ -53,23 +56,24 @@ function jivo_onLoadCallback(){
 	window.jivo_cstm_widget = document.createElement('div');
 	jivo_cstm_widget.setAttribute('id', 'jivo_custom_widget');
 
+	if (isMobile() && window.location.pathname === '/order') widgetContainer.style.zIndex = 1;
 
 	widgetContainer.appendChild(jivo_cstm_widget);
 	widgetContainer.appendChild(unreadMessagesCountContainer);
 	document.body.appendChild(widgetContainer);
-	
+
 	// Добавляем обработчик клика по ярлыку - чтобы при клике разворачивалось окно
-	jivo_cstm_widget.onclick = function(){
+	jivo_cstm_widget.onclick = function () {
 		api.open();
 	}
-	
+
 	// Изменяем CSS класс, если есть операторы в онлайне
-	if (jivo_config.chat_mode === 'online'){
+	if (jivo_config.chat_mode === 'online') {
 		jivo_cstm_widget.setAttribute('class', 'jivo_online');
 	}
-	
+
 	// Теперь можно показать ярлык пользователю
-	window.jivo_cstm_widget.style.display='block';
+	window.jivo_cstm_widget.style.display = 'block';
 
 	setInterval(() => {
 		updateUnreadCount();
@@ -81,12 +85,12 @@ function jivo_onLoadCallback(){
 	когда окно чата JivoSite разворачивается или сворвачивается
 	пользователем, либо по правилу активного приглашения.
 */
-function jivo_onOpen(){
+function jivo_onOpen() {
 	// Если чат развернут - скрываем ярлык
 	if (jivo_cstm_widget)
 		jivo_cstm_widget.style.display = 'none';
 }
-function jivo_onClose(){
+function jivo_onClose() {
 	// Если чат свернут - показываем ярлык
 	if (jivo_cstm_widget)
 		jivo_cstm_widget.style.display = 'block';

@@ -4,10 +4,34 @@
     overflow-y: auto;
     margin-bottom: calc(2.4rem + 4px);
 }
+.custom__control_new {
+    display: flex;
+}
+.control__searchBar {
+    /* display: none; */
+}
 .customs--no-scroll{
     overflow: hidden;
     padding: 0;
 }
+
+.search__fabric {
+    animation: unset;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+}
+
+.search__fabric {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s linear 0.3s;
+}
+.search__fabric.show {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
 .customs--short{
     flex-grow: 0;
     overflow-y: auto;
@@ -19,13 +43,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 3.5rem 0 1.3333rem;
+    padding: 0 1.3333rem 0 1.3333rem;
     margin-bottom: 1.3333rem;
     height: 2.9333rem;
     background: #eceeee;
     color: black;
     position: relative;
     cursor: pointer;
+}
+
+.custom._design {
+    padding: 0 3.5rem 0 1.3333rem;
+}
+
+.custom--chosen::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #8a8a8a;
 }
 .custom.custom__no-pointer {
     cursor: default;

@@ -13,6 +13,7 @@ interface CommonProps {
     item: SubgroupChoiceItem;
     noCursorPointer?: boolean;
     lang: string | undefined;
+    visitedChoiceItems?: string[];
 }
 
 const Common = (props: CommonProps) => {
@@ -20,7 +21,8 @@ const Common = (props: CommonProps) => {
         item,
         clearClick,
         noCursorPointer,
-        lang = 'en'
+        lang = 'en',
+        visitedChoiceItems,
     } = props;
 
     const renderClearButton = (choiceItem: SubgroupChoiceItem) => {
@@ -33,8 +35,28 @@ const Common = (props: CommonProps) => {
                 choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
         }
     };
+
+    const showVerticalBar = (choiceItem: SubgroupChoiceItem) => {
+        switch (choiceItem.id) {
+            case 'initials_text':
+                return choiceItem.status && typeof choiceItem.status === 'string'
+                    && choiceItem.status !== loc[lang].noStatus;
+            default:
+                return visitedChoiceItems && visitedChoiceItems.includes(item.id);
+
+        }
+    };
+
+    const commonClasses = classNames(
+        'custom', '_design',
+        {
+            'custom__no-pointer': noCursorPointer,
+            'custom--chosen': showVerticalBar(item),
+        }
+    );
+
     return (
-        <div className={classNames('custom', { 'custom__no-pointer': noCursorPointer})}>
+        <div className={commonClasses}>
             <span className="custom__content">
                 <span
                     className="custom__name"
@@ -79,6 +101,7 @@ interface LinkProps {
     clearClick: (...args: any[]) => (...args: any[]) => void; // tslint:disable-line no-any
     basicRoute: string;
     lang?: string;
+    visitedChoiceItems?: string[];
 }
 class CustomLink extends React.PureComponent<LinkProps> {
 
@@ -88,7 +111,8 @@ class CustomLink extends React.PureComponent<LinkProps> {
             basicRoute,
             onClick,
             clearClick,
-            lang
+            lang,
+            visitedChoiceItems,
         } = this.props;
         const status = isMobile() && !isLandscape() && item.status && item.status!.length > 13
             ? item.status!.slice(0, 10) + '...'
@@ -98,7 +122,9 @@ class CustomLink extends React.PureComponent<LinkProps> {
                 to={`${basicRoute}/${item.link}`}
                 onClick={onClick({
                     value: item.linkName,
-                    link: `${basicRoute}/${item.link}`})}
+                    link: `${basicRoute}/${item.link}`,
+                    id: item.id,
+                })}
                 key={item.id}
                 style={{
                     marginBottom: '1.333rem',
@@ -109,6 +135,7 @@ class CustomLink extends React.PureComponent<LinkProps> {
                     lang={lang}
                     item={item}
                     clearClick={clearClick}
+                    visitedChoiceItems={visitedChoiceItems}
                 >
                     {status}
                 </Common>
@@ -187,12 +214,19 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         items: [],
         basicRoute: '/',
         pushOrderPathitem: () => undefined,
+        addVisitedChoiceItem: () => undefined,
+        removeVisitedChoiceItem: () => undefined,
     };
     onClick = (nextOrderPath: OrderPathItem) => () => {
+        if (nextOrderPath.id) {
+            this.props.addVisitedChoiceItem!(nextOrderPath.id);
+        }
         this.props.pushOrderPathItem!(nextOrderPath);
     }
     clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
         e.preventDefault();
+        e.stopPropagation();
+        this.props.removeVisitedChoiceItem!(element);
         const orderStore = this.props.orderStore!;
         orderStore.clearException(garment, element, 'click');
         orderStore.clearElement(garment, element, 'click');
@@ -202,7 +236,8 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         const {
             items,
             basicRoute,
-            lang
+            lang,
+            visitedChoiceItems,
         } = this.props;
         return (
         <ReactCSSTransitionGroup
@@ -233,6 +268,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
                         onClick={this.onClick}
                         clearClick={this.clearClick}
                         key={`custom-link-${item.id}`}
+                        visitedChoiceItems={visitedChoiceItems}
                     />
                 )
         )}

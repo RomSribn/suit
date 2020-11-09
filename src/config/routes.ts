@@ -29,16 +29,17 @@ export const services = {
 const routes = {
   details: `/order/details`,
   order: '/order/details',
-  orderList: '/order/list',
+  orderList: '/orders/list',
   login: '/login',
   index: '/',
+  mainPage: '/order',
   customersList: '/customer/list',
 };
 
 type MakeNavigationRoutes = () => NavigationRoutes;
 const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   index: '/',
-  order: routes.order,
+  order: '/order',
   panel: '/panel',
   customersList: routes.customersList,
   calendar: '/calendar',
@@ -80,7 +81,8 @@ const getCombinedPathAndTitle = (routeKey: RootKey) =>
     path: navigationRoutes[routeKey], title: Object.keys(routesTranslations).reduce((acc, cur) => {
       acc[cur] = routesTranslations[cur][routeKey];
       return acc;
-  }, {})});
+    }, {})
+  });
 
 export {
   navigationRoutes,

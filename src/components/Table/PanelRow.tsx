@@ -268,6 +268,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                                 className="controls__link controls__link--pdf"
                                 target="_blank"
                                 href={`${API_ROOT}/api/orders/${props.activeOrderId}/getScreenshot?` +
+                                `host=${window.location.host}&` +
                                 `very-insecure-token=${encodeURIComponent(props.userToken || '')}`}
                                 title={loc[lang].controls.pdf}
                             />

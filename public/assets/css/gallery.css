@@ -17,7 +17,7 @@
     height: 6.9rem;
     margin-top: 1.3333rem;
     background: #eceeee;
-    padding: 1.2rem 1.7333rem .7333rem 1.3333rem;
+    padding: 1.2rem 1.3333rem .7333rem 1.3333rem;
     width: 100%;
 }
 
@@ -43,10 +43,36 @@
     font-size: .8666rem;
     color: #8a8a8a;
 }
+
+.gallery__footer--articul > span > button {
+    text-decoration: underline !important;
+    text-transform: capitalize !important;
+    font-size: .8666rem !important;
+    /* background-color: #acacac !important;
+     */
+    background-color: transparent !important;
+    width: 100px !important;
+    padding: 0px 0px !important;
+    border: none !important;
+    color: #8a8a8a !important;
+}
+
+.text-block__price span{
+    margin-right: 5px;
+}
+
 .gallery__footer--txt{
     overflow: hidden; /*необходим для gallery__footer--txt-clamp*/
     font-size: 1rem;
     line-height: 1.4;
+}
+.gallery__footer--detailButton.button {
+    text-align: right !important;
+}
+.gallery__footer--detailButton.button.black:hover {
+    /* background: #8a8a8a !important;
+    border-color: #8a8a8a !important; */
+    color: #000 !important;
 }
 .gallery__footer--txt-clamp{
     /* обрезаем текст и выставляем троеточие если в блоке больше 2 строк, в firefox без троеточия*/
@@ -86,8 +112,10 @@
 .gallery--colors .gallery__item:hover:after{border: .3333rem solid #fff; opacity: 1;}
 
 .gallery__filter-btn{
-    width: 2.6666rem;
-    height: 2.6666rem;
+    /* width: 2.6666rem;
+    height: 2.6666rem; */
+    width: 2.4rem;
+    height: 2.4rem;
     background: #ebebeb;
     border: 1px solid #eceeee;
     opacity: .85;
@@ -97,7 +125,7 @@
     border-color: #7d7d7d;
 }
 .gallery__filter-btn span{
-    display: block;
+    /* display: block; */
     width: 1.7333rem;
     height: 1px;
     background: #999;
@@ -105,12 +133,12 @@
     -o-transition: .25s ease;
     transition: .25s ease;
     position: absolute;
-    left: 50%;
+    /* left: 50%; */
     margin-left: -.86665rem;
 }
-.gallery__filter-btn span:nth-child(1){top: .6666rem;}
-.gallery__filter-btn span:nth-child(2){top: 1.2666rem;}
-.gallery__filter-btn span:nth-child(3){top: 1.8666rem;}
+.gallery__filter-btn span:nth-child(1){top: .8666rem;}
+.gallery__filter-btn span:nth-child(2){top: 1.4666rem;}
+.gallery__filter-btn span:nth-child(3){top: 2.0666rem;}
 .gallery__filter-btn span:after{
     content: '';
     display: block;
@@ -128,7 +156,13 @@
 .gallery__filter-btn span:nth-child(2):after{margin-left: .2rem;}
 .gallery__filter-btn span:nth-child(3):after{margin-left: .9333rem;}
 
-.gallery__filter-btn.open span:after{opacity: 0;}
+.gallery__filter-btn.open {
+    background-color: #d6d6d6;
+}
+.gallery__filter-btn {
+    margin: auto;
+}
+/* .gallery__filter-btn.open span:after{opacity: 0;}
 .gallery__filter-btn.open span:nth-child(2){display: none;}
 .gallery__filter-btn.open span:nth-child(1){
     -webkit-transform: rotate(45deg);
@@ -136,14 +170,14 @@
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
     top: 1.2666rem;
-}
-.gallery__filter-btn.open span:nth-child(3){
+} */
+/* .gallery__filter-btn.open span:nth-child(3){
     -webkit-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
     top: 1.2666rem;
-}
+} */
 
 .gallery__photo-btn{
     position: absolute;

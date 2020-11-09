@@ -7,7 +7,7 @@ import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
 
-let scrollData: {[key: string]: number} = {};
+let scrollData: { [key: string]: number } = {};
 
 type FilterFields = (
     item: Subgroup,
@@ -39,7 +39,7 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
             }
         } else if (order[garment][0].fabric_ref[item.subsection_our_code]) {
             ourCode = order[garment][0].fabric_ref[item.subsection_our_code].our_code;
-            defaultCode =  defaultValues!.fabric_ref![item.subsection_our_code].our_code;
+            defaultCode = defaultValues!.fabric_ref![item.subsection_our_code].our_code;
         }
     } catch (_) {
         status = loc[lang].noStatus;
@@ -64,15 +64,17 @@ const filterFields: FilterFields = (item, subgroup, lang, order, garment, defaul
     {
         app,
         user,
-        garments: {Subgroups},
+        garments: { Subgroups },
         order,
         routing:
-        {location: { pathname }} },
+        { location: { pathname } } },
     nextProps: SubgroupChoiceProps) => ({
         lang: app.lang,
         SubgroupsStore: new Subgroups(nextProps.match.params.garment),
         order: order.order,
+        // defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment] : {},
         defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment][0] : {},
+        // defaultValues: nextProps.match.params.garment, // <--- Нет идей зачем это, поставил заглуш
         userStore: user,
         activeExceptions: order.exceptions,
         setSubgroupTitle: order.setSubgroupTitle,
@@ -98,7 +100,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             history: { action },
             location: { pathname }
         } = prevProps;
-        if (action !== 'POP' && pathname.includes('design')) {
+        if (action !== 'POP' && pathname.includes('design') || pathname.includes('fitting')) {
             const choiceItemsEl = document.querySelector('.customs.customs--short');
             scrollData = {
                 ...scrollData,
@@ -156,6 +158,19 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 )),
             ]
             : [];
+
+        const dataFitting = $store
+            ? [
+                ...$store.fitting.map((v: Subgroup) => filterFields(
+                    v,
+                    'fitting',
+                    lang!,
+                    order!,
+                    'shirt',
+                    defaultValues
+                )),
+            ]
+            : [];
         return (
             <Switch>
                 <Route
@@ -180,6 +195,12 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                     path={routes.design}
                 >
                     <Component lang={lang} match={match} data={data} />
+                </Route>
+                <Route
+                    exact={true}
+                    path={routes.fitting}
+                >
+                    <Component lang={lang} match={match} data={dataFitting} />
                 </Route>
                 <Redirect to={match.url} />
             </Switch>);

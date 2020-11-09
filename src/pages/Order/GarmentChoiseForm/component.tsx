@@ -8,39 +8,67 @@ import { PopUp } from '../../../containers/Popup';
 import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
-import { isMobile } from '../../../utils';
+import history from '../../../history';
+import { routes } from '../../../config/routes';
+
+const isRealIndexPage = () => window.location.pathname === routes.mainPage;
 
 type MakeCatalogItems = (
     g: Garments,
     lang: string,
+    currentActiveGarment: string[],
     activeGarments: string[],
-    toggle: (g: string) => (e: any ) => void) => React.ReactNode[]; // tslint:disable-line
-const makeCatalogItems: MakeCatalogItems = (garments, lang, activeGarments, toggle) => Object
+    setCurrentActiveGarment: (g: string) => void,
+    toggle: (g: string) => (e: any) => void, // tslint:disable-line
+    isNavigationGarments?: boolean) => React.ReactNode[];
+const makeCatalogItems: MakeCatalogItems = (
+    garments,
+    lang,
+    currentActiveGarment,
+    activeGarments,
+    setCurrentActiveGarment,
+    toggle,
+    isNavigationGarments) => Object
     .keys(garments)
     .map(garment => {
-        return garment !== 'design' ? (
+        const isNavSkip = !isNavigationGarments || activeGarments.includes(garment);
+        const firstCurrentActiveGarment = currentActiveGarment[0] || activeGarments[0];
+        return garment !== 'design' && isNavSkip ? (
             <label className="catalog__item" key={garment}>
                 <input
                     type="checkbox"
                     name="goods"
-                    checked={activeGarments.includes(garment)}
+                    checked={
+                    isNavigationGarments ? firstCurrentActiveGarment === garment : activeGarments.includes(garment)
+                    }
                     value={garment}
-                    // onClick={(e) => { e.preventDefault(); }}
-                    onChange={toggle(garment)}
+                    onClick={(e) => {
+                        if (isNavigationGarments) {
+                        history
+                        .push(window.location.pathname
+                                .replace(
+                                    firstCurrentActiveGarment
+                                    , garment));
+                        setCurrentActiveGarment(garment);
+                                }
+                    }}
+                    onChange={(e) => {
+                        if (!isNavigationGarments) {
+                            toggle(garment)(e);
+                        }
+                    } }
                 />
 
                 <span className="catalog__item-decoration">
-                <FadeIn>
-                    <span key={lang}>
-                    {
-                        garments[garment].titles
-                            ? garments[garment].titles![lang]
-                                ? garments[garment].titles![lang]
-                                : garment
-                            : loc[lang!].garmentsHardcodes[garments[garment].id] || garments[garment].name
-                    }
-                </span>
-                </FadeIn>
+                    <FadeIn>
+                        <span key={lang}>
+                            {
+                                garments[garment] &&
+                                garments[garment][`name${lang.charAt(0).toUpperCase() + lang.slice(1)}`]
+                                || garments[garment].name
+                            }
+                        </span>
+                    </FadeIn>
                 </span>
 
             </label>
@@ -55,14 +83,14 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         lang: 'en',
         garments: {},
         fetchGarments: () => undefined,
-        toggleGarment: () => () => {}, // tslint:disable-line
+        toggleGarment: () => () => { }, // tslint:disable-line
         pushOrderPathitem: () => undefined,
     };
     constructor(props: GarmentChoiceFormProps) {
         super(props);
         this.state = {
             garmentChoiceFormHeight: 0,
-            showUnavailablePopup: false
+            showUnavailablePopup: false,
         };
     }
     componentWillMount() {
@@ -116,34 +144,35 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         this.props.toggleGarment!(ADD)(garment);
     }
     remove = (garment: string) => {
-        this.props.toggleGarment!(REMOVE)(garment);
+      this.props.toggleGarment!(REMOVE)(garment);
     }
     toggle = (garment: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             this.activate(garment);
-         } else {
-             this.remove(garment);
-         }
+        } else {
+          this.remove(garment);
+        }
     }
     render() {
         const {
             lang,
             garments,
-            catalogFormClassName,
             activeGarments,
-            isIndexPage,
+            isNavigationGarments,
+            currentActiveGarment,
+            setCurrentActiveGarment
         } = this.props;
         return (
             <div
                 className={classNames(
-                'catalog',
-                {
-                    ['catalog--top-position']: !isIndexPage,
-                },
+                    'catalog',
+
+                    'catalog--top-position',
+
                 )}
-                style={ !isIndexPage ? {
-                    marginBottom: 0,
-                } : {}}
+                // style={{
+                //     marginBottom: 0,
+                // }}
             >
                 <PopUp
                     open={this.state.showUnavailablePopup}
@@ -162,75 +191,42 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     >
                         <div style={{ marginBottom: '2rem' }}>{loc[lang!].unavailablePopupText}</div>
                         <Button
-                            onClick={() => this.setState({showUnavailablePopup: false})}
+                            onClick={() => this.setState({ showUnavailablePopup: false })}
                         >ok
                         </Button>
                     </div>
                 </PopUp>
 
                 <form
-                    className={`catalog__form ${catalogFormClassName}`}
+                    className={`catalog__form`}
                     style={
-                        isIndexPage
-                         ? {}
-                         : {
-                            maxHeight: this.state.garmentChoiceFormHeight,
-                            transition: 'max-height .3s',
-                            overflow: 'hidden',
+                        isRealIndexPage()
+                            ? {}
+                            : {
+                                transition: 'max-height .3s',
+                                overflow: 'hidden',
+                                marginBottom: 0
                             }
                     }
                 >
-                    {   isIndexPage &&
-                        <CatalogIntroText lang={lang!}/>
+                    {isRealIndexPage() &&
+                        <CatalogIntroText lang={lang!} />
                     }
                     <div className="catalog__form-wrap">
-                        {makeCatalogItems(garments!, lang!, activeGarments!, this.toggle)}
-                        {/* TODO заглушки пока нет разделов, помимо рубашки */}
-                        <label
-                            className="catalog__item"
-                            onClick={() => this.setState({showUnavailablePopup: true})}
-                        >
-                            <input type="checkbox" name="goods" checked={false} />
-                            <span className="catalog__item-decoration">
-                                <span key={lang}>
-                                    {loc[lang!].garmentsHardcodes.suit}
-                                </span>
-                            </span>
-                        </label>
-                        {
-                            !isMobile() &&
-                                <label
-                                    className="catalog__item"
-                                    onClick={() => this.setState({showUnavailablePopup: true})}
-                                >
-                                    <input type="checkbox" name="goods" checked={false} />
-                                    <span className="catalog__item-decoration">
-                                        <span key={lang}>
-                                            {loc[lang!].garmentsHardcodes.shoes}
-                                        </span>
-                                    </span>
-                                </label>
-                        }
-                        {
-                            !isMobile() &&
-                                <label
-                                    className="catalog__item"
-                                    onClick={() => this.setState({showUnavailablePopup: true})}
-                                >
-                                    <input type="checkbox" name="goods" checked={false} />
-                                    <span className="catalog__item-decoration">
-                                        <span key={lang}>
-                                            {loc[lang!].garmentsHardcodes.more}
-                                        </span>
-                                    </span>
-                                </label>
-                        }
+                        {makeCatalogItems(
+                            garments!, 
+                            lang!, 
+                            [currentActiveGarment!], 
+                            activeGarments!, 
+                            setCurrentActiveGarment!,
+                            this.toggle!, 
+                            isNavigationGarments)}
                     </div>
-                    {   isIndexPage &&
+                    {isRealIndexPage() &&
                         <div className="catalog__submit-bar">
                             <FadeIn>
-                                <Link
-                                    to="/order/details"
+                                {!isMobile() ? <Link
+                                    to={`order/details/${currentActiveGarment}/fabric_ref/fabric`}
                                     key={lang}
                                     onClick={this.makeOrder}
                                     className="catalog__submit"
@@ -255,7 +251,19 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                             />
                                         </svg>
                                     </div>
-                                </Link>
+                                </Link> :
+                                    <Link
+                                        to={`order/details/${currentActiveGarment}/fabric_ref/fabric`}
+                                        key={lang}
+                                        onClick={this.makeOrder}
+                                        style={{
+                                            width: '100%',
+                                            height: 'unset'
+                                        }}
+                                        className="catalog__submit--mobile catalog__item-decoration"
+                                    >
+                                        {loc[lang!].submit}
+                                    </Link>}
                             </FadeIn>
                         </div>
                     }

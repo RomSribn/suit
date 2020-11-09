@@ -1,9 +1,10 @@
-import { App } from '../stores/app';
+// import { App } from '../stores/app';
 import { OrderStore } from '../stores/order';
 import { Subgroups } from '../stores/garments';
 
 export interface CommonStores {
-    app: App;
+    app: IAppStore;
+    filterStore?: IAppStore;
     order: OrderStore;
     ordersStore: OrderList.IOrderStore;
     user: IUserStore;

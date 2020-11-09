@@ -19,6 +19,7 @@ type GarmentsFromServerToGarmentsObject = (
 class GarmentsStore {
   @observable.shallow garmentsList = {};
   @observable activeGarments = observable.array();
+  @observable currentActiveGarment = ''; // Гермент, что сейчас отображается в адрессной строке
   @observable active = '';
   @observable isFetching = false;
   @observable error = {};
@@ -29,9 +30,9 @@ class GarmentsStore {
       method: 'GET',
       url: `${API_ROOT}/${services.garments}`,
     },
-    () => { this.isFetching = true; },
-    this.garmentsLoaded,
-    (e: Error) => this.error);
+      () => { this.isFetching = true; },
+      this.garmentsLoaded,
+      (e: Error) => this.error);
   }
   garmentsLoaded = (data: GarmentsFromServer) => {
     const reduceCallback: GarmentsFromServerToGarmentsObject = (acc, cur) => {
@@ -39,7 +40,7 @@ class GarmentsStore {
         id,
       } = cur;
       acc[id] = cur;
-      return acc; 
+      return acc;
     };
     const list = data.reduce(reduceCallback, {});
     this.garmentsList = list;
@@ -47,15 +48,20 @@ class GarmentsStore {
   }
   @action
   toggleGarment = (garment: string) => (_action: string) => {
-    if (this.activeGarments.length < 2) {
-      return;
-    }
+    // Старая заглушка
+    // if (this.activeGarments.length < 3) {
+    //   return;
+    // }
     if (_action === ADD) {
-      if (this.activeGarments.findIndex(el => garment === el ) === -1) {
-        this.activeGarments.push(garment);
+      // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
+      if (this.activeGarments.findIndex(el => garment === el) === -1) {
+      this.activeGarments.push(garment);
+      this.currentActiveGarment = this.activeGarments[0];
       }
-    } else if ( _action === REMOVE) {
-        this.activeGarments.remove(garment);
+    } else if (_action === REMOVE) {
+      this.activeGarments.remove(garment);
+      this.currentActiveGarment = this.activeGarments[0];
+      return;
     } else {
       // tslint:disable-next-line no-console
       console.error(`You have provided ${_action}-action which is not one of
@@ -63,17 +69,23 @@ class GarmentsStore {
     }
   }
   @action
+  setCurrentActiveGarment = (garment: string) => {
+    this.currentActiveGarment = garment;
+  }
+  @action
   setActiveGarment = (garment: string) => {
     let clickedGarment = this.garmentsList[garment];
     if (!clickedGarment) {
       clickedGarment = new GarmentStore(garment, this);
     }
-    this.active = garment;    
+    this.active = garment;
   }
 
   @action
   setChosenGarments = (garments: string[]) => {
-      this.activeGarments = observable.array(garments);
+    const garmentsArray = observable.array(garments);
+    this.activeGarments = garmentsArray;
+    this.currentActiveGarment = garmentsArray[0];
   }
 }
 

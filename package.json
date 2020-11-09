@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "CONSULT_WIDGET_ID=KlNHIaLoy7 node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "NODE_ENV=production node scripts/build.js",
     "server:update:all": "npm run server:update:gasuits; npm run server:update:mysuits; npm run server:update:kalasova; npm run server:update:suit",
     "server:update:gasuits": "SERVER=188.68.208.249 sh .deploy/update_server.sh",
@@ -133,6 +133,7 @@
     "react-select": "^2.0.0",
     "react-table": "^6.8.6",
     "react-transition-group": "^2.2.1",
+    "swiper": "^6.1.1",
     "typescript": "^3.3.3"
   },
   "jest": {

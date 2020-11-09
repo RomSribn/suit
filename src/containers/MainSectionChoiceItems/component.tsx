@@ -48,7 +48,7 @@ const Common = (props: CommonProps) => {
     };
 
     const commonClasses = classNames(
-        'custom',
+        'custom', '_design',
         {
             'custom__no-pointer': noCursorPointer,
             'custom--chosen': showVerticalBar(item),

@@ -17,15 +17,18 @@ class Controll extends React.PureComponent<ControllProps> {
     render() {
         const {
             onCLick,
-            isOpen
+            isOpen,
+            isSearchBarOpened,
+            toggleIsSearchBarOpened
         } = this.props;
         return (
             <button
+                style={{ zIndex: isSearchBarOpened ? 9999 : 9999 }}
                 className={classnames(
                     'btn gallery__filter-btn',
                     { open: isOpen },
                 )}
-                onClick={onCLick}
+                onClick={() => { onCLick(); if (isSearchBarOpened) { toggleIsSearchBarOpened!(); } }}
                 title="filter"
             >
                 <span /> <span /> <span />

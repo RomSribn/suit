@@ -2,8 +2,17 @@ import * as React from 'react';
 import { findKey } from 'lodash';
 import { Navlinks } from './navlinks';
 import { navigationRoutes, routesTranslations } from '../../../config/routes';
+import { inject, observer } from 'mobx-react';
+import { routes } from '../../../config/routes';
 
-class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: string}> {
+@inject(({ garments: { garments } }) => {
+    return {
+        activeGarment: garments.currentActiveGarment,
+    };
+})
+@observer
+
+class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: string }> {
     static defaultProps = {
         lang: 'en',
     };
@@ -30,22 +39,23 @@ class HeaderContent extends React.Component<HeaderContentProps, {pageTitle?: str
     render() {
         const {
         } = this.state;
-        const { path, lang, isAuth } = this.props;
-        const routeName = findKey(navigationRoutes, v => v === path ) || '';
+        const { path, lang, isAuth, activeGarment } = this.props;
+        const routeName = findKey(navigationRoutes, v => v === path) || '';
+        const isRealIndexPage = path === routes.mainPage;
         return (
-        <div
-            className="main__header-content"
-            style={HeaderContent.style}
-        >
-            <h1 className="main__header-title">
-                {path.includes('/order/details') ?
-                    <Navlinks isAuth={isAuth} /> :
-                    <span className="header-text">
-                        {routesTranslations[lang][routeName]}
-                    </span>
-                }
-            </h1>
-        </div>);
+            <div
+                className="main__header-content"
+                style={HeaderContent.style}
+            >
+                <h1 className="main__header-title">
+                    {path.includes('/order/details') ?
+                        <Navlinks garment={activeGarment!} isAuth={isAuth} /> :
+                        !isRealIndexPage && <span className="header-text">
+                            {routesTranslations[lang][routeName]}
+                        </span>
+                    }
+                </h1>
+            </div>);
     }
 }
 

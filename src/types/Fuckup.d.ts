@@ -43,6 +43,36 @@ declare namespace Fuckup {
             title: Translations<string>;
         }
     }
+    interface AdditionalFabric {
+        delivery_days: number;
+        dependent_subsection_our_codes: string[];
+        description: Translations<string>;
+        elementCode: string;
+        exception: string[];
+        geo_url_3d: string;
+        img_url_2d: string;
+        img_url_2d_list: string[];
+        img_url_2d_thumbnail_list: string[];
+        is_item_clear: boolean;
+        main_color: Translations<string | null>;
+        our_code: string;
+        pattern: Translations<string | null>;
+        pattern_size: Translations<string | null>;
+        price: Translations<number>;
+        second_colors: Translations<string | null >[];
+        tex_url_3d: string;
+        title: Translations<string>;
+        weight: Translations<number | null>;
+        common: {
+            is_allowOwnFabric: boolean;
+            is_input: boolean;
+            is_multiple: boolean;
+            is_subclear: boolean;
+            position: number;
+            subsection_our_code: string;
+            title: Translations<string>;
+        };
+    }
     export interface OrderFromServer {
         orderId: number;
         price: Translations<string>;
@@ -65,7 +95,7 @@ declare namespace Fuckup {
                 mainFabric: DesignInfo;
                 items: {
                     value: string | null;
-                    additionalFabric: string | null;
+                    additionalFabric: AdditionalFabric;
                     design: DesignInfo;
                 }[];
             }

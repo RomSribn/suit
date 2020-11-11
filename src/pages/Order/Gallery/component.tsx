@@ -257,9 +257,28 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 if (!newOrder) {
                     newOrder = {};
                 }
-                newOrder[garment][0][group][subgroup] = {};
-                newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
-                newOrder[garment][0][group][subgroup].title = newOrderItem.title;
+                if (subgroup === 'fabric') {
+                    if (orderStore!.partOfShirtToggle === 'all') {
+                        // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                        newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
+                        newOrder[garment][0][group][subgroup].title = newOrderItem.title;
+                        _.forEach(newOrder[garment][0].design, (item) => {
+                            if (item.additionalFabric) {
+                                item.additionalFabric = null;
+                            }
+                        });
+                    } else {
+                        // устанавливаем доп ткань для части рубашки из активного элемента
+                        newOrder[garment][0].design[orderStore!.partOfShirtToggle].additionalFabric =
+                            newOrderItem.our_code;
+                    }
+                } else {
+                    if (!newOrder[garment][0][group][subgroup]) { // может быть в случае с pocket
+                        newOrder[garment][0][group][subgroup] = {};
+                    }
+                    newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
+                    newOrder[garment][0][group][subgroup].title = newOrderItem.title;
+                }
                 orderStore!.updateOrderInfo(newOrder);
                 const props = this.props;
 

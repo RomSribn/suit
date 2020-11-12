@@ -84,7 +84,21 @@
 }
 .gallery__footer--detailButton.button {
     text-align: right !important;
+
+
 }
+@media only screen and (max-width: 450px), only screen and (max-height: 450px) {
+        .gallery__footer--detailButton.button {
+            background: black !important;
+            color: white !important;
+            font-size: 1rem !important;
+            font-weight: 400 !important;
+            padding: 0 5px !important;
+            text-transform: capitalize !important;
+
+
+}
+    }
 .gallery__footer--detailButton.button.black:hover {
     /* background: #8a8a8a !important;
     border-color: #8a8a8a !important; */
@@ -264,6 +278,9 @@
     .gallery__footer {
         width: 100%;
         margin-top: 0;
+        position: absolute;
+        left: 0;
+        bottom: 50px;
     }
 
     .gallery__footer--title {

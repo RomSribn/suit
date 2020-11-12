@@ -14,4 +14,5 @@ export interface GroupChoiceProps {
     garments?: {
         Subgroups: typeof Subgroups
     };
+    orderStore?: IOrderStore;
 }

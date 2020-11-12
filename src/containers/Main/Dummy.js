@@ -107,7 +107,8 @@ class Widget extends PureComponent {
                 )
           )
         }
-        const  mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => this.props.assets.includes(activeExceptionCode));
+        const assetsIds = this.props.assets.map(asset => asset.id || asset);
+        const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
 
         if (mutuallyExclusiveItems.length && exceptions) {
           mutuallyExclusiveItems.forEach((item) => {
@@ -119,7 +120,7 @@ class Widget extends PureComponent {
                   ) {
                   allExceptions = allExceptions.filter((i) => {
                     if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
-                        if (!this.props.assets.includes(defaultItemValues[elementKey])) {
+                        if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
                           this.props.assets.push(defaultItemValues[elementKey])
                         }
                     }
@@ -134,7 +135,10 @@ class Widget extends PureComponent {
 
         const actualExceptions = [...allExceptions, ...activeExceptions];
         const nextAssets = this.props.assets
-          .filter(i => !actualExceptions.includes(i))
+            .filter(asset => {
+              const id = asset.id ? asset.id : asset;
+              return !actualExceptions.includes(id)
+            })
 
           /**
            * При загрузке без кеша все хорошо.
@@ -272,6 +276,7 @@ export default class App extends Component {
                 initials.text.font = val;
               }
             }
+            const additionalFabric = curGarment[0].design[subgroup] && curGarment[0].design[subgroup].additionalFabric;
             if (
               activeElement.elementInfo &&
               activeElement.elementInfo.garment === garment &&
@@ -282,12 +287,20 @@ export default class App extends Component {
                 initials.id = activeElement.our_code;
               } else {
                 if (!subgroup.includes(INITIALS)) {
-                  acc.push(activeElement.our_code)
+                  if (subgroup === 'fabric') {
+                    acc.push(subgroupVal.our_code);
+                  } else {
+                    const value = additionalFabric ?
+                        { id: activeElement.our_code, materials: [additionalFabric] } : activeElement.our_code;
+                    acc.push(value);
+                  }
                 }
               }
             } else {
               if (!subgroup.includes(INITIALS) && subgroupVal) {
-                acc.push(subgroupVal.our_code);
+                const value = additionalFabric ?
+                    { id: subgroupVal.our_code, materials: [additionalFabric] } : subgroupVal.our_code;
+                acc.push(value);
               }
             }
             // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color

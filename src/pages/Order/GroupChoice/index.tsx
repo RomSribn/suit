@@ -2,18 +2,20 @@ import * as React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
-import { isMobile, isLandscape } from '../../../utils';
+import { isMobile, isLandscape, isTablet } from '../../../utils';
 import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
 import { routes } from '../routes';
 import { Controll } from '../Filter';
+import './styles.styl';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({ app, filterStore, garments: { Subgroups } }) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
         app,
-        filterStore
+        filterStore,
+        orderStore: order,
     };
 })
 @observer
@@ -29,6 +31,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         }
     }
 
+    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.orderStore!.setPartOfShirtToggle(e.target.value);
+    }
+
     render() {
         const {
             match: { params: { garment, subgroup, group } },
@@ -36,7 +42,13 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             backLink,
             lang,
             subgroupsStore,
+            orderStore,
         } = this.props;
+        let itemsWithOwnFabric: Subgroup[] = [];
+        if (subgroupsStore!.data) {
+            itemsWithOwnFabric = subgroupsStore!.data.design
+                .filter((s) => s.is_allowOwnFabric);
+        }
 
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
 
@@ -50,8 +62,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             choiceItemValue =
             _.get(order, `${fixedGarment}[0].${subgroup}.${group}.title.${lang}`, loc[lang].noStatus);
         }
-        const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 13
-            ? choiceItemValue!.slice(0, 10) + '...'
+
+        const itemValue = isMobile() && !isLandscape() && choiceItemValue && choiceItemValue!.length > 15 ||
+            !(isMobile() || (isTablet() && !isLandscape()))
+            ? choiceItemValue!.slice(0, 12) + '...'
             : choiceItemValue;
         // console.log('subStore.data', subgroupsStore!.data![subgroup]); // tslint:disable-line
         // console.log('group', group); // tslint:disable-line
@@ -68,19 +82,57 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                 {(subgroup === 'fitting') || (subgroup === 'design') && <span className="custom__control"/>}
             </>
         );
+        const partOfShirtToggleItems = [
+            {
+                subsection_our_code: 'all',
+                title: { en: 'all', ru: 'все' },
+            },
+            ...itemsWithOwnFabric,
+        ];
+
+        const toggle = (
+            <div className="toggle">
+                {partOfShirtToggleItems.map((item) => (
+                    <span key={item.subsection_our_code} className="toggle__item">
+                        <input
+                            className="toggle__input"
+                            type="radio"
+                            name="allowed_own_fabric"
+                            id={item.subsection_our_code}
+                            value={item.subsection_our_code}
+                            checked={orderStore!.partOfShirtToggle === item.subsection_our_code}
+                            onChange={this.handleChange}
+                        />
+                        <label className="toggle__label" htmlFor={item.subsection_our_code}>
+                            {loc[lang].for} {item.title[lang]}
+                        </label>
+                    </span>
+                ))}
+            </div>
+        );
+
+        const isToggleOnSeparateRow = isMobile() || (isTablet() && !isLandscape());
+
         return (
             <Switch>
                 <Route path={routes.fabric}>
+                    <>
                     <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
                         {content}
-                        <div className="custom__control_new">
+                        {!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}
+                        <div
+                            className="custom__control_new"
+                            style={{
+                                 flexBasis: this.props.app && this.props.app.isSearchBarOpened ? 'auto' : 0,
+                             }}
+                        >
                             <form
                                 style={{
                                     display: isMobile() ? 'none' : 'block',
                                     cursor: 'pointer',
-                                    transition: '0.5s',
+                                    transition: '0.3s',
                                     transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                        'unset' : 'translateX(74%)'
+                                        'unset' : 'translateX(34%)'
                                 }}
                                 className="search"
                             >
@@ -128,8 +180,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             < Controll />
                         </div>
                     </div>
+                    {isToggleOnSeparateRow && toggle}
+                    </>
                 </Route>
-                    {subgroup === 'fitting' ?
+                {subgroup === 'fitting' ?
                     <Link to={backLink}  className="custom custom--open">
                         {content}
                     </Link> :

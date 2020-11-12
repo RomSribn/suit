@@ -195,10 +195,10 @@ const makeGalleryItems: makeGalleryItems = (
         acc.push(item.our_code);
         return acc;
     }, []).join('') + shownItem.our_code + zoomId;
-
-    if (galleryItemsCache[cache]) {
-        return galleryItemsCache[cache];
-    }
+    // временно отключено
+    // if (galleryItemsCache[cache]) {
+    //     return galleryItemsCache[cache];
+    // }
     const result = items.map((item, elementIndex) => {
         console.log('XXX', item); // tslint:disable-line
         return (

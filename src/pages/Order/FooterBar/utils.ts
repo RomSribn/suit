@@ -75,9 +75,28 @@ const updateOrder = (props: Props) => {
             newValue = {};
           }
           if (subgroup !== 'initials_text') {
-            newValue[garment][0][group][subgroup] = {};
-            newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
-            newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+              if (subgroup === 'fabric') {
+                  if (orderStore!.partOfShirtToggle === 'all') {
+                      // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                      newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
+                      newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+                      _.forEach(newValue[garment][0].design, (item) => {
+                          if (item.additionalFabric) {
+                              item.additionalFabric = null;
+                          }
+                      });
+                  } else {
+                      // устанавливаем доп ткань для части рубашки из активного элемента
+                      newValue[garment][0].design[orderStore!.partOfShirtToggle].additionalFabric =
+                          orderStore!.activeElement!.our_code;
+                  }
+              } else {
+                  if (!newValue[garment][0][group][subgroup]) { // может быть в случае с pocket
+                      newValue[garment][0][group][subgroup] = {};
+                  }
+                  newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
+                  newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
+              }
           }
 
           // initial values

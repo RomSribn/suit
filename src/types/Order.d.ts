@@ -18,6 +18,8 @@ interface IOrderStore {
     error: object | null;
     setFitting: (garment: string, fitting: { id: string; value: number }) => void;
     getFitting: (garment: string) => (fittingName: string) => number;
+    partOfShirtToggle: string;
+    setPartOfShirtToggle: (value: string) => void;
     setActiveItem(item: GalleryStoreItem | null): void;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order, exception?: OrderItemException): void;
@@ -48,6 +50,7 @@ interface OrderItemInfo {
     is_subclear?: boolean;
     title: Translations<string>;
     img_url_2d?: string;
+    additionalFabric?: string | null;
 }
 
 interface OrderItemElement {
@@ -101,7 +104,7 @@ interface ServerItem {
     };
     additionalFabric?: {
         ourCode: string;
-    },
+    } | null,
 }
 
 interface ServerOrder {

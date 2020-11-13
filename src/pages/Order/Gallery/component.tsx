@@ -380,7 +380,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
 
-                            {/* <div className="gallery__footer--articul"> */}
+                            <div className="gallery__footer--articul">
                                 {this.props.app &&
                                     <Button
                                         onClick={this.props.app.toggleSwiperPopup}
@@ -389,7 +389,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                         Подробно
                                     </Button>
                                 }
-                            {/* </div> */}
+                            </div>
                     </div>
                     {!isMobile() && <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">

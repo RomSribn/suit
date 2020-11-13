@@ -84,7 +84,6 @@
 }
 .demo{
     position: absolute;
-    transform: translateY(-60px);
     top: 0;
     left: 0;
     z-index: 3;
@@ -109,6 +108,7 @@
 @media (max-width: 450px) {
     .demo {
         width: 8%;
+        transform: translateY(-60px);
     }
 }
 

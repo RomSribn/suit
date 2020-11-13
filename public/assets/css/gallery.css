@@ -64,7 +64,7 @@
 }
 
 .gallery__footer--articul > span > button {
-  text-decoration: underline !important;
+  text-decoration: underline;
   text-transform: capitalize !important;
   font-size: 0.8666rem !important;
   /* background-color: #acacac !important;
@@ -74,6 +74,12 @@
   padding: 0px 0px !important;
   border: none !important;
   color: #8a8a8a !important;
+}
+
+@media (max-width: 450px) {
+  .gallery__footer--articul > span > button {
+    text-decoration: none !important;
+  }
 }
 
 .text-block__price span {

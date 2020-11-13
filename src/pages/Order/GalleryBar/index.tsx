@@ -200,7 +200,6 @@ const makeGalleryItems: makeGalleryItems = (
     //     return galleryItemsCache[cache];
     // }
     const result = items.map((item, elementIndex) => {
-        console.log('XXX', item); // tslint:disable-line
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}

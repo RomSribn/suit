@@ -59,7 +59,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 5;
     height: 100%;
     padding: 2.5rem;
     width: -webkit-calc(50% + 2.5rem);
@@ -85,6 +84,7 @@
 }
 .demo{
     position: absolute;
+    transform: translateY(-60px);
     top: 0;
     left: 0;
     z-index: 3;
@@ -104,5 +104,11 @@
 
 @media only screen and (max-height : 700px){
     .main-menu li {margin: 1.4rem 0;}
+}
+
+@media (max-width: 450px) {
+    .demo {
+        width: 8%;
+    }
 }
 

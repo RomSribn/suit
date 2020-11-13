@@ -1,17 +1,21 @@
 import * as React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
 import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
-import { routes } from '../routes';
+// import { routes } from '../routes';
 import { Controll } from '../Filter';
 import './styles.styl';
+import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, garments: { Subgroups } }) => {
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, user, garments: 
+    { Subgroups, garments } }) => {
     return {
+        userStore: user,
+        activeGarments: [...garments!.activeGarments],
         subgroupsStore: new Subgroups('shirt'),
         app,
         filterStore,
@@ -39,10 +43,12 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const {
             match: { params: { garment, subgroup, group } },
             order,
-            backLink,
+            // backLink,
             lang,
             subgroupsStore,
             orderStore,
+            userStore,
+            activeGarments
         } = this.props;
         let itemsWithOwnFabric: Subgroup[] = [];
         if (subgroupsStore!.data) {
@@ -69,15 +75,21 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             : choiceItemValue;
         // console.log('subStore.data', subgroupsStore!.data![subgroup]); // tslint:disable-line
         // console.log('group', group); // tslint:disable-line
-        const subgroupName = subgroupsStore!.data
-            ? subgroupsStore!.data[subgroup]
-                .find((item: Subgroup) => item.subsection_our_code === group).title[lang]
-            : '';
         const content = (
             <>
                 <span className="custom__content">
-                    <span className="custom__name">{subgroupName}:</span>
+                    {isMobile() ? 
+                <Navlinks 
+                    garment={activeGarments && activeGarments[0] || 'shirt'} 
+                    isAuth={userStore!.isAuth} 
+                /> : <>
+                    <span className="custom__name">{subgroupsStore!.data
+            ? subgroupsStore!.data[subgroup]
+                .find((item: Subgroup) => item.subsection_our_code === group).title[lang]
+            : ''}:</span>
                     <span className="custom__status">{itemValue}</span>
+                </>}
+
                 </span>
                 {(subgroup === 'fitting') || (subgroup === 'design') && <span className="custom__control"/>}
             </>
@@ -111,11 +123,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             </div>
         );
 
-        const isToggleOnSeparateRow = isMobile() || (isTablet() && !isLandscape());
+        const isToggleOnSeparateRow = (isTablet() && !isLandscape());
 
         return (
-            <Switch>
-                <Route path={routes.fabric}>
+<>
                     <>
                     <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
                         {content}
@@ -128,11 +139,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                         >
                             <form
                                 style={{
-                                    display: isMobile() ? 'none' : 'block',
                                     cursor: 'pointer',
                                     transition: '0.3s',
                                     transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                        'unset' : 'translateX(34%)'
+                                        'unset' : 'translateX(60%)'
                                 }}
                                 className="search"
                             >
@@ -180,17 +190,17 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             < Controll />
                         </div>
                     </div>
-                    {isToggleOnSeparateRow && toggle}
+                    {isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'
+                        && subgroup !== 'design' && toggle}
                     </>
-                </Route>
-                {subgroup === 'fitting' ?
-                    <Link to={backLink}  className="custom custom--open">
+                {/* {subgroup === 'fitting' ?
+                    <Link to={backLink}  className="custom custom--openss">
                         {content}
                     </Link> :
-                    <Link to={backLink} onClick={this.backClick} className="custom custom--open">
+                    <Link to={backLink} onClick={this.backClick} className="custom custom--openss">
                         {content}
-                    </Link>}
-            </Switch>
+                    </Link>} */}
+</>
         );
     }
 }

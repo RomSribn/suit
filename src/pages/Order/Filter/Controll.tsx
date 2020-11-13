@@ -23,7 +23,7 @@ class Controll extends React.PureComponent<ControllProps> {
         } = this.props;
         return (
             <button
-                style={{ zIndex: isSearchBarOpened ? 9999 : 9999 }}
+                style={{ zIndex: 999, width: '90px' }}
                 className={classnames(
                     'btn gallery__filter-btn',
                     { open: isOpen },

@@ -6,6 +6,7 @@ import { routes } from '../routes';
 import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
+import { isMobile } from '../../../utils';
 
 let scrollData: { [key: string]: number } = {};
 
@@ -171,6 +172,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 )),
             ]
             : [];
+
         return (
             <Switch>
                 <Route
@@ -186,6 +188,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                                 choiceItem={choiceItem!}
                                 lang={lang!}
                                 order={order!}
+                                withToggle={true}
                             />
                         );
                     }}
@@ -193,17 +196,60 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 <Route
                     exact={true}
                     path={routes.design}
-                >
-                    <Component lang={lang} match={match} data={data} />
-                </Route>
+                    render={(props) => {
+                        const _match = props.match;
+                        return (
+                            <>
+                            {isMobile() && <GroupChoice
+                                match={_match}
+                                popOrderPathitem={popOrderPathitem!}
+                                setSubgroupTitle={setSubgroupTitle!}
+                                backLink={backLink!}
+                                choiceItem={choiceItem!}
+                                lang={lang!}
+                                order={order!}
+                                withToggle={false}
+                            />}
+                            <div className={'design-navigation-wrapper'}>
+                                <a href="/random" className={'design-navigation _active'}>Все</a>
+                                <a href="/random" className={'design-navigation'}>Воротник</a>
+                                <a href="/random" className={'design-navigation'}>Манжет</a>
+                                <a href="/random" className={'design-navigation'}>Перед</a>
+                            </div>
+                            <Component lang={lang} match={match} data={data} />
+                            </>
+                        );
+                    }}
+                />
                 <Route
                     exact={true}
                     path={routes.fitting}
-                >
-                    <Component lang={lang} match={match} data={dataFitting} />
-                </Route>
+                    render={(props) => {
+                        const _match = props.match;
+                        return (
+                            <>
+                            {isMobile() && <GroupChoice
+                                match={_match}
+                                popOrderPathitem={popOrderPathitem!}
+                                setSubgroupTitle={setSubgroupTitle!}
+                                backLink={backLink!}
+                                choiceItem={choiceItem!}
+                                lang={lang!}
+                                order={order!}
+                                withToggle={false}
+                            />}
+                            <div className={'design-navigation-wrapper'}>
+                                <a href="/random" className={'design-navigation _active'}>Все</a>
+                                <a href="/random" className={'design-navigation'}>Тело</a>
+                                <a href="/random" className={'design-navigation'}>Альтерации</a>
+                            </div>
+                            <Component lang={lang} match={match} data={dataFitting} />
+                            </>
+                        );
+                    }}
+                />
                 <Redirect to={match.url} />
-            </Switch>);
+                </Switch>);
     }
 }
 

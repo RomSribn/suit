@@ -2,6 +2,7 @@ import { observable, action, get } from 'mobx';
 import * as _ from 'lodash';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
+import { basisPart } from '../pages/Order/GroupChoice';
 
 type CloneOrderObject = (order: Order) => Order;
 const cloneOrderObject: CloneOrderObject = (order) => {
@@ -118,7 +119,7 @@ export class OrderStore implements IOrderStore {
     @observable isFetching = false;
     prevActiveItem?: string | null = null;
     @observable error: object | null = null;
-    @observable partOfShirtToggle = 'all';
+    @observable partOfShirtToggle = basisPart;
 
     isEmptyOrder = () => _.isEmpty(this.order);
 
@@ -388,14 +389,9 @@ export class OrderStore implements IOrderStore {
         const newOrder = cloneOrderObject(order);
         if (this.activeElement && this.activeElement.elementInfo) {
             if (this.activeElement.elementInfo.subGroup === 'fabric') {
-                if (this.partOfShirtToggle === 'all') {
-                    // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                if (this.partOfShirtToggle === basisPart) {
+                    // устанавливаем код активной ткани
                     newOrder.shirt[0].fabric_ref.fabric.our_code = this.activeElement.our_code;
-                    _.forEach(newOrder.shirt[0].design, (item) => {
-                        if (item.additionalFabric) {
-                            item.additionalFabric = null;
-                        }
-                    });
                 } else {
                     // устанавливаем доп ткань для части рубашки из активного элемента
                     newOrder.shirt[0].design[this.partOfShirtToggle].additionalFabric = this.activeElement.our_code;
@@ -482,6 +478,18 @@ export class OrderStore implements IOrderStore {
     @action
     setPartOfShirtToggle = (value: string) => {
         this.partOfShirtToggle = value;
+    }
+
+    @action
+    clearAdditionalFabric = (garment: string) => {
+        const newValue = {...this.order};
+        _.forEach(newValue[garment][0].design, (item) => {
+            if (item.additionalFabric) {
+                item.additionalFabric = null;
+            }
+        });
+        this.order = newValue;
+        this.partOfShirtToggle = basisPart;
     }
 }
 

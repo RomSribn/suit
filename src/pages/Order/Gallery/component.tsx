@@ -9,6 +9,7 @@ import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
 import { Button } from '../../../components/Button';
+import { basisPart } from '../GroupChoice';
 // import { observer } from 'mobx-react';
 
 interface GalleryState extends ImageLoadState {
@@ -258,15 +259,10 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     newOrder = {};
                 }
                 if (subgroup === 'fabric') {
-                    if (orderStore!.partOfShirtToggle === 'all') {
-                        // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                    if (orderStore!.partOfShirtToggle === basisPart) {
+                        // устанавливаем код активной ткани
                         newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
                         newOrder[garment][0][group][subgroup].title = newOrderItem.title;
-                        _.forEach(newOrder[garment][0].design, (item) => {
-                            if (item.additionalFabric) {
-                                item.additionalFabric = null;
-                            }
-                        });
                     } else {
                         // устанавливаем доп ткань для части рубашки из активного элемента
                         newOrder[garment][0].design[orderStore!.partOfShirtToggle].additionalFabric =

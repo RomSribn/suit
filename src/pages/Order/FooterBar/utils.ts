@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { basisPart } from '../GroupChoice';
 
 export const handleSetOrder = (
     orderStore: IOrderStore,
@@ -76,15 +77,10 @@ const updateOrder = (props: Props) => {
           }
           if (subgroup !== 'initials_text') {
               if (subgroup === 'fabric') {
-                  if (orderStore!.partOfShirtToggle === 'all') {
-                      // устанавливаем код активной ткани и очищаем additionalFabric для всех элементов рубашки
+                  if (orderStore!.partOfShirtToggle === basisPart) {
+                      // устанавливаем код активной ткани
                       newValue[garment][0][group][subgroup].our_code = orderStore!.activeElement!.our_code;
                       newValue[garment][0][group][subgroup].title = orderStore!.activeElement!.title;
-                      _.forEach(newValue[garment][0].design, (item) => {
-                          if (item.additionalFabric) {
-                              item.additionalFabric = null;
-                          }
-                      });
                   } else {
                       // устанавливаем доп ткань для части рубашки из активного элемента
                       newValue[garment][0].design[orderStore!.partOfShirtToggle].additionalFabric =

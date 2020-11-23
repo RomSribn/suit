@@ -10,6 +10,8 @@ import { routes } from '../routes';
 import { Controll } from '../Filter';
 import './styles.styl';
 
+export const basisPart = 'basis';
+
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, garments: { Subgroups } }) => {
     return {
         subgroupsStore: new Subgroups('shirt'),
@@ -33,6 +35,11 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.props.orderStore!.setPartOfShirtToggle(e.target.value);
+    }
+
+    handleReset = () => {
+        const { orderStore, match: { params: { garment } } } = this.props;
+        orderStore!.clearAdditionalFabric(garment);
     }
 
     render() {
@@ -84,16 +91,17 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         );
         const partOfShirtToggleItems = [
             {
-                subsection_our_code: 'all',
-                title: { en: 'all', ru: 'все' },
+                subsection_our_code: basisPart,
+                title: { [lang]: loc[lang].basis },
             },
             ...itemsWithOwnFabric,
         ];
 
-        const toggle = (
-            <div className="toggle">
-                {partOfShirtToggleItems.map((item) => (
-                    <span key={item.subsection_our_code} className="toggle__item">
+        const togglesBlock = (
+            <div className="toggles-block">
+                <div className="toggles">
+                    {partOfShirtToggleItems.map((item) => (
+                        <span key={item.subsection_our_code} className="toggle">
                         <input
                             className="toggle__input"
                             type="radio"
@@ -107,11 +115,11 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             {loc[lang].for} {item.title[lang]}
                         </label>
                     </span>
-                ))}
+                    ))}
+                </div>
+                <button className="toggles-block__btn" onClick={this.handleReset}>{loc[lang].reset}</button>
             </div>
         );
-
-        const isToggleOnSeparateRow = isMobile() || (isTablet() && !isLandscape());
 
         return (
             <Switch>
@@ -119,7 +127,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     <>
                     <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
                         {content}
-                        {!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}
                         <div
                             className="custom__control_new"
                             style={{
@@ -180,7 +187,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             < Controll />
                         </div>
                     </div>
-                    {isToggleOnSeparateRow && toggle}
+                    {togglesBlock}
                     </>
                 </Route>
                 {subgroup === 'fitting' ?

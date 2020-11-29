@@ -6,6 +6,7 @@ import { routes } from '../routes';
 import { Fitting } from '../Fitting/component';
 // import { Controll } from '../Filter';
 import { InitialsCustomInput } from '../Initials-custom-input';
+import ToggleBar from '../ToggleBar';
 
 const galleryCache = {};
 
@@ -126,12 +127,12 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
 @observer
 class Gallery extends React.Component<GalleryContainerProps> {
     render() {
-        // const {
-        //     match: { params: { group } },
-        // } = this.props;
+        const {
+            match: { params: { group, garment } },
+        } = this.props;
         return (
             <>
-                {/* {group === 'fabric_ref' && <Controll />} */}
+                 {group === 'fabric_ref' && <ToggleBar garment={garment} />}
                 <GalleryBlock {...this.props} />
             </>
         );

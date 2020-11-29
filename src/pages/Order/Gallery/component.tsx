@@ -9,7 +9,7 @@ import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
 import { Button } from '../../../components/Button';
-import { basisPart } from '../GroupChoice';
+import { basisPart } from '../ToggleBar';
 // import { observer } from 'mobx-react';
 
 interface GalleryState extends ImageLoadState {

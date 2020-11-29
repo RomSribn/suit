@@ -44,7 +44,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1.3333rem 0 1.3333rem;
-    margin-bottom: 1.3333rem;
+    margin-bottom: 0.8rem;
     height: 2.9333rem;
     background: #eceeee;
     color: black;
@@ -154,18 +154,8 @@
     opacity: 0;
 }
 
-.custom__content {
-    flex-shrink: 0;
-}
-
-
 @media only screen and (max-width : 1310px){
     .custom__status{font-size: 11px;}
-}
-@media only screen and (max-width : 768px){
-    .custom--open {
-        margin: auto;
-    }
 }
 @media only screen and (max-height : 700px){
     .custom__status{font-size: 11px;}
@@ -192,7 +182,6 @@
         text-overflow: ellipsis;
         align-items: center;
         white-space: nowrap;
-        flex-shrink: 1;
     }
 
     .custom.custom__no-pointer .custom__content {

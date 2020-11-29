@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { basisPart } from '../GroupChoice';
+import { basisPart } from '../ToggleBar';
 
 export const handleSetOrder = (
     orderStore: IOrderStore,

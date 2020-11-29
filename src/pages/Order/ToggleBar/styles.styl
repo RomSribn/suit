@@ -1,24 +1,26 @@
-.toggles-block {
+.toggle-bar {
     display: flex;
     align-items: center;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0 1.3333rem 0 1.3333rem;
+}
+.toggles {
+    display: flex;
 }
 .toggle {
-    margin-left: 20px;
+    margin-right: 20px;
     line-height: 1.4rem;
-    &:first-child {
-        margin-left: 0;
-    }
 }
 .toggles-block__btn {
     background: transparent;
-    border: 1px solid #b7b7b7;
-    padding: 4px 6px;
-    margin-left: 20px
+    border: none;
+    margin-left: auto;
+    line-height: 1.4rem;
     color: #666;
     cursor: pointer;
     transition: all 0.3s linear
     &:hover {
-        border-color: #8a8a8a;
         color: #000;
     }
 }
@@ -89,8 +91,6 @@
 @media (max-width: 768px) {
     .toggles-block {
         white-space: nowrap;
-        padding: 10px 0;
-        margin-bottom: -10px;
     }
     .toggles {
         overflow-x: auto;

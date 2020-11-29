@@ -2,7 +2,7 @@ import { observable, action, get } from 'mobx';
 import * as _ from 'lodash';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
-import { basisPart } from '../pages/Order/GroupChoice';
+import { basisPart } from '../pages/Order/ToggleBar';
 
 type CloneOrderObject = (order: Order) => Order;
 const cloneOrderObject: CloneOrderObject = (order) => {

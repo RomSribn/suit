@@ -18,4 +18,5 @@ interface ItemData {
 interface SwiperPopupProps {
   item?: ItemData,
   closeButton: () => void
+  lang: string
 }

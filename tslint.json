@@ -31,7 +31,6 @@
         "no-arg": true,
         "no-console": [
             true,
-            "log",
             "error",
             "debug",
             "info",

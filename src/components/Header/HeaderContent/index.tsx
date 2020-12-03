@@ -49,7 +49,7 @@ class HeaderContent extends React.Component<HeaderContentProps, { pageTitle?: st
             >
                 <h1 className="main__header-title">
                     {path.includes('/order/details') ?
-                        <Navlinks garment={activeGarment!} isAuth={isAuth} /> :
+                        <Navlinks garment={activeGarment!} isAuth={isAuth} lang={lang} /> :
                         !isRealIndexPage && <span className="header-text">
                             {routesTranslations[lang][routeName]}
                         </span>

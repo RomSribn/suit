@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
@@ -11,7 +11,7 @@ import { Controll } from '../Filter';
 import './styles.styl';
 import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
 
-@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, user, garments: 
+@inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, user, garments:
     { Subgroups, garments } }) => {
     return {
         userStore: user,
@@ -78,10 +78,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const content = (
             <>
                 <span className="custom__content">
-                    {isMobile() ? 
-                <Navlinks 
-                    garment={activeGarments && activeGarments[0] || 'shirt'} 
-                    isAuth={userStore!.isAuth} 
+                    {isMobile() ?
+                <Navlinks
+                    garment={activeGarments && activeGarments[0] || 'shirt'}
+                    isAuth={userStore!.isAuth}
                 /> : <>
                     <span className="custom__name">{subgroupsStore!.data
             ? subgroupsStore!.data[subgroup]

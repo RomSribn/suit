@@ -1,12 +1,27 @@
-.toggle {
+.toggle-bar {
     display: flex;
-    margin-left: auto;
-    flex-shrink: 0;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0 1.3333rem 0 1.3333rem;
 }
-.toggle__item {
-    margin-left: 20px;
-    &:first-child {
-        margin-left: 0;
+.toggles {
+    display: flex;
+}
+.toggle {
+    margin-right: 20px;
+    line-height: 1.4rem;
+}
+.toggles-block__btn {
+    background: transparent;
+    border: none;
+    margin-left: auto;
+    line-height: 1.4rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s linear
+    &:hover {
+        color: #000;
     }
 }
 .toggle__input:checked,
@@ -18,7 +33,7 @@
 .toggle__input:not(:checked) + .toggle__label
 {
     position: relative;
-    padding-left: 18px;
+    padding-left: 20px;
     cursor: pointer;
     color: #666;
     font-size: 1rem;
@@ -74,11 +89,11 @@
 }
 
 @media (max-width: 768px) {
-    .toggle {
-        overflow-x: auto;
+    .toggles-block {
         white-space: nowrap;
-        padding: 10px 0;
-        margin-bottom: -10px;
+    }
+    .toggles {
+        overflow-x: auto;
     }
 }
 

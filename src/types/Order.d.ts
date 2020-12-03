@@ -20,6 +20,7 @@ interface IOrderStore {
     getFitting: (garment: string) => (fittingName: string) => number;
     partOfShirtToggle: string;
     setPartOfShirtToggle: (value: string) => void;
+    clearAdditionalFabric: (garment: string) => void;
     setActiveItem(item: GalleryStoreItem | null): void;
     setGarmentValue(garment: string, value: any): void;
     setOrder (_o: Order, exception?: OrderItemException): void;

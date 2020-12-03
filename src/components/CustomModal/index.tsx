@@ -1,12 +1,12 @@
 import * as React  from 'react';
 import './style.styl';
 
-interface ModalProps {
+interface IModalProps {
     closeModal(): void;
-    children?: any;
+    children?: React.ElementType;
 }
 
-const CustomModal: React.FunctionComponent<ModalProps> = ({closeModal, children}) => {
+const CustomModal: React.FunctionComponent<IModalProps> = ({closeModal, children}) => {
     const backDrop = React.useRef(null);
 
     const handleBackdropClick = (e:  React.MouseEvent<HTMLDivElement>) => {

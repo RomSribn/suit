@@ -9,16 +9,6 @@ interface ModalProps {
 const CustomModal: React.FunctionComponent<ModalProps> = ({closeModal, children}) => {
     const backDrop = React.useRef(null);
 
-
-    React.useEffect(() => {
-        window.addEventListener('keydown', handleKeyPress, false);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyPress, false);
-        };
-    });
-
-
     const handleBackdropClick = (e:  React.MouseEvent<HTMLDivElement>) => {
         const { current } = backDrop;
         if (e.target !== current) {
@@ -36,6 +26,16 @@ const CustomModal: React.FunctionComponent<ModalProps> = ({closeModal, children}
         // }
         // props.closeModal();
     };
+
+
+    React.useEffect(() => {
+        window.addEventListener('keydown', handleKeyPress, false);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress, false);
+        };
+    });
+
 
     return (
         <div className={'backdrop'} ref={backDrop} onClick={handleBackdropClick}>

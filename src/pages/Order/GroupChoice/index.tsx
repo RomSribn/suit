@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+// import { Link, Route, Switch } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
@@ -103,7 +103,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         ];
 
         const toggle = (
-            <div className="toggle">
+            <div className="toggle toggle-wrap">
                 {partOfShirtToggleItems.map((item) => (
                     <span key={item.subsection_our_code} className="toggle__item">
                         <input
@@ -128,7 +128,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
 <>
                     <>
-                    <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
+                    <div className="custom custom--open">
                         {content}
                         {!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}
                         <div

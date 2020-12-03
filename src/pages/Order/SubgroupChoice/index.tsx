@@ -210,12 +210,14 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                                 order={order!}
                                 withToggle={false}
                             />}
-                            <div className={'design-navigation-wrapper'}>
-                                <a href="/random" className={'design-navigation _active'}>Все</a>
-                                <a href="/random" className={'design-navigation'}>Воротник</a>
-                                <a href="/random" className={'design-navigation'}>Манжет</a>
-                                <a href="/random" className={'design-navigation'}>Перед</a>
-                            </div>
+                                <div className={'nav-overflow'}>
+                                <div className={'design-navigation-wrapper'}>
+                                    <a href="/random" className={'design-navigation _active'}>Все</a>
+                                    <a href="/random" className={'design-navigation'}>Воротник</a>
+                                    <a href="/random" className={'design-navigation'}>Манжет</a>
+                                    <a href="/random" className={'design-navigation'}>Перед</a>
+                                </div>
+                                </div>
                             <Component lang={lang} match={match} data={data} />
                             </>
                         );

@@ -8,23 +8,41 @@ import { GarmentChoise } from '../GarmentChoiseForm';
 import { Main as Details } from '../Details';
 import { Gallery } from '../Gallery';
 import { SubgroupChoice } from '../SubgroupChoice';
+import CustomModal from '../../../components/CustomModal';
 import { Footer } from '../Footer';
 import { routes } from '../routes';
 import { routes as defaultRoutes } from '../../../config/routes';
+import { CSSTransition } from 'react-transition-group';
+import '../../../components/CustomModal/transition.css';
 
 import './styles.styl';
 import { Demo } from '../OrderDecorationBlocks';
 
+
 class MainSection extends React.Component<MainSectionProps> {
     state = {
         inititalTouch: 0,
-        isMenuUncovered: true
+        isMenuUncovered: true,
+        modalIsOpen: true
     };
+
+    openModal = () => {
+        this.setState({modalIsOpen: true});
+    };
+
+   closeModal = () => {
+       this.setState({modalIsOpen: false});
+    };
+
+
     render() {
         const {
             isIndexPage,
             detailsDeep,
         } = this.props;
+        const {
+            modalIsOpen,
+        } = this.state;
 
         const isRealIndexPage =
             window.location.pathname ===
@@ -48,7 +66,12 @@ class MainSection extends React.Component<MainSectionProps> {
                             justifyContent: 'space-around',
                         }}
                 >
-                    <Filter />
+                    <CSSTransition in={modalIsOpen} timeout={300} classNames={'transition'} unmountOnExit>
+                        <CustomModal closeModal={this.closeModal}>
+                            <Filter />
+                        </CustomModal>
+                    </CSSTransition>
+
                     {isRealIndexPage && <Demo />}
                     {isRealIndexPage && <GarmentChoise isNavigationGarments={false} />}
                     <div

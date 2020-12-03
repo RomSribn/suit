@@ -66,6 +66,7 @@
 .design-navigation-wrapper {
     display: none;
 }
+
 @media (max-width: 450px) {
     .main__bar{
     top: 0.5rem;
@@ -263,3 +264,13 @@
     }
 }
 
+.nav-overflow{
+    min-width: 320px;
+    max-width: 100%;
+}
+
+.nav-overflow .design-navigation-wrapper{
+    padding: 13px 0;
+    margin: 0 13px;
+    overflow-x: auto;
+}

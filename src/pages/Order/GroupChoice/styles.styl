@@ -1,27 +1,12 @@
-.toggle-bar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 1.333rem;
-}
-.toggles {
-    display: flex;
-}
 .toggle {
-    margin-right: 20px;
-    line-height: 1.4rem;
-}
-.toggles-block__btn {
-    background: transparent;
-    border: none;
+    display: flex;
     margin-left: auto;
-    line-height: 1.4rem;
-    color: #666;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s linear
-    &:hover {
-        color: #000;
+    flex-shrink: 0;
+}
+.toggle__item {
+    margin-left: 20px;
+    &:first-child {
+        margin-left: 0;
     }
 }
 .toggle__input:checked,
@@ -33,7 +18,7 @@
 .toggle__input:not(:checked) + .toggle__label
 {
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
     cursor: pointer;
     color: #666;
     font-size: 1rem;
@@ -89,21 +74,16 @@
 }
 
 @media (max-width: 768px) {
-    .toggles-block {
-        white-space: nowrap;
-    }
-    .toggles {
+    .toggle {
         overflow-x: auto;
-        margin-right: 15px;
+        white-space: nowrap;
+        padding: 10px 0;
+        margin-bottom: -10px;
     }
-    .toggle-bar {
-        padding: 0 1rem 0 1rem;
+    .toggle-wrap {
+        padding: 1rem;
+        margin-bottom: 0;
     }
-
-    .toggles-block__btn {
-        margin-top: 10px;
-    }
-
 }
 
 @media (max-width: 450px) {
@@ -112,12 +92,13 @@
         padding-left: 20px;
     }
 
-    .toggles-block__btn {
-        margin-top: 0;
-        margin-bottom: 12px;
-    }
-
     .toggle {
         margin-bottom 1rem
+    }
+
+    .toggle-wrap.toggle {
+        padding: 1rem;
+        margin-bottom: 0;
+
     }
 }

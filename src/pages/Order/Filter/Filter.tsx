@@ -83,6 +83,7 @@ const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string)
         </div>
     );
 };
+
 class FilterComponent extends React.PureComponent<FilterProps> {
     public static defaultProps: DefaultFilterProps = {
         filters: {},

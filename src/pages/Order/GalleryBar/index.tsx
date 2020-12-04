@@ -83,9 +83,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         } = this.props;
 
         const {
-            img_url_2d: image,
-            our_code: id,
-            title
+          img_url_2d: image,
+          img_url_2d_list,
+          our_code: id,
+          title,
         } = this.props.item;
         if (!this.state.load.success) {
             return null;
@@ -143,7 +144,16 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                   })}
                 >
                   <div className={classnames('gallery__item', { active })}>
-                    <img src={image} alt={`${id}`} />
+                              <img
+                                src={img_url_2d_list[1]}
+                                className="gallery__item--hover-image"
+                                alt={`${id}`}
+                              />
+                              <img
+                                src={image}
+                                className="gallery__item--main-image"
+                                alt={`${id}`}
+                              />
                     {this.props.app &&
                       this.props.app.changeSearchedItemsCount()}
                     {!isMobile() &&

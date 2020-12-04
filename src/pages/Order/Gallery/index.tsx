@@ -91,6 +91,17 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                     />
                 )
                 : (
+                    <> {/* Заглушка */}
+                    {group === 'design' && (
+                        <div className={'nav-overflow'}>
+                            <div className={'design-navigation-wrapper'}>
+                                <a href="/random" className={'design-navigation'}>Все</a>
+                                <a href="/random" className={'design-navigation _active'}>Воротник</a>
+                                <a href="/random" className={'design-navigation'}>Манжет</a>
+                                <a href="/random" className={'design-navigation'}>Перед</a>
+                             </div>
+                        </div>
+                    )}
                     <div
                         style={
                             {
@@ -118,6 +129,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                             app={this.props.app}
                         />
                     </div>
+                    </>
                 )
         );
     }

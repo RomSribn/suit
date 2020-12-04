@@ -8,6 +8,7 @@ interface DefaultFilterProps {
     filters: Filters;
     isOpen: boolean;
     lang: string;
+    onClose: () => void;
 }
 type FilterProps = _FilterProps & DefaultFilterProps;
 
@@ -31,6 +32,7 @@ interface _ControllProps {
     filterStore?: IFilterStore;
     app?: IAppStore;
     toggleIsSearchBarOpened?: () => void;
+    openModal: () => void;
 }
 interface DefaultControllProps {
     isSearchBarOpened: boolean;

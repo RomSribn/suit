@@ -10,7 +10,7 @@
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;
-    
+
 }
 .filter.open{width: 13.6666rem;}
 .filter__wrap{
@@ -135,6 +135,28 @@ input:checked + .filter__label-name:before{
 }
 input:checked + .filter__label-color:before{opacity: 1;}
 
+.popup__container .filter{
+    width: 92.5vw;
+    top: unset;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    overflow-y: auto;
+    max-height: 98vh;
+    transform: translateX(-50%);
+    padding-bottom: 74px;
+    flex-direction: column;
+    margin: 0;
+}
+
+.popup__container .filter__wrap{
+    opacity: 1;
+    width: 100%;
+}
+
+.filter-button{
+    display: none;
+}
 
 @media only screen and (max-width : 1310px){
     .filter__label-name{font-size: 11px;}
@@ -142,16 +164,43 @@ input:checked + .filter__label-color:before{opacity: 1;}
 @media only screen and (max-height : 700px){
     .filter__label-name{font-size: 11px;}
 }
+
 @media only screen and (max-width: 450px), only screen and (max-height: 450px) {
     .filter {
         top: 0;
         height: 100%;
     }
     .filter.open{
-        width: 90%;
+        width: 80%;
         margin-right: 0;
     }
     .filter__wrap {
         padding: 1.8rem 0.6rem;
+    }
+}
+
+@media only screen and (max-width: 450px){
+    .filter-btn-wrap{
+        display: block;
+        position: absolute;
+        bottom: 0;
+        min-height: 71px;
+        width: 100%;
+        background: black ;
+    }
+    .filter-button{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        padding: 10px;
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 18px ;
+        font-weight: 400 ;
+        background: unset;
+        cursor: pointer;
+        border: 0;
     }
 }

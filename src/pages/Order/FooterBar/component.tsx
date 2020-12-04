@@ -13,10 +13,17 @@ import { routes as configRoutes } from '../../../config/routes';
 
 import './styles.styl';
 import { FooterBarProps } from './typings';
+import { OrderInfoMobile } from '../OrderInfo/component';
+import * as moment from 'moment';
+import { inject, observer } from 'mobx-react';
 
 type Props = FooterBarProps & { orderStore: IOrderStore };
 
-class FooterBar extends React.Component<Props> {
+@inject(({order}) => ({
+    order
+}))
+@observer
+class FooterBar extends React.Component<COrderInfoProps & Props> {
     static defaultProps = {
         goBack: () => undefined,
         popOrderPathitem: () => undefined,
@@ -42,8 +49,14 @@ class FooterBar extends React.Component<Props> {
     render() {
         const {
             lang,
-            mutuallyExclusivePopup
+            mutuallyExclusivePopup,
+            order
         } = this.props;
+        const orderInfo = order!.orderInfo;
+        const deliveryDate = orderInfo ?
+            moment().add(orderInfo.deliveryDays, 'days').format('DD.MM.YYYY') :
+            '00.00.0000';
+        const price = orderInfo ? orderInfo.price[lang!] : '0';
         return (
             <div className="footer-btn-bar footer-btn-bar__mobile">
                 <PopUp open={mutuallyExclusivePopup && mutuallyExclusivePopup!.show}>
@@ -126,7 +139,11 @@ class FooterBar extends React.Component<Props> {
                         )}
                     />
                 </Switch>
-
+                {isMobile() && <OrderInfoMobile
+                    lang={lang!}
+                    deliveryDate={deliveryDate}
+                    price={price}
+                />}
                 <Switch>
                     <Route
                         path={routes.fabric}

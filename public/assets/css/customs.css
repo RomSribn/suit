@@ -1,7 +1,7 @@
 .customs{
     flex-grow: 1;
     width: 100%;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     margin-bottom: calc(2.4rem + 4px);
 }
 .custom__control_new {
@@ -34,9 +34,9 @@
 
 .customs--short{
     flex-grow: 0;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     padding-right: 0;
-    min-height: 2.9333rem;
+    /*min-height: 2.9333rem;*/
     margin-bottom: 0;
 }
 .custom{
@@ -44,7 +44,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1.3333rem 0 1.3333rem;
-    margin-bottom: 0.8rem;
+    /*margin-bottom: 0.8rem;*/
     height: 2.9333rem;
     background: #eceeee;
     color: black;
@@ -167,21 +167,29 @@
         margin-bottom: 1.333rem;
     }
 
+    .custom__control_new {
+        position: relative;
+    }
+
     .custom--short {
         width: 94%;
         margin: auto;
     }
 
     .custom--open {
+        padding: 0 1rem;
+        height: 50px;
         width: 100%;
     }
 
     .custom .custom__content {
         width: 100%;
-        overflow: hidden;
+        overflow-x: auto;
         text-overflow: ellipsis;
         align-items: center;
         white-space: nowrap;
+        display: block;
+        min-width: 180px;
     }
 
     .custom.custom__no-pointer .custom__content {

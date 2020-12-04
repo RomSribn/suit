@@ -244,6 +244,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             transitionName="height-fade-in"
             transitionEnterTimeout={TRANSITION_DUARAION}
             transitionLeaveTimeout={TRANSITION_DUARAION}
+            className={'design-items-wrapper'}
         >
             {items.map(
             (item: SubgroupChoiceItem) => (

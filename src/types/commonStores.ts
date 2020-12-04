@@ -1,6 +1,7 @@
 // import { App } from '../stores/app';
 import { OrderStore } from '../stores/order';
 import { Subgroups } from '../stores/garments';
+import GarmentsStore from '../stores/garments/garments';
 
 export interface CommonStores {
     app: IAppStore;
@@ -14,7 +15,8 @@ export interface CommonStores {
         }
     };
     garments: {
-        Subgroups: typeof Subgroups
+        Subgroups: typeof Subgroups,
+        garments?: typeof GarmentsStore
     };
     customersStore: ICustomerStore;
 }

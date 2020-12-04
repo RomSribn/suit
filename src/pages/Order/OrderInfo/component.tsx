@@ -72,7 +72,7 @@ class OrderInfoMobile extends React.PureComponent<OrderInfoProps> {
         return (
             <div className="calc-blc-mobile">
                 <span className="calc-text-mobile">
-                    <span>{`${loc[lang].price}: ${loc[lang].currency}${price}`}</span>
+                    <span>{`${loc[lang].currency}${price}`}</span>
                     <span className="portrait-hide">&nbsp;/&nbsp; {`${loc[lang].delivery} ${deliveryDate}`}</span>
                 </span>
             </div>

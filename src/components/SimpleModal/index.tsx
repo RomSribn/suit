@@ -38,9 +38,10 @@ class SimpleModal extends React.Component<SimpleModalProps, {}> {
   }
 
   render() {
-    const { data, show, isSmall, isTransparent } = this.props;
+    const { data, show, isSmall, isTransparent} = this.props;
     const { title, desc, buttons } = data;
     const baseClassName = 'simple-modal-wrapper';
+
     return (
       <PopUp open={show} onClose={this.onClickButton}>
         <div

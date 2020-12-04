@@ -49,7 +49,7 @@
     background-color: white;
     -webkit-transition: background-color .35s ease;
     -o-transition: background-color .35s ease;
-    transition: background-color .35s ease;    
+    transition: background-color .35s ease;
 }
 
 .content--white,
@@ -76,17 +76,17 @@
     flex-direction: column;
     -ms-align-items: flex-start;
     align-items: flex-start;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;
-    
 }
+
 .demo{
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 3;
+    /*z-index: 3;*/
     height: 100%;
     width: -webkit-calc(50% + 2.5rem);
     width: -moz-calc(50% + 2.5rem);

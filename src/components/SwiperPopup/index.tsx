@@ -12,7 +12,7 @@ SwiperCore.use([Pagination, Thumbs]);
 const SwiperPopup = (props: SwiperPopupProps) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState();
   const { lang } = props;
-  console.log('item: ', props.item);
+
   return (
     <div className="swiper-popup-container">
       <div className="swipe-block">

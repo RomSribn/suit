@@ -38,7 +38,7 @@ class SimpleModal extends React.Component<SimpleModalProps, {}> {
   }
 
   render() {
-    const { data, show, isSmall, isTransparent , children} = this.props;
+    const { data, show, isSmall, isTransparent} = this.props;
     const { title, desc, buttons } = data;
     const baseClassName = 'simple-modal-wrapper';
 
@@ -60,7 +60,6 @@ class SimpleModal extends React.Component<SimpleModalProps, {}> {
             <div className="desc-wrapper">
               <p className={classNames('desc-text', {['desc-text_black']: isTransparent})}>
                 {desc}
-                {children}
               </p>
             </div>
             <div className="buttons-wrapper">

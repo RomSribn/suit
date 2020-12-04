@@ -111,3 +111,29 @@
   }
 }
 
+.navigation-item.submenu-item{
+    margin: 0 0 5px 30px;
+    padding: 5px 18px 5px 10px;
+    text-transform: uppercase;
+    cursor: pointer
+
+    &:hover{
+        background-color: #ccc;
+    }
+
+    svg{
+        fill: #ccc;
+    }
+}
+
+.subMenu{
+    max-height: 0;
+    min-width: 100px;
+    overflow: hidden;
+    transition: 0.3s linear;
+
+    &.active{
+      max-height: 500px;
+      overflow: unset;
+    }
+}

@@ -31,6 +31,7 @@ interface _ControllProps {
     filterStore?: IFilterStore;
     app?: IAppStore;
     toggleIsSearchBarOpened?: () => void;
+    openModal: () => void;
 }
 interface DefaultControllProps {
     isSearchBarOpened: boolean;

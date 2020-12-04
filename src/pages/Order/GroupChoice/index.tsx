@@ -7,9 +7,10 @@ import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
 import { CommonStores } from '../../../types/commonStores';
 // import { routes } from '../routes';
-import { Controll } from '../Filter';
+import { Controll, Filter } from '../Filter';
 import './styles.styl';
 import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
+import { PopUp } from '../../../containers/Popup';
 
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(({order, app, filterStore, user, garments:
     { Subgroups, garments } }) => {
@@ -24,6 +25,10 @@ import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
 })
 @observer
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
+    state = {
+        modalIsOpen: false,
+    };
+
     componentDidMount() {
         this.props.setSubgroupTitle(this.props.choiceItem.value);
     }
@@ -39,7 +44,18 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         this.props.orderStore!.setPartOfShirtToggle(e.target.value);
     }
 
+    openModal = () => {
+        this.setState({ modalIsOpen: true });
+    }
+
+    closeModal = () => {
+        this.setState({ modalIsOpen: false });
+    }
+
     render() {
+        const {
+            modalIsOpen,
+        } = this.state;
         const {
             match: { params: { garment, subgroup, group } },
             order,
@@ -187,11 +203,19 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     />
                                 </div>
                             </form>
-                            < Controll />
+
+                            <Controll openModal={this.openModal}/>
+
                         </div>
                     </div>
                     {isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'
                         && subgroup !== 'design' && toggle}
+
+                        {modalIsOpen && (
+                            <PopUp open={modalIsOpen} onClose={this.closeModal}>
+                                <Filter />
+                            </PopUp>
+                        )}
                     </>
                 {/* {subgroup === 'fitting' ?
                     <Link to={backLink}  className="custom custom--openss">

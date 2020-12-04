@@ -64,6 +64,7 @@ class Controll extends React.Component<_ControllProps> {
     render() {
         const {
             isOpen,
+            openModal,
             toggleOpen,
             type,
             filterStore,
@@ -75,9 +76,10 @@ class Controll extends React.Component<_ControllProps> {
                 isSearchBarOpened={isSearchBarOpened!}
                 filterStore={filterStore}
                 isOpen={isOpen!}
-                onCLick={toggleOpen!}
+                onCLick={toggleOpen}
                 toggleIsSearchBarOpened={toggleIsSearchBarOpened!}
                 type={type!}
+                openModal={openModal}
             />);
     }
 }

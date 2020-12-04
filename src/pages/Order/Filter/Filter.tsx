@@ -106,9 +106,12 @@ class FilterComponent extends React.PureComponent<FilterProps> {
                 )}
             >
                 <div className="filter__wrap">
-                {Object.keys(filters || {})
-                .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
+                    {Object.keys(filters || {})
+                    .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
+                <button onClick={() => null} className={'filter-button'}>
+                    Применить Фильтр
+                </button>
             </div>
         );
     }

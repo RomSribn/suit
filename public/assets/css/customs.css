@@ -167,6 +167,10 @@
         margin-bottom: 1.333rem;
     }
 
+    .custom__control_new {
+        position: relative;
+    }
+
     .custom--short {
         width: 94%;
         margin: auto;

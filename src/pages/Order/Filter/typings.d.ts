@@ -8,6 +8,7 @@ interface DefaultFilterProps {
     filters: Filters;
     isOpen: boolean;
     lang: string;
+    onClose: () => void;
 }
 type FilterProps = _FilterProps & DefaultFilterProps;
 

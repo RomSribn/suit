@@ -16,7 +16,8 @@ class Filter extends React.Component<_FilterProps> {
             isOpen,
             filters,
             lang,
-            filterStore
+            filterStore,
+            onClose,
         } = this.props;
         return (
             <FilterComponent
@@ -24,6 +25,7 @@ class Filter extends React.Component<_FilterProps> {
                 isOpen={isOpen!}
                 filters={filters!}
                 filterStore={filterStore}
+                onClose={onClose}
             />
         );
     }

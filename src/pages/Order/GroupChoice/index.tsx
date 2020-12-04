@@ -170,7 +170,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
 
                 {modalIsOpen && (
                     <PopUp open={modalIsOpen} onClose={this.closeModal}>
-                        <Filter />
+                        <Filter onClose={this.closeModal}/>
                     </PopUp>
                 )}
             </>

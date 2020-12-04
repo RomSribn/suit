@@ -323,6 +323,15 @@
   .gallery__footer--txt-clamp {
     font-size: 0.75rem;
   }
+  .gallery__filter-btn span:nth-child(1) {
+    top: 0.5666rem;
+  }
+  .gallery__filter-btn span:nth-child(2) {
+    top: 1.1666rem;
+  }
+  .gallery__filter-btn span:nth-child(3) {
+    top: 1.7666rem;
+  }
 }
 
 @media only screen and (max-height: 450px) {

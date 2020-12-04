@@ -17,7 +17,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
         const {
             value,
             addFilter,
-            removeFilter
+            removeFilter,
         } = this.props;
 
         if (e.target.checked) {
@@ -88,7 +88,7 @@ class FilterComponent extends React.PureComponent<FilterProps> {
     public static defaultProps: DefaultFilterProps = {
         filters: {},
         isOpen: false,
-        lang: 'ru'
+        lang: 'ru',
     };
  
     render() {
@@ -96,7 +96,8 @@ class FilterComponent extends React.PureComponent<FilterProps> {
             filters,
             isOpen,
             lang,
-            filterStore
+            filterStore,
+            onClose,
         } = this.props;
         return (
             <div
@@ -109,9 +110,14 @@ class FilterComponent extends React.PureComponent<FilterProps> {
                     {Object.keys(filters || {})
                     .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
-                <button onClick={() => null} className={'filter-button'}>
-                    Применить Фильтр
-                </button>
+                <div className={'filter-btn-wrap'}>
+                    <button onClick={() => {
+                        onClose()
+                    }} className={'filter-button'}>
+                        Применить Фильтр
+                    </button>
+                </div>
+
             </div>
         );
     }

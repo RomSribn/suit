@@ -324,6 +324,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                         <SwiperPopup
                             item={this.props.app.swiperPopupData}
                             closeButton={this.props.app.toggleSwiperPopup}
+                            lang={this.props.app.lang}
                         />
                     </PopUp>
                 }

@@ -1,13 +1,16 @@
 interface Locale {
     emptyBlockMessage: string;
+    details: string;
 }
 
 const makeLocale: MakeLocale<Locale> = () => ({
     en: {
-        emptyBlockMessage: 'this section is empty yet'
+        emptyBlockMessage: 'this section is empty yet',
+        details: 'Details'
     },
     ru: {
-        emptyBlockMessage: 'эта секция еще не заполнена'
+        emptyBlockMessage: 'эта секция еще не заполнена',
+        details: 'Подробно'
     },
 });
 

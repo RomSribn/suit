@@ -48,7 +48,8 @@ export default inject(({ garments: { garments } }) => {
                     {isLandscape ? 
                         <Navlinks 
                             garment={activeGarments && activeGarments[0] || 'shirt'} 
-                            isAuth={isAuth} 
+                            isAuth={isAuth}
+                            lang={lang}
                         /> : (
                         // Проп прокину в другом таске, пока будет заглушка
                         // И зачем вообще анонимная функа ПРОКИНУТА ДЕФОЛТОМ

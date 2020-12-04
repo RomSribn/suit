@@ -10,6 +10,7 @@ import './styles.styl';
 import { updateOrder } from '../FooterBar/utils';
 import { Button } from '../../../components/Button';
 import { basisPart } from '../ToggleBar';
+import { loc } from './loc';
 // import { observer } from 'mobx-react';
 
 interface GalleryState extends ImageLoadState {
@@ -382,7 +383,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                         onClick={this.props.app.toggleSwiperPopup}
                                         className="gallery__footer--detailButton"
                                     >
-                                        Подробно
+                                        {loc[lang].details}
                                     </Button>
                                 }
                             </div>

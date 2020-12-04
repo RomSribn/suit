@@ -187,7 +187,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         onChange={(e) => this.props.app
                                             && this.props.app.setCurrentSearchValue(e.target.value)}
                                         className="search__input"
-                                        placeholder={'Поиск ...'}
+                                        placeholder={loc[lang].search}
                                     />
                                     <span
                                         className={`icon-close search__clear search__fabric

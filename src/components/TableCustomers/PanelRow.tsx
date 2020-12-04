@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import './panelRowStyles.styl';
+import { loc } from './loc';
 
 interface PanelRowState {
     showControls: boolean;
@@ -15,6 +16,7 @@ class PanelRow extends React.PureComponent<PanelRowCustomersProps, PanelRowState
     }
 
     render() {
+        const { lang } = this.props;
         return (
             <div className="panel-row">
                 <form className="search">
@@ -25,7 +27,7 @@ class PanelRow extends React.PureComponent<PanelRowCustomersProps, PanelRowState
                             maxLength={150}
                             autoComplete="off"
                             className="search__input"
-                            placeholder="Поиск ..."
+                            placeholder={loc[lang].search}
                             onFocus={() => this.setState({showControls: false })}
                             onBlur={() => this.setState({showControls: true })}
                         />

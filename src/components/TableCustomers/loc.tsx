@@ -3,6 +3,7 @@ import { Columns } from './index';
 type Loc = {
     /** Наименования колонок отображения */
     columns: Record<Columns, string>;
+    search: string;
 };
 
 const loc: Translations<Loc> = {
@@ -14,6 +15,7 @@ const loc: Translations<Loc> = {
             email: 'Email',
             password: 'Password',
         },
+        search: 'Search ...'
     },
     ru: {
         columns: {
@@ -23,6 +25,7 @@ const loc: Translations<Loc> = {
             email: 'Email',
             password: 'Пароль',
         },
+        search: 'Поиск ...'
     }
 };
 

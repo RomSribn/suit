@@ -31,6 +31,7 @@ type Loc = {
     password: string;
     login: string;
     supportInfo: string;
+    search: string;
     /**
      * Возвращает строку вида "создать профиль клиента {customerId}"
      */
@@ -84,6 +85,7 @@ const loc: Translations<Loc> = {
         password: 'Password',
         login: 'Login',
         supportInfo: 'Please, contact service support',
+        search: 'Search ...'
         },
     ru: {
         columns: {
@@ -129,6 +131,7 @@ const loc: Translations<Loc> = {
         password: 'Пароль',
         login: 'Логин',
         supportInfo: 'Пожалуйста, обратитесь в поддержку сервиса',
+        search: 'Поиск ...'
     }
 };
 

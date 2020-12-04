@@ -5,11 +5,13 @@ import 'swiper/swiper-bundle.css';
 import './styles.css';
 import { createPackOfSlides, createPackOfThumbs } from './tools';
 import { Button } from '../Button';
+import { loc } from './loc';
 
 SwiperCore.use([Pagination, Thumbs]);
 
 const SwiperPopup = (props: SwiperPopupProps) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState();
+  const { lang } = props;
 
   return (
     <div className="swiper-popup-container">
@@ -44,36 +46,36 @@ const SwiperPopup = (props: SwiperPopupProps) => {
           <div>({props.item && props.item.title && props.item.elementCode})</div>
         </div>
         <div className="text-block__breadcrumbs">
-          <a href="/">Заказать</a>
+          <a href="/">{loc[lang].order}</a>
           <span>/</span>
-          <a onClick={props!.closeButton}>Сорочка</a>
+          <a onClick={props!.closeButton}>{loc[lang].shirt}</a>
           <span>/</span>
-          <a onClick={props!.closeButton}>Ткань</a>
+          <a onClick={props!.closeButton}>{loc[lang].cloth}</a>
         </div>
         <div className="text-block__price">
-          <span>₽</span>
-          {props.item && props.item.price && props.item.price.title.ru}
+          <span>{loc[lang].currency}</span>
+          {props.item && props.item.price && props.item.price.title[lang]}
         </div>
 
         {/* Тут ваша импортированая кнопка */}
         <Button className="text-block__button" onClick={props!.closeButton}>
-          Ткань выбрана
+          {loc[lang].clothSelected}
         </Button>
 
         <div className="text-block__info">
-          <h2>Информация о товаре</h2>
+          <h2>{loc[lang].productInfo}</h2>
           <p>Brand: Andrezza & Castelli</p>
           <p>
-            Цвет ткани:
-            {props.item && props.item.main_color && props!.item.main_color.title.ru}
+            {loc[lang].fabricColor}
+            {props.item && props.item.main_color && props!.item.main_color.title[lang]}
           </p>
-          <p>Рисунок: {props.item && props.item.pattern && props.item.pattern.title.ru}</p>
-          <p>Плотность: 120-140</p>
-          <p>Состав: Хлопок</p>
-          <p>Каталог: CLASSIC A-1</p>
-          <p>Категория: 40-50s Classic</p>
-          <p>Конструкция: 50</p>
-          <p>Осталось ткани: 22 м</p>
+          <p>{loc[lang].fabric} {props.item && props.item.pattern && props.item.pattern.title[lang]}</p>
+          <p>{loc[lang].density}</p>
+          <p>{loc[lang].composition}</p>
+          <p>{loc[lang].catalog}</p>
+          <p>{loc[lang].category}</p>
+          <p>{loc[lang].design}</p>
+          <p>{loc[lang].clothLeft}</p>
         </div>
       </div>
       <div

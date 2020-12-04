@@ -18,6 +18,8 @@ class Login extends Component {
     this.state = {
       isRemember: false,
       showForgot: false,
+      login: '',
+      pass: ''
     }
   }
 
@@ -32,9 +34,10 @@ class Login extends Component {
       this.props.closeForm && this.props.closeForm();
       return;
     }
+
     this.props.userStore.fetchLogin(
-      this.refs.name.value,
-      this.refs.pass.value
+      this.state.login,
+      this.state.pass
     ).then((...args) => {
       // TODO: вставить обработчик ошибок. Здесь должна быть логика "забыли пароль?"
       if (args[0] && args[0].error) {
@@ -58,6 +61,10 @@ class Login extends Component {
       this.props.closeForm && this.props.closeForm()
     }
   }
+  onInputChange = (event) => {
+    const value = event.target.value;
+    this.setState({ [event.target.name]: value });
+  } 
   render() {
     const {
       userStore,
@@ -91,14 +98,16 @@ class Login extends Component {
           {!this.state.showForgot ?
             <React.Fragment>
               <input
-                ref="name"
+                onChange={this.onInputChange}
+                name="login"
                 type="text"
                 required={true}
                 className="login_input"
                 placeholder={loc[lang].placeHolders.login}
                />
               <input
-                ref="pass"
+                onChange={this.onInputChange}
+                name="pass"
                 type="password"
                 className="login_input"
                 placeholder={loc[lang].placeHolders.password}

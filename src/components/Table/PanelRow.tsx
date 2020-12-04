@@ -146,7 +146,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             maxLength={150}
                             autoComplete="off"
                             className="search__input"
-                            placeholder="Поиск ..."
+                            placeholder={loc[lang].search}
                             onFocus={() => this.setState({showControls: false })}
                             onBlur={() => this.setState({showControls: true })}
                         />

@@ -25,7 +25,7 @@ class Filter extends React.Component<_FilterProps> {
                 isOpen={isOpen!}
                 filters={filters!}
                 filterStore={filterStore}
-                onClose={onClose}
+                onClose={onClose!}
             />
         );
     }

@@ -3,12 +3,13 @@ interface _FilterProps {
     filters?: Filters;
     filterStore?: IFilterStore;
     isOpen?: boolean;
+    onClose?: () => void;
 }
 interface DefaultFilterProps {
     filters: Filters;
     isOpen: boolean;
     lang: string;
-    onClose: () => void;
+    onClose?: () => void;
 }
 type FilterProps = _FilterProps & DefaultFilterProps;
 

@@ -46,7 +46,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
                     name={group}
                     onChange={this.onChange}
                 />
-                { isColorGroup ? 
+                { isColorGroup ?
                 <span
                     className="filter__label color-value"
                     style={{ backgroundColor: value}}
@@ -89,8 +89,9 @@ class FilterComponent extends React.PureComponent<FilterProps> {
         filters: {},
         isOpen: false,
         lang: 'ru',
+        onClose: () => null,
     };
- 
+
     render() {
         const {
             filters,
@@ -110,10 +111,18 @@ class FilterComponent extends React.PureComponent<FilterProps> {
                     {Object.keys(filters || {})
                     .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
-                <div className={'filter-btn-wrap'}>
-                    <button onClick={() => {
-                        onClose()
-                    }} className={'filter-button'}>
+                <div
+                  className={'filter-btn-wrap'}
+                >
+                    <button
+                      onClick={() => {
+                          if ( onClose ) {
+                              onClose();
+                          }
+                      }}
+                      className={'filter-button'}
+                    >
+
                         Применить Фильтр
                     </button>
                 </div>

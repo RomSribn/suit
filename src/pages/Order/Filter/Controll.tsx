@@ -24,8 +24,6 @@ class Controll extends React.Component<ControllProps> {
             toggleIsSearchBarOpened
         } = this.props;
 
-        console.log('onCLick', onCLick);
-
         return (
             <button
                 style={{ zIndex: 99, width: '90px' }}

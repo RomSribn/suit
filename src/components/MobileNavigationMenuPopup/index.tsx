@@ -186,7 +186,9 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                                            className="navigation-item submenu-item"
                                            to={item.url}
                                            key={item.name}
-                                           onClick={() => null}
+                                           onClick={(e) => {
+                                             callList([closeMenu]);
+                                           }}
                                        >
                                          <span>{item.name}</span>
                                          <svg

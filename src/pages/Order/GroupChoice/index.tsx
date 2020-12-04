@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
@@ -55,7 +55,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const {
             match: { params: { garment, subgroup, group } },
             order,
-            backLink,
+            // backLink,
             lang,
             subgroupsStore,
         } = this.props;
@@ -95,81 +95,85 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         );
 
         return (
-            <Switch>
-                <Route path={routes.fabric}>
-                    <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
-                        {content}
-                        <div className="custom__control_new">
-                            <form
-                                style={{
-                                    display: isMobile() ? 'none' : 'block',
-                                    cursor: 'pointer',
-                                    transition: '0.5s',
-                                    transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                        'unset' : 'translateX(74%)'
-                                }}
-                                className="search"
-                            >
-                                <div style={{ background: 'transparent' }} className="search__control">
-                                <span
+            <>
+                <Switch>
+                    <Route path={routes.fabric}>
+                        <div className="custom custom--open" style={{ overflow: 'hidden', cursor: 'unset' }}>
+                            {content}
+                            <div className="custom__control_new">
+                                <form
                                     style={{
-                                        zIndex: 9999
+                                        display: isMobile() ? 'none' : 'block',
+                                        cursor: 'pointer',
+                                        transition: '0.5s',
+                                        transform: this.props.app && this.props.app.isSearchBarOpened ?
+                                            'unset' : 'translateX(74%)'
                                     }}
-                                    className="search__icon"
-                                    onClick={() => {
-                                        this.props.app!.toggleIsSearchBarOpened();
-                                        if (this.props.filterStore!.isOpen) {
-                                            this.props.filterStore!.toggleOpen();
-                                        }
-                                    }}
-                                />
-                                    <input
-                                        style={{
-                                            background: 'transparent',
-                                            visibility: this.props.app && this.props.app.isSearchBarOpened
-                                                ? 'visible' : 'hidden'
-                                        }}
-                                        type="search"
-                                        maxLength={150}
-                                        autoComplete="off"
-                                        onChange={(e) => this.props.app
-                                            && this.props.app.setCurrentSearchValue(e.target.value)}
-                                        className="search__input"
-                                        placeholder={loc[lang].search}
-                                    />
+                                    className="search"
+                                >
+                                    <div style={{ background: 'transparent' }} className="search__control">
                                     <span
-                                        className={`icon-close search__clear search__fabric
-                                        ${
-                                            this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
-                                        title="Clear"
+                                        style={{
+                                            zIndex: 9999
+                                        }}
+                                        className="search__icon"
                                         onClick={() => {
                                             this.props.app!.toggleIsSearchBarOpened();
-                                        }}
-                                        style={{
-                                            width: '40px'
+                                            if (this.props.filterStore!.isOpen) {
+                                                this.props.filterStore!.toggleOpen();
+                                            }
                                         }}
                                     />
-                                </div>
-                            </form>
-                            <Controll openModal={this.openModal}/>
+                                        <input
+                                            style={{
+                                                background: 'transparent',
+                                                visibility: this.props.app && this.props.app.isSearchBarOpened
+                                                    ? 'visible' : 'hidden'
+                                            }}
+                                            type="search"
+                                            maxLength={150}
+                                            autoComplete="off"
+                                            onChange={(e) => this.props.app
+                                                && this.props.app.setCurrentSearchValue(e.target.value)}
+                                            className="search__input"
+                                            placeholder={loc[lang].search}
+                                        />
+                                        <span
+                                            className={`icon-close search__clear search__fabric
+                                            ${
+                                                this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
+                                            title="Clear"
+                                            onClick={() => {
+                                                this.props.app!.toggleIsSearchBarOpened();
+                                            }}
+                                            style={{
+                                                width: '40px'
+                                            }}
+                                        />
+                                    </div>
+                                </form>
+                                <Controll openModal={this.openModal}/>
 
+                            </div>
                         </div>
-                    </div>
-                </Route>
-                {subgroup === 'fitting' ?
-                    <Link to={backLink}  className="custom custom--open">
-                        {content}
-                    </Link> :
-                    <Link to={backLink} onClick={this.backClick} className="custom custom--open">
-                        {content}
-                    </Link>}
+                    </Route>
+                </Switch>
+
+                {/*{subgroup === 'fitting' ?*/}
+                {/*    <Link to={backLink}  className="custom custom--open">*/}
+                {/*        {content}*/}
+                {/*    </Link> :*/}
+                {/*    <Link to={backLink} onClick={this.backClick} className="custom custom--open">*/}
+                {/*        {content}*/}
+                {/*    </Link>*/}
+                {/*}*/}
 
                 {modalIsOpen && (
                     <PopUp open={modalIsOpen} onClose={this.closeModal}>
                         <Filter />
                     </PopUp>
                 )}
-            </Switch>
+            </>
         );
     }
 }

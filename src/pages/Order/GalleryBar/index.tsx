@@ -319,7 +319,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 onScroll={this.handleScroll}
                 id="js-bar-wrap"
             >
-                {this.props.app && this.props.app.swiperPopupData &&
+                { (this.props.app && this.props.app.showSwiperPopup && this.props.app.swiperPopupData) &&
                     <PopUp open={this.props.app.showSwiperPopup}>
                         <SwiperPopup
                             item={this.props.app.swiperPopupData}

@@ -184,7 +184,7 @@
 
     .custom .custom__content {
         width: 100%;
-        overflow-x: auto;
+        /*overflow-x: auto;*/
         text-overflow: ellipsis;
         align-items: center;
         white-space: nowrap;

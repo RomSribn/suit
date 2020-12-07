@@ -28,7 +28,6 @@
   }
 
   .popup__container .swiper-popup-container .text-block__top{
-    height: calc(100vh);
     display: flex;
     flex-direction: column;
   }

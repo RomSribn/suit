@@ -72,10 +72,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         //       .filter((s) => s.is_allowOwnFabric);
         // }
 
-        console.log('match', this.props.match);
-        console.log('group', group);
-        console.log('subgroup', subgroup);
-
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
 
         let choiceItemValue: string | undefined;

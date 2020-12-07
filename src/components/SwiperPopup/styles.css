@@ -22,6 +22,22 @@
     width: 100%;
   }
 
+  .popup__container .swiper-popup-container{
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .popup__container .swiper-popup-container .text-block__top{
+    height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popup__container .swiper-popup-container .button-bar{
+    margin-top: auto;
+    margin-bottom: 2rem;
+  }
+
   .text-block__info {
     margin-top: 10px;
   }
@@ -60,6 +76,7 @@
   .swiper-container-thumbs {
     display: none;
   }
+
 }
 .swiper-pagination {
   bottom: 0;

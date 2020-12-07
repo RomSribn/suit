@@ -15,52 +15,55 @@ const SwiperPopup = (props: SwiperPopupProps) => {
 
   return (
     <div className="swiper-popup-container">
-      <div className="swipe-block">
-        <Swiper
-          id="main"
-          thumbs={{ swiper: thumbsSwiper! }}
-          pagination={true}
-          spaceBetween={0}
-          slidesPerView={1}
-        >
-          {props.item && props.item.img_url_2d_list &&
-            createPackOfSlides(props.item.img_url_2d_list)}
-        </Swiper>
-
-        <Swiper
-          id="thumbs"
-          style={{ width: 'auto', marginRight: '10px' }}
-          direction="vertical"
-          spaceBetween={5}
-          slidesPerView={4}
-          onSwiper={setThumbsSwiper!}
-        >
-          {props.item && props.item.img_url_2d_list &&
-            createPackOfThumbs(props.item.img_url_2d_list)}
-        </Swiper>
-      </div>
-
       <div className="text-block">
-        <div className="text-block__title">
-          {props.item && props.item.title && props.item.title.ru}
-          <div>({props.item && props.item.title && props.item.elementCode})</div>
-        </div>
-        <div className="text-block__breadcrumbs">
-          <a href="/">{loc[lang].order}</a>
-          <span>/</span>
-          <a onClick={props!.closeButton}>{loc[lang].shirt}</a>
-          <span>/</span>
-          <a onClick={props!.closeButton}>{loc[lang].cloth}</a>
-        </div>
-        <div className="text-block__price">
-          <span>{loc[lang].currency}</span>
-          {props.item && props.item.price && props.item.price.title[lang]}
-        </div>
+        <div className={'text-block__top'}>
+          <div className="swipe-block">
+            <Swiper
+                id="main"
+                thumbs={{ swiper: thumbsSwiper! }}
+                pagination={true}
+                spaceBetween={0}
+                slidesPerView={1}
+            >
+              {props.item && props.item.img_url_2d_list &&
+              createPackOfSlides(props.item.img_url_2d_list)}
+            </Swiper>
 
-        {/* Тут ваша импортированая кнопка */}
-        <Button className="text-block__button" onClick={props!.closeButton}>
-          {loc[lang].clothSelected}
-        </Button>
+            <Swiper
+                id="thumbs"
+                style={{ width: 'auto', marginRight: '10px' }}
+                direction="vertical"
+                spaceBetween={5}
+                slidesPerView={4}
+                onSwiper={setThumbsSwiper!}
+            >
+              {props.item && props.item.img_url_2d_list &&
+              createPackOfThumbs(props.item.img_url_2d_list)}
+            </Swiper>
+          </div>
+          <div className="text-block__title">
+            {props.item && props.item.title && props.item.title.ru}
+            <div>({props.item && props.item.title && props.item.elementCode})</div>
+          </div>
+
+          <div className="text-block__breadcrumbs">
+            <a href="/">{loc[lang].order}</a>
+            <span>/</span>
+            <a onClick={props!.closeButton}>{loc[lang].shirt}</a>
+            <span>/</span>
+            <a onClick={props!.closeButton}>{loc[lang].cloth}</a>
+          </div>
+
+          <div className="text-block__price">
+            <span>{loc[lang].currency}</span>
+            {props.item && props.item.price && props.item.price.title[lang]}
+          </div>
+
+          {/* Тут ваша импортированая кнопка */}
+          <Button className="text-block__button" onClick={props!.closeButton}>
+            {loc[lang].clothSelected}
+          </Button>
+        </div>
 
         <div className="text-block__info">
           <h2>{loc[lang].productInfo}</h2>

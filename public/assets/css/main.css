@@ -75,6 +75,9 @@
     .design-items-wrapper {
         padding: 1rem;
         display: block;
+        overflow: auto;
+        height: 500px;
+        padding-bottom: 120px;
     }
 
     .design-navigation-wrapper {

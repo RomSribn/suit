@@ -6,6 +6,7 @@ interface GalleryBarProps {
     shownItem: GalleryStoreItem;
     isMouseOverElement: boolean;
     activeElementIndex: number;
+    filterStore?: IFilterStore;
 }
 
 interface Child {

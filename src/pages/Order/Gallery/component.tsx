@@ -369,6 +369,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                 setActiveElementIndex={this.setActiveElementIndex}
                                 setPreviewElementIndex={this.setPreviewElementIndex}
                                 isMouseOverElement={mouseOverElement}
+                                filterStore={this.props.filterStore!}
                             />
                         </div>
                     </div>

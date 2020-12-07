@@ -179,6 +179,7 @@ type makeGalleryItems = (
     isMouseOverElement: boolean,
     zoomId: string,
     setZoomId: (id: string) => void,
+    filterStore: IFilterStore,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -190,6 +191,7 @@ const makeGalleryItems: makeGalleryItems = (
     isMouseOverElement,
     zoomId,
     setZoomId,
+    filterStore,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -199,7 +201,28 @@ const makeGalleryItems: makeGalleryItems = (
     // if (galleryItemsCache[cache]) {
     //     return galleryItemsCache[cache];
     // }
-    const result = items.map((item, elementIndex) => {
+
+    const filtered  = (): GalleryStoreItems => {
+        const filters = Object.keys(filterStore.userFilters);
+        const result2 = items.filter(item => {
+            let res;
+            for ( let i = 0; i < filters.length; i++ ) {
+                if ( filterStore.userFilters[filters[i]].includes(item[filters[i]].value) ) {
+                    console.log('123');
+                    return res = true;
+                }
+            }
+            return res;
+        });
+
+        if ( result2.length < 1 ) {
+            return items;
+        }
+
+        return result2;
+    };
+
+    const result = filtered().map((item, elementIndex) => {
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}
@@ -232,9 +255,11 @@ type State = {
 };
 
 @inject(({
-    app
+    app,
+    filterStore
 }) => ({
-    app
+    app,
+    filterStore,
 })
 )
 @observer
@@ -342,6 +367,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                         isMouseOverElement,
                         this.state.zoomId,
                         this.setZoomId,
+                        this.props.filterStore!
                     )}
                 </div>
             </div>

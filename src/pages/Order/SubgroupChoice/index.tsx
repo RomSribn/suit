@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Switch, Route, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { SubgroupChoice as Component } from './component';
 import { routes } from '../routes';
 import { GroupChoice } from '../GroupChoice';
@@ -160,6 +161,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             ]
             : [];
 
+        console.log('data', data);
         const dataFitting = $store
             ? [
                 ...$store.fitting.map((v: Subgroup) => filterFields(
@@ -212,10 +214,12 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                             />}
                                 <div className={'nav-overflow'}>
                                 <div className={'design-navigation-wrapper'}>
-                                    <a href="/random" className={'design-navigation _active'}>Все</a>
-                                    <a href="/random" className={'design-navigation'}>Воротник</a>
-                                    <a href="/random" className={'design-navigation'}>Манжет</a>
-                                    <a href="/random" className={'design-navigation'}>Перед</a>
+                                    <Link to={match.url} className={'design-navigation _active'}>Все</Link>
+                                  {data.map(item => (
+                                    <Link to={`${match.url}/${item.link}`} className={'design-navigation '}>
+                                      {item.linkName}
+                                    </Link>
+                                  ))}
                                 </div>
                                 </div>
                             <Component lang={lang} match={match} data={data} />

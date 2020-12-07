@@ -189,7 +189,7 @@
         align-items: center;
         white-space: nowrap;
         display: block;
-        min-width: 180px;
+        /*min-width: 180px;*/
     }
 
     .custom.custom__no-pointer .custom__content {

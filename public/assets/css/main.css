@@ -9,7 +9,7 @@
     z-index: 6;
     width: 100%;
     min-height: 2.6666rem;
-    height: 2.6666rem;
+    /*height: 2.6666rem;*/
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;

@@ -21,7 +21,7 @@ const NavlinksComponent: React.FunctionComponent<NavlinksComponentProps> = ({ is
             <NavlinksItemComponent to={garmentSet(routes.design)}>
                 {loc[lang].design}
             </NavlinksItemComponent>
-            <NavlinksItemComponent to={garmentSet(routes.fitting)} forbidden={!isAuth}>
+            <NavlinksItemComponent to={garmentSet(routes.fitting)}>
                 {loc[lang].metrics}
             </NavlinksItemComponent>
         </div>

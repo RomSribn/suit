@@ -26,7 +26,7 @@ class Controll extends React.Component<ControllProps> {
 
         return (
             <button
-                style={{ zIndex: 99, width: '90px' }}
+                style={{ zIndex: 99, width: '65px' }}
                 className={classnames(
                     'btn gallery__filter-btn',
                     { open: isOpen },

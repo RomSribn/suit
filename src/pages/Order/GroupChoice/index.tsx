@@ -72,6 +72,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         //       .filter((s) => s.is_allowOwnFabric);
         // }
 
+        console.log('match', this.props.match);
+        console.log('group', group);
+        console.log('subgroup', subgroup);
+
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
 
         let choiceItemValue: string | undefined;
@@ -89,8 +93,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         !(isMobile() || (isTablet() && !isLandscape()))
           ? choiceItemValue!.slice(0, 12) + '...'
           : choiceItemValue;
-        // console.log('subStore.data', subgroupsStore!.data![subgroup]); // tslint:disable-line
-        // console.log('group', group); // tslint:disable-line
+
         const content = (
           <>
                 <span className="custom__content">
@@ -141,77 +144,79 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         //   </div>
         // );
 
-        const isToggleOnSeparateRow = (isTablet() && !isLandscape());
+        // const isToggleOnSeparateRow = (isTablet() && !isLandscape());
 
         return (
           <>
               <>
                   <div className="custom custom--open">
                       {content}
-                      {!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened}
-                      <div
-                        className="custom__control_new"
-                        style={{
-                            flexBasis: this.props.app && this.props.app.isSearchBarOpened ? 'auto' : 0,
-                        }}
-                      >
-                          <form
-                            style={{
-                                cursor: 'pointer',
-                                transition: '0.3s',
-                                transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                  'unset' : 'translateX(60%)'
-                            }}
-                            className="search"
+                      {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened}*/}
+                      {(group && group === 'fabric') && (
+                          <div
+                              className="custom__control_new"
+                              style={{
+                                  flexBasis: this.props.app && this.props.app.isSearchBarOpened ? 'auto' : 0,
+                              }}
                           >
-                              <div style={{ background: 'transparent' }} className="search__control">
+                              <form
+                                  style={{
+                                      cursor: 'pointer',
+                                      transition: '0.3s',
+                                      transform: this.props.app && this.props.app.isSearchBarOpened ?
+                                          'unset' : 'translateX(60%)'
+                                  }}
+                                  className="search"
+                              >
+                                  <div style={{ background: 'transparent' }} className="search__control">
                                     <span
-                                      style={{
-                                          zIndex: 9999
-                                      }}
-                                      className="search__icon"
-                                      onClick={() => {
-                                          this.props.app!.toggleIsSearchBarOpened();
-                                          if (this.props.filterStore!.isOpen) {
-                                              this.props.filterStore!.toggleOpen();
-                                          }
-                                      }}
+                                        style={{
+                                            zIndex: 9999
+                                        }}
+                                        className="search__icon"
+                                        onClick={() => {
+                                            this.props.app!.toggleIsSearchBarOpened();
+                                            if (this.props.filterStore!.isOpen) {
+                                                this.props.filterStore!.toggleOpen();
+                                            }
+                                        }}
                                     />
-                                  <input
-                                    style={{
-                                        background: 'transparent',
-                                        visibility: this.props.app && this.props.app.isSearchBarOpened
-                                          ? 'visible' : 'hidden'
-                                    }}
-                                    type="search"
-                                    maxLength={150}
-                                    autoComplete="off"
-                                    onChange={(e) => this.props.app
-                                      && this.props.app.setCurrentSearchValue(e.target.value)}
-                                    className="search__input"
-                                    placeholder={loc[lang].search}
-                                  />
-                                  <span
-                                    className={`icon-close search__clear search__fabric
+                                      <input
+                                          style={{
+                                              background: 'transparent',
+                                              visibility: this.props.app && this.props.app.isSearchBarOpened
+                                                  ? 'visible' : 'hidden'
+                                          }}
+                                          type="search"
+                                          maxLength={150}
+                                          autoComplete="off"
+                                          onChange={(e) => this.props.app
+                                              && this.props.app.setCurrentSearchValue(e.target.value)}
+                                          className="search__input"
+                                          placeholder={loc[lang].search}
+                                      />
+                                      <span
+                                          className={`icon-close search__clear search__fabric
                                         ${
-                                      this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
-                                    title="Clear"
-                                    onClick={() => {
-                                        this.props.app!.toggleIsSearchBarOpened();
-                                    }}
-                                    style={{
-                                        width: '40px'
-                                    }}
-                                  />
-                              </div>
-                          </form>
+                                              this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
+                                          title="Clear"
+                                          onClick={() => {
+                                              this.props.app!.toggleIsSearchBarOpened();
+                                          }}
+                                          style={{
+                                              width: '15px'
+                                          }}
+                                      />
+                                  </div>
+                              </form>
 
-                          <Controll openModal={this.openModal}/>
+                              <Controll openModal={this.openModal}/>
 
-                      </div>
+                          </div>
+                      )}
                   </div>
-                  {isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'
-                  && subgroup !== 'design'}
+                  {/*{isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'*/}
+                  {/*&& subgroup !== 'design'}*/}
 
                   {modalIsOpen && (
                     <PopUp open={modalIsOpen} onClose={this.closeModal}>

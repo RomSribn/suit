@@ -47,7 +47,6 @@
 
 .navLinks__item_mobile
   font-size: 17px
-  margin-right 13px
   margin-top 3px
   margin-bottom 0 !important
   text-align center
@@ -55,6 +54,10 @@
   color #000000
   opacity 0.6
   font-weight 500
+
+  &:not(:last-child){
+    margin-right 13px
+  }
 
   @media (max-width: 450px)
         padding: 0 3px

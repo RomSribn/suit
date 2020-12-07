@@ -30,7 +30,7 @@
         "no-any": true,
         "no-arg": true,
         "no-console": [
-            false,
+            true,
             "log",
             "error",
             "debug",

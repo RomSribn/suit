@@ -212,3 +212,9 @@ and (-webkit-min-device-pixel-ratio: 1)  {
         width: 1.0333rem;
     }
 }
+
+@media only screen and (max-width: 450px){
+    .sizes__wrap {
+        padding-bottom: 100px;
+    }
+}

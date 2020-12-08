@@ -143,6 +143,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         // );
 
         // const isToggleOnSeparateRow = (isTablet() && !isLandscape());
+        let lastParametr = this.props.match.url.split('/');
 
         return (
           <>
@@ -153,16 +154,17 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                           <div
                               className="custom__control_new"
                           >
-                              <form
-                                  style={{
-                                      cursor: 'pointer',
-                                      transition: '0.3s',
-                                      transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                          'unset' : isMobile() ? 'translateX(60%)' : 'translateX(74%)'
-                                  }}
-                                  className="search"
-                              >
-                                  <div style={{ background: 'transparent' }} className="search__control">
+                              { (isMobile() || lastParametr[lastParametr.length - 1] === 'fabric') && (
+                                  <form
+                                      style={{
+                                          cursor: 'pointer',
+                                          transition: '0.3s',
+                                          transform: this.props.app && this.props.app.isSearchBarOpened ?
+                                              'unset' : isMobile() ? 'translateX(60%)' : 'translateX(74%)'
+                                      }}
+                                      className="search"
+                                  >
+                                      <div style={{ background: 'transparent' }} className="search__control">
                                     <span
                                         style={{
                                             zIndex: 9999
@@ -181,41 +183,43 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                             }
                                         }}
                                     />
-                                      <input
-                                          style={{
-                                              background: 'transparent',
-                                              visibility: this.props.app && this.props.app.isSearchBarOpened
-                                                  ? 'visible' : 'hidden'
-                                          }}
-                                          type="search"
-                                          maxLength={150}
-                                          autoComplete="off"
-                                          onChange={(e) => this.props.app
-                                              && this.props.app.setCurrentSearchValue(e.target.value)}
-                                          className="search__input"
-                                          placeholder={loc[lang].search}
-                                      />
-                                      <span
-                                          className={`icon-close search__clear search__fabric
+                                          <input
+                                              style={{
+                                                  background: 'transparent',
+                                                  visibility: this.props.app && this.props.app.isSearchBarOpened
+                                                      ? 'visible' : 'hidden'
+                                              }}
+                                              type="search"
+                                              maxLength={150}
+                                              autoComplete="off"
+                                              onChange={(e) => this.props.app
+                                                  && this.props.app.setCurrentSearchValue(e.target.value)}
+                                              className="search__input"
+                                              placeholder={loc[lang].search}
+                                          />
+                                          <span
+                                              className={`icon-close search__clear search__fabric
                                         ${
-                                              this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
-                                          title="Clear"
-                                          onClick={() => {
-                                              this.props.app!.toggleIsSearchBarOpened();
-                                              if ( isMobile() ) {
-                                                  this.setState({showFilterBtn: !showFilterBtn});
-                                              }
-                                          }}
-                                          style={{
-                                              width: '30px'
-                                          }}
-                                      />
-                                  </div>
-                              </form>
+                                                  this.props.app && this.props.app.isSearchBarOpened ? 'show' : ''}`}
+                                              title="Clear"
+                                              onClick={() => {
+                                                  this.props.app!.toggleIsSearchBarOpened();
+                                                  if ( isMobile() ) {
+                                                      this.setState({showFilterBtn: !showFilterBtn});
+                                                  }
+                                              }}
+                                              style={{
+                                                  width: '30px'
+                                              }}
+                                          />
+                                      </div>
+                                  </form>
+                              )}
+
                               { (isMobile() && showFilterBtn) && (
                                 <Controll disableBtn={group !== 'fabric'} openModal={this.openModal}/>
                               )}
-                              { !isMobile() && (
+                              { (!isMobile() && lastParametr[lastParametr.length - 1] === 'fabric') && (
                                 <Controll openModal={this.openModal}/>
                               )}
                           </div>

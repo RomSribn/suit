@@ -21,7 +21,7 @@ interface DefaultFilterItemProps {
     addFilter: (value: string) => void;
     removeFilter: (value: string) => void;
 }
-type FilterItemProps = FilterValue & DefaultFilterItemProps
+type FilterItemProps = FilterValue & DefaultFilterItemProps;
 
 interface _ControllProps {
     isOpen?: boolean;
@@ -29,11 +29,12 @@ interface _ControllProps {
     type?: string;
     onCLick?: () => void;
     closeFilter?: () => void;
-    toggleOpen?(): void;
+    toggleOpen?: () => void;
     filterStore?: IFilterStore;
     app?: IAppStore;
     toggleIsSearchBarOpened?: () => void;
     openModal: () => void;
+    disableBtn?: boolean;
 }
 interface DefaultControllProps {
     isSearchBarOpened: boolean;

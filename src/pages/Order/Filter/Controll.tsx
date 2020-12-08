@@ -21,7 +21,8 @@ class Controll extends React.Component<ControllProps> {
             isOpen,
             openModal,
             isSearchBarOpened,
-            toggleIsSearchBarOpened
+            toggleIsSearchBarOpened,
+            disableBtn
         } = this.props;
 
         return (
@@ -30,7 +31,7 @@ class Controll extends React.Component<ControllProps> {
                     'btn gallery__filter-btn',
                     { open: isOpen },
                 )}
-                // disabled={true}
+                disabled={disableBtn}
                 onClick={() => {
                     if ( !isMobile() ) {
                         onCLick();

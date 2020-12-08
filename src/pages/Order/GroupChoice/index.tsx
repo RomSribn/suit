@@ -150,7 +150,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                   <div className="custom custom--open" style={{overflow: 'hidden', cursor: 'unset'}}>
                       {content}
                       {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened}*/}
-                      {(group && group === 'fabric') && (
                           <div
                               className="custom__control_new"
                           >
@@ -170,6 +169,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         }}
                                         className="search__icon"
                                         onClick={() => {
+                                            if ( group !== 'fabric') {
+                                                return;
+                                            }
                                             this.props.app!.toggleIsSearchBarOpened();
                                             if (this.props.filterStore!.isOpen) {
                                                 this.props.filterStore!.toggleOpen();
@@ -211,13 +213,12 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                   </div>
                               </form>
                               { (isMobile() && showFilterBtn) && (
-                                <Controll openModal={this.openModal}/>
+                                <Controll disableBtn={group !== 'fabric'} openModal={this.openModal}/>
                               )}
                               { !isMobile() && (
                                 <Controll openModal={this.openModal}/>
                               )}
                           </div>
-                      )}
                   </div>
                   {/*{isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'*/}
                   {/*&& subgroup !== 'design'}*/}

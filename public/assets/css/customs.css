@@ -123,6 +123,9 @@
     outline-width: 0;
 }
 
+.custom__control {
+    z-index: 100;
+}
 .custom__control:hover {
     cursor: pointer;
 }

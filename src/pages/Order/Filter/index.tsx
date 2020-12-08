@@ -72,6 +72,7 @@ class Controll extends React.Component<_ControllProps> {
             filterStore,
             isSearchBarOpened,
             toggleIsSearchBarOpened,
+            disableBtn,
         } = this.props;
         return (
             <ControllComponent
@@ -82,6 +83,7 @@ class Controll extends React.Component<_ControllProps> {
                 toggleIsSearchBarOpened={toggleIsSearchBarOpened!}
                 type={type!}
                 openModal={openModal}
+                disableBtn={disableBtn}
             />);
     }
 }

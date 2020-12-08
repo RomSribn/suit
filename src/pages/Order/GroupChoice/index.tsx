@@ -207,7 +207,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                               }
                                           }}
                                           style={{
-                                              width: '40px'
+                                              width: '30px'
                                           }}
                                       />
                                   </div>

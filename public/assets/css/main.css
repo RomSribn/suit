@@ -75,14 +75,15 @@
     .design-items-wrapper {
         padding: 1rem;
         display: block;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         height: 500px;
         padding-bottom: 120px;
     }
 
     .design-navigation-wrapper {
         display: flex;
-        padding: 1rem;
+        padding: 1rem 1rem 0 1rem;
     }
     .design-navigation {
         font-size: 18px;

@@ -161,7 +161,6 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
             ]
             : [];
 
-        console.log('data', data);
         const dataFitting = $store
             ? [
                 ...$store.fitting.map((v: Subgroup) => filterFields(

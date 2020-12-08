@@ -208,7 +208,6 @@ const makeGalleryItems: makeGalleryItems = (
             let res;
             for ( let i = 0; i < filters.length; i++ ) {
                 if ( filterStore.userFilters[filters[i]].includes(item[filters[i]].value) ) {
-                    console.log('123');
                     return res = true;
                 }
             }

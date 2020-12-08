@@ -16,6 +16,12 @@
   display: flex;
   flex-direction: row-reverse;
 }
+
+.popup__container .swiper-popup-container{
+  height: 90vh;
+  overflow: auto;
+}
+
 @media only screen and (max-width: 450px) {
   .swiper-popup-container {
     flex-direction: column;

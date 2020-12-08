@@ -46,7 +46,7 @@
     transition: .35s ease;     */
 }
 .navbar--white{
-    background-color: white;
+    background-color: rgba(255, 255, 255,.6);
     -webkit-transition: background-color .35s ease;
     -o-transition: background-color .35s ease;
     transition: background-color .35s ease;

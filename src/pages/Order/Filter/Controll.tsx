@@ -26,11 +26,11 @@ class Controll extends React.Component<ControllProps> {
 
         return (
             <button
-                style={{ zIndex: 99, width: '65px' }}
                 className={classnames(
                     'btn gallery__filter-btn',
                     { open: isOpen },
                 )}
+                // disabled={true}
                 onClick={() => {
                     if ( !isMobile() ) {
                         onCLick();

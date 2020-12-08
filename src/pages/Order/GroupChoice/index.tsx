@@ -27,6 +27,7 @@ import { PopUp } from '../../../containers/Popup';
 class GroupChoice extends React.PureComponent<GroupChoiceProps> {
     state = {
         modalIsOpen: false,
+        showFilterBtn: true,
     };
 
     componentDidMount() {
@@ -55,6 +56,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
     render() {
         const {
             modalIsOpen,
+            showFilterBtn,
         } = this.state;
         const {
             match: { params: { garment, subgroup, group } },
@@ -145,22 +147,19 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
           <>
               <>
-                  <div className="custom custom--open">
+                  <div className="custom custom--open" style={{overflow: 'hidden', cursor: 'unset'}}>
                       {content}
                       {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened}*/}
                       {(group && group === 'fabric') && (
                           <div
                               className="custom__control_new"
-                              style={{
-                                  flexBasis: this.props.app && this.props.app.isSearchBarOpened ? 'auto' : 0,
-                              }}
                           >
                               <form
                                   style={{
                                       cursor: 'pointer',
                                       transition: '0.3s',
                                       transform: this.props.app && this.props.app.isSearchBarOpened ?
-                                          'unset' : 'translateX(60%)'
+                                          'unset' : isMobile() ? 'translateX(60%)' : 'translateX(74%)'
                                   }}
                                   className="search"
                               >
@@ -174,6 +173,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                             this.props.app!.toggleIsSearchBarOpened();
                                             if (this.props.filterStore!.isOpen) {
                                                 this.props.filterStore!.toggleOpen();
+                                            }
+                                            if ( isMobile() ) {
+                                                this.setState({showFilterBtn: !showFilterBtn});
                                             }
                                         }}
                                     />
@@ -198,16 +200,22 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                           title="Clear"
                                           onClick={() => {
                                               this.props.app!.toggleIsSearchBarOpened();
+                                              if ( isMobile() ) {
+                                                  this.setState({showFilterBtn: !showFilterBtn});
+                                              }
                                           }}
                                           style={{
-                                              width: '15px'
+                                              width: '40px'
                                           }}
                                       />
                                   </div>
                               </form>
-
-                              <Controll openModal={this.openModal}/>
-
+                              { (isMobile() && showFilterBtn) && (
+                                <Controll openModal={this.openModal}/>
+                              )}
+                              { !isMobile() && (
+                                <Controll openModal={this.openModal}/>
+                              )}
                           </div>
                       )}
                   </div>

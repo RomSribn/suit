@@ -8,5 +8,5 @@ interface LabelProps {
 }
 interface InfoSubSectionProps {
     title: string;
-    data: {name: string, value: string}[];
+    data: { id: string, name: string, value: string}[];
 }

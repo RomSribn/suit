@@ -51,7 +51,7 @@ class Wrapper extends Component {
     const isStylist = role === 'STYLIST';
 
     if (location.pathname === '/pdf') {
-      return <Route path='/pdf' render={(props) => <Pdf {...props} {...this.props} />} />
+      return <Route path='/pdf' render={(props) => <Pdf {...props} />} />
     }
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (<React.Fragment key="common wrapper with spinner">

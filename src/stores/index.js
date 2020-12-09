@@ -6,6 +6,7 @@ import { order } from './order';
 import { ordersStore } from './orders';
 import { filterStore } from './filterStore';
 import customersStore from './customers';
+import { pdfStore } from './pdfStore';
 
 export default {
   app,
@@ -16,4 +17,5 @@ export default {
   filterStore,
   ordersStore,
   customersStore,
+  pdfStore,
 }

@@ -328,7 +328,9 @@ class Table extends React.Component<TProps, TState> {
                 getTrProps={({}, rowInfo: RowInfo) => {
                     return {
                         onClick: () => {
-                            this.panelRow && this.panelRow.current && this.panelRow.current.triggerControls(true); // tslint:disable-line
+                            this.panelRow && this.panelRow.current &&  // tslint:disable-line
+                            // @ts-ignore
+                            this.panelRow.current.wrappedInstance.triggerControls(true);
                             if (rowInfo) {
                                 this.setActiveOrderId(rowInfo.row.id);
                                 this.setActiveOrderInfo(rowInfo.original);

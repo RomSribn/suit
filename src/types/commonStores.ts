@@ -17,4 +17,5 @@ export interface CommonStores {
         Subgroups: typeof Subgroups
     };
     customersStore: ICustomerStore;
+    pdfStore: IPdfStore;
 }

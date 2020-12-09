@@ -6,6 +6,7 @@
 }
 .custom__control_new {
     display: flex;
+    align-items: center;
 }
 .control__searchBar {
     /* display: none; */
@@ -36,7 +37,7 @@
     flex-grow: 0;
     overflow-y: auto;
     padding-right: 0;
-    min-height: 3.6333rem;
+    /*min-height: 2.9333rem;*/
     margin-bottom: 0;
 }
 .custom{
@@ -213,7 +214,7 @@
     .search__fabric.show {
         transform: translateX(10px);
     }
-    .custom__control {
-        display: none;
-    }
+    /*.custom__control {*/
+    /*    display: none;*/
+    /*}*/
 }

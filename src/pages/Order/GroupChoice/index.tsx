@@ -150,11 +150,15 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
               <>
                   <div className="custom custom--open" style={{overflow: 'hidden', cursor: 'unset'}}>
                       {content}
-                      {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened}*/}
+                      {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}*/}
                           <div
                               className="custom__control_new"
                           >
-                              { (isMobile() || lastParametr[lastParametr.length - 1] === 'fabric') && (
+                              { ( (isMobile() && (
+                                  lastParametr[lastParametr.length - 1] === 'fabric' ||
+                                  lastParametr[lastParametr.length - 1] === 'design' ||
+                                  lastParametr[lastParametr.length - 1] === 'fitting'
+                              )) || lastParametr[lastParametr.length - 1] === 'fabric') && (
                                   <form
                                       style={{
                                           cursor: 'pointer',
@@ -216,16 +220,21 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                   </form>
                               )}
 
-                              { (isMobile() && showFilterBtn) && (
+                              { (isMobile() && showFilterBtn && (
+                                  lastParametr[lastParametr.length - 1] === 'fabric' ||
+                                  lastParametr[lastParametr.length - 1] === 'design' ||
+                                  lastParametr[lastParametr.length - 1] === 'fitting'
+                              )) && (
                                 <Controll disableBtn={group !== 'fabric'} openModal={this.openModal}/>
                               )}
+
                               { (!isMobile() && lastParametr[lastParametr.length - 1] === 'fabric') && (
                                 <Controll openModal={this.openModal}/>
                               )}
                           </div>
                   </div>
                   {/*{isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'*/}
-                  {/*&& subgroup !== 'design'}*/}
+                  {/*&& subgroup !== 'design' && toggle}*/}
 
                   {modalIsOpen && (
                     <PopUp open={modalIsOpen} onClose={this.closeModal}>

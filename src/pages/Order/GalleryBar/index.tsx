@@ -145,7 +145,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                 >
                     <div className={classnames('gallery__item', { active })}>
                         <img
-                            src={img_url_2d_list[1]}
+                            src={`${process.env.API_ROOT}${img_url_2d_list[0].slice(5)}`}
                             className="gallery__item--hover-image"
                             alt={`${id}`}
                         />
@@ -155,10 +155,9 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                             alt={`${id}`}
                         />
                         {this.props.app &&
-                        this.props.app.changeSearchedItemsCount()}
-                        {!isMobile() &&
-                        this.props.zoomId === id &&
-                        this.props.app && (
+                            this.props.app.changeSearchedItemsCount()}
+                        {this.props.zoomId === id &&
+                            this.props.app && (
                             <span onClick={toggleSwipe} className="zoom-icon" />
                         )}
                     </div>

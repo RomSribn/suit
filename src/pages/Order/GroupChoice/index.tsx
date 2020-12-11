@@ -153,7 +153,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     <div
                         className="custom custom--open"
                         style={{overflow: 'hidden'}}
-                        onClick={() => console.log('this.props: ', this.props)}
                     >
                       {content}
                       {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}*/}

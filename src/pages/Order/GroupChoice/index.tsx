@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import { Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
@@ -61,7 +61,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const {
             match: { params: { garment, subgroup, group } },
             order,
-            // backLink,
+            backLink,
             lang,
             subgroupsStore,
             // orderStore,
@@ -92,6 +92,10 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
           ? choiceItemValue!.slice(0, 12) + '...'
           : choiceItemValue;
 
+        const itemFound = subgroupsStore!.data![subgroup]
+            .find((item: Subgroup) => item.subsection_our_code === group);
+        const name = itemFound ? itemFound.title[lang] : '';
+
         const content = (
           <>
                 <span className="custom__content">
@@ -101,10 +105,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                         isAuth={userStore!.isAuth}
                         lang={'ru'}
                       /> : <>
-                    <span className="custom__name">{subgroupsStore!.data
-                      ? subgroupsStore!.data[subgroup]
-                        .find((item: Subgroup) => item.subsection_our_code === group).title[lang]
-                      : ''}:</span>
+                    <span className="custom__name">{name}:</span>
                           <span className="custom__status">{itemValue}</span>
                       </>}
 
@@ -148,7 +149,12 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
           <>
               <>
-                  <div className="custom custom--open" style={{overflow: 'hidden', cursor: 'unset'}}>
+                <Link to={backLink}>   
+                    <div
+                        className="custom custom--open"
+                        style={{overflow: 'hidden'}}
+                        onClick={() => console.log('this.props: ', this.props)}
+                    >
                       {content}
                       {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}*/}
                           <div
@@ -232,7 +238,8 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                 <Controll openModal={this.openModal}/>
                               )}
                           </div>
-                  </div>
+                    </div>
+                </Link> 
                   {/*{isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'*/}
                   {/*&& subgroup !== 'design' && toggle}*/}
 

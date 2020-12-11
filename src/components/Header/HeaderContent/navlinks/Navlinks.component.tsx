@@ -13,6 +13,7 @@ interface NavlinksComponentProps {
 
 const NavlinksComponent: React.FunctionComponent<NavlinksComponentProps> = ({ isAuth, garment, lang }) => {
     const garmentSet = (link: string) => link.replace(':garment', garment);
+
     return (
         <div className="navlinks__container">
             <NavlinksItemComponent to={garmentSet(routes.fabric)}>

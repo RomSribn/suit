@@ -93,7 +93,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
           : choiceItemValue;
 
         let itemFound: Subgroup | null = null;
-        if (subgroupsStore!.data![subgroup]) {
+        if (subgroupsStore && subgroupsStore!.data && subgroupsStore!.data![subgroup]) {
             itemFound = subgroupsStore!.data![subgroup]
                 .find((item: Subgroup) => item.subsection_our_code === group);
         }
@@ -107,7 +107,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                       <Navlinks
                         garment={activeGarments && activeGarments[0] || 'shirt'}
                         isAuth={userStore!.isAuth}
-                        lang={'ru'}
+                        lang={lang}
                       /> : <>
                     <span className="custom__name">{name}:</span>
                           <span className="custom__status">{itemValue}</span>

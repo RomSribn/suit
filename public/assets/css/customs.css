@@ -138,7 +138,9 @@
     cursor: pointer;
 }
 .custom__control:before,
-.custom__control:after{
+.custom__control:after,
+.custom__control_new:before,
+.custom__control_new:after {
     content: '';
     display: block;
     width: 1.3333rem;

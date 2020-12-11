@@ -95,7 +95,8 @@
 
 }
 @media only screen and (max-width: 450px) {
-  .swiper-container#main {
+  .swiper-container#main,
+  .text-block {
     width: 100%;
   }
   .swiper-container-thumbs {
@@ -105,6 +106,13 @@
 @media only screen and (max-width: 768px) {
   .swiper-container:not(#main) {
     display: none;
+  }
+  .swiper-container#main,
+  .swiper-slide {
+    width: 100%;
+  }
+  .text-block {
+    width: 95%;
   }
 }
 
@@ -310,3 +318,12 @@
   }
 }
 
+@media screen and (min-width: 1024px) {
+  .text-block {
+    display: flex;
+  }
+  .text-block__info {
+    max-width: 300px;
+    margin-left: 5px;
+  }
+}

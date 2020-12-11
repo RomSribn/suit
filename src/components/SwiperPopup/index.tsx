@@ -41,6 +41,9 @@ const SwiperPopup = (props: SwiperPopupProps) => {
               createPackOfThumbs(props.item.img_url_2d_list)}
             </Swiper>
           </div>
+        </div>
+
+        <div className="text-block__info">
           <div className="text-block__title">
             {props.item && props.item.title && props.item.title.ru}
             <div>({props.item && props.item.title && props.item.elementCode})</div>
@@ -69,9 +72,6 @@ const SwiperPopup = (props: SwiperPopupProps) => {
           <Button className="text-block__button" onClick={props!.closeButton}>
             {props.item!.elementInfo!.group === 'fabric_ref' ? loc[lang].clothSelected : loc[lang].designSelected} 
           </Button>
-        </div>
-
-        <div className="text-block__info">
           <h2>{loc[lang].productInfo}</h2>
           {
             props.item!.elementInfo!.group === 'fabric_ref'

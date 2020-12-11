@@ -92,8 +92,12 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
           ? choiceItemValue!.slice(0, 12) + '...'
           : choiceItemValue;
 
-        const itemFound = subgroupsStore!.data![subgroup]
-            .find((item: Subgroup) => item.subsection_our_code === group);
+        let itemFound: Subgroup | null = null;
+        if (subgroupsStore!.data![subgroup]) {
+            itemFound = subgroupsStore!.data![subgroup]
+                .find((item: Subgroup) => item.subsection_our_code === group);
+        }
+        
         const name = itemFound ? itemFound.title[lang] : '';
 
         const content = (

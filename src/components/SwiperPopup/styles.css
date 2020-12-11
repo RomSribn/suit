@@ -10,14 +10,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-transform: capitalize;
+  height: 100vh;
 }
 
 .swipe-block {
   display: flex;
   flex-direction: row-reverse;
 }
-
-.swiper-popup-container.--portrait
 
 .popup__container .swiper-popup-container{
   height: 90vh;
@@ -138,6 +137,7 @@
 
 .text-block {
   margin-left: 20px;
+  overflow: scroll;
 }
 
 .text-block button {

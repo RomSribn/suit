@@ -51,7 +51,13 @@ const SwiperPopup = (props: SwiperPopupProps) => {
             <span>/</span>
             <a onClick={props!.closeButton}>{loc[lang].shirt}</a>
             <span>/</span>
-            <a onClick={props!.closeButton}>{loc[lang].cloth}</a>
+            <a onClick={props!.closeButton}>
+              { 
+                props.item!.elementInfo!.group === 'fabric_ref'
+                  ? loc[lang].cloth
+                  : loc[lang].designLink 
+              }
+            </a>
           </div>
 
           <div className="text-block__price">
@@ -61,24 +67,32 @@ const SwiperPopup = (props: SwiperPopupProps) => {
 
           {/* Тут ваша импортированая кнопка */}
           <Button className="text-block__button" onClick={props!.closeButton}>
-            {loc[lang].clothSelected}
+            {props.item!.elementInfo!.group === 'fabric_ref' ? loc[lang].clothSelected : loc[lang].designSelected} 
           </Button>
         </div>
 
         <div className="text-block__info">
           <h2>{loc[lang].productInfo}</h2>
-          <p>Brand: Andrezza & Castelli</p>
-          <p>
-            {loc[lang].fabricColor}
-            {props.item && props.item.main_color && props!.item.main_color.title[lang]}
-          </p>
-          <p>{loc[lang].fabric} {props.item && props.item.pattern && props.item.pattern.title[lang]}</p>
-          <p>{loc[lang].density}</p>
-          <p>{loc[lang].composition}</p>
-          <p>{loc[lang].catalog}</p>
-          <p>{loc[lang].category}</p>
-          <p>{loc[lang].design}</p>
-          <p>{loc[lang].clothLeft}</p>
+          {
+            props.item!.elementInfo!.group === 'fabric_ref'
+              ? <>
+                <p>Brand: Andrezza & Castelli</p>
+                <p>{props.item!.description![lang]}</p>
+                <p>
+                  {loc[lang].fabricColor}
+                  {props.item && props.item.main_color && props!.item.main_color.title[lang]}
+                </p>
+                <p>{loc[lang].fabric} {props.item && props.item.pattern && props.item.pattern.title[lang]}</p>
+                <p>{loc[lang].density}</p>
+                <p>{loc[lang].composition}</p>
+                <p>{loc[lang].catalog}</p>
+                <p>{loc[lang].category}</p>
+                <p>{loc[lang].design}</p>
+                <p>{loc[lang].clothLeft}</p>
+              </>
+              : <p>{props.item!.description![lang]}</p>
+          }
+          
         </div>
       </div>
       <div

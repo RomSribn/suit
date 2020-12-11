@@ -3,6 +3,7 @@ interface Locale {
     shirt: string;
     cloth: string;
     clothSelected: string;
+    designSelected: string;
     continue: string;
     currency: string;
     productInfo: string;
@@ -14,6 +15,7 @@ interface Locale {
     category: string;
     design: string;
     clothLeft: string;
+    designLink: string;
 }
 
 export const loc: MakeLocale<Locale> = {
@@ -21,7 +23,9 @@ export const loc: MakeLocale<Locale> = {
         order: 'Order',
         shirt: 'Shirt',
         cloth: 'Cloth',
+        designLink: 'Design',
         clothSelected: 'cloth selected',
+        designSelected: 'Design selected',
         continue: 'continue',
         currency: '€',
         productInfo: 'Product info',
@@ -38,7 +42,9 @@ export const loc: MakeLocale<Locale> = {
         order: 'Заказать',
         shirt: 'Сорочка',
         cloth: 'Ткань',
+        designLink: 'Дизайн',
         clothSelected: 'ткань выбрана',
+        designSelected: 'Дизайн выбран',
         continue: 'продолжить',
         currency: '₽',
         productInfo: 'Информация о товаре',

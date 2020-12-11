@@ -1,7 +1,13 @@
 type TitleData = {
   title: {
-    ru: string
+    ru: string,
+    en?: string
   },
+}
+
+type ItemLoc ={
+  ru?: string,
+  en?: string
 }
 
 interface ItemData {
@@ -10,6 +16,8 @@ interface ItemData {
   pattern?: TitleData,
   main_color?: TitleData,
   price?: TitleData,
+  elementInfo?: { garment: string, group: string, subGroup: string }
+  description?: ItemLoc
   title?: {
     ru: string
   }

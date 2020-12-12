@@ -123,6 +123,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             this.props.app!.toggleSwiperPopup();
         };
 
+        const hoverImg = `${process.env.API_ROOT}${(img_url_2d_list.length > 1) && img_url_2d_list[1].slice(5) || id}`;
+
         return (
             <>
             {this.props.app &&
@@ -145,7 +147,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                 >
                     <div className={classnames('gallery__item', { active })}>
                         <img
-                            src={`${process.env.API_ROOT}${img_url_2d_list[0].slice(5)}`}
+                            src={hoverImg}
                             className="gallery__item--hover-image"
                             alt={`${id}`}
                         />

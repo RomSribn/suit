@@ -19,4 +19,5 @@ export interface CommonStores {
         garments?: typeof GarmentsStore
     };
     customersStore: ICustomerStore;
+    pdfStore: IPdfStore;
 }

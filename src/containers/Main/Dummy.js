@@ -345,7 +345,10 @@ export default class App extends Component {
         // Может случиться, если по дефолту у элемента нет заданного значения
         if (!params.find(param => (
           activeElement.our_code === param ||
-          (param && (activeElement.our_code === param.id))
+          (param && (activeElement.our_code === param.id)) ||
+          // Если подразделу (воротник и тд) назначена отдельная ткань,
+          // то нужно проверять наличие activeElement в массиве materials)
+          (param && param.materials && param.materials.includes(activeElement.our_code))
         ))) {
           // Добавляем его в к параметрам отображения
           params.push(activeElement.our_code);

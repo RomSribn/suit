@@ -26,7 +26,7 @@ const InfoSubSection = ({title, data}: InfoSubSectionProps) => (
     <div className="info-block">
         <div className="info-block__title">{title}</div>
         <div className="info-block__details">
-            {data.map((item) => <Label key={name} name={item.name} value={item.value}/>)}
+            {data.map((item) => <Label key={item.id} {...item} />)}
         </div>
     </div>
 );
@@ -36,7 +36,7 @@ const InfoSubSection = ({title, data}: InfoSubSectionProps) => (
     orderStore: order,
     garmentsStore: garments,
     routingStore: routing,
-    fittingStore: new GalleryStore('shirt', 'fitting', 'fitting'),
+    fittingStore: new GalleryStore('shirt', 'fitting', 'body_measurements'),
     orderInfo: order.orderInfo || {},
     SubgroupsStore: new Subgroups('shirt')
 }))
@@ -51,8 +51,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
             if (query.order_id) {
                 orderStore.fetchInitialOrder(
                     Object.keys(garmentsStore.garmentsList),
-                    // tslint:disable-next-line:no-any
-                    (garments: any) => garmentsStore.setChosenGarments(garments)
+                    (garments: string[]) => garmentsStore.setChosenGarments(garments)
                 )
                     .then(() => {
                         orderStore.fetchOrder(query.order_id, query['super-user-token']);
@@ -62,7 +61,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
     }
 
     render() {
-        const { lang, orderStore, fittingStore, SubgroupsStore, orderInfo, order } = this.props;
+        const { lang, orderStore, fittingStore, SubgroupsStore, orderInfo } = this.props;
         if (!orderInfo.orderId) {
             return null;
         }
@@ -74,7 +73,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
         const designBlockData = Object.keys(designItems).map((key) => {
             const itemWithSubsectionCode = _.find(designSubgroupItems, { 'subsection_our_code': key }) || {};
             return {
-                name: _.get(itemWithSubsectionCode, `title[${lang}]`, ''),
+                name: _.get(itemWithSubsectionCode, `title[${lang}]`, key),
                 id: key,
                 value: designItems[key].title[lang],
             };
@@ -85,25 +84,29 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
         const deliveryDate = moment(date).add(deliveryDays, 'days').format('DD.MM.YYYY');
 
         const generalInfo = [{
+            id: 'name',
             name: loc[lang].name,
             value: customer && customer.name || '',
         }, {
+            id: 'orderId',
             name: loc[lang].orderId,
             value: orderId || '',
         }, {
+            id: 'date',
             name: loc[lang].date,
             value: deliveryDate || '',
         }, {
+            id: 'price',
             name: loc[lang].price || '',
             value: price && price.ru || '',
         }];
 
         const fittingItems = [...fittingStore.items] || [];
-        const fittingsInfo = order.shirt && orderStore && fittingItems.reduce((acc: string[], item) => {
+        const fittingsInfo = orderStore.order.shirt && fittingItems.reduce((acc: string[], item) => {
             const name = item.title[lang];
             const value = orderStore!.getFitting('shirt')(item.our_code);
             if (name && value) {
-                return [...acc, { name, value }];
+                return [...acc, { id: item.id, name, value }];
             }
             return acc;
         }, []);
@@ -118,14 +121,14 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
                     <InfoRow name={loc[lang].info}/>
                     <div className="info-block__wrapper">
                         <InfoSubSection data={generalInfo} title={loc[lang].general}/>
-                        {order.shirt && orderStore && fittingsInfo.length > 0 && (
+                        {orderStore.order.shirt && fittingsInfo.length > 0 && (
                             <InfoSubSection data={fittingsInfo} title={loc[lang].fitting}/>
                         )}
                     </div>
 
                     <InfoRow name={loc[lang].shirt}/>
                     <div className="info-block__wrapper">
-                        <InfoSubSection title={loc[lang].fabric} data={[{name: '', value: fabric}]}/>
+                        <InfoSubSection title={loc[lang].fabric} data={[{id: 'fabric', name: '', value: fabric}]}/>
                         {designBlockData && <InfoSubSection title={loc[lang].design} data={designBlockData}/>}
                     </div>
                 </div>

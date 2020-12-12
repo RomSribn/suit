@@ -30,6 +30,8 @@ interface PanelRowProps {
     lang: Lang;
     activeOrderId?: string | null;
     role?: Role;
+    generatePdf?: (orderId: string, token: string, role: Role) => void;
+    pdfStatesByOrderId?: Map<string, {isFetching?: boolean, error?: Error}>;
 }
 
 interface FilterParams {

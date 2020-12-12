@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { inject, observer } from 'mobx-react';
 import * as classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { ConfirmPopup } from '../ConfirmPopup';
-import { API_ROOT, routes } from '../../config/routes';
+import { routes } from '../../config/routes';
 import { loc } from './loc';
 import { SimpleModal } from '../SimpleModal';
+import { SimpleSpinner } from '../Spinner';
 
 import './panelRowStyles.styl';
 
@@ -14,7 +16,12 @@ interface PanelRowState {
     info: string;
 }
 
-class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
+@inject(({pdfStore}) => ({
+    pdfStatesByOrderId: pdfStore.pdfStatesByOrderId,
+    generatePdf: pdfStore.generatePdf,
+}))
+@observer
+class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
     constructor(props: PanelRowProps) {
         super(props);
         this.state = {
@@ -103,6 +110,14 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
 
     onCloseModal = () => this.setState({ showInfo : false, info: '' });
 
+    generatePdf = () => {
+        const {orderInfo, activeOrderId, role, userToken, generatePdf} = this.props;
+        const orderId = orderInfo && orderInfo.id || activeOrderId;
+        if (orderId) {
+            generatePdf!(orderId, userToken!, role!);
+        }
+    }
+
     render() {
         const {
             orderInfo,
@@ -110,6 +125,7 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             activeOrderId,
             lang,
             role,
+            pdfStatesByOrderId,
         } = this.props;
         const {
             showControls
@@ -133,9 +149,18 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
             nextStatusIndex = 1;
         }
         const nextStatus = loc[lang].statuses[orderStatuses[nextStatusIndex - 1]];
-        const props = this.props;
         const isStylist = role === 'STYLIST';
         const isCustomer = role === 'CUSTOMER';
+        const orderId = orderInfo && orderInfo.id || activeOrderId || '';
+        const pdfState = pdfStatesByOrderId!.get(orderId);
+        const isFetchingPdf = pdfState && pdfState.isFetching;
+
+        const spinner = (
+            <div className="controls__spinner">
+                <SimpleSpinner />
+            </div>
+        );
+
         return (
             <div className="panel-row">
                 <form className="search">
@@ -264,14 +289,12 @@ class PanelRow extends React.PureComponent<PanelRowProps, PanelRowState> {
                             </>
                         )}
                         <li className={itemClassName}>
-                            <a
+                            <span
                                 className="controls__link controls__link--pdf"
-                                target="_blank"
-                                href={`${API_ROOT}/api/orders/${props.activeOrderId}/getScreenshot?` +
-                                `host=${window.location.host}&` +
-                                `very-insecure-token=${encodeURIComponent(props.userToken || '')}`}
+                                onClick={this.generatePdf}
                                 title={loc[lang].controls.pdf}
                             />
+                            {isFetchingPdf && spinner}
                         </li>
                     </ul>
                 </div>

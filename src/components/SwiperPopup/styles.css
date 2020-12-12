@@ -64,6 +64,9 @@
   /* width: 183.75px; */
   width: 10.60606vw;
 }
+.text-block {
+  margin-left: 20px;
+}
 @media only screen and (max-width: 450px) {
   .swiper-container {
     width: 355px;
@@ -108,7 +111,7 @@
     width: 100% !important;
   }
   .text-block {
-    width: 95%;
+    margin-left: 0;
   }
 }
 
@@ -128,19 +131,9 @@
 }
 
 @media only screen and (max-width: 450px) {
-  .swiper-image__slide {
-    width: 355px;
-  }
-}
-
-@media only screen and (max-width: 450px) {
   .swiper-image__thumb {
     width: 85px;
   }
-}
-
-.text-block {
-  margin-left: 20px;
 }
 
 .text-block button {
@@ -199,7 +192,7 @@
   margin-left: 20px;
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 768px) {
   .close-swiper-popup {
     position: absolute;
     right: 10px;

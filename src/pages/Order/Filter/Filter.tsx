@@ -17,7 +17,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
         const {
             value,
             addFilter,
-            removeFilter
+            removeFilter,
         } = this.props;
 
         if (e.target.checked) {
@@ -46,7 +46,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
                     name={group}
                     onChange={this.onChange}
                 />
-                { isColorGroup ? 
+                { isColorGroup ?
                 <span
                     className="filter__label color-value"
                     style={{ backgroundColor: value}}
@@ -83,19 +83,22 @@ const makeFilterGroup = (group: Filter, filterStore: IFilterStore, lang: string)
         </div>
     );
 };
+
 class FilterComponent extends React.PureComponent<FilterProps> {
     public static defaultProps: DefaultFilterProps = {
         filters: {},
         isOpen: false,
-        lang: 'ru'
+        lang: 'ru',
+        onClose: () => null,
     };
- 
+
     render() {
         const {
             filters,
             isOpen,
             lang,
-            filterStore
+            filterStore,
+            onClose,
         } = this.props;
         return (
             <div
@@ -105,9 +108,25 @@ class FilterComponent extends React.PureComponent<FilterProps> {
                 )}
             >
                 <div className="filter__wrap">
-                {Object.keys(filters || {})
-                .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
+                    {Object.keys(filters || {})
+                    .map((key, index) => makeFilterGroup(filters[key], filterStore!, lang))}
                 </div>
+                <div
+                  className={'filter-btn-wrap'}
+                >
+                    <button
+                      onClick={() => {
+                          if ( onClose ) {
+                              onClose();
+                          }
+                      }}
+                      className={'filter-button'}
+                    >
+
+                        Применить Фильтр
+                    </button>
+                </div>
+
             </div>
         );
     }

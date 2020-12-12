@@ -100,6 +100,12 @@ class Fitting extends React.PureComponent<FittingProps> {
         const { items, lang, orderStore } = this.props;
         const setFitting = (id: string) => (value: number) => {orderStore!.setFitting('shirt', {id, value}); };
         return (
+            <>
+            <div className={'design-navigation-wrapper'}>
+                <a href="/random" className={'design-navigation'}>Все</a>
+                <a href="/random" className={'design-navigation _active'}>Тело</a>
+                <a href="/random" className={'design-navigation'}>Альтерации</a>
+            </div>
             <div className="sizes__wrap sizes">
             {items.map(
                 item => (
@@ -112,7 +118,8 @@ class Fitting extends React.PureComponent<FittingProps> {
                     />
                 )
             )}
-            </div>);
+            </div>
+            </>);
     }
 }
 

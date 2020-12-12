@@ -43,7 +43,7 @@ export default inject(({ garments: { garments } }) => {
                     className="open-element-img"
                 />
             </button>
-            <main className="content-wrapper">
+            <main style={{display: 'none'}} className="content-wrapper">
                 <h2 className="menu-title">
                     {isLandscape ? 
                         <Navlinks 

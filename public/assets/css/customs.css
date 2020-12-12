@@ -1,11 +1,12 @@
 .customs{
     flex-grow: 1;
     width: 100%;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     margin-bottom: calc(2.4rem + 4px);
 }
 .custom__control_new {
     display: flex;
+    align-items: center;
 }
 .control__searchBar {
     /* display: none; */
@@ -34,18 +35,25 @@
 
 .customs--short{
     flex-grow: 0;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     padding-right: 0;
-    min-height: 2.9333rem;
+    /*min-height: 2.9333rem;*/
     margin-bottom: 0;
+    max-height: 100%;
+}
+
+.customs--short .design-items-wrapper{
+    display: block;
+    max-height: 100%;
+    overflow-y: auto;
 }
 .custom{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 1.3333rem 0 1.3333rem;
-    margin-bottom: 0.8rem;
-    height: 2.9333rem;
+    margin-bottom: 1rem;
+    min-height: 2.9333rem;
     background: #eceeee;
     color: black;
     position: relative;
@@ -54,6 +62,7 @@
 
 .custom._design {
     padding: 0 3.5rem 0 1.3333rem;
+    min-height: 2.9333rem;
 }
 
 .custom--chosen::before {
@@ -122,6 +131,9 @@
     outline-width: 0;
 }
 
+.custom__control {
+    z-index: 100;
+}
 .custom__control:hover {
     cursor: pointer;
 }
@@ -167,21 +179,33 @@
         margin-bottom: 1.333rem;
     }
 
+    .custom__control_new {
+        position: relative;
+    }
+
     .custom--short {
         width: 94%;
         margin: auto;
     }
+    .customs--short{
+        overflow-y: unset;
+    }
 
     .custom--open {
+        padding: 0 1rem;
+        height: 50px;
         width: 100%;
+        margin-bottom: 0;
     }
 
     .custom .custom__content {
         width: 100%;
-        overflow: hidden;
+        /*overflow-x: auto;*/
         text-overflow: ellipsis;
         align-items: center;
         white-space: nowrap;
+        display: block;
+        /*min-width: 180px;*/
     }
 
     .custom.custom__no-pointer .custom__content {
@@ -193,4 +217,11 @@
         display: initial;
         flex: initial;
     }
+
+    .search__fabric.show {
+        transform: translateX(10px);
+    }
+    /*.custom__control {*/
+    /*    display: none;*/
+    /*}*/
 }

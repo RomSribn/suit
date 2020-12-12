@@ -65,13 +65,16 @@ class Paralax extends React.PureComponent {
                     `translate(0px, 0px) matrix(1, 0, 0, 1, ${-distX / 50}, ${-distY / 50})`;
                 // "translate(0px, 0px) matrix(1, 0, 0, 1, " + -(distX/50) + ", " + -(distY/50) + ")";
 
-                word1.style.transform = `translateX(${-distX / 50}px)`;
+                if (word1) {
+                    word1.style.transform = `translateX(${-distX / 50}px)`;
+                }
                 // word1.style.transform = "translateX(" + -(distX/50) + "px)";
 
-                word1.style.transform = `translateX(${-distX / 50}px)`;
                 // word1.style.transform = "translateX(" + distX/50 + "px)";
 
-                word3.style.transform = `translateX(${-distX / 50}px)`;
+                if (word3) {
+                    word3!.style.transform = `translateX(${-distX / 50}px)`;
+                }
                 // word3.style.transform = "translateX(" + -(distX/50) + "px)";
             };
             this.listener = listener;

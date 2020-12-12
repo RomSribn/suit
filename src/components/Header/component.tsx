@@ -56,7 +56,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
         // console.log(isRealIndexPage()); // tslint:disable-line
 
         return (
-            <div style={isNotDesignPart() ? {} : {marginBottom: '1.5rem'}} className="main__header">
+            <div className="main__header">
                 {
                     !state.isMobile ?
                         <div className="header-wrapper">

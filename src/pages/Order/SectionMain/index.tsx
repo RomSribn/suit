@@ -12,10 +12,13 @@ import { Footer } from '../Footer';
 import { routes } from '../routes';
 import { routes as defaultRoutes } from '../../../config/routes';
 
-import './styles.styl';
 import { Demo } from '../OrderDecorationBlocks';
 
 class MainSection extends React.Component<MainSectionProps> {
+    state = {
+        inititalTouch: 0,
+        isMenuUncovered: true,
+    };
     render() {
         const {
             isIndexPage,
@@ -31,6 +34,8 @@ class MainSection extends React.Component<MainSectionProps> {
                 <div
                     className="main__middle"
                     style={!isRealIndexPage ? {
+                        transform: isMobile() ? `translateY(${this.state.isMenuUncovered ? 10 : 70}%)` : 'unset',
+                        transition: '0.5s',
                         justifyContent: !detailsDeep
                             ? 'flex-start'
                             : 'center',
@@ -39,7 +44,7 @@ class MainSection extends React.Component<MainSectionProps> {
                             flexDirection: 'row',
                             alignItems: 'center',
                             marginTop: '100px',
-                            justifyContent: 'space-around'
+                            justifyContent: 'space-around',
                         }}
                 >
                     <Filter />
@@ -60,6 +65,24 @@ class MainSection extends React.Component<MainSectionProps> {
                                 ['customs--short']: !detailsDeep,
                             },
                         )}
+                        onTouchStart={
+                        (event: React.TouchEvent<HTMLInputElement>) => {
+                        this.setState({
+                            inititalTouch: event.touches[0].clientY,
+                        });
+                        }
+                        }
+                        onTouchEnd={
+                            (event: React.TouchEvent<HTMLInputElement>) => {
+                            if ( (event.changedTouches[0].clientY -
+                                this.state.inititalTouch) < -10 || (event.changedTouches[0].clientY -
+                                this.state.inititalTouch) > 10) {
+                            this.setState({ isMenuUncovered: event.changedTouches[0].clientY
+                                < this.state.inititalTouch});
+                                }
+                            console.log(this.state.isMenuUncovered ); // tslint:disable-line
+                            }
+                        }
                     >
                         <Switch>
                             <Route

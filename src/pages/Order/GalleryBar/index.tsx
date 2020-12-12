@@ -83,9 +83,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         } = this.props;
 
         const {
-            img_url_2d: image,
-            our_code: id,
-            title
+          img_url_2d: image,
+          img_url_2d_list,
+          our_code: id,
+          title,
         } = this.props.item;
         if (!this.state.load.success) {
             return null;
@@ -122,6 +123,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             this.props.app!.toggleSwiperPopup();
         };
 
+        const hoverImg = `${process.env.API_ROOT}${(img_url_2d_list.length > 1) && img_url_2d_list[1].slice(5) || id}`;
+
         return (
             <>
             {this.props.app &&
@@ -142,16 +145,24 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                     landscape: isMobile() && isLandscape(),
                   })}
                 >
-                  <div className={classnames('gallery__item', { active })}>
-                    <img src={image} alt={`${id}`} />
-                    {this.props.app &&
-                      this.props.app.changeSearchedItemsCount()}
-                    {!isMobile() &&
-                      this.props.zoomId === id &&
-                      this.props.app && (
-                        <span onClick={toggleSwipe} className="zoom-icon" />
-                      )}
-                  </div>
+                    <div className={classnames('gallery__item', { active })}>
+                        <img
+                            src={hoverImg}
+                            className="gallery__item--hover-image"
+                            alt={`${id}`}
+                        />
+                        <img
+                            src={image}
+                            className="gallery__item--main-image"
+                            alt={`${id}`}
+                        />
+                        {this.props.app &&
+                            this.props.app.changeSearchedItemsCount()}
+                        {this.props.zoomId === id &&
+                            this.props.app && (
+                            <span onClick={toggleSwipe} className="zoom-icon" />
+                        )}
+                    </div>
                 </div>
               )}
           </>
@@ -169,6 +180,7 @@ type makeGalleryItems = (
     isMouseOverElement: boolean,
     zoomId: string,
     setZoomId: (id: string) => void,
+    filterStore: IFilterStore,
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -180,6 +192,7 @@ const makeGalleryItems: makeGalleryItems = (
     isMouseOverElement,
     zoomId,
     setZoomId,
+    filterStore,
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -189,7 +202,27 @@ const makeGalleryItems: makeGalleryItems = (
     // if (galleryItemsCache[cache]) {
     //     return galleryItemsCache[cache];
     // }
-    const result = items.map((item, elementIndex) => {
+
+    const filtered  = (): GalleryStoreItems => {
+        const filters = Object.keys(filterStore.userFilters);
+        const result2 = items.filter(item => {
+            let res;
+            for ( let i = 0; i < filters.length; i++ ) {
+                if ( filterStore.userFilters[filters[i]].includes(item[filters[i]].value) ) {
+                    return res = true;
+                }
+            }
+            return res;
+        });
+
+        if ( result2.length < 1 ) {
+            return items;
+        }
+
+        return result2;
+    };
+
+    const result = filtered().map((item, elementIndex) => {
         return (
             <GalleryItem
                 key={item.fabric_code + item.our_code}
@@ -222,9 +255,11 @@ type State = {
 };
 
 @inject(({
-    app
+    app,
+    filterStore
 }) => ({
-    app
+    app,
+    filterStore,
 })
 )
 @observer
@@ -309,7 +344,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                 onScroll={this.handleScroll}
                 id="js-bar-wrap"
             >
-                {this.props.app && this.props.app.swiperPopupData &&
+                { (this.props.app && this.props.app.showSwiperPopup && this.props.app.swiperPopupData) &&
                     <PopUp open={this.props.app.showSwiperPopup}>
                         <SwiperPopup
                             item={this.props.app.swiperPopupData}
@@ -332,6 +367,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                         isMouseOverElement,
                         this.state.zoomId,
                         this.setZoomId,
+                        this.props.filterStore!
                     )}
                 </div>
             </div>

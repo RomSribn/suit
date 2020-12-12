@@ -87,7 +87,6 @@ a{
 }
 .btn:disabled {
     cursor: default;
-    opacity: .25;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

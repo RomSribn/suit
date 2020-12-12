@@ -20,6 +20,9 @@
 }
 
 @media only screen and (max-width: 450px) {
+	#jivo_custom_widget-container {
+		z-index: 2;
+	}
 	#jivo_custom_widget {
 		bottom: 1.5rem;
 		left: 1rem;

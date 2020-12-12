@@ -46,10 +46,10 @@
     transition: .35s ease;     */
 }
 .navbar--white{
-    background-color: white;
+    background-color: rgba(255, 255, 255,.6);
     -webkit-transition: background-color .35s ease;
     -o-transition: background-color .35s ease;
-    transition: background-color .35s ease;    
+    transition: background-color .35s ease;
 }
 
 .content--white,
@@ -59,7 +59,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 5;
     height: 100%;
     padding: 2.5rem;
     width: -webkit-calc(50% + 2.5rem);
@@ -77,17 +76,17 @@
     flex-direction: column;
     -ms-align-items: flex-start;
     align-items: flex-start;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     -webkit-transition: .35s ease;
     -o-transition: .35s ease;
     transition: .35s ease;
-    
 }
+
 .demo{
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 3;
+    /*z-index: 3;*/
     height: 100%;
     width: -webkit-calc(50% + 2.5rem);
     width: -moz-calc(50% + 2.5rem);
@@ -104,5 +103,12 @@
 
 @media only screen and (max-height : 700px){
     .main-menu li {margin: 1.4rem 0;}
+}
+
+@media (max-width: 450px) {
+    .demo {
+        width: 8%;
+        transform: translateY(-60px);
+    }
 }
 

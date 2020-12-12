@@ -18,13 +18,15 @@
     margin-left: 30px; 
 
   .navigation-item {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
     text-transform: capitalize;
-    margin: 0.6vh;
-    margin-left: 0px;
+    padding: 0.6vh;
+    padding-left: 0px;
+    padding-bottom: 10px;
     color: #000;
     display: flex;
+    cursor: pointer;
     justify-content: space-between;
 
     .arrow {
@@ -109,3 +111,29 @@
   }
 }
 
+.navigation-item.submenu-item{
+    margin: 0 0 5px 30px;
+    padding: 5px 18px 5px 10px;
+    text-transform: uppercase;
+    cursor: pointer
+
+    &:hover{
+        background-color: #ccc;
+    }
+
+    svg{
+        fill: #ccc;
+    }
+}
+
+.subMenu{
+    max-height: 0;
+    min-width: 100px;
+    overflow: hidden;
+    transition: 0.3s linear;
+
+    &.active{
+      max-height: 500px;
+      overflow: unset;
+    }
+}

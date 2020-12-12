@@ -9,9 +9,22 @@
         background-color #eceeee
 
     @media only screen and (max-width: 450px), only screen and (max-height: 450px)
-        width 55%
+        width 100%
+        // height
         /* поднимаем на 35px из-за полоски навигации хрома на мобилках */
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 0;
+
 
         &--full
             width 100%
+            padding: 1.5rem 1rem;
+
+    @media only screen and (max-width: 450px){
+        .main__middle{
+            background: #fff;
+        }
+    }
+
+.main.main--full .main__middle{
+    background: transparent;
+}

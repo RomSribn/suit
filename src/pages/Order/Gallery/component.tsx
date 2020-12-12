@@ -369,6 +369,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                 setActiveElementIndex={this.setActiveElementIndex}
                                 setPreviewElementIndex={this.setPreviewElementIndex}
                                 isMouseOverElement={mouseOverElement}
+                                filterStore={this.props.filterStore!}
                             />
                         </div>
                     </div>
@@ -376,7 +377,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 <div className="gallery__footer">
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
-                        {!isMobile() &&
+
                             <div className="gallery__footer--articul">
                                 {this.props.app &&
                                     <Button
@@ -387,15 +388,14 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                                     </Button>
                                 }
                             </div>
-                        }
                     </div>
-                    <div className="gallery__footer--txt">
+                    {!isMobile() && <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">
                             {description ||
                                 'deafult description text'
                             }
                         </p>
-                    </div>
+                    </div>}
                 </div>
             </div>
         );

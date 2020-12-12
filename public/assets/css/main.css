@@ -9,7 +9,7 @@
     z-index: 6;
     width: 100%;
     min-height: 2.6666rem;
-    height: 2.6666rem;
+    /*height: 2.6666rem;*/
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -61,6 +61,59 @@
     -ms-align-items: center;
     align-items: center;
     justify-content: flex-end;
+}
+
+.design-navigation-wrapper {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .main__bar{
+    top: 0.5rem;
+    right: 1rem;
+    }
+    .design-items-wrapper {
+        padding: 1rem;
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 500px;
+        padding-bottom: 120px;
+    }
+
+    .design-navigation-wrapper {
+        display: flex;
+        padding: 1rem 1rem 0 1rem;
+    }
+    .design-navigation {
+        font-size: 18px;
+        text-decoration: none;
+        color: black;
+        opacity: 0.6;
+        font-weight: 500;
+        padding: 0.5rem 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .design-navigation._active {
+        color: white;
+        opacity: 1;
+        background: black;
+        font-size: 18px;
+        padding: 0.5rem 1.2rem;
+    }
+    /*.nav-overflow .design-navigation._active{*/
+    /*    padding: 0 1.2rem;*/
+    /*}*/
+    /*.nav-overflow .design-navigation{*/
+    /*    padding: 0 1.2rem;*/
+    /*}*/
+}
+
+.header-wrapper-mobile {
+    padding: 0 1rem;
 }
 .notification {
     position: relative;
@@ -157,6 +210,12 @@
 .breadcrumbs span,
 .breadcrumbs a:hover{color: #fff;}
 
+@media (min-width: 450px) {
+    .main.main--white {
+    z-index: 4;
+    }
+}
+
 .main--white{
     color: #000;
     background: rgba(255, 255, 255, 0.6);
@@ -201,16 +260,32 @@
     }
     .main__footer {
         flex-direction: column;
-        height: 100%;
         width: 100%;
         margin: 0 auto;
         justify-content: flex-start;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background: black;
+        min-height: 5.5rem;
     }
     .main__middle {
         position: initial;
+        /*background: white;*/
     }
     .main--white{
         background: rgba(255, 255, 255, 0.85);
     }
 }
 
+.nav-overflow{
+    min-width: 320px;
+    max-width: 100%;
+}
+
+.nav-overflow .design-navigation-wrapper{
+    padding: 1rem 0 0.7rem 0;
+    margin: 0 13px;
+    overflow-x: auto;
+    white-space: nowrap;
+}

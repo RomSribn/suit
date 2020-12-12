@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Switch, Route, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { SubgroupChoice as Component } from './component';
 import { routes } from '../routes';
 import { GroupChoice } from '../GroupChoice';
 import { trim } from '../../../config/routes';
 import { loc } from './loc';
+import { isMobile } from '../../../utils';
 
 let scrollData: { [key: string]: number } = {};
 
@@ -171,6 +173,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 )),
             ]
             : [];
+
         return (
             <Switch>
                 <Route
@@ -186,6 +189,7 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                                 choiceItem={choiceItem!}
                                 lang={lang!}
                                 order={order!}
+                                withToggle={true}
                             />
                         );
                     }}
@@ -193,17 +197,64 @@ class SubgroupChoice extends React.Component<SubgroupChoiceProps> {
                 <Route
                     exact={true}
                     path={routes.design}
-                >
-                    <Component lang={lang} match={match} data={data} />
-                </Route>
+                    render={(props) => {
+                        const _match = props.match;
+                        return (
+                            <>
+                            {isMobile() && <GroupChoice
+                                match={_match}
+                                popOrderPathitem={popOrderPathitem!}
+                                setSubgroupTitle={setSubgroupTitle!}
+                                backLink={backLink!}
+                                choiceItem={choiceItem!}
+                                lang={lang!}
+                                order={order!}
+                                withToggle={false}
+                            />}
+                                <div className={'nav-overflow'}>
+                                <div className={'design-navigation-wrapper'}>
+                                    <Link to={match.url} className={'design-navigation _active'}>Все</Link>
+                                  {data.map(item => (
+                                    <Link to={`${match.url}/${item.link}`} className={'design-navigation '}>
+                                      {item.linkName}
+                                    </Link>
+                                  ))}
+                                </div>
+                                </div>
+                            <Component lang={lang} match={match} data={data} />
+                            </>
+                        );
+                    }}
+                />
                 <Route
                     exact={true}
                     path={routes.fitting}
-                >
-                    <Component lang={lang} match={match} data={dataFitting} />
-                </Route>
+                    render={(props) => {
+                        const _match = props.match;
+                        return (
+                            <>
+                            {isMobile() && <GroupChoice
+                                match={_match}
+                                popOrderPathitem={popOrderPathitem!}
+                                setSubgroupTitle={setSubgroupTitle!}
+                                backLink={backLink!}
+                                choiceItem={choiceItem!}
+                                lang={lang!}
+                                order={order!}
+                                withToggle={false}
+                            />}
+                            <div className={'design-navigation-wrapper'}>
+                                <a href="/random" className={'design-navigation _active'}>Все</a>
+                                <a href="/random" className={'design-navigation'}>Тело</a>
+                                <a href="/random" className={'design-navigation'}>Альтерации</a>
+                            </div>
+                            <Component lang={lang} match={match} data={dataFitting} />
+                            </>
+                        );
+                    }}
+                />
                 <Redirect to={match.url} />
-            </Switch>);
+                </Switch>);
     }
 }
 

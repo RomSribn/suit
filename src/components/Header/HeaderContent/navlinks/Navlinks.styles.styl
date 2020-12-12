@@ -1,6 +1,7 @@
 .navlinks
   &__container
     display flex
+    align-items: center;
 
     .button-bar
       width unset
@@ -43,3 +44,39 @@
 
     &._active
       color #046b71 !important
+
+.navLinks__item_mobile
+  font-size: 17px
+  margin-top 3px
+  margin-bottom 0 !important
+  text-align center
+  text-transform uppercase
+  color #000000
+  opacity 0.6
+  font-weight 500
+
+  &:not(:last-child){
+    margin-right 13px
+  }
+
+  @media (max-width: 450px)
+        padding: 0 3px
+
+  &._active
+    opacity 1
+    border-bottom: 1px solid #000000
+
+
+  &.button.black
+    border: unset;
+    background-color: unset;
+    font-size: 17px;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000;
+    opacity: 0.6;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 3px;
+

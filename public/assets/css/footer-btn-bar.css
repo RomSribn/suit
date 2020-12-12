@@ -124,22 +124,24 @@
     .footer-btn-bar__mobile {
         justify-content: space-between;
         width: 100%;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        position: absolute;
+        padding: 1.5rem 1rem;
     }
     .footer-btn-bar__mobile span {
-        width: 100%;
+        width: 30%;
     }
 
     .footer-btn-bar__mobile > a {
-        width: 100%;
+        width: 30%;
     }
 }
 
 @media only screen and (max-width: 450px) {
-    .footer-btn-bar__mobile > * {
+    /* .footer-btn-bar__mobile > * {
         margin-bottom: 1rem;
-    }
+    } */
 
     .footer-btn-bar__mobile > *:last-child {
         margin: 0;

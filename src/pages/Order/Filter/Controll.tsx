@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import { isMobile } from '../../../utils';
 
-class Controll extends React.PureComponent<ControllProps> {
+class Controll extends React.Component<ControllProps> {
     static defaultProps = {
         isOpen: false,
         type: '',
@@ -18,17 +19,27 @@ class Controll extends React.PureComponent<ControllProps> {
         const {
             onCLick,
             isOpen,
+            openModal,
             isSearchBarOpened,
-            toggleIsSearchBarOpened
+            toggleIsSearchBarOpened,
+            disableBtn
         } = this.props;
+
         return (
             <button
-                style={{ zIndex: isSearchBarOpened ? 9999 : 9999 }}
                 className={classnames(
                     'btn gallery__filter-btn',
                     { open: isOpen },
                 )}
-                onClick={() => { onCLick(); if (isSearchBarOpened) { toggleIsSearchBarOpened!(); } }}
+                disabled={disableBtn}
+                onClick={() => {
+                    if ( !isMobile() ) {
+                        onCLick();
+                        if (isSearchBarOpened) { toggleIsSearchBarOpened!(); }
+                        return;
+                    }
+                    openModal();
+                }}
                 title="filter"
             >
                 <span /> <span /> <span />

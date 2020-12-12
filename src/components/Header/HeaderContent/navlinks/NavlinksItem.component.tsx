@@ -9,11 +9,12 @@ interface NavlinksItem {
 }
 
 const NavlinksItemComponent: React.FunctionComponent<NavlinksItem> = (props) => {
-    const className = 'navlinks__item ' + (props.className ? props.className : '');
+    const className = isMobile() ? 'navLinks__item_mobile' : 'navlinks__item';
 
     if (props.forbidden) {
         return <SaveButton className={className}>{props.children}</SaveButton>;
     }
+    
     return (
     <NavLink
         className={className}

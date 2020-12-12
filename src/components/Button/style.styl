@@ -110,6 +110,10 @@
             width 8.5rem
         &.white
             width 8.5rem
+    .swiper-popup-container
+        .button
+            &.black
+                width 9.5rem
 
 @media only screen and (max-width:  991px)
     .button-bar
@@ -132,11 +136,15 @@
         stroke-dashoffset -70%
 
 @media only screen and (max-width:  450px), only screen and (max-height: 450px)
-    .button-bar
-        width: 189px;
+    .frame 
+        display none
     .button
         &.black
             width: calc(100% + 4px);
             margin-left: -2px;
+            font-weight 700
+            text-align center
+            color #000
+            background-color #fff
         &.white
             width 100%;

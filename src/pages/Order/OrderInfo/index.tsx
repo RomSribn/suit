@@ -27,17 +27,12 @@ class OrderInfo extends React.Component<COrderInfoProps> {
         return (
             <React.Fragment>
             {
-                !isMobile() ?
+                !isMobile() &&
                 <Component.OrderInfo
                     lang={lang!}
                     deliveryDate={deliveryDate}
                     price={price}
-                /> :
-                <Component.OrderInfoMobile
-                    lang={lang!}
-                    deliveryDate={deliveryDate}
-                    price={price}
-                />
+                /> 
             }
             </React.Fragment>
             

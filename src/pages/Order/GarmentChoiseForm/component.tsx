@@ -4,8 +4,6 @@ import * as classNames from 'classnames';
 import { FadeIn } from '../../../containers/Transitions';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
-import { PopUp } from '../../../containers/Popup';
-import { Button } from '../../../components/Button';
 import { makeRoutes } from '../routes';
 import { loc } from './loc';
 import history from '../../../history';
@@ -174,28 +172,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                 //     marginBottom: 0,
                 // }}
             >
-                <PopUp
-                    open={this.state.showUnavailablePopup}
-                >
-                    <div
-                        style={{
-                            height: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                            width: '70%',
-                            margin: 'auto',
-                            textAlign: 'center'
-                        }}
-                    >
-                        <div style={{ marginBottom: '2rem' }}>{loc[lang!].unavailablePopupText}</div>
-                        <Button
-                            onClick={() => this.setState({ showUnavailablePopup: false })}
-                        >ok
-                        </Button>
-                    </div>
-                </PopUp>
 
                 <form
                     className={`catalog__form`}

@@ -54,6 +54,7 @@ class Widget extends PureComponent {
 
     this.widget3d = new Widget3D(this.widgetContainer, {
       basePath: `/webgl_test/4igoom/`,
+      dracoPath: `/webgl_test/4igoom/draco/`,
       apiPath: `${API_ROOT}/api/`,
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,

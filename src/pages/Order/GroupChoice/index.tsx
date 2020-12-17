@@ -103,7 +103,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         const content = (
           <>
                 <span className="custom__content">
-                    {isMobile() ?
+                    {isMobile() && !this.props.app!.isSearchBarOpened ?
                       <Navlinks
                         garment={activeGarments && activeGarments[0] || 'shirt'}
                         isAuth={userStore!.isAuth}
@@ -175,7 +175,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                           transform: this.props.app && this.props.app.isSearchBarOpened ?
                                               'unset' : isMobile() ? 'translateX(60%)' : 'translateX(74%)'
                                       }}
-                                      className="search"
+                                      className="search dslkf"
                                   >
                                       <div style={{ background: 'transparent' }} className="search__control">
                                     <span
@@ -229,7 +229,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                   </form>
                               )}
 
-                              { (isMobile() && showFilterBtn && (
+                              { (isMobile() && showFilterBtn && !this.props.app!.isSearchBarOpened && (
                                   lastParametr[lastParametr.length - 1] === 'fabric' ||
                                   lastParametr[lastParametr.length - 1] === 'design' ||
                                   lastParametr[lastParametr.length - 1] === 'fitting'

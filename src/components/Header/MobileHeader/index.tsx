@@ -9,11 +9,12 @@ import { Navlinks } from '../HeaderContent/navlinks';
 import { inject, observer } from 'mobx-react';
 
 type Props = {
-  openMenu: () => void;
-  lang: Lang;
-  isLandscape: boolean;
-  isAuth?: boolean;
-  activeGarments?: string[];
+    openMenu: () => void;
+    lang: Lang;
+    isLandscape: boolean;
+    isAuth?: boolean;
+    activeGarments?: string[];
+    path?: string;
 };
 
 type Group = 'design' | 'fabric_ref' | 'fitting';
@@ -29,87 +30,89 @@ const makeNavLinkItem = (active: boolean) => (
 );
 
 export default inject(({ garments: { garments } }) => {
+
     return {
         activeGarments: [...garments.activeGarments],
     };
-})(observer(({ openMenu, lang, isLandscape, isAuth,  activeGarments}: Props) => {
+})(observer(({ openMenu, lang, isLandscape, isAuth, activeGarments, path }: Props) => {
+
     return (
         <header className="headerWrapper">
             <button className="open-menu" onClick={openMenu}>
                 <img
                     src={process.env.STATIC_IMAGES +
-                        `./tools/${window.location.pathname === '/order' ? 'white' : 'black'}/menu-button.svg`}
+                        `./tools/${path === '/order' ? 'white' : 'black'}/menu-button.svg`}
                     alt=""
                     className="open-element-img"
                 />
             </button>
-            <main style={{display: 'none'}} className="content-wrapper">
+            <main style={{ display: 'none' }} className="content-wrapper">
                 <h2 className="menu-title">
-                    {isLandscape ? 
-                        <Navlinks 
-                            garment={activeGarments && activeGarments[0] || 'shirt'} 
+                    {isLandscape ?
+                        <Navlinks
+                            garment={activeGarments && activeGarments[0] || 'shirt'}
                             isAuth={isAuth}
                             lang={lang}
                         /> : (
-                        // Проп прокину в другом таске, пока будет заглушка
-                        // И зачем вообще анонимная функа ПРОКИНУТА ДЕФОЛТОМ
-                        <>
-                            <Switch>
-                                <Route
-                                    path={routes.fabric}
-                                    component={() =>
-                                        <span className="navlinks-mobile__value">
-                                            {mobileHeaderTranslations[lang].fabric}
-                                        </span>}
-                                />
-                                <Route
-                                    path={routes.design}
-                                    component={() =>
-                                        <span className="navlinks-mobile__value">
-                                            {mobileHeaderTranslations[lang].design}
-                                        </span>}
-                                />
-                                <Route
-                                    path={routes.fitting}
-                                    component={() =>
-                                        <span
-                                            className="navlinks-mobile__value"
-                                        >
-                                            {mobileHeaderTranslations[lang].fitting}
-                                        </span>
-                                    }
-                                />
-                                <Route
-                                    path={configRoutes.orderList}
-                                    component={() =>
-                                        <span className="navlinks-mobile__value">
-                                            {mobileHeaderTranslations[lang].orderList}
-                                        </span>}
-                                />
-                                <Route
-                                    path={configRoutes.customersList}
-                                    component={() =>
-                                        <span className="navlinks-mobile__value">
-                                            {mobileHeaderTranslations[lang].customersList}
-                                        </span>}
-                                />
-                            </Switch>
+                            // Проп прокину в другом таске, пока будет заглушка
+                            // И зачем вообще анонимная функа ПРОКИНУТА ДЕФОЛТОМ
+                            <>
+                                <Switch>
+                                    <Route
+                                        path={routes.fabric}
+                                        component={() =>
+                                            <span className="navlinks-mobile__value">
+                                                {mobileHeaderTranslations[lang].fabric}
+                                            </span>}
+                                    />
+                                    <Route
+                                        path={routes.design}
+                                        component={() =>
+                                            <span className="navlinks-mobile__value">
+                                                {mobileHeaderTranslations[lang].design}
+                                            </span>}
+                                    />
+                                    <Route
+                                        path={routes.fitting}
+                                        component={() =>
+                                            <span
+                                                className="navlinks-mobile__value"
+                                            >
+                                                {mobileHeaderTranslations[lang].fitting}
+                                            </span>
+                                        }
+                                    />
+                                    <Route
+                                        path={configRoutes.orderList}
+                                        component={() =>
+                                            <span className="navlinks-mobile__value">
+                                                {mobileHeaderTranslations[lang].orderList}
+                                            </span>}
+                                    />
+                                    <Route
+                                        path={configRoutes.customersList}
+                                        component={() =>
+                                            <span className="navlinks-mobile__value">
+                                                {mobileHeaderTranslations[lang].customersList}
+                                            </span>}
+                                    />
+                                </Switch>
 
-                            <Route
-                                path={routes.groupChoice}
-                                component={
-                                    (props: RouteComponentProps<{ group: Group }>) => {
-                                        return (
-                                            <div className="navlinks-mobile__container">
-                                                {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
-                                                {makeNavLinkItem(props.match.params.group === 'design')}
-                                                {makeNavLinkItem(props.match.params.group === 'fitting')}
-                                            </div>
-                                        );
-                                    }}
-                            />
-                        </>
-                    )}
+                                <Route
+                                    path={routes.groupChoice}
+                                    component={
+                                        (props: RouteComponentProps<{ group: Group }>) => {
+                                            return (
+                                                <div className="navlinks-mobile__container">
+                                                    {makeNavLinkItem(props.match.params.group === 'fabric_ref')}
+                                                    {makeNavLinkItem(props.match.params.group === 'design')}
+                                                    {makeNavLinkItem(props.match.params.group === 'fitting')}
+                                                </div>
+                                            );
+                                        }}
+                                />
+                            </>
+                        )}
                 </h2>
             </main>
 

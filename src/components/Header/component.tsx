@@ -26,11 +26,11 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
 
     listener = () => {
         setTimeout(() => {
-          this.setState({
-            isMobile: isMobile(),
-            isLandscape: isLandscape(),
-            // isRealIndexPage: isRealIndexPage(),
-          });
+            this.setState({
+                isMobile: isMobile(),
+                isLandscape: isLandscape(),
+                // isRealIndexPage: isRealIndexPage(),
+            });
         }, 300);
     }
 
@@ -49,7 +49,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
             appStore,
             userStore,
             isAuth,
-            openMenu,
+            openMenu
         } = this.props;
 
         const state = this.state;
@@ -76,6 +76,7 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
                         </div> :
                         <div className="header-wrapper-mobile">
                             <MobileHeader
+                                path={path!}
                                 openMenu={openMenu}
                                 lang={lang}
                                 isLandscape={state.isLandscape}
@@ -92,6 +93,4 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
     }
 }
 
-export {
-    Header,
-};
+export { Header };

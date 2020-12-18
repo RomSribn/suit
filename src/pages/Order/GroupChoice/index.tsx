@@ -114,7 +114,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                       </>}
 
                 </span>
-              {(subgroup === 'fitting') || (subgroup === 'design') && <span className="custom__control"/>}
+              {(subgroup === 'fitting') || (subgroup === 'design') && (
+              <Link to={backLink} className="custom__control-btn"><span className="span"/></Link>
+              )}
           </>
         );
 
@@ -153,7 +155,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         return (
           <>
               <>
-                <Link to={backLink}>   
+                {/* <Link to={backLink}>    */}
                     <div
                         className="custom custom--open"
                         style={{overflow: 'hidden'}}
@@ -162,12 +164,21 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                       {/*{!isToggleOnSeparateRow && this.props.app && !this.props.app.isSearchBarOpened && toggle}*/}
                           <div
                               className="custom__control_new"
+                              style={{
+                                  marginRight: !(
+                                      lastParametr[lastParametr.length - 1] === 'fabric'
+                                       || lastParametr[lastParametr.length - 1] === 'design'
+                                        || lastParametr[lastParametr.length - 1] === 'fitting'
+                                  ) ? 30 : 0,
+                              }}
                           >
-                              { ( (isMobile() && (
-                                  lastParametr[lastParametr.length - 1] === 'fabric' ||
-                                  lastParametr[lastParametr.length - 1] === 'design' ||
-                                  lastParametr[lastParametr.length - 1] === 'fitting'
-                              )) || lastParametr[lastParametr.length - 1] === 'fabric') && (
+                              { 
+                            //   ( (isMobile() && (
+                            //       lastParametr[lastParametr.length - 1] === 'fabric' ||
+                            //       lastParametr[lastParametr.length - 1] === 'design' ||
+                            //       lastParametr[lastParametr.length - 1] === 'fitting'
+                            //   )) || lastParametr[lastParametr.length - 1] === 'fabric') &&
+                              (
                                   <form
                                       style={{
                                           cursor: 'pointer',
@@ -183,10 +194,11 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                             zIndex: 9999
                                         }}
                                         className="search__icon"
-                                        onClick={() => {
-                                            if ( group !== 'fabric') {
-                                                return;
-                                            }
+                                        onClick={(e) => {
+                                            // if ( group !== 'fabric') {
+                                            //     return;
+                                            // }
+                                            e.stopPropagation();
                                             this.props.app!.toggleIsSearchBarOpened();
                                             if (this.props.filterStore!.isOpen) {
                                                 this.props.filterStore!.toggleOpen();
@@ -229,11 +241,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                   </form>
                               )}
 
-                              { (isMobile() && showFilterBtn && !this.props.app!.isSearchBarOpened && (
-                                  lastParametr[lastParametr.length - 1] === 'fabric' ||
-                                  lastParametr[lastParametr.length - 1] === 'design' ||
-                                  lastParametr[lastParametr.length - 1] === 'fitting'
-                              )) && (
+                              { (isMobile() && showFilterBtn && !this.props.app!.isSearchBarOpened) && (
                                 <Controll disableBtn={group !== 'fabric'} openModal={this.openModal}/>
                               )}
 
@@ -242,7 +250,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                               )}
                           </div>
                     </div>
-                </Link> 
+                {/* </Link>  */}
                   {/*{isToggleOnSeparateRow && this.props.withToggle && subgroup !== 'fitting'*/}
                   {/*&& subgroup !== 'design' && toggle}*/}
 

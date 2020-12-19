@@ -36,16 +36,20 @@ const menuList: MenuLink[] = [
     name: 'order',
     url: '/order',
     submenu: [
-      { name: 'Сорочка',
+      {
+        name: 'Сорочка',
         url: '/order',
       },
-      { name: 'Пиджак',
+      {
+        name: 'Пиджак',
         url: '/order',
       },
-      { name: 'Брюки',
+      {
+        name: 'Брюки',
         url: '/order',
       },
-      { name: 'Пальто',
+      {
+        name: 'Пальто',
         url: '/order',
       },
     ]
@@ -60,7 +64,7 @@ const menuList: MenuLink[] = [
   },
   {
     name: 'orderList',
-    url: '/order/list'
+    url: '/orders/list'
   },
   {
     name: 'calendar',
@@ -162,44 +166,44 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                         </a>
 
                         : navItem.submenu ? (
-                             <div>
-                               <span
-                                   onClick={(e) => {
-                                      setActiveMenu(!activeMenu);
+                          <div>
+                            <span
+                              onClick={(e) => {
+                                setActiveMenu(!activeMenu);
+                              }}
+                              className="navigation-item"
+                            >
+                              {loc[currentLang][navItem.name]}
+                              <span>
+                                <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                              </span>
+                            </span>
+                            <CSSTransition
+                              in={activeMenu}
+                              timeout={300}
+                              classNames="fade-in"
+                              unmountOnExit={true}
+                            >
+                              <ul>
+                                {navItem.submenu.map((item: SubmenuItem) => (
+                                  <Link
+                                    className="navigation-item submenu-item"
+                                    to={item.url}
+                                    key={item.name}
+                                    onClick={(e) => {
+                                      callList([closeMenu]);
                                     }}
-                                   className="navigation-item"
-                               >
-                                 {loc[currentLang][navItem.name]}
-                                 <span>
-                                    <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                                 </span>
-                               </span>
-                               <CSSTransition
-                                   in={activeMenu}
-                                   timeout={300}
-                                   classNames="fade-in"
-                                   unmountOnExit={true}
-                               >
-                                 <ul>
-                                   {navItem.submenu.map((item: SubmenuItem) => (
-                                       <Link
-                                           className="navigation-item submenu-item"
-                                           to={item.url}
-                                           key={item.name}
-                                           onClick={(e) => {
-                                             callList([closeMenu]);
-                                           }}
-                                       >
-                                         <span>{item.name}</span>
-                                         <svg
-                                             xmlns="http://www.w3.org/2000/svg"
-                                             width="20"
-                                             height="20"
-                                             viewBox="0 0 448 512"
-                                         >
-                                           <path
-                                               fill="currentColor"
-                                               d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
+                                  >
+                                    <span>{item.name}</span>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 448 512"
+                                    >
+                                      <path
+                                        fill="currentColor"
+                                        d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
                                              8 0 00-8 8v272a8 8 0 008 8zm-160 0h16a8 8 0 008-8V152a8
                                               8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8zM440
                                                64H336l-33.6-44.8A48 48 0 00264 0h-80a48 48 0
@@ -210,35 +214,35 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                                                  64H152zM384 464a16 16 0 01-16 16H80a16 16 0
                                                   01-16-16V96h320zm-168-32h16a8 8 0 008-8V152a8
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
-                                           />
-                                         </svg>
-                                       </Link>
-                                   ))}
-                                 </ul>
-                               </CSSTransition>
+                                      />
+                                    </svg>
+                                  </Link>
+                                ))}
+                              </ul>
+                            </CSSTransition>
 
-                             </div>
+                          </div>
                         ) :
 
-                        <Link
-                          className="navigation-item"
-                          to={navItem.url}
-                          onClick={(e) => {
-                            if (navItem.unusualSideEffect) {
-                              navItem.unusualSideEffect();
-                            } else if (sideEffects[navItem.sideEffect!]) {
-                              e.preventDefault();
-                              callList([closeMenu, sideEffects[navItem.sideEffect!]]);
-                            } else {
-                              callList([closeMenu]);
-                            }
-                          }}
-                        >
-                          <span>{loc[currentLang][navItem.name]}</span>
-                          <span>
-                            <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                          </span>
-                        </Link>
+                          <Link
+                            className="navigation-item"
+                            to={navItem.url}
+                            onClick={(e) => {
+                              if (navItem.unusualSideEffect) {
+                                navItem.unusualSideEffect();
+                              } else if (sideEffects[navItem.sideEffect!]) {
+                                e.preventDefault();
+                                callList([closeMenu, sideEffects[navItem.sideEffect!]]);
+                              } else {
+                                callList([closeMenu]);
+                              }
+                            }}
+                          >
+                            <span>{loc[currentLang][navItem.name]}</span>
+                            <span>
+                              <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                            </span>
+                          </Link>
                     );
                   }}
                 />

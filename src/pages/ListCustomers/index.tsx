@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TableCustomers } from '../../components/TableCustomers';
 import { observer, inject } from 'mobx-react';
 
-@inject(({ customersStore, app}) => ({
+@inject(({ customersStore, app }) => ({
     customersStore,
     appStore: app,
 }))
@@ -16,7 +16,7 @@ class ListCustomers extends React.Component<ListCustomersProps> {
         const customers = this.props.customersStore!.customers;
         const lang = this.props.appStore!.lang;
         return (
-            <div className="main__middle">
+            <div className="main__middle ыва">
                 <TableCustomers
                     customers={customers}
                     lang={lang}

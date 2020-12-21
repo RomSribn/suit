@@ -50,7 +50,7 @@ export default inject(({ garments: { garments } }) => {
                 <h2 className="menu-title">
                     {isLandscape ?
                         <Navlinks
-                            garment={activeGarments && activeGarments[0] || 'shirt'}
+                            garment={(activeGarments && activeGarments[0]) || 'shirt'}
                             isAuth={isAuth}
                             lang={lang}
                         /> : (

@@ -66,9 +66,8 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             lang,
             subgroupsStore,
             userStore,
-            activeGarments,
+            // activeGarments,
         } = this.props;
-
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
 
         let choiceItemValue: string | undefined;
@@ -112,7 +111,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                 <span className="custom__content">
                     {isMobile() && !this.props.app!.isSearchBarOpened ? (
                         <Navlinks
-                            garment={(activeGarments && activeGarments[0]) || 'shirt'}
+                            garment={fixedGarment}
                             isAuth={userStore!.isAuth}
                             lang={lang}
                         />

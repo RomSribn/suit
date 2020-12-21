@@ -14,11 +14,14 @@ type Props = {
   toggleLoginForm: () => void,
   sideEffects: [() => void],
   role?: Role,
+  activeGarments?: string[],
+  currentActiveGarment?: string,
+  setCurrentActiveGarment?: (garment: string) => void,
 };
 
 type SubmenuItem = {
   name: string,
-  url: string,
+  id: string,
 };
 
 type MenuLink = {
@@ -27,78 +30,101 @@ type MenuLink = {
   sideEffect?: string,
   withoutArrow?: boolean,
   withoutBaseUrl?: boolean,
-  unusualSideEffect?: () => void
+  unusualSideEffect?: () => void,
   submenu?: Array<SubmenuItem>
 };
 
-const menuList: MenuLink[] = [
-  {
-    name: 'order',
-    url: '/order',
-    submenu: [
-      {
-        name: 'Сорочка',
-        url: '/order',
-      },
-      {
-        name: 'Пиджак',
-        url: '/order',
-      },
-      {
-        name: 'Брюки',
-        url: '/order',
-      },
-      {
-        name: 'Пальто',
-        url: '/order',
-      },
-    ]
-  },
-  {
-    name: 'panel',
-    url: '/panel'
-  },
-  {
-    name: 'customersList',
-    url: '/customer/list'
-  },
-  {
-    name: 'orderList',
-    url: '/orders/list'
-  },
-  {
-    name: 'calendar',
-    url: '/calendar'
-  },
-  {
-    name: 'store',
-    url: '/store'
-  },
-  {
-    name: 'analytics',
-    url: '/analytics'
-  },
-  {
-    name: 'settings',
-    url: '/settings',
-  },
-  {
-    name: 'logOut',
-    url: '/',
-    sideEffect: 'logout',
-    withoutArrow: true
-  },
-  {
-    name: 'chat',
-    url: 'javascript:jivo_api.open()',
-    withoutArrow: true,
-    withoutBaseUrl: true
-  }
-];
+const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] => activeGarments.map(garment => {
 
-export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideEffects, role }: Props) => {
+  if (garment === 'shirt') {
+    return {
+      name: 'Рубашка',
+      id: garment
+    };
+  }
+
+  if (garment === 'jacket') {
+    return {
+      name: 'Пиджак',
+      id: garment
+    };
+  }
+
+  if (garment === 'pants') {
+    return {
+      name: 'Брюки',
+      id: garment
+    };
+  }
+
+  return {
+    name: 'Рубашка',
+    id: 'shirt'
+  };
+
+});
+
+export default ({
+  activeGarments,
+  setCurrentActiveGarment,
+  currentActiveGarment,
+  currentLang = 'en',
+  closeMenu,
+  setLang,
+  toggleLoginForm,
+  sideEffects,
+  role
+}: Props) => {
+  const menuList: MenuLink[] = [
+    {
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || [])
+    },
+    {
+      name: 'panel',
+      url: '/panel'
+    },
+    {
+      name: 'customersList',
+      url: '/customer/list'
+    },
+    {
+      name: 'orderList',
+      url: '/orders/list'
+    },
+    {
+      name: 'calendar',
+      url: '/calendar'
+    },
+    {
+      name: 'store',
+      url: '/store'
+    },
+    {
+      name: 'analytics',
+      url: '/analytics'
+    },
+    {
+      name: 'settings',
+      url: '/settings',
+    },
+    {
+      name: 'logOut',
+      url: '/',
+      sideEffect: 'logout',
+      withoutArrow: true
+    },
+    {
+      name: 'chat',
+      url: 'javascript:jivo_api.open()',
+      withoutArrow: true,
+      withoutBaseUrl: true
+    }
+  ];
   const customerMenuList = menuList.filter(item => !['customersList', 'store', 'analytics'].includes(item.name));
   const [activeMenu, setActiveMenu] = React.useState(false);
+
   const anonMenuList: MenuLink[] = [{
     name: 'logIn',
     url: '/',
@@ -140,8 +166,8 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                 <Route
                   key={navItem.name}
                   className="navigation-list-item"
-                  // path={routes.subgroupChoice}
                   component={(...props: any[]) => { // tslint:disable-line
+                    const isOrder: boolean = navItem.name === 'order';
                     return (
                       navItem.withoutBaseUrl ?
                         <a
@@ -179,7 +205,7 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                               </span>
                             </span>
                             <CSSTransition
-                              in={activeMenu}
+                              in={isOrder ? !activeMenu : activeMenu}
                               timeout={300}
                               classNames="fade-in"
                               unmountOnExit={true}
@@ -188,14 +214,15 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                                 {navItem.submenu.map((item: SubmenuItem) => (
                                   <Link
                                     className="navigation-item submenu-item"
-                                    to={item.url}
+                                    to={window.location.pathname.replace(currentActiveGarment || '', item.id)}
                                     key={item.name}
                                     onClick={(e) => {
                                       callList([closeMenu]);
+                                      setCurrentActiveGarment!(item.id);
                                     }}
                                   >
                                     <span>{item.name}</span>
-                                    <svg
+                                    {!isOrder && (<svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       width="20"
                                       height="20"
@@ -215,7 +242,8 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                                                   01-16-16V96h320zm-168-32h16a8 8 0 008-8V152a8
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
                                       />
-                                    </svg>
+                                    </svg>)}
+                                    {isOrder && item.id === currentActiveGarment && <i className={`circle`} />}
                                   </Link>
                                 ))}
                               </ul>

@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
-
-import { routes, getCombinedPathAndTitle } from '../config/routes';
-import CrumbRoute from '../utils/CrumbRoute';
-import { Spinner } from './Spinner';
 import { Common } from '../containers/Common';
-import { Order } from '../pages/Order'
-import { ListOrders } from '../pages/ListOrders';
-import { PopUp } from '../containers/Popup'
-import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup'
-import Login from './Login'
 import { ListCustomers } from '../pages/ListCustomers'
+import { ListOrders } from '../pages/ListOrders';
+import { observer, inject } from 'mobx-react'
+import { Order } from '../pages/Order'
+import { PopUp } from '../containers/Popup'
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
+import { routes, getCombinedPathAndTitle } from '../config/routes';
+import { Spinner } from './Spinner';
+import CrumbRoute from '../utils/CrumbRoute';
+import Login from './Login'
+import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup'
 import Pdf from '../pages/Pdf'
 
 let dummyWasRendered = false;
 
-@inject(({ user, app, order }) => ({
+@inject(({ user, app, order, garments: { garments } }) => ({
   userStore: user,
   app,
-  order: order.order
+  order: order.order,
+  activeGarments: [...garments.activeGarments],
+  currentActiveGarment: garments.currentActiveGarment,
+  setCurrentActiveGarment: garments.setCurrentActiveGarment
 }))
 @observer
 class Wrapper extends Component {
@@ -43,11 +45,14 @@ class Wrapper extends Component {
       app,
       userStore,
       location,
+      activeGarments,
+      currentActiveGarment,
+      setCurrentActiveGarment
     } = this.props;
     const { lang, showMobileMenu, toggleMobileMenu, setLang } = app;
     const { logout, isAuth, profile } = userStore;
     const loggedIn = this.props.userStore.isAuth;
-    const role = userStore.profile && userStore.profile.role || null;
+    const role = (profile && profile.role) || null;
     const isStylist = role === 'STYLIST';
 
     if (location.pathname === '/pdf') {
@@ -70,6 +75,9 @@ class Wrapper extends Component {
                   logout: logout.bind(userStore)
                 }}
                 role={role}
+                activeGarments={activeGarments}
+                currentActiveGarment={currentActiveGarment}
+                setCurrentActiveGarment={setCurrentActiveGarment}
               /> :
               <Login loginCallback={toggleMobileMenu} closeForm={toggleMobileMenu} />
           }

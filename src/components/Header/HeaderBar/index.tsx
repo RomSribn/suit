@@ -50,6 +50,7 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
         } = this.props;
         const isRealIndexPage = window.location.pathname === routes.mainPage;
         const userName = userStore.profile ? userStore.profile.user : loginText[lang];
+        const parsedUserName = userName.length > 10 ? `${userName.substring(0, 10)}…` : userName;
         return (
             <div className="main__bar">
                 <Link
@@ -62,7 +63,7 @@ class HeaderBar extends React.Component<HeaderBarProps, State> {
                     onClick={this.profileLinkClick}
                     className={`profile-link ${isRealIndexPage && 'profile-link--index-page-modify'}`}
                 >
-                    {!isMobile() && userName}
+                    {!isMobile() && parsedUserName}
                 </Link>
                 <PopUp
                     open={this.state.showLoginForm}

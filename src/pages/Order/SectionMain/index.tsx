@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { Redirect, Route, Switch } from 'react-router';
 import * as classnames from 'classnames';
-import { getCombinedPathAndTitle } from '../routes';
-import CrumbRoute from '../../../utils/CrumbRoute';
+import { Demo } from '../OrderDecorationBlocks';
 import { Filter } from '../Filter';
-import { GarmentChoise } from '../GarmentChoiseForm';
-import { Main as Details } from '../Details';
-import { Gallery } from '../Gallery';
-import { SubgroupChoice } from '../SubgroupChoice';
 import { Footer } from '../Footer';
+import { Gallery } from '../Gallery';
+import { GarmentChoise } from '../GarmentChoiseForm';
+import { getCombinedPathAndTitle } from '../routes';
+import { Main as Details } from '../Details';
+import { Redirect, Route, Switch } from 'react-router';
 import { routes } from '../routes';
 import { routes as defaultRoutes } from '../../../config/routes';
-
-import { Demo } from '../OrderDecorationBlocks';
+import { SubgroupChoice } from '../SubgroupChoice';
+import CrumbRoute from '../../../utils/CrumbRoute';
 
 class MainSection extends React.Component<MainSectionProps> {
     state = {
@@ -36,9 +35,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     style={!isRealIndexPage ? {
                         transform: isMobile() ? `translateY(${this.state.isMenuUncovered ? 10 : 70}%)` : 'unset',
                         transition: '0.5s',
-                        justifyContent: !detailsDeep
-                            ? 'flex-start'
-                            : 'center',
+                        justifyContent: 'space-between',
                     } : {
                             display: 'flex',
                             flexDirection: 'row',
@@ -62,25 +59,27 @@ class MainSection extends React.Component<MainSectionProps> {
                                  * ререндеров происходит при переходе на галлерею тканей
                                  * @todo Разобраться че за нах
                                  */
-                                ['customs--short']: !detailsDeep,
+                                'customs--short': !detailsDeep,
                             },
                         )}
                         onTouchStart={
-                        (event: React.TouchEvent<HTMLInputElement>) => {
-                        this.setState({
-                            inititalTouch: event.touches[0].clientY,
-                        });
-                        }
+                            (event: React.TouchEvent<HTMLInputElement>) => {
+                                this.setState({
+                                    inititalTouch: event.touches[0].clientY,
+                                });
+                            }
                         }
                         onTouchEnd={
                             (event: React.TouchEvent<HTMLInputElement>) => {
-                            if ( (event.changedTouches[0].clientY -
-                                this.state.inititalTouch) < -10 || (event.changedTouches[0].clientY -
-                                this.state.inititalTouch) > 10) {
-                            this.setState({ isMenuUncovered: event.changedTouches[0].clientY
-                                < this.state.inititalTouch});
+                                if ((event.changedTouches[0].clientY -
+                                    this.state.inititalTouch) < -10 || (event.changedTouches[0].clientY -
+                                        this.state.inititalTouch) > 10) {
+                                    this.setState({
+                                        isMenuUncovered: event.changedTouches[0].clientY
+                                            < this.state.inititalTouch
+                                    });
                                 }
-                            console.log(this.state.isMenuUncovered ); // tslint:disable-line
+                                console.log(this.state.isMenuUncovered); // tslint:disable-line
                             }
                         }
                     >

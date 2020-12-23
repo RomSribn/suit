@@ -32,7 +32,6 @@
   height: 100%;
 }
 .gallery__footer {
-  /*height: 6.9rem;*/
   margin-top: 1.3333rem;
   background: #eceeee;
   padding: 1.1rem;
@@ -92,7 +91,7 @@
   line-height: 1.4;
 }
 .gallery__footer--detailButton.button {
-    text-align: right !important;
+  text-align: right !important;
 }
 
 @media only screen and (max-width: 450px), only screen and (max-height: 450px) {
@@ -310,7 +309,7 @@
     font-size: 11px;
   }
 }
-@media only screen and (max-width: 450px){
+@media only screen and (max-width: 450px) {
   .gallery__footer {
     width: 100%;
     margin-top: 0;
@@ -330,7 +329,6 @@
   .gallery__footer--detailButton.button {
     text-align: center !important;
   }
-
 }
 
 @media only screen and (max-height: 450px) {

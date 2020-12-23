@@ -127,13 +127,13 @@ class Login extends Component {
             />
           }
           <div className="controlls-bar">
+            <Button theme="white" invertTheme={true} onClick={this.backClick}>{loc[lang].back}</Button>
             <Button
               theme="black"
               invertTheme={true}
               type="submit"
               >{this.state.showForgot ? loc[lang].forgotSend : loc[lang].login}
               </Button>
-            <Button theme="white" invertTheme={true} onClick={this.backClick}>{loc[lang].back}</Button>
           </div>
         </div>
         <LanguageControl mobileOnly={true} className="login__language-control" />

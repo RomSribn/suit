@@ -7,10 +7,14 @@
 
     &.flex-content
         max-height 100%
-
         .rt-table
-            display: table
-            max-height 100%
+            display: flex
+            flex: 1
+            flex-direction: column
+            align-items: stretch
+            width: 100%
+            border-collapse: collapse
+            overflow: auto
 
     & .rt
         &-thead
@@ -25,8 +29,6 @@
             // и рисуем вместо них только фильтры
             &.-header
                 display none
-            &.-filters
-                min-width 0!important
             .wrapper-dropdown
                 border none
                 background none
@@ -41,11 +43,13 @@
             align-items: center;
 
         &-tbody
-            display block
-            min-width 0!important
+            display: flex
             padding 0.667rem
             position relative
             transition opacity 0.35s linear
+            flex: 99999 1 auto
+            flex-direction: column
+            overflow: auto
 
         &-tr-group
             .rt-tr

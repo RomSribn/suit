@@ -211,26 +211,33 @@ export default ({
                               unmountOnExit={true}
                             >
                               <ul>
-                                {navItem.submenu.map((item: SubmenuItem) => (
-                                  <Link
-                                    className="navigation-item submenu-item"
-                                    to={window.location.pathname.replace(currentActiveGarment || '', item.id)}
-                                    key={item.name}
-                                    onClick={(e) => {
-                                      callList([closeMenu]);
-                                      setCurrentActiveGarment!(item.id);
-                                    }}
-                                  >
-                                    <span>{item.name}</span>
-                                    {!isOrder && (<svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      viewBox="0 0 448 512"
+                                {navItem.submenu.map((item: SubmenuItem) => {
+                                  const { pathname = '' } = window.location;
+                                  const redirectingPath: string =
+                                    pathname.includes('order/details') ?
+                                      window.location.pathname.replace(currentActiveGarment || '', item.id) :
+                                      `/order/details/${item.id}/fabric_ref/fabric`;
+
+                                  return (
+                                    <Link
+                                      className="navigation-item submenu-item"
+                                      to={redirectingPath}
+                                      key={item.name}
+                                      onClick={(e) => {
+                                        callList([closeMenu]);
+                                        setCurrentActiveGarment!(item.id);
+                                      }}
                                     >
-                                      <path
-                                        fill="currentColor"
-                                        d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
+                                      <span>{item.name}</span>
+                                      {!isOrder && (<svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 448 512"
+                                      >
+                                        <path
+                                          fill="currentColor"
+                                          d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
                                              8 0 00-8 8v272a8 8 0 008 8zm-160 0h16a8 8 0 008-8V152a8
                                               8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8zM440
                                                64H336l-33.6-44.8A48 48 0 00264 0h-80a48 48 0
@@ -241,11 +248,12 @@ export default ({
                                                  64H152zM384 464a16 16 0 01-16 16H80a16 16 0
                                                   01-16-16V96h320zm-168-32h16a8 8 0 008-8V152a8
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
-                                      />
-                                    </svg>)}
-                                    {isOrder && item.id === currentActiveGarment && <i className={`circle`} />}
-                                  </Link>
-                                ))}
+                                        />
+                                      </svg>)}
+                                      {isOrder && item.id === currentActiveGarment && <i className={`circle`} />}
+                                    </Link>
+                                  );
+                                })}
                               </ul>
                             </CSSTransition>
 

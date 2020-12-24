@@ -98,18 +98,20 @@ class FittingItem extends React.PureComponent<Props, State> {
 
 class Fitting extends React.PureComponent<FittingProps> {
     render() {
-        const { items, lang, orderStore, garment, dataFitting = [], url = '' } = this.props;
+        const { items, lang, orderStore, garment, group, dataFitting = [], url = '' } = this.props;
         const setFitting = (id: string) => (value: number) => { orderStore!.setFitting('shirt', { id, value }); };
+        const baseUrl = `/order/details/${garment}`;
 
         return (
             <>
                 <div className={'design-navigation-wrapper'}>
+                    <Link to={`${baseUrl}/${group}`} className={'design-navigation'}>Все</Link>
                     {dataFitting.map(item => {
                         const isActive = url.includes(item.id);
                         return (
                             <Link
                                 key={item.id}
-                                to={`/order/details/${garment}/${item.link}`}
+                                to={`${baseUrl}/${item.link}`}
                                 className={`design-navigation ${isActive ? '_active' : ''}`}
                             >
                                 {item.linkName}

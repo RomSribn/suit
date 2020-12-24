@@ -123,6 +123,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         orderStore={orderStore}
                         dataFitting={dataFitting}
                         garment={garment}
+                        group={group}
                         url={url}
                     />
                 )
@@ -131,16 +132,30 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         {group === 'design' && (
                             <div className={'nav-overflow'}>
                                 <div className={'design-navigation-wrapper'}>
+                                    <Link
+                                        to={`/order/details/${garment}/${group}`}
+                                        className={'design-navigation'}
+                                    >
+                                        Все
+                                    </Link>
                                     {data.map(item => {
                                         const isActive = url.includes(item.id);
                                         return (
-                                            <Link
-                                                to={`/order/details/${garment}/${item.link}`}
-                                                className={`design-navigation ${isActive ? '_active' : ''}`}
+                                            <div
                                                 key={item.id}
+                                                ref={(element) =>
+                                                    element &&
+                                                    isActive &&
+                                                    element.scrollIntoView({ behavior: 'smooth' })}
                                             >
-                                                {item.linkName}
-                                            </Link>
+                                                <Link
+                                                    to={`/order/details/${garment}/${item.link}`}
+                                                    className={`design-navigation ${isActive ? '_active' : ''}`}
+                                                    key={item.id}
+                                                >
+                                                    {item.linkName}
+                                                </Link>
+                                            </div>
                                         );
                                     })}
                                 </div>

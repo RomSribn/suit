@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 import { loc } from './loc';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
@@ -62,11 +61,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                 params: { garment, subgroup, group },
             },
             order,
-            backLink,
             lang,
             subgroupsStore,
             userStore,
-            // activeGarments,
         } = this.props;
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
 
@@ -122,12 +119,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             </>
                         )}
                 </span>
-                {subgroup === 'fitting' ||
-                    (subgroup === 'design' && (
-                        <Link to={backLink} className="custom__control-btn">
-                            <span className="span" />
-                        </Link>
-                    ))}
             </>
         );
 
@@ -139,15 +130,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     {content}
                     <div
                         className="custom__control_new"
-                        style={{
-                            marginRight: !(
-                                lastParametr[lastParametr.length - 1] === 'fabric' ||
-                                lastParametr[lastParametr.length - 1] === 'design' ||
-                                lastParametr[lastParametr.length - 1] === 'fitting'
-                            )
-                                ? 30
-                                : 0,
-                        }}
                     >
                         <form
                             style={{

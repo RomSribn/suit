@@ -23,6 +23,7 @@ interface FittingProps {
     dataFitting?: any[]; 
     url?: string;
     garment?: string;
+    group?: string;
 }
 
 interface FittingContainerProps extends FittingProps {

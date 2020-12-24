@@ -306,3 +306,8 @@
   overflow-x: auto;
   white-space: nowrap;
 }
+
+.design-navigation-wrapper .design-navigation {
+  display: inline-block;
+  text-transform: capitalize;
+}

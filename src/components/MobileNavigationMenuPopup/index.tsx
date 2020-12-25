@@ -185,10 +185,11 @@ export default ({
                           }}
                         >
                           <span>{loc[currentLang][navItem.name]}</span>
-
-                          <span>
-                            <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                          </span>
+                          {window.location.pathname.includes(navItem.url) && (
+                            <span>
+                              <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                            </span>
+                          )}
                         </a>
 
                         : navItem.submenu ? (
@@ -200,9 +201,11 @@ export default ({
                               className="navigation-item"
                             >
                               {loc[currentLang][navItem.name]}
-                              <span>
-                                <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                              </span>
+                              {window.location.pathname.includes('order/details') && (
+                                <span>
+                                  <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                                </span>
+                              )}
                             </span>
                             <CSSTransition
                               in={isOrder ? !activeMenu : activeMenu}
@@ -250,7 +253,10 @@ export default ({
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
                                         />
                                       </svg>)}
-                                      {isOrder && item.id === currentActiveGarment && <i className={`circle`} />}
+                                      {isOrder &&
+                                        item.id === currentActiveGarment &&
+                                        window.location.pathname.includes(currentActiveGarment) &&
+                                        <i className={`circle`} />}
                                     </Link>
                                   );
                                 })}
@@ -275,9 +281,11 @@ export default ({
                             }}
                           >
                             <span>{loc[currentLang][navItem.name]}</span>
-                            <span>
-                              <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                            </span>
+                            {window.location.pathname.includes(navItem.url) && (
+                              <span>
+                                <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                              </span>
+                            )}
                           </Link>
                     );
                   }}

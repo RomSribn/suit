@@ -200,7 +200,22 @@ export default ({
                               }}
                               className="navigation-item"
                             >
-                              {loc[currentLang][navItem.name]}
+                              {!navItem.submenu.length ? <Link
+                                className="navigation-item"
+                                to={`/order`}
+                                onClick={(e) => {
+                                  if (navItem.unusualSideEffect) {
+                                    navItem.unusualSideEffect();
+                                  } else if (sideEffects[navItem.sideEffect!]) {
+                                    e.preventDefault();
+                                    callList([closeMenu, sideEffects[navItem.sideEffect!]]);
+                                  } else {
+                                    callList([closeMenu]);
+                                  }
+                                }}
+                              >
+                                {loc[currentLang][navItem.name]}
+                              </Link> : loc[currentLang][navItem.name]}
                               {window.location.pathname.includes('order/details') && (
                                 <span>
                                   <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />

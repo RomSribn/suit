@@ -16,7 +16,7 @@ class ListCustomers extends React.Component<ListCustomersProps> {
         const customers = this.props.customersStore!.customers;
         const lang = this.props.appStore!.lang;
         return (
-            <div className="main__middle ыва">
+            <div className="main__middle">
                 <TableCustomers
                     customers={customers}
                     lang={lang}

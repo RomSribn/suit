@@ -142,7 +142,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                             ? 'translateX(60%)'
                                             : 'translateX(74%)',
                             }}
-                            className="search dslkf"
+                            className="search"
                         >
                             <div
                                 style={{ background: 'transparent' }}
@@ -154,6 +154,16 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     }}
                                     className="search__icon"
                                     onClick={() => {
+                                        // Disable search button at the "Все" submenu page
+                                        const pathArray = window.location.pathname.split('/');
+                                        const isSubmenuPage =
+                                            pathArray[pathArray.length - 1] === 'design' ||
+                                            pathArray[pathArray.length - 1] === 'fitting';
+
+                                        if (isSubmenuPage) {
+                                            return;
+                                        }
+
                                         this.props.app!.toggleIsSearchBarOpened();
                                         if (this.props.filterStore!.isOpen) {
                                             this.props.filterStore!.toggleOpen();

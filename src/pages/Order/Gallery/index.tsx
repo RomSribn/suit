@@ -146,7 +146,9 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                                                 ref={(element) =>
                                                     element &&
                                                     isActive &&
-                                                    element.scrollIntoView({ behavior: 'smooth' })}
+                                                    element.scrollIntoView(
+                                                        { behavior: 'smooth', block: 'end', inline: 'nearest' }
+                                                    )}
                                             >
                                                 <Link
                                                     to={`/order/details/${garment}/${item.link}`}

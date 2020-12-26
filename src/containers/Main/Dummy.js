@@ -59,6 +59,9 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
+      onRotate: (event) => {
+        console.log(event.x, event.y);
+      },
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       }

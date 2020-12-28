@@ -104,17 +104,8 @@
     font-size: 18px;
     padding: 0.5rem 1.2rem;
   }
-  /*.nav-overflow .design-navigation._active{*/
-  /*    padding: 0 1.2rem;*/
-  /*}*/
-  /*.nav-overflow .design-navigation{*/
-  /*    padding: 0 1.2rem;*/
-  /*}*/
 }
 
-.header-wrapper-mobile {
-  padding: 0 1rem;
-}
 .notification {
   position: relative;
   margin-right: 2.3rem;
@@ -217,7 +208,6 @@
 }
 
 .main.main--bg-grey {
-  background-color: #fff;
   z-index: 4;
 }
 

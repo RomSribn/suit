@@ -74,7 +74,12 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
                             />
                             {isOrderDetails() && isNotDesignPart() && <GarmentChoise isNavigationGarments={true} />}
                         </div> :
-                        <div className="header-wrapper-mobile">
+                        <div
+                            className="header-wrapper-mobile"
+                            style={{
+                                padding: path!.includes('order/') ? '0 1rem' : 0
+                            }}
+                        >
                             <MobileHeader
                                 path={path!}
                                 openMenu={openMenu}

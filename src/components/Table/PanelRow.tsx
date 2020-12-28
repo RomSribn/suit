@@ -16,7 +16,7 @@ interface PanelRowState {
     info: string;
 }
 
-@inject(({pdfStore}) => ({
+@inject(({ pdfStore }) => ({
     pdfStatesByOrderId: pdfStore.pdfStatesByOrderId,
     generatePdf: pdfStore.generatePdf,
 }))
@@ -38,7 +38,7 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
             showControls: showControlsBoolValue || !showControls
         });
     }
-    onAcceptClickFabric = (status: {statusId: number, name: OrderStatus}) => () => {
+    onAcceptClickFabric = (status: { statusId: number, name: OrderStatus }) => () => {
         const {
             ordersStore,
             orderInfo,
@@ -86,17 +86,17 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
         if (orderId && customerId) {
             ordersStore.confirmCustomer(Number(orderId), customerId)
                 .then(({ data }: Axios.Response) => {
-                        const info = data.emailSent
-                            ? loc[lang].confirmInfo
-                            : `${loc[lang].login}: ${phone} ${loc[lang].password}: ${data.password}`;
-                        this.setState({
-                            showControls: false,
-                            showInfo: true,
-                            info,
-                        });
-                        if (acceptCallback) {
-                            acceptCallback.call(this, data);
-                        }
+                    const info = data.emailSent
+                        ? loc[lang].confirmInfo
+                        : `${loc[lang].login}: ${phone} ${loc[lang].password}: ${data.password}`;
+                    this.setState({
+                        showControls: false,
+                        showInfo: true,
+                        info,
+                    });
+                    if (acceptCallback) {
+                        acceptCallback.call(this, data);
+                    }
                 })
                 .catch(() => {
                     this.setState({
@@ -108,10 +108,10 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
         }
     }
 
-    onCloseModal = () => this.setState({ showInfo : false, info: '' });
+    onCloseModal = () => this.setState({ showInfo: false, info: '' });
 
     generatePdf = () => {
-        const {orderInfo, activeOrderId, role, userToken, generatePdf} = this.props;
+        const { orderInfo, activeOrderId, role, userToken, generatePdf } = this.props;
         const orderId = orderInfo && orderInfo.id || activeOrderId;
         if (orderId) {
             generatePdf!(orderId, userToken!, role!);
@@ -135,11 +135,11 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
             { disabled: !Boolean(orderInfo && orderInfo.id || activeOrderId) }
         );
         const currentStatusIndex: number = orderInfo && (orderInfo.status.statusId ||
-          // TODO:  ХАК! В овтетах до сих пор присутвтуют поля id вместо statusId
-          // Удалить, как только их почистят и приведут к одной модели
-          orderInfo.status['id']) || // tslint:disable-line
-          // На сервере статусы начинаются с 1
-          1;
+            // TODO:  ХАК! В овтетах до сих пор присутвтуют поля id вместо statusId
+            // Удалить, как только их почистят и приведут к одной модели
+            orderInfo.status['id']) || // tslint:disable-line
+            // На сервере статусы начинаются с 1
+            1;
         const currentStatus = loc[lang].statuses[orderStatuses[currentStatusIndex - 1]];
 
         let nextStatusIndex = currentStatusIndex < orderStatuses.length ?
@@ -172,22 +172,22 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
                             autoComplete="off"
                             className="search__input"
                             placeholder={loc[lang].search}
-                            onFocus={() => this.setState({showControls: false })}
-                            onBlur={() => this.setState({showControls: true })}
+                            onFocus={() => this.setState({ showControls: false })}
+                            onBlur={() => this.setState({ showControls: true })}
                         />
                         <span
                             className="icon-close search__clear"
                             title="Clear"
-                            style={{ visibility: 'hidden'}}
+                            style={{ visibility: 'hidden' }}
                         />
                     </div>
                 </form>
-                <div className={classNames('controls', { hidden: !showControls})}>
+                <div className={classNames('controls', { hidden: !showControls })}>
                     <ul className="controls__list">
-                        <li className="controls__item disabled">
-                            <a
-                                className="controls__link controls__link--phone"
-                                href="#"
+                        <li className="controls__item">
+                            <i
+                                className="controls__link controls__link--search"
+                                onClick={() => this.setState({ showControls: false })}
                                 title={loc[lang].controls.call}
                             />
                         </li>
@@ -211,8 +211,10 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
                         <li
                             className={classNames(
                                 'controls__item',
-                                { disabled: isCustomer && orderInfo && orderInfo.status.name !== 'NEW' &&
-                                        orderInfo.status.name !== 'TEMPORARY' },
+                                {
+                                    disabled: isCustomer && orderInfo && orderInfo.status.name !== 'NEW' &&
+                                        orderInfo.status.name !== 'TEMPORARY'
+                                },
                             )}
                         >
                             <Link
@@ -230,7 +232,7 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
                                     <ConfirmPopup
                                         onAcceptClick={
                                             this.onAcceptClickFabric(
-                                                { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1]}
+                                                { statusId: nextStatusIndex, name: orderStatuses[nextStatusIndex - 1] }
                                             )}
                                         actionText={loc[lang].fabric.updateOrder({
                                             currentStatus: currentStatus,
@@ -260,7 +262,7 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
                                     className={classNames(
                                         'controls__item',
                                         { disabled: (orderInfo && orderInfo.isConfirmed) },
-                                        )}
+                                    )}
                                 >
                                     <ConfirmPopup
                                         actionText={loc[lang].confirmCustomer(orderInfo && orderInfo.name)}

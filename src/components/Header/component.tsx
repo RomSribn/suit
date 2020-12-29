@@ -53,7 +53,6 @@ class Header extends React.Component<HeaderProps, { isMobile: boolean, isLandsca
         } = this.props;
 
         const state = this.state;
-        // console.log(isRealIndexPage()); // tslint:disable-line
 
         return (
             <div className="main__header">

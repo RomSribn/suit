@@ -8,6 +8,7 @@ import { Controll as ControllComponent } from './Controll';
     lang: app.lang,
     filters: filterStore.filters,
     filterStore: filterStore,
+    userFilters: filterStore.userFilters
 }))
 @observer
 class Filter extends React.Component<_FilterProps> {
@@ -18,6 +19,7 @@ class Filter extends React.Component<_FilterProps> {
             lang,
             filterStore,
             onClose,
+            userFilters
         } = this.props;
         return (
             <FilterComponent
@@ -25,6 +27,7 @@ class Filter extends React.Component<_FilterProps> {
                 isOpen={isOpen!}
                 filters={filters!}
                 filterStore={filterStore}
+                userFilters={userFilters}
                 onClose={onClose!}
             />
         );

@@ -7,6 +7,7 @@ import { routes } from '../../config/routes';
 import { loc } from './loc';
 import { SimpleModal } from '../SimpleModal';
 import { SimpleSpinner } from '../Spinner';
+import { isMobile } from '../../utils';
 
 import './panelRowStyles.styl';
 
@@ -184,13 +185,15 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
                 </form>
                 <div className={classNames('controls', { hidden: !showControls })}>
                     <ul className="controls__list">
-                        <li className="controls__item">
-                            <i
-                                className="controls__link controls__link--search"
-                                onClick={() => this.setState({ showControls: false })}
-                                title={loc[lang].controls.call}
-                            />
-                        </li>
+                        {isMobile() && (
+                            <li className="controls__item">
+                                <i
+                                    className="controls__link controls__link--search"
+                                    onClick={() => this.setState({ showControls: false })}
+                                    title={loc[lang].controls.call}
+                                />
+                            </li>
+                        )}
                         <li className="controls__item disabled">
                             <a
                                 className="controls__link controls__link--msg"

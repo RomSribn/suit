@@ -56,6 +56,15 @@ class FilterStore implements IFilterStore {
         };
     }
     @action
+    removeUserGroupFilter: UserFilterGroupAction = (filter) => {
+        const userFilters = {
+            ...this.userFilters
+        };
+        delete userFilters[filter];
+        this.userFilters = userFilters;
+    }
+
+    @action
     clearUserFilters = (): void => { this.userFilters = {}; }
 
     @action

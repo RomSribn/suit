@@ -25,9 +25,11 @@ let wasRendered = false;
 const baseDummyElements = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
 let demoSectionWidth = 400;
 
-@inject(({ order, garments: {Subgroups}, }) => ({
+@inject(({ order, garments: { Subgroups }, app: { setDummyY, isMenuUncovered } }) => ({
   orderStore: order,
   SubgroupsStore: new Subgroups('shirt'),
+  setDummyY,
+  isMenuUncovered
 }))
 class Widget extends PureComponent {
   constructor(props) {
@@ -41,12 +43,16 @@ class Widget extends PureComponent {
     listeners.resize.unsubscribe(this.resizeListenerIndex);
   }
   componentDidMount() {
-    const { resize, orientationchange } = listeners
-    if (isMobile() || isTablet() || isIpadPro()) {
-      document.ontouchmove = function (e) {
-        e.preventDefault();
-      }
-    }
+    const { resize } = listeners
+    /**
+     * setting a lot of errors at the console, try to disable and test
+     * P.S. It has been here, early
+    */
+    // if (isMobile() || isTablet() || isIpadPro()) {
+    //   document.ontouchmove = function (e) {
+    //     e.preventDefault();
+    //   }
+    // }
 
     this.resizeListenerIndex = resize.subscribe(() => {
       this.widget3d && this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight)
@@ -59,15 +65,22 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
+      onRotate: (event) => {
+        console.log(event.x, event.y);
+      },
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
+      },
+      onRotate: ({ y }) => {
+        const { setDummyY, isMenuUncovered } = this.props;
+        isMobile() && isMenuUncovered && setDummyY(y);
       }
       }
     );
     try {
       this.widget3d.firstUpdate.then(() => {
         this.props.onDummyLoad();
-        this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight)
+        this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
       });
       this.widget3d.update(this.props.assets)
       .then(this.handleUpdated);
@@ -170,13 +183,14 @@ class Widget extends PureComponent {
       );
   }
 
-  handleUpdated = () => {
+  handleUpdated = (props) => {
+    console.log('updated');
   }
 }
 
 const GROUPS = ['design', 'fabric_ref', 'fitting']
 let prevInfo = {};
-@inject(({order }) => ({
+@inject(({order}) => ({
   orderStore: order
 }))
 @observer

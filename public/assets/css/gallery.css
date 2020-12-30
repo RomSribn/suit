@@ -316,7 +316,7 @@
     margin-bottom: 0;
     position: absolute;
     left: 0;
-    bottom: 91px;
+    bottom: 14%;
   }
 
   .gallery__footer--title {
@@ -334,5 +334,15 @@
 @media only screen and (max-height: 450px) {
   .gallery__footer {
     display: none;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .gallery__footer--articul {
+    font-size: 11px;
+  }
+
+  .gallery__footer {
+    bottom: 15%;
   }
 }

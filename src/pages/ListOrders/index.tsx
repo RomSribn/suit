@@ -34,17 +34,18 @@ class ListOrders extends React.Component<ListOrdersProps> {
     render() {
         const ordersStore = this.props.ordersStore!;
         const lang = this.props.appStore!.lang;
+
         return (
-        <div className="main__middle">
-            <Table
-                orders={prepareTableData(ordersStore.orders, lang)}
-                lang={lang}
-                ordersStore={ordersStore}
-                userToken={this.props.userToken}
-                baseOrderId={this.props.baseOrderId}
-                role={this.props.role}
-            />
-        </div>
+            <div className="main__middle">
+                <Table
+                    orders={prepareTableData(ordersStore.orders, lang)}
+                    lang={lang}
+                    ordersStore={ordersStore}
+                    userToken={this.props.userToken}
+                    baseOrderId={this.props.baseOrderId}
+                    role={this.props.role}
+                />
+            </div>
         );
     }
 }

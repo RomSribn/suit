@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as classnames from 'classnames';
 import { Demo } from '../OrderDecorationBlocks';
 import { Filter } from '../Filter';
 import { Footer } from '../Footer';
@@ -7,17 +6,31 @@ import { Gallery } from '../Gallery';
 import { GarmentChoise } from '../GarmentChoiseForm';
 import { getCombinedPathAndTitle } from '../routes';
 import { Main as Details } from '../Details';
+import { observer, inject } from 'mobx-react';
 import { Redirect, Route, Switch } from 'react-router';
 import { routes } from '../routes';
 import { routes as defaultRoutes } from '../../../config/routes';
 import { SubgroupChoice } from '../SubgroupChoice';
+import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
 
+@inject(({ app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered } }) => ({
+    setDummyY,
+    dummyY,
+    isMenuUncovered,
+    setIsMenuUncovered
+}))
+@observer
 class MainSection extends React.Component<MainSectionProps> {
     state = {
-        inititalTouch: 0,
-        isMenuUncovered: true,
+        inititalTouch: 0
     };
+
+    componentDidUpdate(prevProps: MainSectionProps) {
+        if ((prevProps.dummyY !== this.props.dummyY) && (this.props.dummyY! > 0) && this.props.setIsMenuUncovered) {
+            this.props.setIsMenuUncovered(false);
+        }
+    }
     render() {
         const {
             isIndexPage,
@@ -33,7 +46,7 @@ class MainSection extends React.Component<MainSectionProps> {
                 <div
                     className="main__middle"
                     style={!isRealIndexPage ? {
-                        transform: isMobile() ? `translateY(${this.state.isMenuUncovered ? 10 : 70}%)` : 'unset',
+                        transform: isMobile() ? `translateY(${this.props.isMenuUncovered ? 10 : 70}%)` : 'unset',
                         transition: '0.5s',
                         justifyContent: 'space-between',
                     } : {
@@ -72,14 +85,10 @@ class MainSection extends React.Component<MainSectionProps> {
                         onTouchEnd={
                             (event: React.TouchEvent<HTMLInputElement>) => {
                                 if ((event.changedTouches[0].clientY -
-                                    this.state.inititalTouch) < -10 || (event.changedTouches[0].clientY -
-                                        this.state.inititalTouch) > 10) {
-                                    this.setState({
-                                        isMenuUncovered: event.changedTouches[0].clientY
-                                            < this.state.inititalTouch
-                                    });
+                                    this.state.inititalTouch) < -10) {
+                                    this.props.setIsMenuUncovered!(!!(event.changedTouches[0].clientY
+                                        < this.state.inititalTouch));
                                 }
-                                console.log(this.state.isMenuUncovered); // tslint:disable-line
                             }
                         }
                     >

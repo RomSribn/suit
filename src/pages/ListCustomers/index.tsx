@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TableCustomers } from '../../components/TableCustomers';
 import { observer, inject } from 'mobx-react';
 
-@inject(({ customersStore, app}) => ({
+@inject(({ customersStore, app }) => ({
     customersStore,
     appStore: app,
 }))

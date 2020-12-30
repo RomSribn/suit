@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
+import { Link } from 'react-router-dom';
 import { isMobile, isLandscape } from '../../../utils';
 
 interface Props {
@@ -13,7 +14,7 @@ type State = {
     value: string;
 };
 class FittingItem extends React.PureComponent<Props, State> {
-    static Ftest (val: string): boolean {
+    static Ftest(val: string): boolean {
         return !val.replace(/\d*\.?\d*/, '').length;
     }
     focuseOnLabel = (e: React.ChangeEvent<any>) => { // tslint:disable-line
@@ -35,7 +36,7 @@ class FittingItem extends React.PureComponent<Props, State> {
     }
 
     onBlur = () => {
-        const props =  this.props;
+        const props = this.props;
         const state = this.state;
         if (state.valid && state.value) {
             props.setFitting(Number(state.value));
@@ -56,7 +57,7 @@ class FittingItem extends React.PureComponent<Props, State> {
             };
         }
     }
-    render () {
+    render() {
         const {
             item,
             lang,
@@ -64,7 +65,7 @@ class FittingItem extends React.PureComponent<Props, State> {
         const title = isMobile() && !isLandscape() && item.title[lang].length > 11 ?
             item.title[lang].slice(0, 10) + '...'
             : item.title[lang];
-        
+
         return (
             <label className="size">
                 <span
@@ -81,13 +82,13 @@ class FittingItem extends React.PureComponent<Props, State> {
                         onChange={this.focuseOnLabel}
                         onBlur={this.onBlur}
                         onInput={(e: any) => { e.preventDefault(); }}  // tslint:disable-line
-                    /> 
+                    />
                     <span className="size__output-lines-group">
                         <span className="size__output-line size__output-line--1" />
-                        <span className="size__output-line size__output-line--2"/>
+                        <span className="size__output-line size__output-line--2" />
                         <span className="size__output-line size__output-line--3" />
                     </span>
-                    <span className="size__color-elem"/>
+                    <span className="size__color-elem" />
                 </span>
                 <span className="size__units">см</span>
             </label>
@@ -97,28 +98,40 @@ class FittingItem extends React.PureComponent<Props, State> {
 
 class Fitting extends React.PureComponent<FittingProps> {
     render() {
-        const { items, lang, orderStore } = this.props;
-        const setFitting = (id: string) => (value: number) => {orderStore!.setFitting('shirt', {id, value}); };
+        const { items, lang, orderStore, garment, group, dataFitting = [], url = '' } = this.props;
+        const setFitting = (id: string) => (value: number) => { orderStore!.setFitting('shirt', { id, value }); };
+        const baseUrl = `/order/details/${garment}`;
+
         return (
             <>
-            <div className={'design-navigation-wrapper'}>
-                <a href="/random" className={'design-navigation'}>Все</a>
-                <a href="/random" className={'design-navigation _active'}>Тело</a>
-                <a href="/random" className={'design-navigation'}>Альтерации</a>
-            </div>
-            <div className="sizes__wrap sizes">
-            {items.map(
-                item => (
-                    <FittingItem 
-                        item={item}
-                        key={item.our_code}
-                        lang={lang}
-                        initialValue={orderStore!.getFitting('shirt')(item.our_code)}
-                        setFitting={setFitting(item.our_code)}
-                    />
-                )
-            )}
-            </div>
+                <div className={'design-navigation-wrapper'}>
+                    <Link to={`${baseUrl}/${group}`} className={'design-navigation'}>Все</Link>
+                    {dataFitting.map(item => {
+                        const isActive = url.includes(item.id);
+                        return (
+                            <Link
+                                key={item.id}
+                                to={`${baseUrl}/${item.link}`}
+                                className={`design-navigation ${isActive ? '_active' : ''}`}
+                            >
+                                {item.linkName}
+                            </Link>
+                        );
+                    })}
+                </div>
+                <div className="sizes__wrap sizes">
+                    {items.map(
+                        item => (
+                            <FittingItem
+                                item={item}
+                                key={item.our_code}
+                                lang={lang}
+                                initialValue={orderStore!.getFitting('shirt')(item.our_code)}
+                                setFitting={setFitting(item.our_code)}
+                            />
+                        )
+                    )}
+                </div>
             </>);
     }
 }

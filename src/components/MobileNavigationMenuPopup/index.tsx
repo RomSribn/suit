@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import './style.styl';
 import { callList } from '../../utils/index';
-import { CSSTransition } from 'react-transition-group';
 
 type Props = {
   currentLang: string,
@@ -14,11 +13,14 @@ type Props = {
   toggleLoginForm: () => void,
   sideEffects: [() => void],
   role?: Role,
+  activeGarments?: string[],
+  currentActiveGarment?: string,
+  setCurrentActiveGarment?: (garment: string) => void,
 };
 
 type SubmenuItem = {
   name: string,
-  url: string,
+  id: string,
 };
 
 type MenuLink = {
@@ -27,74 +29,100 @@ type MenuLink = {
   sideEffect?: string,
   withoutArrow?: boolean,
   withoutBaseUrl?: boolean,
-  unusualSideEffect?: () => void
+  unusualSideEffect?: () => void,
   submenu?: Array<SubmenuItem>
 };
 
-const menuList: MenuLink[] = [
-  {
-    name: 'order',
-    url: '/order',
-    submenu: [
-      { name: 'Сорочка',
-        url: '/order',
-      },
-      { name: 'Пиджак',
-        url: '/order',
-      },
-      { name: 'Брюки',
-        url: '/order',
-      },
-      { name: 'Пальто',
-        url: '/order',
-      },
-    ]
-  },
-  {
-    name: 'panel',
-    url: '/panel'
-  },
-  {
-    name: 'customersList',
-    url: '/customer/list'
-  },
-  {
-    name: 'orderList',
-    url: '/order/list'
-  },
-  {
-    name: 'calendar',
-    url: '/calendar'
-  },
-  {
-    name: 'store',
-    url: '/store'
-  },
-  {
-    name: 'analytics',
-    url: '/analytics'
-  },
-  {
-    name: 'settings',
-    url: '/settings',
-  },
-  {
-    name: 'logOut',
-    url: '/',
-    sideEffect: 'logout',
-    withoutArrow: true
-  },
-  {
-    name: 'chat',
-    url: 'javascript:jivo_api.open()',
-    withoutArrow: true,
-    withoutBaseUrl: true
-  }
-];
+const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] => activeGarments.map(garment => {
 
-export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideEffects, role }: Props) => {
+  if (garment === 'shirt') {
+    return {
+      name: 'Рубашка',
+      id: garment
+    };
+  }
+
+  if (garment === 'jacket') {
+    return {
+      name: 'Пиджак',
+      id: garment
+    };
+  }
+
+  if (garment === 'pants') {
+    return {
+      name: 'Брюки',
+      id: garment
+    };
+  }
+
+  return {
+    name: 'Рубашка',
+    id: 'shirt'
+  };
+
+});
+
+export default ({
+  activeGarments,
+  setCurrentActiveGarment,
+  currentActiveGarment,
+  currentLang = 'en',
+  closeMenu,
+  setLang,
+  toggleLoginForm,
+  sideEffects,
+  role
+}: Props) => {
+  const menuList: MenuLink[] = [
+    {
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || [])
+    },
+    {
+      name: 'panel',
+      url: '/panel'
+    },
+    {
+      name: 'customersList',
+      url: '/customer/list'
+    },
+    {
+      name: 'orderList',
+      url: '/orders/list'
+    },
+    {
+      name: 'calendar',
+      url: '/calendar'
+    },
+    {
+      name: 'store',
+      url: '/store'
+    },
+    {
+      name: 'analytics',
+      url: '/analytics'
+    },
+    {
+      name: 'settings',
+      url: '/settings',
+    },
+    {
+      name: 'logOut',
+      url: '/',
+      sideEffect: 'logout',
+      withoutArrow: true
+    },
+    {
+      name: 'chat',
+      url: 'javascript:jivo_api.open()',
+      withoutArrow: true,
+      withoutBaseUrl: true
+    }
+  ];
   const customerMenuList = menuList.filter(item => !['customersList', 'store', 'analytics'].includes(item.name));
-  const [activeMenu, setActiveMenu] = React.useState(false);
+
   const anonMenuList: MenuLink[] = [{
     name: 'logIn',
     url: '/',
@@ -136,8 +164,8 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                 <Route
                   key={navItem.name}
                   className="navigation-list-item"
-                  // path={routes.subgroupChoice}
                   component={(...props: any[]) => { // tslint:disable-line
+                    const isOrder: boolean = navItem.name === 'order';
                     return (
                       navItem.withoutBaseUrl ?
                         <a
@@ -155,51 +183,65 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                           }}
                         >
                           <span>{loc[currentLang][navItem.name]}</span>
-
-                          <span>
-                            <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                          </span>
+                          {window.location.pathname.includes(navItem.url) && (
+                            <span>
+                              <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                            </span>
+                          )}
                         </a>
 
                         : navItem.submenu ? (
-                             <div>
-                               <span
-                                   onClick={(e) => {
-                                      setActiveMenu(!activeMenu);
+                          <div>
+                            <Link
+                              className="navigation-item"
+                              to={`/order`}
+                              onClick={(e) => {
+                                if (navItem.unusualSideEffect) {
+                                  navItem.unusualSideEffect();
+                                } else if (sideEffects[navItem.sideEffect!]) {
+                                  e.preventDefault();
+                                  callList([closeMenu, sideEffects[navItem.sideEffect!]]);
+                                } else {
+                                  callList([closeMenu]);
+                                }
+                              }}
+                            >
+                              {loc[currentLang][navItem.name]}
+                              {window.location.pathname === '/order' && (
+                                <span>
+                                  <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                                </span>
+                              )}
+
+                            </Link>
+                            <ul>
+                              {navItem.submenu.map((item: SubmenuItem) => {
+                                const { pathname = '' } = window.location;
+                                const redirectingPath: string =
+                                  pathname.includes('order/details') ?
+                                    window.location.pathname.replace(currentActiveGarment || '', item.id) :
+                                    `/order/details/${item.id}/fabric_ref/fabric`;
+
+                                return (
+                                  <Link
+                                    className="navigation-item submenu-item"
+                                    to={redirectingPath}
+                                    key={item.name}
+                                    onClick={(e) => {
+                                      callList([closeMenu]);
+                                      setCurrentActiveGarment!(item.id);
                                     }}
-                                   className="navigation-item"
-                               >
-                                 {loc[currentLang][navItem.name]}
-                                 <span>
-                                    <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                                 </span>
-                               </span>
-                               <CSSTransition
-                                   in={activeMenu}
-                                   timeout={300}
-                                   classNames="fade-in"
-                                   unmountOnExit={true}
-                               >
-                                 <ul>
-                                   {navItem.submenu.map((item: SubmenuItem) => (
-                                       <Link
-                                           className="navigation-item submenu-item"
-                                           to={item.url}
-                                           key={item.name}
-                                           onClick={(e) => {
-                                             callList([closeMenu]);
-                                           }}
-                                       >
-                                         <span>{item.name}</span>
-                                         <svg
-                                             xmlns="http://www.w3.org/2000/svg"
-                                             width="20"
-                                             height="20"
-                                             viewBox="0 0 448 512"
-                                         >
-                                           <path
-                                               fill="currentColor"
-                                               d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
+                                  >
+                                    <span>{item.name}</span>
+                                    {!isOrder && (<svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 448 512"
+                                    >
+                                      <path
+                                        fill="currentColor"
+                                        d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
                                              8 0 00-8 8v272a8 8 0 008 8zm-160 0h16a8 8 0 008-8V152a8
                                               8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8zM440
                                                64H336l-33.6-44.8A48 48 0 00264 0h-80a48 48 0
@@ -210,35 +252,40 @@ export default ({ currentLang = 'en', closeMenu, setLang, toggleLoginForm, sideE
                                                  64H152zM384 464a16 16 0 01-16 16H80a16 16 0
                                                   01-16-16V96h320zm-168-32h16a8 8 0 008-8V152a8
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
-                                           />
-                                         </svg>
-                                       </Link>
-                                   ))}
-                                 </ul>
-                               </CSSTransition>
-
-                             </div>
+                                      />
+                                    </svg>)}
+                                    {isOrder &&
+                                      item.id === currentActiveGarment &&
+                                      window.location.pathname.includes(currentActiveGarment) &&
+                                      <i className={`circle`} />}
+                                  </Link>
+                                );
+                              })}
+                            </ul>
+                          </div>
                         ) :
 
-                        <Link
-                          className="navigation-item"
-                          to={navItem.url}
-                          onClick={(e) => {
-                            if (navItem.unusualSideEffect) {
-                              navItem.unusualSideEffect();
-                            } else if (sideEffects[navItem.sideEffect!]) {
-                              e.preventDefault();
-                              callList([closeMenu, sideEffects[navItem.sideEffect!]]);
-                            } else {
-                              callList([closeMenu]);
-                            }
-                          }}
-                        >
-                          <span>{loc[currentLang][navItem.name]}</span>
-                          <span>
-                            <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
-                          </span>
-                        </Link>
+                          <Link
+                            className="navigation-item"
+                            to={navItem.url}
+                            onClick={(e) => {
+                              if (navItem.unusualSideEffect) {
+                                navItem.unusualSideEffect();
+                              } else if (sideEffects[navItem.sideEffect!]) {
+                                e.preventDefault();
+                                callList([closeMenu, sideEffects[navItem.sideEffect!]]);
+                              } else {
+                                callList([closeMenu]);
+                              }
+                            }}
+                          >
+                            <span>{loc[currentLang][navItem.name]}</span>
+                            {window.location.pathname.includes(navItem.url) && (
+                              <span>
+                                <i className={`${navItem.withoutArrow ? '' : 'arrow right'}`} />
+                              </span>
+                            )}
+                          </Link>
                     );
                   }}
                 />

@@ -9,20 +9,20 @@ import { Header } from '../../containers/Navigation/component';
 import { loc } from './loc';
 import './styles.styl';
 
-const InfoRow = ({name}: InfoRowProps) => (
+const InfoRow = ({ name }: InfoRowProps) => (
     <div className="customs customs--short">
         <div className="custom custom--open">
             <span className="custom__content">
                 <span className="custom__name">{name}:</span>
             </span>
-            <span className="custom__control"/>
+            <span className="custom__control" />
         </div>
     </div>
 );
 
-const Label = ({name, value}: LabelProps) => <div className="info-block__item">{name} {value}</div>;
+const Label = ({ name, value }: LabelProps) => <div className="info-block__item">{name} {value}</div>;
 
-const InfoSubSection = ({title, data}: InfoSubSectionProps) => (
+const InfoSubSection = ({ title, data }: InfoSubSectionProps) => (
     <div className="info-block">
         <div className="info-block__title">{title}</div>
         <div className="info-block__details">
@@ -31,7 +31,7 @@ const InfoSubSection = ({title, data}: InfoSubSectionProps) => (
     </div>
 );
 
-@inject(({ app, order, routing,  garments: { GalleryStore, garments, Subgroups } }) => ({
+@inject(({ app, order, routing, garments: { GalleryStore, garments, Subgroups } }) => ({
     lang: app.lang,
     orderStore: order,
     garmentsStore: garments,
@@ -80,7 +80,7 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
         });
 
         const fabric = _.get(orderStore, `order.shirt[0].fabric_ref.fabric.title[${lang}]`, null);
-        const {customer, orderId, price, date, deliveryDays} = orderInfo;
+        const { customer, orderId, price, date, deliveryDays } = orderInfo;
         const deliveryDate = moment(date).add(deliveryDays, 'days').format('DD.MM.YYYY');
 
         const generalInfo = [{
@@ -114,22 +114,22 @@ class Pdf extends React.Component<any>{ //tslint:disable-line
         return (
             <div className="pdf-page">
                 <div className="navbar navbar--white">
-                    <Header/>
+                    <Header />
                 </div>
-                <DemoSection onDummyLoad={() => console.log('loaded')}/> {/* tslint:disable-line:no-console */}
+                <DemoSection onDummyLoad={() => console.log('loaded')} /> {/* tslint:disable-line:no-console */}
                 <div className="main main--white">
-                    <InfoRow name={loc[lang].info}/>
+                    <InfoRow name={loc[lang].info} />
                     <div className="info-block__wrapper">
-                        <InfoSubSection data={generalInfo} title={loc[lang].general}/>
+                        <InfoSubSection data={generalInfo} title={loc[lang].general} />
                         {orderStore.order.shirt && fittingsInfo.length > 0 && (
-                            <InfoSubSection data={fittingsInfo} title={loc[lang].fitting}/>
+                            <InfoSubSection data={fittingsInfo} title={loc[lang].fitting} />
                         )}
                     </div>
 
-                    <InfoRow name={loc[lang].shirt}/>
+                    <InfoRow name={loc[lang].shirt} />
                     <div className="info-block__wrapper">
-                        <InfoSubSection title={loc[lang].fabric} data={[{id: 'fabric', name: '', value: fabric}]}/>
-                        {designBlockData && <InfoSubSection title={loc[lang].design} data={designBlockData}/>}
+                        <InfoSubSection title={loc[lang].fabric} data={[{ id: 'fabric', name: '', value: fabric }]} />
+                        {designBlockData && <InfoSubSection title={loc[lang].design} data={designBlockData} />}
                     </div>
                 </div>
             </div>

@@ -12,8 +12,12 @@ interface GalleryProps {
     previewElement: ActivePreviewElement | null;
     activeOrderItem?: GalleryStoreItem | null;
     match: any;
-    orderStore?: IOrderStore;
+    // orderStore?: IOrderStore;
+    orderStore?: any; // tslint:disable-line no-any
     Subgroups?: any; // tslint:disable-line no-any
+    SubgroupsStore?: any; // tslint:disable-line no-any
+    defaultValues?: OrderItem;
+
 }
 
 interface GalleryContainerProps extends GalleryProps {

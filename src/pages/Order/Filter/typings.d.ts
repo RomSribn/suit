@@ -2,6 +2,7 @@ interface _FilterProps {
     lang?: string;
     filters?: Filters;
     filterStore?: IFilterStore;
+    userFilters?: UserFilters;
     isOpen?: boolean;
     onClose?: () => void;
 }
@@ -10,6 +11,7 @@ interface DefaultFilterProps {
     isOpen: boolean;
     lang: string;
     onClose?: () => void;
+    removeUserGroupFilter?: (value: string) => void;
 }
 type FilterProps = _FilterProps & DefaultFilterProps;
 
@@ -20,6 +22,8 @@ interface DefaultFilterItemProps {
     group: string;
     addFilter: (value: string) => void;
     removeFilter: (value: string) => void;
+    removeUserGroupFilter: (value: string) => void;
+    userFilters: {};
 }
 type FilterItemProps = FilterValue & DefaultFilterItemProps;
 

@@ -1,5 +1,6 @@
 type EmptyFunction = () => void;
 type UserFilterAction = (filtername: string) => (value: string) => void;
+type UserFilterGroupAction = (filtername: string) => void;
 
 declare interface IFilterStore {
     userFilters: UserFilters;
@@ -12,6 +13,7 @@ declare interface IFilterStore {
     loadFilters: (url: string) => void;
     addUserFilter: UserFilterAction;
     removeUserFilter: UserFilterAction;
+    removeUserGroupFilter: UserFilterGroupAction;
     clearUserFilters: EmptyFunction;
     clearFilters: EmptyFunction;
 }

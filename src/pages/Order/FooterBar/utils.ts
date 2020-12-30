@@ -63,7 +63,7 @@ interface Props {
     orderStore: IOrderStore;
 }
 
-const updateOrder = (props: Props) => {
+export const updateOrder = (props: Props) => {
     try {
         if (props.match) {
           const { match, Subgroups, orderStore } = props;
@@ -188,8 +188,4 @@ const updateOrder = (props: Props) => {
       } catch (_) {
         const { } = _;
       }
-};
-
-export {
-    updateOrder
 };

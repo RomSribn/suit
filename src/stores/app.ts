@@ -36,6 +36,8 @@ export class App implements IAppStore {
   @observable showLoginForm = false;
   @observable currentSearchValue = ' ';
   @observable isSearchBarOpened = false;
+  @observable dummyY = 0;
+  @observable isMenuUncovered = true;
   @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
 
@@ -68,6 +70,16 @@ export class App implements IAppStore {
   @action
   toggleLoginForm = () => {
     this.showLoginForm = !this.showLoginForm;
+  }
+
+  @action
+  setDummyY = (y: number) => {
+    this.dummyY = y;
+  }
+
+  @action
+  setIsMenuUncovered = (isMenuUncovered: boolean) => {
+    this.isMenuUncovered = isMenuUncovered;
   }
 
   @action

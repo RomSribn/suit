@@ -1,11 +1,10 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { inject, observer } from 'mobx-react';
-import * as classnames from 'classnames';
-
 import { isMobile, isLandscape } from '../../../utils';
 import { PopUp } from '../../../containers/Popup';
 import { SwiperPopup } from '../../../components/SwiperPopup';
+import * as _ from 'lodash';
+import * as classnames from 'classnames';
 
 interface P {
     app?: IAppStore;
@@ -83,10 +82,11 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         } = this.props;
 
         const {
-          img_url_2d: image,
-          img_url_2d_list,
-          our_code: id,
-          title,
+            img_url_2d: image,
+            img_url_2d_list,
+            our_code: id,
+            title,
+            elementInfo
         } = this.props.item;
         if (!this.state.load.success) {
             return null;
@@ -123,49 +123,51 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             this.props.app!.toggleSwiperPopup();
         };
 
-        const hoverImg = `${process.env.API_ROOT}${(img_url_2d_list.length > 1) && img_url_2d_list[1].slice(5) || id}`;
-
+        const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
+        const hoverImg = isFabricImg ?
+            `${process.env.API_ROOT}${(img_url_2d_list.length > 1) && img_url_2d_list[1].slice(5) || id}` :
+            image;
         return (
             <>
-            {this.props.app &&
-                (window.location.pathname.includes('design')
-                ? true
-                : ( this.props.app.currentSearchValue &&
-                    id.includes(
-                        this.props.app.currentSearchValue.toLowerCase()
-                    ) ||
-                    title.en.toLowerCase().includes(
-                        this.props.app.currentSearchValue.toLowerCase()
-                    ))) && (
-                <div
-                  onClick={click}
-                  onMouseEnter={onMouseEnter}
-                  onMouseLeave={onMouseLeave}
-                  className={classnames('gallery__item-blc', {
-                    landscape: isMobile() && isLandscape(),
-                  })}
-                >
-                    <div className={classnames('gallery__item', { active })}>
-                        <img
-                            src={hoverImg}
-                            className="gallery__item--hover-image"
-                            alt={`${id}`}
-                        />
-                        <img
-                            src={image}
-                            className="gallery__item--main-image"
-                            alt={`${id}`}
-                        />
-                        {this.props.app &&
-                            this.props.app.changeSearchedItemsCount()}
-                        {this.props.zoomId === id &&
-                            this.props.app && (
-                            <span onClick={toggleSwipe} className="zoom-icon" />
-                        )}
-                    </div>
-                </div>
-              )}
-          </>
+                {this.props.app &&
+                    (window.location.pathname.includes('design')
+                        ? true
+                        : (this.props.app.currentSearchValue &&
+                            id.includes(
+                                this.props.app.currentSearchValue.toLowerCase()
+                            ) ||
+                            title.en.toLowerCase().includes(
+                                this.props.app.currentSearchValue.toLowerCase()
+                            ))) && (
+                        <div
+                            onClick={click}
+                            onMouseEnter={onMouseEnter}
+                            onMouseLeave={onMouseLeave}
+                            className={classnames('gallery__item-blc', {
+                                landscape: isMobile() && isLandscape(),
+                            })}
+                        >
+                            <div className={classnames('gallery__item', { active })}>
+                                <img
+                                    src={hoverImg}
+                                    className="gallery__item--hover-image"
+                                    alt={`${id}`}
+                                />
+                                <img
+                                    src={image}
+                                    className="gallery__item--main-image"
+                                    alt={`${id}`}
+                                />
+                                {this.props.app &&
+                                    this.props.app.changeSearchedItemsCount()}
+                                {this.props.zoomId === id &&
+                                    this.props.app && (
+                                        <span onClick={toggleSwipe} className="zoom-icon" />
+                                    )}
+                            </div>
+                        </div>
+                    )}
+            </>
         );
     }
 }
@@ -203,19 +205,19 @@ const makeGalleryItems: makeGalleryItems = (
     //     return galleryItemsCache[cache];
     // }
 
-    const filtered  = (): GalleryStoreItems => {
+    const filtered = (): GalleryStoreItems => {
         const filters = Object.keys(filterStore.userFilters);
         const result2 = items.filter(item => {
             let res;
-            for ( let i = 0; i < filters.length; i++ ) {
-                if ( filterStore.userFilters[filters[i]].includes(item[filters[i]].value) ) {
+            for (let i = 0; i < filters.length; i++) {
+                if (filterStore.userFilters[filters[i]].includes(item[filters[i]].value)) {
                     return res = true;
                 }
             }
             return res;
         });
 
-        if ( result2.length < 1 ) {
+        if (result2.length < 1) {
             return items;
         }
 

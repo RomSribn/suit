@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Redirect } from 'react-router';
-import { inject, observer } from 'mobx-react';
-import { Gallery as Component } from './component';
-import { routes } from '../routes';
+import { filterFields } from '../SubgroupChoice';
 import { Fitting } from '../Fitting/component';
-// import { Controll } from '../Filter';
+import { Gallery as Component } from './component';
 import { InitialsCustomInput } from '../Initials-custom-input';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import { routes } from '../routes';
 import ToggleBar from '../ToggleBar';
 
 const galleryCache = {};
@@ -45,6 +46,8 @@ const galleryCache = {};
         galleryStore: galleryCache[cacheName],
         filterStore: filterStore,
         Subgroups: Subgroups,
+        SubgroupsStore: new Subgroups(garment),
+        defaultValues: order.defaultValues ? order.defaultValues![nextProps.match.params.garment][0] : {},
         ...nextProps,
     };
 })
@@ -70,10 +73,40 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
             lang,
             setActiveOrderItem,
             setPreviewElement,
-            match: { params: { group, subgroup } },
+            match: { params: { group, subgroup, garment }, url },
             filterStore,
-            match
+            match,
+            SubgroupsStore,
+            defaultValues,
         } = this.props;
+
+        const $store = SubgroupsStore.data as SubgroupsI;
+
+        const data = $store
+            ? [
+                ...$store.design.map((v: Subgroup) => filterFields(
+                    v,
+                    'design',
+                    lang!,
+                    orderStore!,
+                    garment,
+                    defaultValues
+                )),
+            ]
+            : [];
+
+        const dataFitting = $store
+            ? [
+                ...$store.fitting.map((v: Subgroup) => filterFields(
+                    v,
+                    'fitting',
+                    lang!,
+                    orderStore!,
+                    'shirt',
+                    defaultValues
+                )),
+            ]
+            : [];
 
         if (group === 'design' && subgroup === 'initials_text') {
             return <div style={{ padding: '1.333rem 0 0 0', width: '100%' }}><InitialsCustomInput /></div>;
@@ -88,47 +121,75 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                         lang={lang}
                         items={items}
                         orderStore={orderStore}
+                        dataFitting={dataFitting}
+                        garment={garment}
+                        group={group}
+                        url={url}
                     />
                 )
                 : (
-                    <> {/* Заглушка */}
-                    {group === 'design' && (
-                        <div className={'nav-overflow'}>
-                            <div className={'design-navigation-wrapper'}>
-                                <a href="/random" className={'design-navigation'}>Все</a>
-                                <a href="/random" className={'design-navigation _active'}>Воротник</a>
-                                <a href="/random" className={'design-navigation'}>Манжет</a>
-                                <a href="/random" className={'design-navigation'}>Перед</a>
-                             </div>
-                        </div>
-                    )}
-                    <div
-                        style={
-                            {
-                                display: 'contents',
-                                visibility: this.props.app && this.props.app.searchedItemsCount ?
-                                    'visible' : 'hidden'
+                    <>
+                        {group === 'design' && (
+                            <div className={'nav-overflow'}>
+                                <div className={'design-navigation-wrapper'}>
+                                    <Link
+                                        to={`/order/details/${garment}/${group}`}
+                                        className={'design-navigation'}
+                                    >
+                                        Все
+                                    </Link>
+                                    {data.map(item => {
+                                        const isActive = url.includes(item.id);
+                                        return (
+                                            <div
+                                                key={item.id}
+                                                ref={(element) =>
+                                                    element &&
+                                                    isActive &&
+                                                    element.scrollIntoView(
+                                                        { behavior: 'smooth', block: 'end', inline: 'nearest' }
+                                                    )}
+                                            >
+                                                <Link
+                                                    to={`/order/details/${garment}/${item.link}`}
+                                                    className={`design-navigation ${isActive ? '_active' : ''}`}
+                                                    key={item.id}
+                                                >
+                                                    {item.linkName}
+                                                </Link>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                        <div
+                            style={
+                                {
+                                    display: 'contents',
+                                    visibility: this.props.app && this.props.app.searchedItemsCount ?
+                                        'visible' : 'hidden'
+                                }
                             }
-                        }
-                    >
-                        <Component
-                            key={(items || [])
-                                .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
-                            lang={lang}
-                            match={match}
-                            setActiveOrderItem={setActiveOrderItem}
-                            setPreviewElement={setPreviewElement}
-                            items={items}
-                            galleryStore={galleryStore}
-                            group={group}
-                            filterStore={filterStore}
-                            orderStore={orderStore}
-                            activeElement={orderStore.activeElement}
-                            previewElement={orderStore.previewElement}
-                            activeOrderItem={this.props.activeOrderItem}
-                            app={this.props.app}
-                        />
-                    </div>
+                        >
+                            <Component
+                                key={(items || [])
+                                    .reduce((acc: string, item: GalleryStoreItem) => acc += item.our_code, 'key')}
+                                lang={lang}
+                                match={match}
+                                setActiveOrderItem={setActiveOrderItem}
+                                setPreviewElement={setPreviewElement}
+                                items={items}
+                                galleryStore={galleryStore}
+                                group={group}
+                                filterStore={filterStore}
+                                orderStore={orderStore}
+                                activeElement={orderStore.activeElement}
+                                previewElement={orderStore.previewElement}
+                                activeOrderItem={this.props.activeOrderItem}
+                                app={this.props.app}
+                            />
+                        </div>
                     </>
                 )
         );
@@ -144,7 +205,7 @@ class Gallery extends React.Component<GalleryContainerProps> {
         } = this.props;
         return (
             <>
-                 {group === 'fabric_ref' && <ToggleBar garment={garment} />}
+                {group === 'fabric_ref' && <ToggleBar garment={garment} />}
                 <GalleryBlock {...this.props} />
             </>
         );

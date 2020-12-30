@@ -91,6 +91,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         if (!this.state.load.success) {
             return null;
         }
+
         // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна не надо будет притрагиваиться
         // только при рефакторе всего проекта
         if (this.props.filterStore) {

@@ -5,6 +5,8 @@
         height: 20px;
         margin-right: 0.9rem;
         z-index: 5;
+        top: 50%;
+        transform: translateY(-50%);
 }
 .custom__control-btn .span:before {
     content: '';
@@ -20,6 +22,8 @@
     -o-transition: .35s ease;
     transition: .35s ease;
 }
+
+
 .toggle {
     display: flex;
     margin-left: auto;
@@ -99,6 +103,8 @@
     .toggle {
         overflow-x: auto;
         white-space: nowrap;
+        padding: 10px 0;
+        margin-bottom: -10px;
     }
     .toggle-wrap {
         padding: 1rem;

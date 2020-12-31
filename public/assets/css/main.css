@@ -215,6 +215,9 @@
   .main.main--bg-grey {
     background-color: #eceeee;
   }
+  .main--white {
+    z-index: 1;
+  }
 }
 
 .main--white {

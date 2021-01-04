@@ -7,9 +7,11 @@
   display flex
   align-items center
   justify-content center
+  width 100%
   .login
     position relative
-    width: 68rem
+    max-width: 68rem
+    width: 90%
     background url('/assets/img/leadform_background.jpg') no-repeat right
     background-size cover
     padding 5.25rem
@@ -33,8 +35,13 @@
     @media only screen and (max-width: 450px)
       padding: 50% 3.5rem 2.5rem 3.5rem
 
+    @media only screen and (min-width: 450px) and (max-width: 1024px)
+      .button.white,
+      .button.black
+        width 13.3333rem
+
       .button.white
-        width: 100%;
+        margin-right: 12px; 
 
     & .text
       text-align right
@@ -149,7 +156,6 @@
 
       label.cb-text
         padding-top 2px
-        //font-size .86666rem
 
     &__language-control
         position absolute

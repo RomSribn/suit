@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { loc } from './loc';
+import { Link } from 'react-router-dom';
 import { isMobile, isLandscape, isTablet } from '../../../utils';
 import { inject, observer } from 'mobx-react';
 import { GroupChoiceProps } from './typings';
@@ -63,6 +64,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             order,
             lang,
             subgroupsStore,
+            backLink,
             userStore,
         } = this.props;
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
@@ -116,8 +118,14 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             <>
                                 <span className="custom__name">{name}:</span>
                                 <span className="custom__status">{itemValue}</span>
+                                {(subgroup === 'fitting') || (subgroup === 'design') && (
+                                    <Link to={backLink} className="custom__control-btn">
+                                        <span className="span" />
+                                    </Link>
+                                )}
                             </>
                         )}
+
                 </span>
             </>
         );
@@ -133,6 +141,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     >
                         <form
                             style={{
+                                display: 'none',
                                 cursor: 'pointer',
                                 transition: '0.3s',
                                 transform:

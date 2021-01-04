@@ -189,8 +189,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             isLandscapeInitial ?
                 /** У элемента превью элемента есть отступ 5px + 2 бордеры с обеих сторон по 1px */
                 `width: calc(100% - ${(ref && ref.offsetWidth ? ref.offsetWidth + 7 : 0)}px);` :
-                `height: calc(100% - ${
-                (ref ? ref.offsetHeight : 0) ? (this.galleryBarWrapperRef.current.offsetWidth + 10) : 0}px);`
+                `height: calc(100% - ${(ref ? ref.offsetHeight : 0) ?
+                    (this.galleryBarWrapperRef.current.offsetWidth + 10) :
+                    0}px);`
         );
     }
 
@@ -221,6 +222,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             group: this.props.galleryStore.subGroup,
             subGroup: this.props.galleryStore.group
         };
+
         if (action === 'enter') {
             this.props.setPreviewElement({
                 ...elementInfo,
@@ -378,16 +380,16 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                     <div className="gallery__footer-header">
                         <h2 className="gallery__footer--title">{title || 'title'}</h2>
 
-                            <div className="gallery__footer--articul">
-                                {this.props.app &&
-                                    <Button
-                                        onClick={this.props.app.toggleSwiperPopup}
-                                        className="gallery__footer--detailButton"
-                                    >
-                                        {loc[lang].details}
-                                    </Button>
-                                }
-                            </div>
+                        <div className="gallery__footer--articul">
+                            {this.props.app &&
+                                <Button
+                                    onClick={this.props.app.toggleSwiperPopup}
+                                    className="gallery__footer--detailButton"
+                                >
+                                    {loc[lang].details}
+                                </Button>
+                            }
+                        </div>
                     </div>
                     {!isMobile() && <div className="gallery__footer--txt">
                         <p className="gallery__footer--txt-clamp">

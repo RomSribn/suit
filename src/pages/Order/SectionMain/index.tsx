@@ -48,9 +48,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     style={!isRealIndexPage ? {
                         transform: isMobile() ? `translateY(${this.props.isMenuUncovered ? 10 : 70}%)` : 'unset',
                         transition: '0.5s',
-                        justifyContent: !detailsDeep
-                            ? 'flex-start'
-                            : 'center',
+                        justifyContent: 'space-between',
                     } : {
                             display: 'flex',
                             flexDirection: 'row',

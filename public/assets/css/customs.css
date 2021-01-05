@@ -96,6 +96,8 @@
 
 .custom__content {
   display: flex;
+  align-items: center;
+  width: 70%;
 }
 
 .custom__name {
@@ -236,7 +238,6 @@
     text-overflow: ellipsis;
     align-items: center;
     white-space: nowrap;
-    display: block;
   }
 
   .custom.custom__no-pointer .custom__content {

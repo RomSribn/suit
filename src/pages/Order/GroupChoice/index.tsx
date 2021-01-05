@@ -131,6 +131,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         );
 
         let lastParametr = this.props.match.url.split('/');
+        const pathArray = window.location.pathname.split('/');
 
         return (
             <>
@@ -141,7 +142,12 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                     >
                         <form
                             style={{
-                                display: 'none',
+                                display:
+                                    pathArray[pathArray.length - 1] === 'fabric' ||
+                                        pathArray[pathArray.length - 1] === 'design' ||
+                                        pathArray[pathArray.length - 1] === 'fitting' ?
+                                        'block' :
+                                        'none',
                                 cursor: 'pointer',
                                 transition: '0.3s',
                                 transform:
@@ -164,7 +170,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     className="search__icon"
                                     onClick={() => {
                                         // Disable search button at the "Все" submenu page
-                                        const pathArray = window.location.pathname.split('/');
                                         const isSubmenuPage =
                                             pathArray[pathArray.length - 1] === 'design' ||
                                             pathArray[pathArray.length - 1] === 'fitting';
@@ -221,19 +226,35 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             </div>
                         </form>
 
-                        {isMobile() &&
-                            showFilterBtn &&
-                            !this.props.app!.isSearchBarOpened && (
-                                <Controll
-                                    disableBtn={group !== 'fabric'}
-                                    openModal={this.openModal}
-                                />
-                            )}
-
-                        {!isMobile() &&
-                            lastParametr[lastParametr.length - 1] === 'fabric' && (
-                                <Controll openModal={this.openModal} />
-                            )}
+                        <div
+                            style={{
+                                display: isMobile() &&
+                                    showFilterBtn &&
+                                    !this.props.app!.isSearchBarOpened ?
+                                    'block' :
+                                    'none',
+                                position: 'relative',
+                                zIndex: 5
+                            }}
+                        >
+                            <Controll
+                                disableBtn={group !== 'fabric'}
+                                openModal={this.openModal}
+                                isClearFilters={false}
+                            />
+                        </div>
+                        <div
+                            style={{
+                                display: !isMobile() &&
+                                    lastParametr[lastParametr.length - 1] === 'fabric' ?
+                                    'block' :
+                                    'none',
+                                position: 'relative',
+                                zIndex: 5
+                            }}
+                        >
+                            <Controll openModal={this.openModal} isClearFilters={false} />
+                        </div>
                     </div>
                 </div>
 

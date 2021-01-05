@@ -39,6 +39,7 @@ interface _ControllProps {
     toggleIsSearchBarOpened?: () => void;
     openModal: () => void;
     disableBtn?: boolean;
+    isClearFilters?: boolean;
 }
 interface DefaultControllProps {
     isSearchBarOpened: boolean;

@@ -119,9 +119,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                 <span className="custom__name">{name}:</span>
                                 <span className="custom__status">{itemValue}</span>
                                 {(subgroup === 'fitting') || (subgroup === 'design') && (
-                                    <Link to={backLink} className="custom__control-btn">
+                                    <div className="custom__control-btn">
                                         <span className="span" />
-                                    </Link>
+                                    </div>
                                 )}
                             </>
                         )}
@@ -132,133 +132,140 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
 
         let lastParametr = this.props.match.url.split('/');
         const pathArray = window.location.pathname.split('/');
+        const isShowFilterBtn = isMobile() ?
+            showFilterBtn && !this.props.app!.isSearchBarOpened :
+            lastParametr[lastParametr.length - 1] === 'fabric';
 
         return (
             <>
-                <div className="custom custom--open" style={{ overflow: 'hidden' }}>
-                    {content}
-                    <div
-                        className="custom__control_new"
-                    >
-                        <form
-                            style={{
-                                display:
-                                    pathArray[pathArray.length - 1] === 'fabric' ||
-                                        pathArray[pathArray.length - 1] === 'design' ||
-                                        pathArray[pathArray.length - 1] === 'fitting' ?
+                <Link to={(subgroup === 'fitting') || (subgroup === 'design') ? backLink : '#'}>
+                    <div className="custom custom--open" style={{ overflow: 'hidden' }}>
+                        {content}
+                        <div
+                            className="custom__control_new"
+                        >
+                            <form
+                                style={{
+                                    display:
+                                        pathArray[pathArray.length - 1] === 'fabric' ||
+                                            pathArray[pathArray.length - 1] === 'design' ||
+                                            pathArray[pathArray.length - 1] === 'fitting' ?
+                                            'block' :
+                                            'none',
+                                    cursor: 'pointer',
+                                    transition: '0.3s',
+                                    transform:
+                                        this.props.app && this.props.app.isSearchBarOpened
+                                            ? 'unset'
+                                            : isMobile()
+                                                ? 'translateX(60%)'
+                                                : 'translateX(74%)',
+                                }}
+                                className="search"
+                            >
+                                <div
+                                    style={{ background: 'transparent' }}
+                                    className="search__control"
+                                >
+                                    <span
+                                        style={{
+                                            zIndex: 9999,
+                                        }}
+                                        className="search__icon"
+                                        onClick={() => {
+                                            // Disable search button at the "Все" submenu page
+                                            const isSubmenuPage =
+                                                pathArray[pathArray.length - 1] === 'design' ||
+                                                pathArray[pathArray.length - 1] === 'fitting';
+
+                                            if (isSubmenuPage) {
+                                                return;
+                                            }
+
+                                            this.props.app!.toggleIsSearchBarOpened();
+                                            if (this.props.filterStore!.isOpen) {
+                                                this.props.filterStore!.toggleOpen();
+                                            }
+                                            if (isMobile()) {
+                                                this.setState({ showFilterBtn: !showFilterBtn });
+                                            }
+                                        }}
+                                    />
+                                    <input
+                                        style={{
+                                            background: 'transparent',
+                                            visibility:
+                                                this.props.app && this.props.app.isSearchBarOpened
+                                                    ? 'visible'
+                                                    : 'hidden',
+                                        }}
+                                        type="search"
+                                        maxLength={150}
+                                        autoComplete="off"
+                                        onChange={(e) =>
+                                            this.props.app &&
+                                            this.props.app.setCurrentSearchValue(e.target.value)
+                                        }
+                                        className="search__input"
+                                        placeholder={loc[lang].search}
+                                    />
+                                    <span
+                                        className={`icon-close search__clear search__fabric
+                                        ${this.props.app &&
+                                                this.props.app.isSearchBarOpened
+                                                ? 'show'
+                                                : ''
+                                            }`}
+                                        title="Clear"
+                                        onClick={() => {
+                                            this.props.app!.toggleIsSearchBarOpened();
+                                            if (isMobile()) {
+                                                this.setState({ showFilterBtn: !showFilterBtn });
+                                            }
+                                        }}
+                                        style={{
+                                            width: '30px',
+                                        }}
+                                    />
+                                </div>
+                            </form>
+
+                            <div
+                                style={{
+                                    display: isShowFilterBtn ?
                                         'block' :
                                         'none',
-                                cursor: 'pointer',
-                                transition: '0.3s',
-                                transform:
-                                    this.props.app && this.props.app.isSearchBarOpened
-                                        ? 'unset'
-                                        : isMobile()
-                                            ? 'translateX(60%)'
-                                            : 'translateX(74%)',
-                            }}
-                            className="search"
-                        >
-                            <div
-                                style={{ background: 'transparent' }}
-                                className="search__control"
+                                    position: 'relative',
+                                    zIndex: 5
+                                }}
                             >
-                                <span
-                                    style={{
-                                        zIndex: 9999,
-                                    }}
-                                    className="search__icon"
-                                    onClick={() => {
-                                        // Disable search button at the "Все" submenu page
-                                        const isSubmenuPage =
-                                            pathArray[pathArray.length - 1] === 'design' ||
-                                            pathArray[pathArray.length - 1] === 'fitting';
-
-                                        if (isSubmenuPage) {
-                                            return;
-                                        }
-
-                                        this.props.app!.toggleIsSearchBarOpened();
-                                        if (this.props.filterStore!.isOpen) {
-                                            this.props.filterStore!.toggleOpen();
-                                        }
-                                        if (isMobile()) {
-                                            this.setState({ showFilterBtn: !showFilterBtn });
-                                        }
-                                    }}
-                                />
-                                <input
-                                    style={{
-                                        background: 'transparent',
-                                        visibility:
-                                            this.props.app && this.props.app.isSearchBarOpened
-                                                ? 'visible'
-                                                : 'hidden',
-                                    }}
-                                    type="search"
-                                    maxLength={150}
-                                    autoComplete="off"
-                                    onChange={(e) =>
-                                        this.props.app &&
-                                        this.props.app.setCurrentSearchValue(e.target.value)
-                                    }
-                                    className="search__input"
-                                    placeholder={loc[lang].search}
-                                />
-                                <span
-                                    className={`icon-close search__clear search__fabric
-                                        ${this.props.app &&
-                                            this.props.app.isSearchBarOpened
-                                            ? 'show'
-                                            : ''
-                                        }`}
-                                    title="Clear"
-                                    onClick={() => {
-                                        this.props.app!.toggleIsSearchBarOpened();
-                                        if (isMobile()) {
-                                            this.setState({ showFilterBtn: !showFilterBtn });
-                                        }
-                                    }}
-                                    style={{
-                                        width: '30px',
-                                    }}
+                                <Controll
+                                    disableBtn={isMobile() ? group !== 'fabric' : undefined}
+                                    openModal={this.openModal}
+                                    isClearFilters={false}
                                 />
                             </div>
-                        </form>
-
-                        <div
-                            style={{
-                                display: isMobile() &&
-                                    showFilterBtn &&
-                                    !this.props.app!.isSearchBarOpened ?
-                                    'block' :
-                                    'none'
-                            }}
-                        >
-                            <Controll
-                                disableBtn={group !== 'fabric'}
-                                openModal={this.openModal}
-                                isClearFilters={false}
-                            />
-                        </div>
-                        <div
-                            style={{
-                                display: !isMobile() &&
-                                    lastParametr[lastParametr.length - 1] === 'fabric' ?
-                                    'block' :
-                                    'none'
-                            }}
-                        >
-                            <Controll openModal={this.openModal} isClearFilters={false} />
+                            {/* <div
+                                style={{
+                                    display: !isMobile() &&
+                                        lastParametr[lastParametr.length - 1] === 'fabric' ?
+                                        'block' :
+                                        'none',
+                                    position: 'relative',
+                                    zIndex: 5
+                                }}
+                            >
+                                <Controll openModal={this.openModal} isClearFilters={false} />
+                            </div> */}
                         </div>
                     </div>
-                </div>
 
-                {modalIsOpen && (
-                    <PopUp open={modalIsOpen} onClose={this.closeModal}>
-                        <Filter onClose={this.closeModal} />
-                    </PopUp>
-                )}
+                    {modalIsOpen && (
+                        <PopUp open={modalIsOpen} onClose={this.closeModal}>
+                            <Filter onClose={this.closeModal} />
+                        </PopUp>
+                    )}
+                </Link>
             </>
         );
     }

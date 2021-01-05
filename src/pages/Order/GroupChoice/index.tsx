@@ -240,6 +240,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                 }}
                             >
                                 <Controll
+                                    isFabric={pathArray[pathArray.length - 1] === 'fabric'}
                                     disableBtn={isMobile() ? group !== 'fabric' : undefined}
                                     openModal={this.openModal}
                                     isClearFilters={false}

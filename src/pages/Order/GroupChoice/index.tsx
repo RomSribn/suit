@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { loc } from './loc';
-import { Link } from 'react-router-dom';
-import { isMobile, isLandscape, isTablet } from '../../../utils';
-import { inject, observer } from 'mobx-react';
-import { GroupChoiceProps } from './typings';
+import './styles.styl';
 import { CommonStores } from '../../../types/commonStores';
 import { Controll, Filter } from '../Filter';
-import './styles.styl';
+import { GroupChoiceProps } from './typings';
+import { inject, observer } from 'mobx-react';
+import { isMobile, isLandscape, isTablet } from '../../../utils';
+import { Link } from 'react-router-dom';
+import { loc } from './loc';
 import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
 import { PopUp } from '../../../containers/Popup';
 
@@ -245,18 +245,6 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     isClearFilters={false}
                                 />
                             </div>
-                            {/* <div
-                                style={{
-                                    display: !isMobile() &&
-                                        lastParametr[lastParametr.length - 1] === 'fabric' ?
-                                        'block' :
-                                        'none',
-                                    position: 'relative',
-                                    zIndex: 5
-                                }}
-                            >
-                                <Controll openModal={this.openModal} isClearFilters={false} />
-                            </div> */}
                         </div>
                     </div>
 

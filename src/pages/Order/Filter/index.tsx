@@ -79,9 +79,11 @@ class Controll extends React.Component<_ControllProps> {
             isSearchBarOpened,
             toggleIsSearchBarOpened,
             disableBtn,
+            isFabric
         } = this.props;
         return (
             <ControllComponent
+                isFabric={isFabric}
                 isSearchBarOpened={isSearchBarOpened!}
                 filterStore={filterStore}
                 isOpen={isOpen!}

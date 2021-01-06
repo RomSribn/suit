@@ -71,24 +71,29 @@
   height: 100%;
   background-color: #8a8a8a;
 }
+
 .custom.custom__no-pointer {
   cursor: default;
   padding-right: 0;
 }
+
 .custom.custom__no-pointer .custom__content {
   flex: 1;
   display: flex;
   height: 100%;
   align-items: center;
 }
+
 .custom.custom__no-pointer .custom__content .custom__status {
   display: flex;
   flex: 1;
   height: 100%;
 }
+
 .custom:last-child {
   margin-bottom: 0;
 }
+
 .custom__name {
   display: inline-block;
   vertical-align: bottom;
@@ -101,7 +106,6 @@
   display: inline-block;
   font-size: 0.86666rem;
   color: #8a8a8a;
-  height: 100%;
 }
 
 .custom__status input {
@@ -138,9 +142,11 @@
 .custom__control {
   z-index: 100;
 }
+
 .custom__control:hover {
   cursor: pointer;
 }
+
 .custom__control:before,
 .custom__control:after {
   content: '';
@@ -175,11 +181,13 @@
     font-size: 11px;
   }
 }
+
 @media only screen and (max-height: 700px) {
   .custom__status {
     font-size: 11px;
   }
 }
+
 @media only screen and (max-width: 450px) {
   .custom.custom__no-pointer {
     width: 100%;
@@ -195,6 +203,7 @@
     width: 94%;
     margin: auto;
   }
+
   .customs--short {
     overflow-y: unset;
   }
@@ -208,12 +217,9 @@
 
   .custom .custom__content {
     width: 100%;
-    /*overflow-x: auto;*/
     text-overflow: ellipsis;
     align-items: center;
     white-space: nowrap;
-    display: block;
-    /*min-width: 180px;*/
   }
 
   .custom.custom__no-pointer .custom__content {
@@ -229,7 +235,4 @@
   .search__fabric.show {
     transform: translateX(10px);
   }
-  /*.custom__control {*/
-  /*    display: none;*/
-  /*}*/
 }

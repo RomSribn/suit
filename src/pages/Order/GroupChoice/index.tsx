@@ -90,7 +90,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                 choiceItemValue &&
                 choiceItemValue!.length > 15) ||
                 !(isMobile || (isTablet() && !isLandscape()))
-                ? choiceItemValue!.slice(0, 12) + '...'
+                ? choiceItemValue!.slice(0, 12) + '…'
                 : choiceItemValue;
 
         let itemFound: Subgroup | null = null;

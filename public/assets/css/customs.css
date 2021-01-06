@@ -94,12 +94,6 @@
   margin-bottom: 0;
 }
 
-.custom__content {
-  display: flex;
-  align-items: center;
-  width: 70%;
-}
-
 .custom__name {
   display: inline-block;
   vertical-align: bottom;
@@ -113,12 +107,6 @@
   display: inline-block;
   font-size: 0.86666rem;
   color: #8a8a8a;
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-  max-width: 100px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .custom__status input {

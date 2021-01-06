@@ -5,7 +5,7 @@ import { CommonStores } from '../../../types/commonStores';
 import { Controll, Filter } from '../Filter';
 import { GroupChoiceProps } from './typings';
 import { inject, observer } from 'mobx-react';
-import { isMobile, isLandscape, isTablet } from '../../../utils';
+import { isMobile as isMobileCheck, isLandscape, isTablet } from '../../../utils';
 import { Link } from 'react-router-dom';
 import { loc } from './loc';
 import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
@@ -68,6 +68,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             userStore,
         } = this.props;
         const fixedGarment = subgroup === 'fitting' ? 'shirt' : garment;
+        const isMobile = isMobileCheck();
 
         let choiceItemValue: string | undefined;
         if (group === 'initials_text') {
@@ -84,11 +85,11 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         }
 
         const itemValue =
-            (isMobile() &&
+            (isMobile &&
                 !isLandscape() &&
                 choiceItemValue &&
                 choiceItemValue!.length > 15) ||
-                !(isMobile() || (isTablet() && !isLandscape()))
+                !(isMobile || (isTablet() && !isLandscape()))
                 ? choiceItemValue!.slice(0, 12) + '...'
                 : choiceItemValue;
 
@@ -104,11 +105,14 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
         }
 
         const name = itemFound ? itemFound.title[lang] : '';
+        let matchUrlPathArray = this.props.match.url.split('/');
+        const pathArray = window.location.pathname.split('/');
+        const lastParametr = pathArray[pathArray.length - 1];
 
         const content = (
             <>
                 <span className="custom__content">
-                    {isMobile() && !this.props.app!.isSearchBarOpened ? (
+                    {isMobile && !this.props.app!.isSearchBarOpened ? (
                         <Navlinks
                             garment={fixedGarment}
                             isAuth={userStore!.isAuth}
@@ -118,7 +122,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             <>
                                 <span className="custom__name">{name}:</span>
                                 <span className="custom__status">{itemValue}</span>
-                                {(subgroup === 'fitting') || (subgroup === 'design') && (
+                                {(lastParametr !== 'fabric') && (
                                     <div className="custom__control-btn">
                                         <span className="span" />
                                     </div>
@@ -130,15 +134,13 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
             </>
         );
 
-        let lastParametr = this.props.match.url.split('/');
-        const pathArray = window.location.pathname.split('/');
-        const isShowFilterBtn = isMobile() ?
-            showFilterBtn && !this.props.app!.isSearchBarOpened :
-            lastParametr[lastParametr.length - 1] === 'fabric';
+        const isShowFilterBtn = isMobile ?
+            (showFilterBtn && !this.props.app!.isSearchBarOpened) :
+            matchUrlPathArray[matchUrlPathArray.length - 1] === 'fabric';
 
         return (
             <>
-                <Link to={(subgroup === 'fitting') || (subgroup === 'design') ? backLink : '#'}>
+                <Link to={!isMobile && ((subgroup === 'fitting') || (subgroup === 'design')) ? backLink : '#'}>
                     <div className="custom custom--open" style={{ overflow: 'hidden' }}>
                         {content}
                         <div
@@ -147,9 +149,9 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                             <form
                                 style={{
                                     display:
-                                        pathArray[pathArray.length - 1] === 'fabric' ||
-                                            pathArray[pathArray.length - 1] === 'design' ||
-                                            pathArray[pathArray.length - 1] === 'fitting' ?
+                                        lastParametr === 'fabric' ||
+                                            lastParametr === 'design' ||
+                                            lastParametr === 'fitting' ?
                                             'block' :
                                             'none',
                                     cursor: 'pointer',
@@ -157,7 +159,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                     transform:
                                         this.props.app && this.props.app.isSearchBarOpened
                                             ? 'unset'
-                                            : isMobile()
+                                            : isMobile
                                                 ? 'translateX(60%)'
                                                 : 'translateX(74%)',
                                 }}
@@ -175,8 +177,8 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         onClick={() => {
                                             // Disable search button at the "Все" submenu page
                                             const isSubmenuPage =
-                                                pathArray[pathArray.length - 1] === 'design' ||
-                                                pathArray[pathArray.length - 1] === 'fitting';
+                                                lastParametr === 'design' ||
+                                                lastParametr === 'fitting';
 
                                             if (isSubmenuPage) {
                                                 return;
@@ -186,7 +188,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                             if (this.props.filterStore!.isOpen) {
                                                 this.props.filterStore!.toggleOpen();
                                             }
-                                            if (isMobile()) {
+                                            if (isMobile) {
                                                 this.setState({ showFilterBtn: !showFilterBtn });
                                             }
                                         }}
@@ -219,7 +221,7 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                         title="Clear"
                                         onClick={() => {
                                             this.props.app!.toggleIsSearchBarOpened();
-                                            if (isMobile()) {
+                                            if (isMobile) {
                                                 this.setState({ showFilterBtn: !showFilterBtn });
                                             }
                                         }}
@@ -240,8 +242,8 @@ class GroupChoice extends React.PureComponent<GroupChoiceProps> {
                                 }}
                             >
                                 <Controll
-                                    isFabric={pathArray[pathArray.length - 1] === 'fabric'}
-                                    disableBtn={isMobile() ? group !== 'fabric' : undefined}
+                                    isFabric={lastParametr === 'fabric'}
+                                    disableBtn={isMobile ? group !== 'fabric' : undefined}
                                     openModal={this.openModal}
                                     isClearFilters={false}
                                 />

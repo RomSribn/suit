@@ -10,7 +10,7 @@ class Controll extends React.Component<ControllProps> {
     };
 
     componentDidMount() {
-        if (!this.props.isOpen) {
+        if (!this.props.isOpen && this.props.isFabric) {
             this.props.onCLick();
         }
     }
@@ -33,7 +33,7 @@ class Controll extends React.Component<ControllProps> {
                 )}
                 disabled={disableBtn}
                 onClick={() => {
-                    if ( !isMobile() ) {
+                    if (!isMobile()) {
                         onCLick();
                         if (isSearchBarOpened) { toggleIsSearchBarOpened!(); }
                         return;

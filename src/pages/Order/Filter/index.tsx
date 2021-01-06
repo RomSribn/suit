@@ -64,8 +64,11 @@ class Controll extends React.Component<_ControllProps> {
     }
 
     componentWillUnmount() {
-        this.closeFilter();
+        if (this.props.isClearFilters) {
+            this.closeFilter();
+        }
     }
+
     render() {
         const {
             isOpen,
@@ -76,9 +79,11 @@ class Controll extends React.Component<_ControllProps> {
             isSearchBarOpened,
             toggleIsSearchBarOpened,
             disableBtn,
+            isFabric
         } = this.props;
         return (
             <ControllComponent
+                isFabric={isFabric}
                 isSearchBarOpened={isSearchBarOpened!}
                 filterStore={filterStore}
                 isOpen={isOpen!}

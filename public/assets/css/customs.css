@@ -1,25 +1,23 @@
-.customs{
-    flex-grow: 1;
-    width: 100%;
-    /*overflow-y: auto;*/
-    margin-bottom: calc(2.4rem + 4px);
+.customs {
+  flex-grow: 1;
+  width: 100%;
+  margin-bottom: calc(2.4rem + 4px);
 }
+
 .custom__control_new {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
-.control__searchBar {
-    /* display: none; */
-}
-.customs--no-scroll{
-    overflow: hidden;
-    padding: 0;
+
+.customs--no-scroll {
+  overflow: hidden;
+  padding: 0;
 }
 
 .search__fabric {
-    animation: unset;
-    animation-fill-mode: forwards;
-    visibility: hidden;
+  animation: unset;
+  animation-fill-mode: forwards;
+  visibility: hidden;
 }
 
 .search__fabric {
@@ -27,201 +25,221 @@
   visibility: hidden;
   transition: opacity 0.3s, visibility 0.3s linear 0.3s;
 }
+
 .search__fabric.show {
   opacity: 1;
   visibility: visible;
   transition-delay: 0.3s;
 }
 
-.customs--short{
-    flex-grow: 0;
-    /*overflow-y: auto;*/
-    padding-right: 0;
-    /*min-height: 2.9333rem;*/
-    margin-bottom: 0;
-    max-height: 100%;
+.customs--short {
+  flex-grow: 0;
+  padding-right: 0;
+  margin-bottom: 0;
+  max-height: 100%;
 }
 
-.customs--short .design-items-wrapper{
-    display: block;
-    max-height: 100%;
-    overflow-y: auto;
+.customs--short .design-items-wrapper {
+  display: block;
+  max-height: 100%;
+  overflow-y: auto;
 }
-.custom{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.3333rem 0 1.3333rem;
-    margin-bottom: 1rem;
-    min-height: 2.9333rem;
-    background: #eceeee;
-    color: black;
-    position: relative;
-    cursor: pointer;
+
+.custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.3333rem 0 1.3333rem;
+  margin-bottom: 1rem;
+  min-height: 2.9333rem;
+  background: #eceeee;
+  color: black;
+  position: relative;
+  cursor: pointer;
 }
 
 .custom._design {
-    padding: 0 3.5rem 0 1.3333rem;
-    min-height: 2.9333rem;
+  padding: 0 3.5rem 0 1.3333rem;
+  min-height: 2.9333rem;
 }
 
 .custom--chosen::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background-color: #8a8a8a;
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #8a8a8a;
 }
+
 .custom.custom__no-pointer {
-    cursor: default;
-    padding-right: 0;
+  cursor: default;
+  padding-right: 0;
 }
+
 .custom.custom__no-pointer .custom__content {
-    flex: 1;
-    display: flex;
-    height: 100%;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
+
 .custom.custom__no-pointer .custom__content .custom__status {
-    display: flex;
-    flex: 1;
-    height: 100%;
+  display: flex;
+  flex: 1;
+  height: 100%;
 }
-.custom:last-child{margin-bottom: 0;}
-.custom__name{
-    display: inline-block;
-    vertical-align: bottom;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-right: .9333rem;
+
+.custom:last-child {
+  margin-bottom: 0;
 }
-.custom__status{
-    display: inline-block;
-    font-size: .86666rem;
-    color: #8a8a8a;
-    height: 100%;
+
+.custom__name {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-right: 0.9333rem;
+}
+
+.custom__status {
+  display: inline-block;
+  font-size: 0.86666rem;
+  color: #8a8a8a;
 }
 
 .custom__status input {
-    height: 100%;
-    width: 100%;
-    border: none;
-    background: none;
-    color: #8a8a8a;
+  height: 100%;
+  width: 100%;
+  border: none;
+  background: none;
+  color: #8a8a8a;
 }
 
-.custom__status input::-webkit-input-placeholder { /* Chrome */
-    color: #8a8a8a;
+.custom__status input::-webkit-input-placeholder {
+  /* Chrome */
+  color: #8a8a8a;
 }
-.custom__status input:-ms-input-placeholder { /* IE 10+ */
-    color: #8a8a8a;
+
+.custom__status input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #8a8a8a;
 }
-.custom__status input::-moz-placeholder { /* Firefox 19+ */
-    color: #8a8a8a;
-    opacity: 1;
+
+.custom__status input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #8a8a8a;
+  opacity: 1;
 }
-.custom__status input:-moz-placeholder { /* Firefox 4 - 18 */
-    color: #8a8a8a;
-    opacity: 1;
+
+.custom__status input:-moz-placeholder {
+  /* Firefox 4 - 18 */
+  color: #8a8a8a;
+  opacity: 1;
 }
 
 .custom__status input:focus {
-    outline-width: 0;
+  outline-width: 0;
 }
 
 .custom__control {
-    z-index: 100;
+  z-index: 100;
 }
+
 .custom__control:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
+
 .custom__control:before,
-.custom__control:after{
-    content: '';
-    display: block;
-    width: 1.3333rem;
-    height: 2px;
-    background: #000;
-    position: absolute;
-    top: 48%;
-    right: 1.3333rem;
-    margin-top: -1px;
-    -webkit-transition: .35s ease;
-    -o-transition: .35s ease;
-    transition: .35s ease;
-}
-.custom__control:after{
-    -webkit-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-.custom--open .custom__control:after{
-    -webkit-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -o-transform: rotate(0);
-    transform: rotate(0);
-    opacity: 0;
+.custom__control:after {
+  content: '';
+  display: block;
+  width: 1.3333rem;
+  height: 2px;
+  background: #000;
+  position: absolute;
+  top: 48%;
+  right: 1.3333rem;
+  margin-top: -1px;
+  -webkit-transition: 0.35s ease;
+  -o-transition: 0.35s ease;
+  transition: 0.35s ease;
 }
 
-@media only screen and (max-width : 1310px){
-    .custom__status{font-size: 11px;}
+.custom__control:after {
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
-@media only screen and (max-height : 700px){
-    .custom__status{font-size: 11px;}
+
+.custom--open .custom__control:after {
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
+  opacity: 0;
 }
+
+@media only screen and (max-width: 1310px) {
+  .custom__status {
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .custom__status {
+    font-size: 11px;
+  }
+}
+
 @media only screen and (max-width: 450px) {
-    .custom.custom__no-pointer {
-        width: 100%;
-        margin: 0 auto;
-        margin-bottom: 1.333rem;
-    }
+  .custom.custom__no-pointer {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 1.333rem;
+  }
 
-    .custom__control_new {
-        position: relative;
-    }
+  .custom__control_new {
+    position: relative;
+  }
 
-    .custom--short {
-        width: 94%;
-        margin: auto;
-    }
-    .customs--short{
-        overflow-y: unset;
-    }
+  .custom--short {
+    width: 94%;
+    margin: auto;
+  }
 
-    .custom--open {
-        padding: 0 1rem;
-        height: 50px;
-        width: 100%;
-        margin-bottom: 0;
-    }
+  .customs--short {
+    overflow-y: unset;
+  }
 
-    .custom .custom__content {
-        width: 100%;
-        /*overflow-x: auto;*/
-        text-overflow: ellipsis;
-        align-items: center;
-        white-space: nowrap;
-        display: block;
-        /*min-width: 180px;*/
-    }
+  .custom--open {
+    padding: 0 1rem;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 0;
+  }
 
-    .custom.custom__no-pointer .custom__content {
-        flex: initial;
-        display: initial;
-        height: auto;
-    }
-    .custom.custom__no-pointer .custom__content .custom__status {
-        display: initial;
-        flex: initial;
-    }
+  .custom .custom__content {
+    width: 100%;
+    text-overflow: ellipsis;
+    align-items: center;
+    white-space: nowrap;
+  }
 
-    .search__fabric.show {
-        transform: translateX(10px);
-    }
-    /*.custom__control {*/
-    /*    display: none;*/
-    /*}*/
+  .custom.custom__no-pointer .custom__content {
+    flex: initial;
+    display: initial;
+    height: auto;
+  }
+
+  .custom.custom__no-pointer .custom__content .custom__status {
+    display: initial;
+    flex: initial;
+  }
+
+  .search__fabric.show {
+    transform: translateX(10px);
+  }
 }

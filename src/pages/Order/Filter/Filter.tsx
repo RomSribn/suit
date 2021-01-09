@@ -17,7 +17,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
     };
 
     state = {
-        checked: false
+        checked: false,
     };
 
     toggleChecked() {
@@ -72,7 +72,7 @@ class FilterItem extends React.PureComponent<FilterItemProps> {
                     value={value}
                     name={group}
                     onChange={this.onChange}
-                    checked={checked}
+                    checked={!!checked}
                 />
                 { isColorGroup ?
                     <span

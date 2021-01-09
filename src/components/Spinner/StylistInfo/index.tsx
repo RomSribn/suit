@@ -14,7 +14,7 @@ const injector = <T extends CommonStores>(stores: T) => {
 
 @inject<CommonStores, {}, {}, {}>(injector)
 @observer
-class StylistInfoClass extends React.PureComponent<StylistInfoComponentProps> {
+class StylistInfoClass extends React.Component<StylistInfoComponentProps> {
     render() {
         const props = this.props;
         return <StylistInfoComponent lang={props.lang} />;

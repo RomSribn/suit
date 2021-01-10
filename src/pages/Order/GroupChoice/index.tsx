@@ -24,7 +24,7 @@ import { PopUp } from '../../../containers/Popup';
     }
 )
 @observer
-class GroupChoice extends React.PureComponent<GroupChoiceProps> {
+class GroupChoice extends React.Component<GroupChoiceProps> {
     state = {
         modalIsOpen: false,
         showFilterBtn: true,

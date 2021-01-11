@@ -48,7 +48,7 @@ const FIELDS: Field[] = [{
     render: (props: any) => {
         return (
             <>
-                <input {...props.input} className={props.className} placeholder={props.placeholder} required={true}/>
+                <input {...props.input} className={props.className} placeholder={props.placeholder} required={true} />
                 {props.meta.error && props.meta.touched && <div className="order-form__error">{props.meta.error}</div>}
             </>
         );
@@ -62,7 +62,7 @@ const FIELDS: Field[] = [{
 },
 ];
 
-class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, showLoginForm?: boolean}> {
+class SaveForm extends React.PureComponent<FormProps, { showThanks: boolean, showLoginForm?: boolean }> {
     state = {
         showThanks: false,
         showLoginForm: false,
@@ -107,19 +107,19 @@ class SaveForm extends React.PureComponent<FormProps, {showThanks: boolean, show
         } = this.props;
         const state = this.state;
 
-        const content  = state.showThanks
+        const content = state.showThanks
             // ? (<span>{loc[lang].thanksText}</span>)
             ? (
                 <>
                     <span className="order-form__subtitle">{loc[lang].thanksText}</span>
-                    <Redirect to="#thank_you"/>
+                    <Redirect to="#thank_you" />
                 </>
             )
             : (
                 <>
                     <div className="order-form">
                         {FIELDS.map((field) => (
-                            <div className="order-form__item">
+                            <div className="order-form__item" key={`field-${field.name}`}>
                                 <Field
                                     className="order-form__input"
                                     name={field.name}

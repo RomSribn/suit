@@ -1,13 +1,12 @@
 import React, { PureComponent, Component } from 'react';
-import { observer, inject } from 'mobx-react';
-import Widget3D from 'clothes-widget-3d';
-import { Redirect } from 'react-router';
 import _ from 'lodash';
-import { currentItems } from '../../stores/garments/galleryStore';
-import { isMobile, isTablet, isIpadPro, listeners } from '../../utils';
-
 import './styles.demo.styl';
-import {API_ROOT} from '../../config/routes';
+import { API_ROOT } from '../../config/routes';
+import { currentItems } from '../../stores/garments/galleryStore';
+import { isMobile, listeners } from '../../utils';
+import { observer, inject } from 'mobx-react';
+import { Redirect } from 'react-router';
+import Widget3D from 'clothes-widget-3d';
 
 const INITIALS = 'initials';
 
@@ -90,7 +89,9 @@ class Widget extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.assets !== this.props.assets) {
+    const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
+
+    if (!isEqualProps) {
       const exceptions = _.get(this, "props.orderStore.exceptions", []);
       const activeExceptions = _.get(this, "props.orderStore.activeElement.exception", []);
       const activeElementCode = _.get(this, "props.orderStore.activeElement.our_code", null);

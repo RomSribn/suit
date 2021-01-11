@@ -130,7 +130,14 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                 : (
                     <>
                         {group === 'design' && (
-                            <div className={'nav-overflow'}>
+                            <div
+                                className={'nav-overflow'}
+                                style={{
+                                    position: 'absolute',
+                                    paddingTop: 50,
+                                    zIndex: -1
+                                }}
+                            >
                                 <div className={'design-navigation-wrapper'}>
                                     <Link
                                         to={`/order/details/${garment}/${group}`}
@@ -201,7 +208,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
 class Gallery extends React.Component<GalleryContainerProps> {
     render() {
         const {
-            match: { params: { group, garment } },
+            match: { params: { group, garment } }
         } = this.props;
         return (
             <>

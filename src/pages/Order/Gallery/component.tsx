@@ -263,6 +263,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 }
                 if (subgroup === 'fabric') {
                     if (orderStore!.partOfShirtToggle === basisPart) {
+                        if (!newOrder[garment][0][group][subgroup]) {
+                            newOrder[garment][0][group][subgroup] = {};
+                        }
                         // устанавливаем код активной ткани
                         newOrder[garment][0][group][subgroup].our_code = newOrderItem.our_code;
                         newOrder[garment][0][group][subgroup].title = newOrderItem.title;

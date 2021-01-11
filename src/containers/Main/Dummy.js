@@ -190,8 +190,9 @@ class Widget extends PureComponent {
 
 const GROUPS = ['design', 'fabric_ref', 'fitting']
 let prevInfo = {};
-@inject(({order}) => ({
-  orderStore: order
+@inject(({order, garments: { garments }}) => ({
+  orderStore: order,
+  activeGarments: [...garments.activeGarments],
 }))
 @observer
 export default class App extends Component {
@@ -256,7 +257,7 @@ export default class App extends Component {
     /* eslint-enable */
   };
   render() {
-    const { orderStore } = this.props;
+    const { orderStore, activeGarments } = this.props;
     const { subgroup } = this.state;
     let selected = '';
     const activeElement = orderStore.activeElement || {};
@@ -266,7 +267,7 @@ export default class App extends Component {
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
     } else {
-      params = Object.keys(orderStore.order).reduce((acc, garment) => {
+      params = activeGarments.reduce((acc, garment) => {
         const curGarment = orderStore.order[garment];
         GROUPS.forEach(group => {
           Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
@@ -371,6 +372,14 @@ export default class App extends Component {
 
       }
     }
+    const defaultGarments = [...baseDummyElements]
+    if(activeGarments.includes('shirt')) {
+        defaultGarments.splice(defaultGarments.indexOf('shirt'), 1);
+    }
+    if(activeGarments.includes('pants')) {
+        defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
+    }
+
     wasRendered = true;
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
@@ -378,7 +387,8 @@ export default class App extends Component {
         selected={selected || ''}
         paramsSelectedCount={params.length}
         assets={[
-          ...params
+          ...params,
+          ...defaultGarments
         ]}
         onClickAsset={this.handleClickAsset}
         onDummyLoad={this.props.onDummyLoad}

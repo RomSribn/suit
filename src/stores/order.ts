@@ -111,6 +111,7 @@ export class OrderStore implements IOrderStore {
     @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
+    @observable orderDummyParams = observable.array();
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
     @observable previewElement: ActivePreviewElement | null = null;
@@ -230,6 +231,11 @@ export class OrderStore implements IOrderStore {
                 }
             }
         }
+    }
+
+    @action
+    setOrderDummyParams = (params: string[]) => {
+        this.orderDummyParams.push()
     }
 
     // TODO: заглушка для рубашки

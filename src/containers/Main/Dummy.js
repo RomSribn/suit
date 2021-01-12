@@ -64,9 +64,6 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
-      onRotate: (event) => {
-        console.log(event.x, event.y);
-      },
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       },
@@ -81,6 +78,7 @@ class Widget extends PureComponent {
         this.props.onDummyLoad();
         this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
       });
+
       this.widget3d.update(this.props.assets)
       .then(this.handleUpdated);
     } catch(err) {
@@ -264,6 +262,7 @@ export default class App extends Component {
     const activeElement = orderStore.activeElement || {};
     const initials = {};
     let params = [];
+    // eslint-disable-next-line no-unused-vars
 
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
@@ -380,6 +379,12 @@ export default class App extends Component {
     if(activeGarments.includes('pants')) {
         defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
     }
+    debugger;
+    const validParams = [
+      ...params,
+      ...defaultGarments
+    ];
+    orderStore.setOrderDummyParams([...validParams]);
 
     wasRendered = true;
     return (<React.Fragment>
@@ -387,10 +392,7 @@ export default class App extends Component {
       <Widget
         selected={selected || ''}
         paramsSelectedCount={params.length}
-        assets={[
-          ...params,
-          ...defaultGarments
-        ]}
+        assets={[...orderStore.orderDummyParams]}
         onClickAsset={this.handleClickAsset}
         onDummyLoad={this.props.onDummyLoad}
     />

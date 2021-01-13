@@ -261,76 +261,11 @@ export default class App extends Component {
     let selected = '';
     const activeElement = orderStore.activeElement || {};
     const initials = {};
-    let params = [];
-    // eslint-disable-next-line no-unused-vars
-
+    let params = [...orderStore.orderDummyParams]
+   
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
     } else {
-      params = activeGarments.reduce((acc, garment) => {
-        const curGarment = orderStore.order[garment];
-        GROUPS.forEach(group => {
-          Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
-            const subgroupVal = curGarment[0][group][subgroup];
-            if (subgroup.includes(INITIALS)) {
-              if (!initials.text) {
-                initials.text = { value: ''};
-              }
-              if(subgroup === `${INITIALS}_text`) {
-                initials.text.value = subgroupVal;
-              }
-              const val = _.get(activeElement , 'elementInfo.subGroup') === subgroup ?
-                activeElement.our_code :
-                subgroupVal.our_code;
-              if (subgroup === `${INITIALS}_arrangement`) {
-                initials.id = val
-              }
-              if (subgroup === `${INITIALS}_color`) {
-                initials.text.color = val;
-              }
-              if (subgroup === `${INITIALS}_style`) {
-                initials.text.font = val;
-              }
-            }
-            const additionalFabric = curGarment[0].design[subgroup] && curGarment[0].design[subgroup].additionalFabric;
-            if (
-              activeElement.elementInfo &&
-              activeElement.elementInfo.garment === garment &&
-              activeElement.elementInfo.group === group &&
-              activeElement.elementInfo.subGroup === subgroup
-            ) {
-              if (subgroup === `${INITIALS}_arrangement`) {
-                initials.id = activeElement.our_code;
-              } else {
-                if (!subgroup.includes(INITIALS)) {
-                  if (subgroup === 'fabric') {
-                    acc.push(subgroupVal.our_code);
-                  } else {
-                    const value = additionalFabric ?
-                        { id: activeElement.our_code, materials: [additionalFabric] } : activeElement.our_code;
-                    acc.push(value);
-                  }
-                }
-              }
-            } else {
-              if (!subgroup.includes(INITIALS) && subgroupVal) {
-                const value = additionalFabric ?
-                    { id: subgroupVal.our_code, materials: [additionalFabric] } : subgroupVal.our_code;
-                acc.push(value);
-              }
-            }
-            // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
-            if (subgroup ===`${INITIALS}_color`) {
-              if (_.get(activeElement, 'elementInfo.subGroup') ===`${INITIALS}_color`) {
-                acc.push(activeElement.our_code);
-              } else {
-                acc.push(subgroupVal.our_code)
-              }
-            }
-          })
-        })
-        return acc;
-      }, []);
       if (
         activeElement.elementInfo &&
         prevInfo.garment === activeElement.elementInfo.garment &&
@@ -379,20 +314,15 @@ export default class App extends Component {
     if(activeGarments.includes('pants')) {
         defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
     }
-    debugger;
-    const validParams = [
-      ...params,
-      ...defaultGarments
-    ];
-    orderStore.setOrderDummyParams([...validParams]);
 
     wasRendered = true;
     return (<React.Fragment>
       {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
+      {orderStore.orderDummyParams.join('/')}
       <Widget
         selected={selected || ''}
         paramsSelectedCount={params.length}
-        assets={[...orderStore.orderDummyParams]}
+        assets={params}
         onClickAsset={this.handleClickAsset}
         onDummyLoad={this.props.onDummyLoad}
     />

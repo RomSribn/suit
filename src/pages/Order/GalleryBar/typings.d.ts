@@ -7,6 +7,8 @@ interface GalleryBarProps {
     isMouseOverElement: boolean;
     activeElementIndex: number;
     filterStore?: IFilterStore;
+    activeGarments?: string[];
+    setOrderDummyParams?: (params: string[]) => void;
 }
 
 interface Child {

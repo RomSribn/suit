@@ -39,7 +39,7 @@ const prepareDataFromServer: Fuckup.PrepareDataFromServer = (serverOrder) => {
         serverGarment
             .fittings
             .map(
-                fittingItem => ({value: fittingItem.value, ourCode: fittingItem.fitting.our_code})
+                fittingItem => ({ value: fittingItem.value, ourCode: fittingItem.fitting.our_code })
             ).forEach(item => {
                 if (!newGarment.fittings) {
                     newGarment.fittings = {};
@@ -89,11 +89,11 @@ const prepareOrder: PrepareOrder = (order, customer?) => {
     const fittings =
         _.union(
             ..._.values(order)
-            .map(item => Object.entries(item[0].fittings || {}))
+                .map(item => Object.entries(item[0].fittings || {}))
         ).reduce((acc, [fittingName, fittingValue]) => typeof fittingValue === 'number' ?
-            [...acc, {ourCode: fittingName, value: fittingValue}] :
+            [...acc, { ourCode: fittingName, value: fittingValue }] :
             acc,
-        []);
+            []);
     return {
         customer,
         items,
@@ -111,7 +111,7 @@ export class OrderStore implements IOrderStore {
     @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
-    @observable orderDummyParams = observable.array();
+    @observable orderDummyParams = observable.array<string>();
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
     @observable previewElement: ActivePreviewElement | null = null;
@@ -140,12 +140,12 @@ export class OrderStore implements IOrderStore {
                 newValue[garment][0][group][element] = '';
             } else {
                 newValue[garment][0][group][element] =
-                (
-                    _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
-                    _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
-                )
-                    ? null
-                    : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
+                    (
+                        _.get(this, `defaultValues.${garment}[0].${group}.${element}.isItemClear`) &&
+                        _.get(this, `defaultValues.${garment}[0].${group}.${element}.isSubClear`)
+                    )
+                        ? null
+                        : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
             }
         } else {
             newValue[garment][0][group][element] =
@@ -162,7 +162,7 @@ export class OrderStore implements IOrderStore {
     }
     @action
     setFitting = (garment: string, fitting: { id: string; value: number }) => {
-        const newOrder = {...this.order};
+        const newOrder = { ...this.order };
         if (!newOrder[garment][0].fittings) {
             newOrder[garment][0].fittings = {};
         }
@@ -234,8 +234,86 @@ export class OrderStore implements IOrderStore {
     }
 
     @action
-    setOrderDummyParams = (params: string[]) => {
-        this.orderDummyParams.push()
+    setOrderDummyParams = (activeGarments: string[]) => {
+        const defaultGarments = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
+        const GROUPS = ['design', 'fabric_ref', 'fitting'];
+        const INITIALS = 'initials';
+        const initials: any = {}; // tslint:disable-line no-any
+        const activeElement: any = this.activeElement || {}; // tslint:disable-line no-any
+        const parsedParams = activeGarments.reduce((acc: string[], garment) => {
+            const curGarment = this.order[garment];
+            GROUPS.forEach(group => {
+                Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
+                    const subgroupVal = curGarment[0][group][subgroup];
+                    if (subgroup.includes(INITIALS)) {
+                        if (!initials.text) {
+                            initials.text = { value: '' };
+                        }
+                        if (subgroup === `${INITIALS}_text`) {
+                            initials.text.value = subgroupVal;
+                        }
+                        const val = _.get(activeElement, 'elementInfo.subGroup') === subgroup ?
+                            activeElement.our_code :
+                            subgroupVal.our_code;
+                        if (subgroup === `${INITIALS}_arrangement`) {
+                            initials.id = val;
+                        }
+                        if (subgroup === `${INITIALS}_color`) {
+                            initials.text.color = val;
+                        }
+                        if (subgroup === `${INITIALS}_style`) {
+                            initials.text.font = val;
+                        }
+                    }
+                    const additionalFabric =
+                        curGarment[0].design[subgroup] && curGarment[0].design[subgroup].additionalFabric;
+                    if (
+                        activeElement.elementInfo &&
+                        activeElement.elementInfo.garment === garment &&
+                        activeElement.elementInfo.group === group &&
+                        activeElement.elementInfo.subGroup === subgroup
+                    ) {
+                        if (subgroup === `${INITIALS}_arrangement`) {
+                            initials.id = activeElement.our_code;
+                        } else {
+                            if (!subgroup.includes(INITIALS)) {
+                                if (subgroup === 'fabric') {
+                                    acc.push(subgroupVal.our_code);
+                                } else {
+                                    const value = additionalFabric ?
+                                        { id: activeElement.our_code, materials: [additionalFabric] } :
+                                        activeElement.our_code;
+                                    acc.push(value);
+                                }
+                            }
+                        }
+                    } else {
+                        if (!subgroup.includes(INITIALS) && subgroupVal) {
+                            const value = additionalFabric ?
+                                { id: subgroupVal.our_code, materials: [additionalFabric] } : subgroupVal.our_code;
+                            acc.push(value);
+                        }
+                    }
+                    // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
+                    if (subgroup === `${INITIALS}_color`) {
+                        if (_.get(activeElement, 'elementInfo.subGroup') === `${INITIALS}_color`) {
+                            acc.push(activeElement.our_code);
+                        } else {
+                            acc.push(subgroupVal.our_code);
+                        }
+                    }
+                });
+            });
+            return acc;
+        }, []);
+
+        if (activeGarments.includes('shirt')) {
+            defaultGarments.splice(defaultGarments.indexOf('shirt'), 1);
+        }
+        if (activeGarments.includes('pants')) {
+            defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
+        }
+        this.orderDummyParams = observable.array([...parsedParams, ...defaultGarments]);
     }
 
     // TODO: заглушка для рубашки
@@ -372,7 +450,7 @@ export class OrderStore implements IOrderStore {
         return callApi({
             url: services.orders + id,
             method,
-            data: prepareOrder(this.order, customerInfo ||  orderInfo!.customer),
+            data: prepareOrder(this.order, customerInfo || orderInfo!.customer),
         },
             (): null => null,
             (info: OrderInfo) => {
@@ -488,7 +566,7 @@ export class OrderStore implements IOrderStore {
 
     @action
     clearAdditionalFabric = (garment: string) => {
-        const newValue = {...this.order};
+        const newValue = { ...this.order };
         _.forEach(newValue[garment][0].design, (item) => {
             if (item.additionalFabric) {
                 item.additionalFabric = null;

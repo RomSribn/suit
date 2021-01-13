@@ -283,7 +283,6 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 }
                 orderStore!.updateOrderInfo(newOrder);
                 const props = this.props;
-                // debugger;
 
                 updateOrder({
                     match: props.match!,

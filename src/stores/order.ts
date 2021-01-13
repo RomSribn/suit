@@ -198,9 +198,6 @@ export class OrderStore implements IOrderStore {
     }
 
     @action
-    isExclusivePopupShowing = () => _.get(this, 'mutuallyExclusivePopup.show', false)
-
-    @action
     setOrder(_o: Order, exception?: OrderItemException | null) {
         this.order = { ..._o };
         this.updateOrderInfo();

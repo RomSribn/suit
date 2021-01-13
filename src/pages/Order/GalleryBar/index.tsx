@@ -15,7 +15,7 @@ interface P {
     zoomId: string | null;
     setZoomId: (id: string) => void;
     onClick(): void;
-    setOrderDummyParams: () => void;
+    setOrderDummyParams(): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
     incremetLoadedCount(): void;
@@ -94,7 +94,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             return null;
         }
 
-        // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна не надо будет притрагиваиться
+        // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
         if (this.props.filterStore) {
             const filters = this.props.filterStore.userFilters;
@@ -103,7 +103,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             for (const name in filterNames) {
                 // Если в массиве значений данного фильтра filters[name]
                 // есть такое же значение, как у данного элемента галлереи,
-                // тогда шлем все нахуй
+                // тогда выходим с метода
                 if (filters[name] && filters[name].includes(this.props.item[name].filterValue)) {
                     return null;
                 }

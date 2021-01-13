@@ -71,7 +71,7 @@ class Widget extends PureComponent {
         const { setDummyY, isMenuUncovered } = this.props;
         isMobile() && isMenuUncovered && setDummyY(y);
       }
-      }
+    }
     );
     try {
       this.widget3d.firstUpdate.then(() => {
@@ -80,8 +80,8 @@ class Widget extends PureComponent {
       });
 
       this.widget3d.update(this.props.assets)
-      .then(this.handleUpdated);
-    } catch(err) {
+        .then(this.handleUpdated);
+    } catch (err) {
       console.log('Ошибка при рендере манекена', err)
     }
   }
@@ -107,64 +107,64 @@ class Widget extends PureComponent {
         }, [])
         : [];
 
-        const defaultItemValues = {}
-        if (defaultValues) {
-          Object.keys(defaultValues)
+      const defaultItemValues = {}
+      if (defaultValues) {
+        Object.keys(defaultValues)
           .filter(item => !item.includes(['manequin']))
           .map(filteredGarment =>
-              defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
-                .map(garmentObject => Object.keys(garmentObject.design)
-                  .forEach(
-                    elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
-                  )
+            defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
+              .map(garmentObject => Object.keys(garmentObject.design)
+                .forEach(
+                  elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
                 )
+              )
           )
-        }
-        const assetsIds = this.props.assets.map(asset => asset.id || asset);
-        const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
+      }
+      const assetsIds = this.props.assets.map(asset => asset.id || asset);
+      const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
 
-        if (mutuallyExclusiveItems.length && exceptions) {
-          mutuallyExclusiveItems.forEach((item) => {
-            Object.keys(exceptions).forEach((garmentKey) => {
-              Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-                if (
-                  exceptions[garmentKey][elementKey].exceptions &&
-                  exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
-                  ) {
-                  allExceptions = allExceptions.filter((i) => {
-                    if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
-                        if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
-                          this.props.assets.push(defaultItemValues[elementKey])
-                        }
+      if (mutuallyExclusiveItems.length && exceptions) {
+        mutuallyExclusiveItems.forEach((item) => {
+          Object.keys(exceptions).forEach((garmentKey) => {
+            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
+              if (
+                exceptions[garmentKey][elementKey].exceptions &&
+                exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
+              ) {
+                allExceptions = allExceptions.filter((i) => {
+                  if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
+                    if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
+                      this.props.assets.push(defaultItemValues[elementKey])
                     }
+                  }
 
-                    return !exceptions[garmentKey][elementKey].exceptions.includes(i)
-                    })
-                }
-              })
+                  return !exceptions[garmentKey][elementKey].exceptions.includes(i)
+                })
+              }
             })
           })
-        }
+        })
+      }
 
-        const actualExceptions = [...allExceptions, ...activeExceptions];
-        const nextAssets = this.props.assets
-            .filter(asset => {
-              const id = asset.id ? asset.id : asset;
-              return !actualExceptions.includes(id)
-            })
+      const actualExceptions = [...allExceptions, ...activeExceptions];
+      const nextAssets = this.props.assets
+        .filter(asset => {
+          const id = asset.id ? asset.id : asset;
+          return !actualExceptions.includes(id)
+        })
 
-          /**
-           * При загрузке без кеша все хорошо.
-           * Но по какой-то непонятной ссаной бесовщине при перезагузке
-           * порядок первого рендера такой:
-           * отрендерил состояние с дефолтами -> отрендерил дефолты оО
-           * потому здесь какой-то непонятный грязный хак.
-           * У меня заканчиваются крылышки и пиво. так что читай todo:
-           * @todo Если ты знаешь в чем причина - U R welcome, fix it
-           */
-          setTimeout(() => {
-            this.widget3d.update(nextAssets).then(this.handleUpdated);
-          }, 500);
+      /**
+       * При загрузке без кеша все хорошо.
+       * Но по какой-то непонятной ссаной бесовщине при перезагузке
+       * порядок первого рендера такой:
+       * отрендерил состояние с дефолтами -> отрендерил дефолты оО
+       * потому здесь какой-то непонятный грязный хак.
+       * У меня заканчиваются крылышки и пиво. так что читай todo:
+       * @todo Если ты знаешь в чем причина - U R welcome, fix it
+       */
+      setTimeout(() => {
+        this.widget3d.update(nextAssets).then(this.handleUpdated);
+      }, 500);
     }
 
     if (this.props.selected && prevProps.selected !== this.props.selected) {
@@ -174,12 +174,12 @@ class Widget extends PureComponent {
 
   render() {
     return (
-        <div
-          className="widget3d"
-          ref={(node) => this.widgetContainer = node}
-          style={{ width: `${demoSectionWidth}%`, height: '100%' }}
-        />
-      );
+      <div
+        className="widget3d"
+        ref={(node) => this.widgetContainer = node}
+        style={{ width: `${demoSectionWidth}%`, height: '100%' }}
+      />
+    );
   }
 
   handleUpdated = (props) => {
@@ -187,9 +187,8 @@ class Widget extends PureComponent {
   }
 }
 
-const GROUPS = ['design', 'fabric_ref', 'fitting']
 let prevInfo = {};
-@inject(({order, garments: { garments }}) => ({
+@inject(({ order, garments: { garments } }) => ({
   orderStore: order,
   activeGarments: [...garments.activeGarments],
 }))
@@ -205,26 +204,34 @@ export default class App extends Component {
   componentDidMount = () => {
     prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo', {});
   }
+
+  componentDidUpdate(prevProps) {
+    const isActiveGarmentsChanged = !_.isEqual(prevProps.activeGarments, this.props.activeGarments);
+    if (isActiveGarmentsChanged) {
+      const { orderStore, activeGarments } = this.props;
+      orderStore.setOrderDummyParams(activeGarments);
+    }
+  }
   update = (subgroup) => {
     const items = currentItems;
 
-          const {
-            orderStore
-          } = this.props;
+    const {
+      orderStore
+    } = this.props;
 
-          const codeInOrder =
-            _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
-          const item = items.find(i => i.our_code === codeInOrder);
+    const codeInOrder =
+      _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
+    const item = items.find(i => i.our_code === codeInOrder);
 
-          if (!_.isEmpty(item)) {
-              item.elementInfo = {
-                  garment: 'shirt',
-                  group: 'design',
-                  subgroup
-              };
-          }
-          orderStore.setActiveItem(item);
-          orderStore.setPreviewElement(null);
+    if (!_.isEmpty(item)) {
+      item.elementInfo = {
+        garment: 'shirt',
+        group: 'design',
+        subgroup
+      };
+    }
+    orderStore.setActiveItem(item);
+    orderStore.setPreviewElement(null);
   };
   handleClickAsset = ({ id }) => {
     // TODO
@@ -244,8 +251,8 @@ export default class App extends Component {
     } = this.props;
     const subgroup =
       _.findKey(
-          orderStore.order.shirt[0].design,
-          ['our_code', id]
+        orderStore.order.shirt[0].design,
+        ['our_code', id]
       );
     if (id !== this.state.subgroup) {
       this.update(subgroup);
@@ -256,13 +263,13 @@ export default class App extends Component {
     /* eslint-enable */
   };
   render() {
-    const { orderStore, activeGarments } = this.props;
+    const { orderStore } = this.props;
     const { subgroup } = this.state;
     let selected = '';
     const activeElement = orderStore.activeElement || {};
     const initials = {};
     let params = [...orderStore.orderDummyParams]
-   
+
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
     } else {
@@ -307,25 +314,17 @@ export default class App extends Component {
 
       }
     }
-    const defaultGarments = [...baseDummyElements]
-    if(activeGarments.includes('shirt')) {
-        defaultGarments.splice(defaultGarments.indexOf('shirt'), 1);
-    }
-    if(activeGarments.includes('pants')) {
-        defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
-    }
 
     wasRendered = true;
     return (<React.Fragment>
-      {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
-      {orderStore.orderDummyParams.join('/')}
+      {subgroup && <Redirect to={`/order/details/shirt/design/${subgroup}`} />}
       <Widget
         selected={selected || ''}
         paramsSelectedCount={params.length}
         assets={params}
         onClickAsset={this.handleClickAsset}
         onDummyLoad={this.props.onDummyLoad}
-    />
+      />
     </React.Fragment>);
   }
 

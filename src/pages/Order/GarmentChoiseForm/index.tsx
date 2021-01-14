@@ -17,8 +17,6 @@ import { GarmentChoise as GarmentChoiseComponent } from './component';
         path: routing.location.pathname,
         order: order.order,
         makeOrder: order.fetchInitialOrder,
-        setVisibleGarments: order.setVisibleGarments,
-        visibleGarments: order.visibleGarments
     };
 })
 @observer
@@ -36,8 +34,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             isNavigationGarments,
             currentActiveGarment,
             setCurrentActiveGarment,
-            setVisibleGarments,
-            visibleGarments
         } = this.props;
         return (
             <GarmentChoiseComponent
@@ -52,8 +48,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
                 path={path}
                 makeOrder={makeOrder}
                 pushOrderPathitem={pushOrderPathitem}
-                setVisibleGarments={setVisibleGarments}
-                visibleGarments={visibleGarments}
             />
         );
     }

@@ -10,6 +10,4 @@ interface GarmentChoiceFormProps {
     makeOrder?(garments: string[]): void;
     pushOrderPathitem?(item: OrderPathItem): void;
     isNavigationGarments: boolean;
-    setVisibleGarments?: (activeGarments: string[]) => void;
-    visibleGarments?: IVisibleGarments;
 }

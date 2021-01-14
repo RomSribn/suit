@@ -8,7 +8,7 @@ import { loc } from './loc';
 import { makeRoutes } from '../routes';
 import { routes } from '../../../config/routes';
 import history from '../../../history';
-import { VisibleButton } from '../../../components/VisibleButton';
+import { GarmentViewController } from '../GarmentViewController';
 
 const isRealIndexPage = () => window.location.pathname === routes.mainPage;
 
@@ -160,9 +160,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
             activeGarments,
             isNavigationGarments,
             currentActiveGarment,
-            setCurrentActiveGarment,
-            setVisibleGarments,
-            visibleGarments
+            setCurrentActiveGarment
         } = this.props;
         return (
             <div
@@ -203,13 +201,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                             isNavigationGarments)}
                     </div>
                     {!isRealIndexPage() && (
-                        <div
-                            onClick={() => {
-                                setVisibleGarments!(activeGarments!);
-                            }}
-                        >
-                            <VisibleButton isHide={!!visibleGarments![currentActiveGarment!]} />
-                        </div>
+                        <GarmentViewController />
                     )}
                     {isRealIndexPage() &&
                         <div className="catalog__submit-bar">

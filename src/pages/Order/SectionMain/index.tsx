@@ -13,6 +13,7 @@ import { routes as defaultRoutes } from '../../../config/routes';
 import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
+import { GarmentViewController } from '../GarmentViewController';
 
 @inject(({ app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered } }) => ({
     setDummyY,
@@ -57,6 +58,18 @@ class MainSection extends React.Component<MainSectionProps> {
                             justifyContent: 'space-around',
                         }}
                 >
+                    <div
+                        style={{
+                            display: isMobile() ? 'block' : 'none',
+                            position: 'absolute',
+                            top: -33,
+                            right: 'calc(0% + 10px)',
+                            transform: 'scale(0.9)',
+                            opacity: 0.8
+                        }}
+                    >
+                        <GarmentViewController />
+                    </div>
                     <Filter />
                     {isRealIndexPage && <Demo />}
                     {isRealIndexPage && <GarmentChoise isNavigationGarments={false} />}

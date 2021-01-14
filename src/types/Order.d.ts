@@ -23,7 +23,7 @@ interface IOrderStore {
     clearAdditionalFabric: (garment: string) => void;
     setActiveItem(item: GalleryStoreItem | null): void;
     setGarmentValue(garment: string, value: any): void;
-    setOrder (_o: Order, exception?: OrderItemException): void;
+    setOrder(_o: Order, exception?: OrderItemException): void;
     saveOrder(customerInfo?: User): Promise<any>;
     updateOrderInfo(order: Order, customerInfo?: User): Promise<any>;
     toggleHiddenElement(element: string): void;
@@ -36,6 +36,12 @@ interface IOrderStore {
 
 interface Order {
     [key: string]: OrderItem;
+}
+
+interface IVisibleGarments {
+    shirt: string | null;
+    jacket: string | null;
+    pants: string | null;
 }
 
 interface OrderInfo {
@@ -74,28 +80,28 @@ type ExceptionItem = {
 interface Exception {
     parent: string,
     data: {
-        [key: string] : string[]
+        [key: string]: string[]
     }
 }
 
 interface OrderItem {
-    fabric_ref : {
+    fabric_ref: {
         fabric: OrderItemInfo;
-        [key: string] : any;
+        [key: string]: any;
     };
-    design : {
-        [key: string] : OrderItemInfo;
+    design: {
+        [key: string]: OrderItemInfo;
     } & { initials_text?: string };
     fittings?: {
-       [key: string]: number;
+        [key: string]: number;
     };
-    [key: string] : any;
+    [key: string]: any;
 }
 
 type ClearElementActionType = 'default' | 'click'
 
 interface OrderDesign {
-    [key: string] : OrderItemInfo;
+    [key: string]: OrderItemInfo;
 }
 
 interface ServerItem {

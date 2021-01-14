@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import * as classNames from 'classnames';
-import { FadeIn } from '../../../containers/Transitions';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
-import { makeRoutes } from '../routes';
+import { FadeIn } from '../../../containers/Transitions';
+import { Link } from 'react-router-dom';
 import { loc } from './loc';
-import history from '../../../history';
+import { makeRoutes } from '../routes';
 import { routes } from '../../../config/routes';
+import history from '../../../history';
 
 const isRealIndexPage = () => window.location.pathname === routes.mainPage;
 
@@ -27,51 +27,53 @@ const makeCatalogItems: MakeCatalogItems = (
     setCurrentActiveGarment,
     toggle,
     isNavigationGarments) => Object
-    .keys(garments)
-    .map(garment => {
-        const isNavSkip = !isNavigationGarments || activeGarments.includes(garment);
-        const firstCurrentActiveGarment = currentActiveGarment[0] || activeGarments[0];
-        return garment !== 'design' && isNavSkip ? (
-            <label className="catalog__item" key={garment}>
-                <input
-                    type="checkbox"
-                    name="goods"
-                    checked={
-                    isNavigationGarments ? firstCurrentActiveGarment === garment : activeGarments.includes(garment)
-                    }
-                    value={garment}
-                    onClick={(e) => {
-                        if (isNavigationGarments) {
-                        history
-                        .push(window.location.pathname
-                                .replace(
-                                    firstCurrentActiveGarment
-                                    , garment));
-                        setCurrentActiveGarment(garment);
-                                }
-                    }}
-                    onChange={(e) => {
-                        if (!isNavigationGarments) {
-                            toggle(garment)(e);
+        .keys(garments)
+        .map(garment => {
+            const isNavSkip = !isNavigationGarments || activeGarments.includes(garment);
+            const firstCurrentActiveGarment = currentActiveGarment[0] || activeGarments[0];
+            return garment !== 'design' && isNavSkip ? (
+                <label className="catalog__item" key={garment}>
+                    <input
+                        type="checkbox"
+                        name="goods"
+                        checked={
+                            isNavigationGarments ?
+                                firstCurrentActiveGarment === garment :
+                                activeGarments.includes(garment)
                         }
-                    } }
-                />
-
-                <span className="catalog__item-decoration">
-                    <FadeIn>
-                        <span key={lang}>
-                            {
-                                garments[garment] &&
-                                garments[garment][`name${lang.charAt(0).toUpperCase() + lang.slice(1)}`]
-                                || garments[garment].name
+                        value={garment}
+                        onClick={(e) => {
+                            if (isNavigationGarments) {
+                                history
+                                    .push(window.location.pathname
+                                        .replace(
+                                            firstCurrentActiveGarment
+                                            , garment));
+                                setCurrentActiveGarment(garment);
                             }
-                        </span>
-                    </FadeIn>
-                </span>
+                        }}
+                        onChange={(e) => {
+                            if (!isNavigationGarments) {
+                                toggle(garment)(e);
+                            }
+                        }}
+                    />
 
-            </label>
-        ) : null;
-    });
+                    <span className="catalog__item-decoration">
+                        <FadeIn>
+                            <span key={lang}>
+                                {
+                                    garments[garment] &&
+                                    garments[garment][`name${lang.charAt(0).toUpperCase() + lang.slice(1)}`]
+                                    || garments[garment].name
+                                }
+                            </span>
+                        </FadeIn>
+                    </span>
+
+                </label>
+            ) : null;
+        });
 interface State {
     garmentChoiceFormHeight: number;
     showUnavailablePopup: boolean;
@@ -125,8 +127,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
             activeGarments,
             makeOrder,
             pushOrderPathitem,
-            lang,
-            // orderStore,
+            lang
         } = this.props;
         if (!activeGarments!.length) {
             e.preventDefault();
@@ -142,13 +143,13 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         this.props.toggleGarment!(ADD)(garment);
     }
     remove = (garment: string) => {
-      this.props.toggleGarment!(REMOVE)(garment);
+        this.props.toggleGarment!(REMOVE)(garment);
     }
     toggle = (garment: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             this.activate(garment);
         } else {
-          this.remove(garment);
+            this.remove(garment);
         }
     }
     render() {
@@ -158,7 +159,9 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
             activeGarments,
             isNavigationGarments,
             currentActiveGarment,
-            setCurrentActiveGarment
+            setCurrentActiveGarment,
+            setVisibleGarments,
+            visibleGarments
         } = this.props;
         return (
             <div
@@ -168,9 +171,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     'catalog--top-position',
 
                 )}
-                // style={{
-                //     marginBottom: 0,
-                // }}
             >
 
                 <form
@@ -181,7 +181,10 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                             : {
                                 transition: 'max-height .3s',
                                 overflow: 'hidden',
-                                marginBottom: 0
+                                marginBottom: 0,
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
                             }
                     }
                 >
@@ -190,14 +193,23 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     }
                     <div className="catalog__form-wrap">
                         {makeCatalogItems(
-                            garments!, 
-                            lang!, 
-                            [currentActiveGarment!], 
-                            activeGarments!, 
+                            garments!,
+                            lang!,
+                            [currentActiveGarment!],
+                            activeGarments!,
                             setCurrentActiveGarment!,
-                            this.toggle!, 
+                            this.toggle!,
                             isNavigationGarments)}
                     </div>
+                    {!isRealIndexPage() && (
+                        <div
+                            onClick={() => {
+                                setVisibleGarments!(activeGarments!);
+                            }}
+                        >
+                            {visibleGarments![currentActiveGarment!] ? 'Show' : 'Hide'}
+                        </div>
+                    )}
                     {isRealIndexPage() &&
                         <div className="catalog__submit-bar">
                             <FadeIn>

@@ -111,6 +111,11 @@ export class OrderStore implements IOrderStore {
     @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
+    @observable visibleGarments: IVisibleGarments = {
+        shirt: null,
+        jacket: null,
+        pants: null
+    };
     @observable orderDummyParams = observable.array<string>();
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
@@ -228,6 +233,24 @@ export class OrderStore implements IOrderStore {
                 }
             }
         }
+    }
+
+    @action
+    setVisibleGarments = (activeGarments: string[]) => {
+        const garment: string = this.activeElement!.elementInfo.garment;
+        const newValue = { ...this.visibleGarments };
+        const selectedGarment: string | null = newValue[garment];
+
+        if (selectedGarment) {
+            newValue[garment] = null;
+            const visibleDummyParams = activeGarments.filter(activeGarment => !newValue[activeGarment]);
+            this.setOrderDummyParams(visibleDummyParams);
+        } else {
+            newValue[garment] = garment;
+            const visibleDummyParams = activeGarments.filter(activeGarment => !newValue[activeGarment]);
+            this.setOrderDummyParams(visibleDummyParams);
+        }
+        this.visibleGarments = newValue;
     }
 
     @action

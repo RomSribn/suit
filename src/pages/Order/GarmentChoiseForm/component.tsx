@@ -8,6 +8,7 @@ import { loc } from './loc';
 import { makeRoutes } from '../routes';
 import { routes } from '../../../config/routes';
 import history from '../../../history';
+import { VisibleButton } from '../../../components/VisibleButton';
 
 const isRealIndexPage = () => window.location.pathname === routes.mainPage;
 
@@ -207,7 +208,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                 setVisibleGarments!(activeGarments!);
                             }}
                         >
-                            {visibleGarments![currentActiveGarment!] ? 'Show' : 'Hide'}
+                            <VisibleButton isHide={!!visibleGarments![currentActiveGarment!]} />
                         </div>
                     )}
                     {isRealIndexPage() &&

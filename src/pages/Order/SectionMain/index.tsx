@@ -36,7 +36,13 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
+            isMenuUncovered,
+            setIsMenuUncovered
         } = this.props;
+
+        const {
+            inititalTouch
+        } = this.state;
 
         const isRealIndexPage =
             window.location.pathname ===
@@ -47,7 +53,7 @@ class MainSection extends React.Component<MainSectionProps> {
                 <div
                     className="main__middle"
                     style={!isRealIndexPage ? {
-                        transform: isMobile() ? `translateY(${this.props.isMenuUncovered ? 10 : 70}%)` : 'unset',
+                        transform: isMobile() ? `translateY(${isMenuUncovered ? 10 : 70}%)` : 'unset',
                         transition: '0.5s',
                         justifyContent: 'space-between',
                     } : {
@@ -58,18 +64,20 @@ class MainSection extends React.Component<MainSectionProps> {
                             justifyContent: 'space-around',
                         }}
                 >
-                    <div
-                        style={{
-                            display: isMobile() ? 'block' : 'none',
-                            position: 'absolute',
-                            top: -33,
-                            right: 'calc(0% + 10px)',
-                            transform: 'scale(0.9)',
-                            opacity: 0.8
-                        }}
-                    >
-                        <GarmentViewController />
-                    </div>
+                    {!isMenuUncovered && (
+                        <div
+                            style={{
+                                display: isMobile() ? 'block' : 'none',
+                                position: 'absolute',
+                                top: -33,
+                                right: 'calc(0% + 10px)',
+                                transform: 'scale(0.9)',
+                                opacity: 0.8
+                            }}
+                        >
+                            <GarmentViewController />
+                        </div>
+                    )}
                     <Filter />
                     {isRealIndexPage && <Demo />}
                     {isRealIndexPage && <GarmentChoise isNavigationGarments={false} />}
@@ -98,9 +106,9 @@ class MainSection extends React.Component<MainSectionProps> {
                         onTouchEnd={
                             (event: React.TouchEvent<HTMLInputElement>) => {
                                 if ((event.changedTouches[0].clientY -
-                                    this.state.inititalTouch) < -10) {
-                                    this.props.setIsMenuUncovered!(!!(event.changedTouches[0].clientY
-                                        < this.state.inititalTouch));
+                                    inititalTouch) < -10) {
+                                    setIsMenuUncovered!(!!(event.changedTouches[0].clientY
+                                        < inititalTouch));
                                 }
                             }
                         }

@@ -6,11 +6,12 @@ import './styles.styl';
 
 export const basisPart = 'basis';
 
-@inject(({ order, app, garments: { Subgroups } }) => {
+@inject(({ order, app, garments: { Subgroups, garments } }) => {
     return {
         orderStore: order,
         lang: app.lang,
         subgroupsStore: new Subgroups('shirt'),
+        activeGarments: garments.activeGarments
     };
 })
 @observer
@@ -20,8 +21,9 @@ class ToggleBar extends React.Component<ToggleBarProps> {
     }
 
     handleReset = () => {
-        const { orderStore, garment } = this.props;
+        const { orderStore, garment, activeGarments } = this.props;
         orderStore!.clearAdditionalFabric(garment);
+        orderStore!.setOrderDummyParams(activeGarments!);
     }
 
     render() {
@@ -50,19 +52,19 @@ class ToggleBar extends React.Component<ToggleBarProps> {
                 <div className="toggles">
                     {partOfShirtToggleItems.map((item) => (
                         <span key={item.subsection_our_code} className="toggle">
-                        <input
-                            className="toggle__input"
-                            type="radio"
-                            name="allowed_own_fabric"
-                            id={item.subsection_our_code}
-                            value={item.subsection_our_code}
-                            checked={orderStore!.partOfShirtToggle === item.subsection_our_code}
-                            onChange={this.handleChange}
-                        />
-                        <label className="toggle__label" htmlFor={item.subsection_our_code}>
-                            {loc[lang].for} {item.title[lang]}
-                        </label>
-                    </span>
+                            <input
+                                className="toggle__input"
+                                type="radio"
+                                name="allowed_own_fabric"
+                                id={item.subsection_our_code}
+                                value={item.subsection_our_code}
+                                checked={orderStore!.partOfShirtToggle === item.subsection_our_code}
+                                onChange={this.handleChange}
+                            />
+                            <label className="toggle__label" htmlFor={item.subsection_our_code}>
+                                {loc[lang].for} {item.title[lang]}
+                            </label>
+                        </span>
                     ))}
                 </div>
                 <button className="toggles-block__btn" onClick={this.handleReset}>{loc[lang].reset}</button>

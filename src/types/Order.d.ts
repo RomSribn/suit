@@ -32,6 +32,8 @@ interface IOrderStore {
     fetchOrder(orderId: string, superUserToken?: string): Promise<any>;
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
     clearOrderInfo(): void;
+    setOrderDummyParams: (acriveGarments: string[]) => void;
+    setVisibleGarments: (acriveGarments: string[]) => void;
 }
 
 interface Order {

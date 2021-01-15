@@ -6,6 +6,7 @@ import { currentItems } from '../../stores/garments/galleryStore';
 import { isMobile, listeners } from '../../utils';
 import { observer, inject } from 'mobx-react';
 import { Redirect } from 'react-router';
+import { toJS } from 'mobx';
 import Widget3D from 'clothes-widget-3d';
 
 const INITIALS = 'initials';
@@ -268,7 +269,14 @@ export default class App extends Component {
     let selected = '';
     const activeElement = orderStore.activeElement || {};
     const initials = {};
-    let params = [...orderStore.orderDummyParams]
+    /**
+     * Need to create deep copy of any arrays elements. 
+     * I think, this is an old mobx version issue
+     * @todo try to updating all mobx extensions 
+     * P.S. I've tried to do this, got a lot of new issues
+     */
+    // let params = orderStore.orderDummyParams.map(param => toJs(param));
+    let params = toJS(orderStore.orderDummyParams);
 
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;

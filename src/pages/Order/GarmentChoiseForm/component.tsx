@@ -182,7 +182,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                 overflow: 'hidden',
                                 marginBottom: 0,
                                 display: 'flex',
-                                justifyContent: 'space-between',
                                 alignItems: 'center'
                             }
                     }
@@ -219,7 +218,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                                         <div className="catalog__submit-line catalog__submit-line--3" />
                                     </div>
                                     <div className="catalog__submit-frame">
-                                        <svg width="100%" height="100%">
+                                        <svg width="calc(31% + 1px)" height="100%">
                                             <rect
                                                 className="catalog__submit-rect catalog__submit-rect--1"
                                                 width="100%"

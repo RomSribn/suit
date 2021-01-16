@@ -5,7 +5,7 @@
 .visible-button {
   position: relative;
   background-color: #ebeeee;
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 .ripple {
   position: absolute;

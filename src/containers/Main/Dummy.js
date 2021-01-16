@@ -307,7 +307,11 @@ export default class App extends Component {
       if (!_.isEmpty(initials) && typeof selected !== initials) {
         params.push(initials);
       }
-      if (!_.isEmpty(activeElement) && !visibleGarments[activeElement.elementInfo.garment]) {
+      if (
+        !_.isEmpty(activeElement) &&
+        activeElement.elementInfo &&
+        !visibleGarments[activeElement.elementInfo.garment]
+      ) {
         // Если в параметрах нет активного элемента
         // Может случиться, если по дефолту у элемента нет заданного значения
         if (!params.find(param => (

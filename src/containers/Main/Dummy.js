@@ -268,6 +268,7 @@ export default class App extends Component {
     const { subgroup } = this.state;
     let selected = '';
     const activeElement = orderStore.activeElement || {};
+    const visibleGarments = orderStore.visibleGarments || {};
     const initials = {};
     /**
      * Need to create deep copy of any arrays elements. 
@@ -306,7 +307,7 @@ export default class App extends Component {
       if (!_.isEmpty(initials) && typeof selected !== initials) {
         params.push(initials);
       }
-      if (!_.isEmpty(activeElement)) {
+      if (!_.isEmpty(activeElement) && !visibleGarments[activeElement.elementInfo.garment]) {
         // Если в параметрах нет активного элемента
         // Может случиться, если по дефолту у элемента нет заданного значения
         if (!params.find(param => (

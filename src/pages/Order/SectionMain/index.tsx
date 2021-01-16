@@ -15,11 +15,17 @@ import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
 import { GarmentViewController } from '../GarmentViewController';
 
-@inject(({ app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered } }) => ({
+@inject(({
+    app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered },
+    garments: {
+        garments: { currentActiveGarment }
+    }
+}) => ({
     setDummyY,
     dummyY,
     isMenuUncovered,
-    setIsMenuUncovered
+    setIsMenuUncovered,
+    currentActiveGarment
 }))
 @observer
 class MainSection extends React.Component<MainSectionProps> {
@@ -37,7 +43,8 @@ class MainSection extends React.Component<MainSectionProps> {
             isIndexPage,
             detailsDeep,
             isMenuUncovered,
-            setIsMenuUncovered
+            setIsMenuUncovered,
+            currentActiveGarment
         } = this.props;
 
         const {
@@ -64,17 +71,11 @@ class MainSection extends React.Component<MainSectionProps> {
                             justifyContent: 'space-around',
                         }}
                 >
-                    {!isMenuUncovered && (
-                        <div
-                            style={{
-                                display: isMobile() ? 'block' : 'none',
-                                position: 'absolute',
-                                top: -33,
-                                right: 'calc(0% + 10px)',
-                                transform: 'scale(0.9)',
-                                opacity: 0.8
-                            }}
-                        >
+                    {!isMenuUncovered && isMobile() && (
+                        <div className="above-content">
+                            <div className="above-content__garment">
+                                <span>{currentActiveGarment}</span>
+                            </div>
                             <GarmentViewController />
                         </div>
                     )}

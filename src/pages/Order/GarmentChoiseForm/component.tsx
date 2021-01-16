@@ -33,7 +33,13 @@ const makeCatalogItems: MakeCatalogItems = (
             const isNavSkip = !isNavigationGarments || activeGarments.includes(garment);
             const firstCurrentActiveGarment = currentActiveGarment[0] || activeGarments[0];
             return garment !== 'design' && isNavSkip ? (
-                <label className="catalog__item" key={garment}>
+                <label
+                    className="catalog__item"
+                    key={garment}
+                    style={{
+                        width: isRealIndexPage() ? '35%' : '14rem'
+                    }}
+                >
                     <input
                         type="checkbox"
                         name="goods"
@@ -189,7 +195,12 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     {isRealIndexPage() &&
                         <CatalogIntroText lang={lang!} />
                     }
-                    <div className="catalog__form-wrap">
+                    <div
+                        className="catalog__form-wrap"
+                        style={{
+                            width: !isRealIndexPage() ? 'auto' : '100%'
+                        }}
+                    >
                         {makeCatalogItems(
                             garments!,
                             lang!,

@@ -224,14 +224,25 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         this.props.pushOrderPathItem!(nextOrderPath);
     }
     clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
+        const {
+            removeVisitedChoiceItem,
+            orderStore,
+            activeGarments = []
+        } = this.props;
+        const {
+            clearException,
+            clearElement,
+            setActiveItem,
+            setOrderDummyParams
+        } = orderStore!;
         e.preventDefault();
         e.stopPropagation();
-        this.props.removeVisitedChoiceItem!(element);
-        const orderStore = this.props.orderStore!;
-        orderStore.clearException(garment, element, 'click');
-        orderStore.clearElement(garment, element, 'click');
-        orderStore.setActiveItem(null);
-        orderStore.setOrderDummyParams(['shirt', 'jacket', 'pants']);
+        removeVisitedChoiceItem!(element);
+
+        clearException(garment, element, 'click');
+        clearElement(garment, element, 'click');
+        setActiveItem(null);
+        setOrderDummyParams(activeGarments);
     }
 
     render() {

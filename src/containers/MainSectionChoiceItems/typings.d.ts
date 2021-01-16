@@ -7,4 +7,5 @@ interface ChoiceItemsProps {
     pushOrderPathItem?(item: OrderPathItem): void;
     addVisitedChoiceItem?(name: string): void;
     removeVisitedChoiceItem?(name: string): void;
+    activeGarments?: string[];
 }

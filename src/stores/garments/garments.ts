@@ -55,8 +55,8 @@ class GarmentsStore {
     if (_action === ADD) {
       // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
       if (this.activeGarments.findIndex(el => garment === el) === -1) {
-      this.activeGarments.push(garment);
-      this.currentActiveGarment = this.activeGarments[0];
+        this.activeGarments.push(garment);
+        this.currentActiveGarment = this.activeGarments[0];
       }
     } else if (_action === REMOVE) {
       this.activeGarments.remove(garment);

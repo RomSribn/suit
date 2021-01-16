@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 import { basisPart } from '../pages/Order/ToggleBar';
+import GarmentsStore from './garments/garments';
 
 type CloneOrderObject = (order: Order) => Order;
 const cloneOrderObject: CloneOrderObject = (order) => {
@@ -237,7 +238,7 @@ export class OrderStore implements IOrderStore {
 
     @action
     setVisibleGarments = (activeGarments: string[]) => {
-        const garment: string = this.activeElement!.elementInfo.garment;
+        const garment: string = GarmentsStore.currentActiveGarment;
         const newValue = { ...this.visibleGarments };
         const selectedGarment: string | null = newValue[garment];
 

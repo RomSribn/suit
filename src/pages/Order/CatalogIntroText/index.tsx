@@ -6,6 +6,7 @@ import { loc } from './loc';
 const CatalogIntroText = (props: Props) => {
     const {
         lang,
+        isClearSubmit
     } = props;
     return (
         <ReactCSSTransitionGroup
@@ -17,6 +18,7 @@ const CatalogIntroText = (props: Props) => {
                 <p>{loc[lang!].introText.first}</p>
 
                 <p>{loc[lang!].introText.second}</p>
+                {isClearSubmit && (<span className="intro-txt__info">*</span>)}
             </div>
             <div className="catalog__gender-block">
                 <button>{loc[lang!].introText.forHim}</button>

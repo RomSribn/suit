@@ -12,6 +12,15 @@
   position: relative;
 }
 
+.intro-txt__info {
+  position: absolute;
+  font-size: 14pt;
+  font-weight: bold;
+  color: red;
+  top: -3px;
+  left: -10px;
+}
+
 .catalog__intro-txt p {
   font-size: 2rem;
   opacity: 1;

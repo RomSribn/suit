@@ -84,6 +84,7 @@ const makeCatalogItems: MakeCatalogItems = (
 interface State {
     garmentChoiceFormHeight: number;
     showUnavailablePopup: boolean;
+    isClearSubmit: boolean;
 }
 class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
     static defaultProps = {
@@ -98,6 +99,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         this.state = {
             garmentChoiceFormHeight: 0,
             showUnavailablePopup: false,
+            isClearSubmit: false
         };
     }
     componentWillMount() {
@@ -138,6 +140,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
         } = this.props;
         if (!activeGarments!.length) {
             e.preventDefault();
+            this.setState({ isClearSubmit: true });
         } else {
             makeOrder!(activeGarments!);
             pushOrderPathitem!({
@@ -193,7 +196,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     }
                 >
                     {isRealIndexPage() &&
-                        <CatalogIntroText lang={lang!} />
+                        <CatalogIntroText lang={lang!} isClearSubmit={this.state.isClearSubmit} />
                     }
                     <div
                         className="catalog__form-wrap"

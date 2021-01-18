@@ -131,7 +131,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
     makeOrder = (e: React.MouseEvent<HTMLAnchorElement>) => {
         const {
             activeGarments,
-            makeOrder,
             pushOrderPathitem,
             lang
         } = this.props;
@@ -139,7 +138,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
             e.preventDefault();
             this.setState({ isClearSubmit: true });
         } else {
-            makeOrder!(activeGarments!);
             pushOrderPathitem!({
                 value: loc[lang!].pathItemValue,
                 link: makeRoutes().details,

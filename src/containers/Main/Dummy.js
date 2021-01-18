@@ -331,7 +331,6 @@ export default class App extends Component {
     wasRendered = true;
     return (<React.Fragment>
       {subgroup && <Redirect to={`/order/details/shirt/design/${subgroup}`} />}
-      {params.join(',')}
       <Widget
         selected={selected || ''}
         paramsSelectedCount={params.length}

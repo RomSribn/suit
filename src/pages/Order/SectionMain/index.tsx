@@ -14,9 +14,10 @@ import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
 import { GarmentViewController } from '../GarmentViewController';
+import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 
 @inject(({
-    app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered },
+    app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered, lang },
     garments: {
         garments: { currentActiveGarment }
     }
@@ -25,7 +26,8 @@ import { GarmentViewController } from '../GarmentViewController';
     dummyY,
     isMenuUncovered,
     setIsMenuUncovered,
-    currentActiveGarment
+    currentActiveGarment,
+    lang
 }))
 @observer
 class MainSection extends React.Component<MainSectionProps> {
@@ -44,7 +46,8 @@ class MainSection extends React.Component<MainSectionProps> {
             detailsDeep,
             isMenuUncovered,
             setIsMenuUncovered,
-            currentActiveGarment
+            currentActiveGarment,
+            lang = 'ru'
         } = this.props;
 
         const {
@@ -74,7 +77,7 @@ class MainSection extends React.Component<MainSectionProps> {
                     {!isMenuUncovered && isMobile() && (
                         <div className="above-content">
                             <div className="above-content__garment">
-                                <span>{currentActiveGarment}</span>
+                                <span>{loc[lang][currentActiveGarment]}</span>
                             </div>
                             <GarmentViewController />
                         </div>

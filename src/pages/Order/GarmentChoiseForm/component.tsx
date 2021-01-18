@@ -196,10 +196,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                         <CatalogIntroText lang={lang!} isClearSubmit={this.state.isClearSubmit} />
                     }
                     <div
-                        className="catalog__form-wrap"
-                        style={{
-                            width: '100%'
-                        }}
+                        className={`catalog__form-wrap${isRealIndexPage() ? ' index-mobile' : ''}`}
                     >
                         {makeCatalogItems(
                             garments!,

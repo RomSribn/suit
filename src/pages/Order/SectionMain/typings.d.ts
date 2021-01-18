@@ -6,4 +6,5 @@ interface MainSectionProps extends OrderSectionInterface {
     isMenuUncovered?: boolean;
     setIsMenuUncovered?: (isMenuUncovered: boolean) => void;
     currentActiveGarment?: string;
+    lang?: string;
 }

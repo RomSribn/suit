@@ -261,6 +261,10 @@
     width: 100%;
   }
 
+  .catalog__form-wrap.index-mobile {
+    flex-wrap: wrap;
+  }
+
   .catalog__item {
     width: 13rem;
     margin: 0;

@@ -1,19 +1,28 @@
 import * as React from 'react';
+import './styles.styl';
 import { inject, observer } from 'mobx-react';
 import { loc } from './loc';
 import { ToggleBarProps } from './typings';
-import './styles.styl';
 
 export const basisPart = 'basis';
 
-@inject(({ order, app, garments: { Subgroups, garments } }) => {
-    return {
-        orderStore: order,
-        lang: app.lang,
-        subgroupsStore: new Subgroups('shirt'),
-        activeGarments: garments.activeGarments
-    };
-})
+@inject(
+    ({
+        order,
+        app,
+        garments: {
+            Subgroups,
+            garments: { activeGarments, currentActiveGarment },
+        },
+    }) => {
+        return {
+            orderStore: order,
+            lang: app.lang,
+            subgroupsStore: new Subgroups(currentActiveGarment),
+            activeGarments,
+        };
+    }
+)
 @observer
 class ToggleBar extends React.Component<ToggleBarProps> {
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,16 +36,13 @@ class ToggleBar extends React.Component<ToggleBarProps> {
     }
 
     render() {
-        const {
-            orderStore,
-            lang = 'ru',
-            subgroupsStore,
-        } = this.props;
+        const { orderStore, lang = 'ru', subgroupsStore } = this.props;
 
         let itemsWithOwnFabric: Subgroup[] = [];
         if (subgroupsStore!.data) {
-            itemsWithOwnFabric = subgroupsStore!.data.design
-                .filter((s) => s.is_allowOwnFabric);
+            itemsWithOwnFabric = subgroupsStore!.data.design.filter(
+                (s) => s.is_allowOwnFabric
+            );
         }
 
         const partOfShirtToggleItems = [
@@ -58,16 +64,23 @@ class ToggleBar extends React.Component<ToggleBarProps> {
                                 name="allowed_own_fabric"
                                 id={item.subsection_our_code}
                                 value={item.subsection_our_code}
-                                checked={orderStore!.partOfShirtToggle === item.subsection_our_code}
+                                checked={
+                                    orderStore!.partOfShirtToggle === item.subsection_our_code
+                                }
                                 onChange={this.handleChange}
                             />
-                            <label className="toggle__label" htmlFor={item.subsection_our_code}>
+                            <label
+                                className="toggle__label"
+                                htmlFor={item.subsection_our_code}
+                            >
                                 {loc[lang].for} {item.title[lang]}
                             </label>
                         </span>
                     ))}
                 </div>
-                <button className="toggles-block__btn" onClick={this.handleReset}>{loc[lang].reset}</button>
+                <button className="toggles-block__btn" onClick={this.handleReset}>
+                    {loc[lang].reset}
+                </button>
             </div>
         );
     }

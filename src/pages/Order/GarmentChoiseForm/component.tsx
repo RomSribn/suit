@@ -3,12 +3,12 @@ import * as classNames from 'classnames';
 import { ADD, REMOVE } from '../../../stores/garments/garments';
 import { CatalogIntroText } from '../CatalogIntroText';
 import { FadeIn } from '../../../containers/Transitions';
+import { GarmentViewController } from '../GarmentViewController';
 import { Link } from 'react-router-dom';
 import { loc } from './loc';
 import { makeRoutes } from '../routes';
 import { routes } from '../../../config/routes';
 import history from '../../../history';
-import { GarmentViewController } from '../GarmentViewController';
 
 const isRealIndexPage = () => window.location.pathname === routes.mainPage;
 
@@ -36,9 +36,6 @@ const makeCatalogItems: MakeCatalogItems = (
                 <label
                     className="catalog__item"
                     key={garment}
-                    style={{
-                        width: isRealIndexPage() ? '35%' : '14rem'
-                    }}
                 >
                     <input
                         type="checkbox"
@@ -201,7 +198,7 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                     <div
                         className="catalog__form-wrap"
                         style={{
-                            width: !isRealIndexPage() ? 'auto' : '100%'
+                            width: '100%'
                         }}
                     >
                         {makeCatalogItems(
@@ -212,10 +209,11 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps, State> {
                             setCurrentActiveGarment!,
                             this.toggle!,
                             isNavigationGarments)}
+                        {!isRealIndexPage() && (
+                            <GarmentViewController />
+                        )}
                     </div>
-                    {!isRealIndexPage() && (
-                        <GarmentViewController />
-                    )}
+
                     {isRealIndexPage() &&
                         <div className="catalog__submit-bar">
                             <FadeIn>

@@ -6,4 +6,5 @@ export interface ToggleBarProps {
     orderStore?: IOrderStore;
     garment: string;
     activeGarments?: string[];
+    clearSelectedItems?: EmptyFunction;
 }

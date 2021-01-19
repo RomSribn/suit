@@ -14,12 +14,16 @@ export const basisPart = 'basis';
             Subgroups,
             garments: { activeGarments, currentActiveGarment },
         },
+        filterStore: {
+            clearSelectedItems
+        }
     }) => {
         return {
             orderStore: order,
             lang: app.lang,
             subgroupsStore: new Subgroups(currentActiveGarment),
             activeGarments,
+            clearSelectedItems
         };
     }
 )
@@ -30,7 +34,13 @@ class ToggleBar extends React.Component<ToggleBarProps> {
     }
 
     handleReset = () => {
-        const { orderStore, garment, activeGarments } = this.props;
+        const {
+            orderStore,
+            garment,
+            activeGarments,
+            clearSelectedItems
+        } = this.props;
+        clearSelectedItems!();
         orderStore!.clearAdditionalFabric(garment);
         orderStore!.setOrderDummyParams(activeGarments!);
     }

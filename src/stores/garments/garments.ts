@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
-import { callApi } from '../../utils/apiAxios';
 import { API_ROOT, services } from '../../config/routes';
+import { basisPart } from '../../pages/Order/ToggleBar';
+import { callApi } from '../../utils/apiAxios';
+import { order } from '../order';
 import GarmentStore from './garment';
 
 export const ADD: string = 'ADD_ACTIVE_GARMENT';
@@ -71,6 +73,7 @@ class GarmentsStore {
   @action
   setCurrentActiveGarment = (garment: string) => {
     this.currentActiveGarment = garment;
+    order.setPartOfShirtToggle(basisPart);
   }
   @action
   setActiveGarment = (garment: string) => {

@@ -1,8 +1,8 @@
 import { observable, action, get } from 'mobx';
-import * as _ from 'lodash';
+import { basisPart } from '../pages/Order/ToggleBar';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
-import { basisPart } from '../pages/Order/ToggleBar';
+import * as _ from 'lodash';
 import GarmentsStore from './garments/garments';
 
 type CloneOrderObject = (order: Order) => Order;

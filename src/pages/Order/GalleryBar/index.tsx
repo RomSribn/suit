@@ -6,7 +6,15 @@ import { SwiperPopup } from '../../../components/SwiperPopup';
 import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
+interface GalleryItemState extends ImageLoadState {
+}
+
 interface P {
+    setSelectedItems?: (props: ISetSelectedItemsProps) => void;
+    group?: string;
+    subgroup?: string;
+    selectedItems?: any; //tslint:disable-line
+    garment?: string;
     app?: IAppStore;
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
@@ -21,20 +29,25 @@ interface P {
     incremetLoadedCount(): void;
 }
 
-interface GalleryItemState extends ImageLoadState {
-}
-
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
 @inject(({
     order,
     filterStore,
     app
-}) => ({
-    orderStore: order,
-    filterStore,
-    app
+}) => {
+    const {
+        selectedItems,
+        setSelectedItems
+    } = filterStore;
+
+    return {
+        orderStore: order,
+        filterStore,
+        app,
+        selectedItems,
+        setSelectedItems
+    };
 })
-)
 @observer
 class GalleryItem extends React.Component<P, GalleryItemState> {
     constructor(props: P) {
@@ -78,9 +91,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         const {
             onMouseEnter,
             onMouseLeave,
-            shownItem,
             onClick,
-            setOrderDummyParams
+            setOrderDummyParams,
+            selectedItems,
+            setSelectedItems
         } = this.props;
 
         const {
@@ -93,6 +107,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         if (!this.state.load.success) {
             return null;
         }
+
+        const garment = elementInfo && elementInfo.garment;
+        const group = elementInfo && elementInfo.group;
+        const subGroup = elementInfo && elementInfo.subGroup;
 
         // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
@@ -110,13 +128,34 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             }
         }
         const orderStore = this.props.orderStore!;
-        const active =
-            _.get(orderStore, 'activeElement.our_code', '') === id ||
-            shownItem.our_code === id;
+
+        const isActive = () => {
+            const partOfShirtToggle = orderStore && orderStore.partOfShirtToggle;
+
+            const codeInOrder =
+                _.get(orderStore, `order[${garment}][0][${group}][${subGroup}].our_code`, '');
+            const codeInStore =
+                _.get(selectedItems, `[${garment}][${group}][${subGroup}]`, '');
+            const codeInStoreShirt =
+                _.get(selectedItems, `[${garment}][${group}][${partOfShirtToggle}]`, '');
+
+            if (garment === 'shirt' && group === 'fabric_ref') {
+                const comparedValue = codeInStoreShirt || codeInOrder;
+                return comparedValue === id;
+            }
+            if (!Object.values(selectedItems).length || !codeInStore) {
+                return codeInOrder === id;
+            }
+            return codeInStore === id;
+        };
+
+        const active = isActive();
+
         const click = () => {
             this.props.setZoomId(id);
             this.props.filterStore!.closeFilter();
             onClick();
+            setSelectedItems!({ garment, group, subGroup, our_code: id });
             setOrderDummyParams();
         };
         if (this.props.app && active) {
@@ -164,7 +203,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 />
                                 {this.props.app &&
                                     this.props.app.changeSearchedItemsCount()}
-                                {this.props.zoomId === id &&
+                                {active &&
                                     this.props.app && (
                                         <span onClick={toggleSwipe} className="zoom-icon" />
                                     )}

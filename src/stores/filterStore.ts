@@ -1,12 +1,13 @@
 import { observable, action } from 'mobx';
-import * as _ from 'lodash';
 import { callApi } from '../utils/apiAxios';
+import { order } from './order';
+import * as _ from 'lodash';
 
 class FilterStore implements IFilterStore {
     @observable isOpen = false;
     @observable isFetching = false;
     @observable error: Error;
-    
+    @observable selectedItems = {};
     @observable
     filters: Filters | null = null;
 
@@ -19,7 +20,7 @@ class FilterStore implements IFilterStore {
     closeFilter = () => { this.isOpen = false; }
     @action
     loadFilters = (url: string) => {
-        callApi({ url, method: 'GET'},
+        callApi({ url, method: 'GET' },
             () => { this.isFetching = true; },
             (filters: ServerFilters) => {
                 this.filters = Object.keys(filters).reduce((acc, filterName) => {
@@ -35,10 +36,10 @@ class FilterStore implements IFilterStore {
                         values
                     };
                     return acc;
-                  }, {});
+                }, {});
             },
             (e: Error) => this.error = e)
-        .then(() => this.isFetching = false);
+            .then(() => this.isFetching = false);
     }
 
     @action
@@ -70,6 +71,40 @@ class FilterStore implements IFilterStore {
     @action
     clearFilters = (): void => { this.filters = null; }
 
+    @action
+    setSelectedItems = (props: ISetSelectedItemsProps) => {
+        const {
+            our_code,
+            garment,
+            group,
+            subGroup,
+        } = props;
+        const {
+            partOfShirtToggle
+        } = order;
+        const newSelectedItems = { ...this.selectedItems };
+        if (!newSelectedItems[garment]) {
+            newSelectedItems[garment] = {};
+        }
+        if (!newSelectedItems[garment][group]) {
+            newSelectedItems[garment][group] = {};
+        }
+        if (garment === 'shirt' && group === 'fabric_ref') {
+            newSelectedItems[garment][group][partOfShirtToggle] = our_code;
+            this.selectedItems = newSelectedItems;
+            return;
+        }
+        if (!newSelectedItems[garment][group][subGroup]) {
+            newSelectedItems[garment][group][subGroup] = {};
+        }
+        newSelectedItems[garment][group][subGroup] = our_code;
+        this.selectedItems = newSelectedItems;
+    }
+
+    @action
+    clearSelectedItems = () => {
+        this.selectedItems = {};
+    }
     isActive = (filterName: string) => (value: string) => (this.userFilters[filterName] || []).includes(value);
 }
 

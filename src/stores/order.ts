@@ -119,6 +119,7 @@ export class OrderStore implements IOrderStore {
     };
     @observable orderDummyParams = observable.array<string>();
     @observable focusableGarment: string = '';
+    @observable activeGarment: string = '';
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
     @observable previewElement: ActivePreviewElement | null = null;
@@ -600,7 +601,10 @@ export class OrderStore implements IOrderStore {
 
     @action
     setFocusableGarment = (ourCode: string) => {
-        this.focusableGarment = ourCode;
+        if (!this.focusableGarment.includes(ourCode.slice(0, 2))) {
+            this.focusableGarment = ourCode;
+        }
+        this.activeGarment = ourCode;
     }
 }
 

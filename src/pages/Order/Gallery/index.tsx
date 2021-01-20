@@ -41,7 +41,7 @@ const galleryCache = {};
         lang: app.lang,
         activeOrderItem: activeElement,
         orderStore: order,
-        focusableGarment: order.focusableGarment,
+        activeGarment: order.activeGarment,
         galleryStore: galleryCache[cacheName],
         filterStore: filterStore,
         Subgroups: Subgroups,
@@ -180,7 +180,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                                 group={group}
                                 filterStore={filterStore}
                                 orderStore={orderStore}
-                                focusableGarment={this.props.focusableGarment}
+                                activeGarment={this.props.activeGarment}
                                 activeElement={orderStore.activeElement}
                                 previewElement={orderStore.previewElement}
                                 activeOrderItem={this.props.activeOrderItem}

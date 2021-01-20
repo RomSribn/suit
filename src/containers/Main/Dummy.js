@@ -64,9 +64,6 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
-      onRotate: (event) => {
-        console.log(event.x, event.y);
-      },
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       },
@@ -74,16 +71,17 @@ class Widget extends PureComponent {
         const { setDummyY, isMenuUncovered } = this.props;
         isMobile() && isMenuUncovered && setDummyY(y);
       }
-      }
+    }
     );
     try {
       this.widget3d.firstUpdate.then(() => {
         this.props.onDummyLoad();
         this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
       });
+
       this.widget3d.update(this.props.assets)
-      .then(this.handleUpdated);
-    } catch(err) {
+        .then(this.handleUpdated);
+    } catch (err) {
       console.log('Ошибка при рендере манекена', err)
     }
   }
@@ -109,64 +107,64 @@ class Widget extends PureComponent {
         }, [])
         : [];
 
-        const defaultItemValues = {}
-        if (defaultValues) {
-          Object.keys(defaultValues)
+      const defaultItemValues = {}
+      if (defaultValues) {
+        Object.keys(defaultValues)
           .filter(item => !item.includes(['manequin']))
           .map(filteredGarment =>
-              defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
-                .map(garmentObject => Object.keys(garmentObject.design)
-                  .forEach(
-                    elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
-                  )
+            defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
+              .map(garmentObject => Object.keys(garmentObject.design)
+                .forEach(
+                  elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
                 )
+              )
           )
-        }
-        const assetsIds = this.props.assets.map(asset => asset.id || asset);
-        const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
+      }
+      const assetsIds = this.props.assets.map(asset => asset.id || asset);
+      const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
 
-        if (mutuallyExclusiveItems.length && exceptions) {
-          mutuallyExclusiveItems.forEach((item) => {
-            Object.keys(exceptions).forEach((garmentKey) => {
-              Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-                if (
-                  exceptions[garmentKey][elementKey].exceptions &&
-                  exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
-                  ) {
-                  allExceptions = allExceptions.filter((i) => {
-                    if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
-                        if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
-                          this.props.assets.push(defaultItemValues[elementKey])
-                        }
+      if (mutuallyExclusiveItems.length && exceptions) {
+        mutuallyExclusiveItems.forEach((item) => {
+          Object.keys(exceptions).forEach((garmentKey) => {
+            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
+              if (
+                exceptions[garmentKey][elementKey].exceptions &&
+                exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
+              ) {
+                allExceptions = allExceptions.filter((i) => {
+                  if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
+                    if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
+                      this.props.assets.push(defaultItemValues[elementKey])
                     }
+                  }
 
-                    return !exceptions[garmentKey][elementKey].exceptions.includes(i)
-                    })
-                }
-              })
+                  return !exceptions[garmentKey][elementKey].exceptions.includes(i)
+                })
+              }
             })
           })
-        }
+        })
+      }
 
-        const actualExceptions = [...allExceptions, ...activeExceptions];
-        const nextAssets = this.props.assets
-            .filter(asset => {
-              const id = asset.id ? asset.id : asset;
-              return !actualExceptions.includes(id)
-            })
+      const actualExceptions = [...allExceptions, ...activeExceptions];
+      const nextAssets = this.props.assets
+        .filter(asset => {
+          const id = asset.id ? asset.id : asset;
+          return !actualExceptions.includes(id)
+        })
 
-          /**
-           * При загрузке без кеша все хорошо.
-           * Но по какой-то непонятной ссаной бесовщине при перезагузке
-           * порядок первого рендера такой:
-           * отрендерил состояние с дефолтами -> отрендерил дефолты оО
-           * потому здесь какой-то непонятный грязный хак.
-           * У меня заканчиваются крылышки и пиво. так что читай todo:
-           * @todo Если ты знаешь в чем причина - U R welcome, fix it
-           */
-          setTimeout(() => {
-            this.widget3d.update(nextAssets).then(this.handleUpdated);
-          }, 500);
+      /**
+       * При загрузке без кеша все хорошо.
+       * Но по какой-то непонятной ссаной бесовщине при перезагузке
+       * порядок первого рендера такой:
+       * отрендерил состояние с дефолтами -> отрендерил дефолты оО
+       * потому здесь какой-то непонятный грязный хак.
+       * У меня заканчиваются крылышки и пиво. так что читай todo:
+       * @todo Если ты знаешь в чем причина - U R welcome, fix it
+       */
+      setTimeout(() => {
+        this.widget3d.update(nextAssets).then(this.handleUpdated);
+      }, 500);
     }
 
     if (this.props.selected && prevProps.selected !== this.props.selected) {
@@ -176,12 +174,12 @@ class Widget extends PureComponent {
 
   render() {
     return (
-        <div
-          className="widget3d"
-          ref={(node) => this.widgetContainer = node}
-          style={{ width: `${demoSectionWidth}%`, height: '100%' }}
-        />
-      );
+      <div
+        className="widget3d"
+        ref={(node) => this.widgetContainer = node}
+        style={{ width: `${demoSectionWidth}%`, height: '100%' }}
+      />
+    );
   }
 
   handleUpdated = (props) => {
@@ -189,9 +187,8 @@ class Widget extends PureComponent {
   }
 }
 
-const GROUPS = ['design', 'fabric_ref', 'fitting']
 let prevInfo = {};
-@inject(({order, garments: { garments }}) => ({
+@inject(({ order, garments: { garments } }) => ({
   orderStore: order,
   activeGarments: [...garments.activeGarments],
 }))
@@ -207,26 +204,34 @@ export default class App extends Component {
   componentDidMount = () => {
     prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo', {});
   }
+
+  componentDidUpdate(prevProps) {
+    const isActiveGarmentsChanged = !_.isEqual(prevProps.activeGarments, this.props.activeGarments);
+    if (isActiveGarmentsChanged) {
+      const { orderStore, activeGarments } = this.props;
+      orderStore.setOrderDummyParams(activeGarments);
+    }
+  }
   update = (subgroup) => {
     const items = currentItems;
 
-          const {
-            orderStore
-          } = this.props;
+    const {
+      orderStore
+    } = this.props;
 
-          const codeInOrder =
-            _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
-          const item = items.find(i => i.our_code === codeInOrder);
+    const codeInOrder =
+      _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
+    const item = items.find(i => i.our_code === codeInOrder);
 
-          if (!_.isEmpty(item)) {
-              item.elementInfo = {
-                  garment: 'shirt',
-                  group: 'design',
-                  subgroup
-              };
-          }
-          orderStore.setActiveItem(item);
-          orderStore.setPreviewElement(null);
+    if (!_.isEmpty(item)) {
+      item.elementInfo = {
+        garment: 'shirt',
+        group: 'design',
+        subgroup
+      };
+    }
+    orderStore.setActiveItem(item);
+    orderStore.setPreviewElement(null);
   };
   handleClickAsset = ({ id }) => {
     // TODO
@@ -246,8 +251,8 @@ export default class App extends Component {
     } = this.props;
     const subgroup =
       _.findKey(
-          orderStore.order.shirt[0].design,
-          ['our_code', id]
+        orderStore.order.shirt[0].design,
+        ['our_code', id]
       );
     if (id !== this.state.subgroup) {
       this.update(subgroup);
@@ -258,80 +263,16 @@ export default class App extends Component {
     /* eslint-enable */
   };
   render() {
-    const { orderStore, activeGarments } = this.props;
+    const { orderStore } = this.props;
     const { subgroup } = this.state;
     let selected = '';
     const activeElement = orderStore.activeElement || {};
     const initials = {};
-    let params = [];
+    let params = [...orderStore.orderDummyParams]
 
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
     } else {
-      params = activeGarments.reduce((acc, garment) => {
-        const curGarment = orderStore.order[garment];
-        GROUPS.forEach(group => {
-          Object.keys(curGarment[0][group] || {}).forEach(subgroup => {
-            const subgroupVal = curGarment[0][group][subgroup];
-            if (subgroup.includes(INITIALS)) {
-              if (!initials.text) {
-                initials.text = { value: ''};
-              }
-              if(subgroup === `${INITIALS}_text`) {
-                initials.text.value = subgroupVal;
-              }
-              const val = _.get(activeElement , 'elementInfo.subGroup') === subgroup ?
-                activeElement.our_code :
-                subgroupVal.our_code;
-              if (subgroup === `${INITIALS}_arrangement`) {
-                initials.id = val
-              }
-              if (subgroup === `${INITIALS}_color`) {
-                initials.text.color = val;
-              }
-              if (subgroup === `${INITIALS}_style`) {
-                initials.text.font = val;
-              }
-            }
-            const additionalFabric = curGarment[0].design[subgroup] && curGarment[0].design[subgroup].additionalFabric;
-            if (
-              activeElement.elementInfo &&
-              activeElement.elementInfo.garment === garment &&
-              activeElement.elementInfo.group === group &&
-              activeElement.elementInfo.subGroup === subgroup
-            ) {
-              if (subgroup === `${INITIALS}_arrangement`) {
-                initials.id = activeElement.our_code;
-              } else {
-                if (!subgroup.includes(INITIALS)) {
-                  if (subgroup === 'fabric') {
-                    acc.push(subgroupVal.our_code);
-                  } else {
-                    const value = additionalFabric ?
-                        { id: activeElement.our_code, materials: [additionalFabric] } : activeElement.our_code;
-                    acc.push(value);
-                  }
-                }
-              }
-            } else {
-              if (!subgroup.includes(INITIALS) && subgroupVal) {
-                const value = additionalFabric ?
-                    { id: subgroupVal.our_code, materials: [additionalFabric] } : subgroupVal.our_code;
-                acc.push(value);
-              }
-            }
-            // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color
-            if (subgroup ===`${INITIALS}_color`) {
-              if (_.get(activeElement, 'elementInfo.subGroup') ===`${INITIALS}_color`) {
-                acc.push(activeElement.our_code);
-              } else {
-                acc.push(subgroupVal.our_code)
-              }
-            }
-          })
-        })
-        return acc;
-      }, []);
       if (
         activeElement.elementInfo &&
         prevInfo.garment === activeElement.elementInfo.garment &&
@@ -373,27 +314,17 @@ export default class App extends Component {
 
       }
     }
-    const defaultGarments = [...baseDummyElements]
-    if(activeGarments.includes('shirt')) {
-        defaultGarments.splice(defaultGarments.indexOf('shirt'), 1);
-    }
-    if(activeGarments.includes('pants')) {
-        defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
-    }
 
     wasRendered = true;
     return (<React.Fragment>
-      {subgroup &&<Redirect to={`/order/details/shirt/design/${subgroup}`}/>}
+      {subgroup && <Redirect to={`/order/details/shirt/design/${subgroup}`} />}
       <Widget
         selected={selected || ''}
         paramsSelectedCount={params.length}
-        assets={[
-          ...params,
-          ...defaultGarments
-        ]}
+        assets={params}
         onClickAsset={this.handleClickAsset}
         onDummyLoad={this.props.onDummyLoad}
-    />
+      />
     </React.Fragment>);
   }
 

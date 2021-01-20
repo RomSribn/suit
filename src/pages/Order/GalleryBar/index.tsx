@@ -15,6 +15,7 @@ interface P {
     zoomId: string | null;
     setZoomId: (id: string) => void;
     onClick(): void;
+    setOrderDummyParams(): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
     incremetLoadedCount(): void;
@@ -78,7 +79,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             onMouseEnter,
             onMouseLeave,
             shownItem,
-            onClick
+            onClick,
+            setOrderDummyParams
         } = this.props;
 
         const {
@@ -92,7 +94,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             return null;
         }
 
-        // TODO: (KMP) убрать нахуй в стору. Надеюсь, к этому куску говна не надо будет притрагиваиться
+        // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
         if (this.props.filterStore) {
             const filters = this.props.filterStore.userFilters;
@@ -101,7 +103,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             for (const name in filterNames) {
                 // Если в массиве значений данного фильтра filters[name]
                 // есть такое же значение, как у данного элемента галлереи,
-                // тогда шлем все нахуй
+                // тогда выходим с метода
                 if (filters[name] && filters[name].includes(this.props.item[name].filterValue)) {
                     return null;
                 }
@@ -115,6 +117,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             this.props.setZoomId(id);
             this.props.filterStore!.closeFilter();
             onClick();
+            setOrderDummyParams();
         };
         if (this.props.app && active) {
             this.props.app!.setSwiperPopupData(this.props.item);
@@ -184,6 +187,8 @@ type makeGalleryItems = (
     zoomId: string,
     setZoomId: (id: string) => void,
     filterStore: IFilterStore,
+    activeGarments: string[],
+    setOrderDummyParams: (params: string[]) => void
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (
@@ -196,6 +201,8 @@ const makeGalleryItems: makeGalleryItems = (
     zoomId,
     setZoomId,
     filterStore,
+    activeGarments,
+    setOrderDummyParams
 ) => {
     const cache = items.reduce((acc: string[], item): string[] => {
         acc.push(item.our_code);
@@ -232,6 +239,9 @@ const makeGalleryItems: makeGalleryItems = (
                 item={item}
                 onClick={setActiveElementIndex(elementIndex)}
                 shownItem={shownItem}
+                setOrderDummyParams={() => {
+                    setOrderDummyParams(activeGarments);
+                }}
                 onMouseEnter={() => {
                     setPreviewElementIndex(elementIndex, 'enter');
                 }}
@@ -259,10 +269,14 @@ type State = {
 
 @inject(({
     app,
-    filterStore
+    filterStore,
+    garments: { garments },
+    order: { setOrderDummyParams }
 }) => ({
     app,
     filterStore,
+    activeGarments: [...garments.activeGarments],
+    setOrderDummyParams
 })
 )
 @observer
@@ -335,6 +349,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             setPreviewElementIndex,
             shownItem,
             isMouseOverElement,
+            activeGarments,
+            setOrderDummyParams
         } = this.props;
         const {
             renderedElementsCount
@@ -370,7 +386,9 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
                         isMouseOverElement,
                         this.state.zoomId,
                         this.setZoomId,
-                        this.props.filterStore!
+                        this.props.filterStore!,
+                        activeGarments!,
+                        setOrderDummyParams!
                     )}
                 </div>
             </div>

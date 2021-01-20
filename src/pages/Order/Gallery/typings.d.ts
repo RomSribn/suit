@@ -22,6 +22,5 @@ interface GalleryProps {
 
 interface GalleryContainerProps extends GalleryProps {
     match: Match,
-    isExclusivePopupShowing: () => boolean;
     activeOrderItem?: GalleryStoreItem | null;
 }

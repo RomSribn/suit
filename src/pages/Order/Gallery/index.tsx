@@ -25,7 +25,6 @@ const galleryCache = {};
     const {
         setActiveItem,
         setPreviewElement,
-        isExclusivePopupShowing,
         activeElement,
         exceptions,
     } = order;
@@ -39,7 +38,6 @@ const galleryCache = {};
         app,
         setActiveOrderItem: setActiveItem,
         setPreviewElement,
-        isExclusivePopupShowing,
         lang: app.lang,
         activeOrderItem: activeElement,
         orderStore: order,
@@ -53,16 +51,12 @@ const galleryCache = {};
 })
 @observer
 class GalleryBlock extends React.Component<GalleryContainerProps> {
-    componentWillUnmount() {
-        const filterStore = this.props.filterStore!;
-        filterStore.closeFilter();
-        filterStore.clearUserFilters();
-        filterStore.clearFilters();
-
-        if (!this.props.isExclusivePopupShowing()) {
-            this.props.setActiveOrderItem(null);
-        }
-    }
+    // componentWillUnmount() {
+    //     const filterStore = this.props.filterStore!;
+    //     filterStore.closeFilter();
+    //     filterStore.clearUserFilters();
+    //     filterStore.clearFilters();
+    // }
     render() {
         const orderStore = this.props.orderStore!;
         if (orderStore.isEmptyOrder()) {

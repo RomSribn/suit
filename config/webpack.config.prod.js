@@ -1,4 +1,4 @@
-'use strict';
+
 
 const autoprefixer = require('autoprefixer');
 const path = require('path');
@@ -13,7 +13,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -45,7 +45,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -180,7 +180,8 @@ module.exports = {
           // tags. If you use code splitting, however, any async bundles will still
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
-          {test: /\.styl$/,
+          {
+            test: /\.styl$/,
             use: [
               require.resolve("style-loader"),
               {
@@ -316,8 +317,33 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // Minify the code.
-    new UglifyJsPlugin({
+    // // // Minify the code.
+    // new UglifyJsPlugin({
+    //   parallel: true,
+    //   cache: true,
+    //   uglifyOptions: {
+    //     ecma: 8,
+    //     compress: {
+    //       warnings: false,
+    //       // Disabled because of an issue with Uglify breaking seemingly valid code:
+    //       // https://github.com/facebookincubator/create-react-app/issues/2376
+    //       // Pending further investigation:
+    //       // https://github.com/mishoo/UglifyJS2/issues/2011
+    //       comparisons: false,
+    //     },
+    //     mangle: {
+    //       safari10: true,
+    //     },
+    //     output: {
+    //       comments: false,
+    //       // Turned on because emoji and regex is not minified properly using default
+    //       // https://github.com/facebookincubator/create-react-app/issues/2488
+    //       ascii_only: true,
+    //     },
+    //   },
+    //   sourceMap: shouldUseSourceMap,
+    // }),
+    new webpack.optimize.UglifyJsPlugin({
       parallel: true,
       cache: true,
       uglifyOptions: {
@@ -341,7 +367,8 @@ module.exports = {
         },
       },
       sourceMap: shouldUseSourceMap,
-    }),
+    }), //minify everything
+    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,

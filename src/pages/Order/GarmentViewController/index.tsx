@@ -2,31 +2,42 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { VisibleButton } from '../../../components/VisibleButton';
 
-@inject(({ garments: { garments }, order: { setVisibleGarments, visibleGarments } }) => {
+@inject(({ garments: {
+    garments
+},
+    order: {
+        setHiddenGarments,
+        hiddenGarments,
+        setOrderDummyParams
+    }
+}) => {
     return {
         activeGarments: [...garments.activeGarments],
         currentActiveGarment: garments.currentActiveGarment,
         setCurrentActiveGarment: garments.setCurrentActiveGarment,
-        setVisibleGarments,
-        visibleGarments,
+        setHiddenGarments,
+        hiddenGarments,
+        setOrderDummyParams
     };
 })
 @observer
 class GarmentViewController extends React.Component<IGarmentChoiceFormProps> {
     render() {
         const {
-            setVisibleGarments,
+            setHiddenGarments,
             activeGarments,
-            visibleGarments,
-            currentActiveGarment
+            hiddenGarments,
+            currentActiveGarment,
+            // setOrderDummyParams
         } = this.props;
         return (
             <div
                 onClick={() => {
-                    setVisibleGarments!(activeGarments!);
+                    setHiddenGarments!(activeGarments!);
+                    // setOrderDummyParams!(activeGarments!);
                 }}
             >
-                <VisibleButton isHide={!!visibleGarments![currentActiveGarment!]} />
+                <VisibleButton isHide={!!hiddenGarments![currentActiveGarment!]} />
             </div>
         );
     }

@@ -34,7 +34,7 @@ interface IOrderStore {
     fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
     clearOrderInfo(): void;
     setOrderDummyParams: (acriveGarments: string[]) => void;
-    setVisibleGarments: (acriveGarments: string[]) => void;
+    setHiddenGarments: (acriveGarments: string[]) => void;
     setFocusableGarment: (our_code: string) => void;
 }
 
@@ -42,7 +42,7 @@ interface Order {
     [key: string]: OrderItem;
 }
 
-interface IVisibleGarments {
+interface IHiddenGarments {
     shirt: string | null;
     jacket: string | null;
     pants: string | null;

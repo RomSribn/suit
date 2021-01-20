@@ -112,7 +112,7 @@ export class OrderStore implements IOrderStore {
     @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
-    @observable visibleGarments: IVisibleGarments = {
+    @observable hiddenGarments: IHiddenGarments = {
         shirt: null,
         jacket: null,
         pants: null
@@ -238,9 +238,9 @@ export class OrderStore implements IOrderStore {
     }
 
     @action
-    setVisibleGarments = (activeGarments: string[]) => {
+    setHiddenGarments = (activeGarments: string[]) => {
         const garment: string = GarmentsStore.currentActiveGarment;
-        const newValue = { ...this.visibleGarments };
+        const newValue = { ...this.hiddenGarments };
         const selectedGarment: string | null = newValue[garment];
 
         if (selectedGarment) {
@@ -252,7 +252,7 @@ export class OrderStore implements IOrderStore {
             const visibleDummyParams = activeGarments.filter(activeGarment => !newValue[activeGarment]);
             this.setOrderDummyParams(visibleDummyParams);
         }
-        this.visibleGarments = newValue;
+        this.hiddenGarments = newValue;
     }
 
     @action
@@ -335,6 +335,7 @@ export class OrderStore implements IOrderStore {
         if (activeGarments.includes('pants')) {
             defaultGarments.splice(defaultGarments.indexOf('trousers'), 1);
         }
+
         this.orderDummyParams = observable.array([...parsedParams, ...defaultGarments]);
     }
 

@@ -67,9 +67,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         const {
             items,
             previewElement,
-            activeElement,
             galleryStore,
-            orderStore
+            orderStore,
+            focusableGarment
         } = this.props;
 
         const {
@@ -82,7 +82,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
         let item = previewVal;
 
         if (_.isEmpty(item)) {
-            item = activeElement!;
+            item = items.find(i => i.our_code === focusableGarment)!;
         }
 
         if (_.isEmpty(item)) {

@@ -20,7 +20,9 @@ interface P {
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
-    filterStore?: IFilterStore;
+    partOfShirtToggle?: string;
+    closeFilter?: () => void;
+    userFilters?: UserFilters;
     zoomId: string | null;
     setZoomId: (id: string) => void;
     onClick(): void;
@@ -33,22 +35,22 @@ interface P {
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
 @inject(({
     order,
-    filterStore,
+    filterStore: {
+        selectedItems,
+        setSelectedItems,
+        closeFilter,
+        userFilters
+    },
     app
-}) => {
-    const {
-        selectedItems,
-        setSelectedItems
-    } = filterStore;
-
-    return {
-        orderStore: order,
-        filterStore,
-        app,
-        selectedItems,
-        setSelectedItems
-    };
-})
+}) => ({
+    orderStore: order,
+    partOfShirtToggle: order.partOfShirtToggle,
+    closeFilter,
+    app,
+    selectedItems,
+    setSelectedItems,
+    userFilters
+}))
 @observer
 class GalleryItem extends React.Component<P, GalleryItemState> {
     constructor(props: P) {
@@ -74,14 +76,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             onClick,
             setOrderDummyParams,
             setSelectedItems,
-            filterStore,
+            closeFilter,
             setZoomId
         } = props;
         const garment = elementInfo && elementInfo.garment;
         const group = elementInfo && elementInfo.group;
         const subGroup = elementInfo && elementInfo.subGroup;
         setZoomId(our_code);
-        filterStore!.closeFilter();
+        closeFilter!();
         onClick();
         setSelectedItems!({ garment, group, subGroup, our_code });
         setOrderDummyParams();
@@ -99,17 +101,17 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
 
     isActive() {
         const {
-            selectedItems,
             item: {
                 elementInfo,
                 our_code,
-            }
+            },
+            partOfShirtToggle,
+            selectedItems,
         } = this.props;
         const garment = elementInfo && elementInfo.garment;
         const group = elementInfo && elementInfo.group;
         const subGroup = elementInfo && elementInfo.subGroup;
         const orderStore = this.props.orderStore!;
-        const partOfShirtToggle = orderStore && orderStore.partOfShirtToggle;
 
         const codeInOrder =
             _.get(orderStore, `order[${garment}][0][${group}][${subGroup}].our_code`, '');
@@ -143,7 +145,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
 
             const isActive = this.isActive();
             this.setState({ isActive });
-            if (isActive && !focusableGarment.includes(our_code.slice(0, 2))) {
+            if (isActive && focusableGarment !== our_code) {
                 setFocusableGarment(our_code);
             }
             if (this.props.app && this.state.isActive) {
@@ -183,7 +185,9 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
     render() {
         const {
             onMouseEnter,
-            onMouseLeave
+            onMouseLeave,
+            userFilters,
+            item
         } = this.props;
 
         const {
@@ -203,15 +207,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
 
         // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
-        if (this.props.filterStore) {
-            const filters = this.props.filterStore.userFilters;
-            const filterNames = Object.keys(filters);
+        if (userFilters) {
+            const filterNames = Object.keys(userFilters);
 
             for (const name in filterNames) {
                 // Если в массиве значений данного фильтра filters[name]
                 // есть такое же значение, как у данного элемента галлереи,
                 // тогда выходим с метода
-                if (filters[name] && filters[name].includes(this.props.item[name].filterValue)) {
+                if (userFilters[name] && userFilters[name].includes(item[name].filterValue)) {
                     return null;
                 }
             }

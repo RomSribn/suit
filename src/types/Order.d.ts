@@ -8,7 +8,8 @@ interface IOrderStore {
     prevActiveItem?: string | null;
     exceptions: OrderItemException | null;
     defaultExceptions: OrderItemException | null;
-    mutuallyExclusivePopup: MutuallyExclusive | null,
+    mutuallyExclusivePopup: MutuallyExclusive | null;
+    focusableGarment: string;
     isEmptyOrder: () => boolean;
     clearElement: (garment: string, element: string, actionType: ClearElementActionType) => void;
     clearException: (garment: string, subGroup: string, actionType: ClearElementActionType) => void;
@@ -34,6 +35,7 @@ interface IOrderStore {
     clearOrderInfo(): void;
     setOrderDummyParams: (acriveGarments: string[]) => void;
     setVisibleGarments: (acriveGarments: string[]) => void;
+    setFocusableGarment: (our_code: string) => void;
 }
 
 interface Order {

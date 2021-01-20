@@ -9,6 +9,7 @@ interface GalleryBarProps {
     filterStore?: IFilterStore;
     activeGarments?: string[];
     setOrderDummyParams?: (params: string[]) => void;
+    setFocusableGarment?: (our_code: string) => void;
 }
 
 interface Child {

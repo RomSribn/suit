@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
 interface GalleryItemState extends ImageLoadState {
+    isActive: boolean;
 }
 
 interface P {
@@ -55,10 +56,102 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         this.state = {
             load: {
                 error: null,
-                success: null,
+                success: null
             },
+            isActive: false
         };
     }
+
+    handleSelectGarment(props: P) {
+        if (!props) {
+            return;
+        }
+        const {
+            item: {
+                elementInfo,
+                our_code
+            },
+            onClick,
+            setOrderDummyParams,
+            setSelectedItems,
+            filterStore,
+            setZoomId
+        } = props;
+        const garment = elementInfo && elementInfo.garment;
+        const group = elementInfo && elementInfo.group;
+        const subGroup = elementInfo && elementInfo.subGroup;
+        setZoomId(our_code);
+        filterStore!.closeFilter();
+        onClick();
+        setSelectedItems!({ garment, group, subGroup, our_code });
+        setOrderDummyParams();
+    }
+
+    handleToggleSwipe(props: P) {
+        if (!props) {
+            return;
+        }
+        const {
+            app
+        } = props;
+        app!.toggleSwiperPopup();
+    }
+
+    isActive() {
+        const {
+            selectedItems,
+            item: {
+                elementInfo,
+                our_code,
+            }
+        } = this.props;
+        const garment = elementInfo && elementInfo.garment;
+        const group = elementInfo && elementInfo.group;
+        const subGroup = elementInfo && elementInfo.subGroup;
+        const orderStore = this.props.orderStore!;
+        const partOfShirtToggle = orderStore && orderStore.partOfShirtToggle;
+
+        const codeInOrder =
+            _.get(orderStore, `order[${garment}][0][${group}][${subGroup}].our_code`, '');
+        const codeInStore =
+            _.get(selectedItems, `[${garment}][${group}][${subGroup}]`, '');
+        const codeInStoreShirt =
+            _.get(selectedItems, `[${garment}][${group}][${partOfShirtToggle}]`, '');
+
+        if (garment === 'shirt' && group === 'fabric_ref') {
+            const comparedValue = codeInStoreShirt || codeInOrder;
+            return comparedValue === our_code;
+        }
+        if (!Object.values(selectedItems).length || !codeInStore) {
+            return codeInOrder === our_code;
+        }
+        return codeInStore === our_code;
+    }
+
+    componentDidUpdate(prevProps: P) {
+        if (!_.isEqual(prevProps, this.props)) {
+            const {
+                item: {
+                    our_code,
+                },
+                orderStore
+            } = this.props;
+            const {
+                focusableGarment,
+                setFocusableGarment
+            } = orderStore!;
+
+            const isActive = this.isActive();
+            this.setState({ isActive });
+            if (isActive && !focusableGarment.includes(our_code.slice(0, 2))) {
+                setFocusableGarment(our_code);
+            }
+            if (this.props.app && this.state.isActive) {
+                this.props.app!.setSwiperPopupData(this.props.item);
+            }
+        }
+    }
+
     componentDidMount() {
         try {
             const { item: { img_url_2d: imageUrl }, incremetLoadedCount } = this.props;
@@ -90,12 +183,12 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
     render() {
         const {
             onMouseEnter,
-            onMouseLeave,
-            onClick,
-            setOrderDummyParams,
-            selectedItems,
-            setSelectedItems
+            onMouseLeave
         } = this.props;
+
+        const {
+            isActive
+        } = this.state;
 
         const {
             img_url_2d: image,
@@ -107,10 +200,6 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         if (!this.state.load.success) {
             return null;
         }
-
-        const garment = elementInfo && elementInfo.garment;
-        const group = elementInfo && elementInfo.group;
-        const subGroup = elementInfo && elementInfo.subGroup;
 
         // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
@@ -127,44 +216,6 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                 }
             }
         }
-        const orderStore = this.props.orderStore!;
-
-        const isActive = () => {
-            const partOfShirtToggle = orderStore && orderStore.partOfShirtToggle;
-
-            const codeInOrder =
-                _.get(orderStore, `order[${garment}][0][${group}][${subGroup}].our_code`, '');
-            const codeInStore =
-                _.get(selectedItems, `[${garment}][${group}][${subGroup}]`, '');
-            const codeInStoreShirt =
-                _.get(selectedItems, `[${garment}][${group}][${partOfShirtToggle}]`, '');
-
-            if (garment === 'shirt' && group === 'fabric_ref') {
-                const comparedValue = codeInStoreShirt || codeInOrder;
-                return comparedValue === id;
-            }
-            if (!Object.values(selectedItems).length || !codeInStore) {
-                return codeInOrder === id;
-            }
-            return codeInStore === id;
-        };
-
-        const active = isActive();
-
-        const click = () => {
-            this.props.setZoomId(id);
-            this.props.filterStore!.closeFilter();
-            onClick();
-            setSelectedItems!({ garment, group, subGroup, our_code: id });
-            setOrderDummyParams();
-        };
-        if (this.props.app && active) {
-            this.props.app!.setSwiperPopupData(this.props.item);
-        }
-
-        const toggleSwipe = () => {
-            this.props.app!.toggleSwiperPopup();
-        };
 
         const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
         const hoverImg = isFabricImg ?
@@ -183,14 +234,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 this.props.app.currentSearchValue.toLowerCase()
                             ))) && (
                         <div
-                            onClick={click}
+                            onClick={() => this.handleSelectGarment(this.props)}
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
                             className={classnames('gallery__item-blc', {
                                 landscape: isMobile() && isLandscape(),
                             })}
                         >
-                            <div className={classnames('gallery__item', { active })}>
+                            <div className={classnames('gallery__item', { active: isActive })}>
                                 <img
                                     src={hoverImg}
                                     className="gallery__item--hover-image"
@@ -203,9 +254,12 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 />
                                 {this.props.app &&
                                     this.props.app.changeSearchedItemsCount()}
-                                {active &&
+                                {isActive &&
                                     this.props.app && (
-                                        <span onClick={toggleSwipe} className="zoom-icon" />
+                                        <span
+                                            onClick={() => this.handleToggleSwipe(this.props)}
+                                            className="zoom-icon"
+                                        />
                                     )}
                             </div>
                         </div>
@@ -309,13 +363,19 @@ type State = {
 @inject(({
     app,
     filterStore,
-    garments: { garments },
-    order: { setOrderDummyParams }
+    garments: {
+        garments
+    },
+    order: {
+        setOrderDummyParams,
+        setFocusableGarment
+    }
 }) => ({
     app,
     filterStore,
     activeGarments: [...garments.activeGarments],
-    setOrderDummyParams
+    setOrderDummyParams,
+    setFocusableGarment
 })
 )
 @observer
@@ -380,6 +440,13 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     hideExceptionPopup = () => this.setState({ isShowedExceptionPopup: false });
 
     setZoomId = (id: string) => this.setState({ zoomId: id });
+
+    componentWillUnmount() {
+        const {
+            setFocusableGarment
+        } = this.props;
+        setFocusableGarment!('fab34');
+    }
 
     render() {
         const {

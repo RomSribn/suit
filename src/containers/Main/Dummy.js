@@ -188,7 +188,6 @@ class Widget extends PureComponent {
   }
 }
 
-let prevInfo = {};
 @inject(({ order, garments: { garments } }) => ({
   orderStore: order,
   activeGarments: [...garments.activeGarments],
@@ -201,9 +200,6 @@ export default class App extends Component {
       elementChanged: false,
       subgroup: null
     };
-  }
-  componentDidMount = () => {
-    prevInfo = _.get(this, 'props.orderStore.activeElement.elementInfo', {});
   }
 
   componentDidUpdate(prevProps) {
@@ -267,6 +263,7 @@ export default class App extends Component {
     const { orderStore } = this.props;
     const { subgroup } = this.state;
     let selected = '';
+    const focusableGarment = orderStore.focusableGarment;
     const activeElement = orderStore.activeElement || {};
     const visibleGarments = orderStore.visibleGarments || {};
     const initials = {};
@@ -276,34 +273,12 @@ export default class App extends Component {
      * @todo try to updating all mobx extensions 
      * P.S. I've tried to do this, got a lot of new issues
      */
-    // let params = orderStore.orderDummyParams.map(param => toJs(param));
+
     let params = toJS(orderStore.orderDummyParams);
 
     if (orderStore.isEmptyOrder() || !wasRendered) {
       params = baseDummyElements;
     } else {
-      if (
-        activeElement.elementInfo &&
-        prevInfo.garment === activeElement.elementInfo.garment &&
-        prevInfo.group === activeElement.elementInfo.group &&
-        prevInfo.subGroup === activeElement.elementInfo.subGroup &&
-        !activeElement.elementInfo.subGroup.includes(INITIALS)
-      ) {
-        selected = prevInfo.code;
-      } else {
-        selected = activeElement.our_code;
-        prevInfo = {
-          code: activeElement.our_code,
-          garment: _.get(activeElement, 'elementInfo.garment', ''),
-          group: _.get(activeElement, 'elementInfo.group', ''),
-          subGroup: _.get(activeElement, 'elementInfo.subGroup', '')
-        };
-      }
-      if (activeElement.elementInfo &&
-        activeElement.elementInfo.subGroup &&
-        activeElement.elementInfo.subGroup.includes(INITIALS)) {
-        selected = initials;
-      }
       if (!_.isEmpty(initials) && typeof selected !== initials) {
         params.push(initials);
       }
@@ -332,7 +307,7 @@ export default class App extends Component {
     return (<React.Fragment>
       {subgroup && <Redirect to={`/order/details/shirt/design/${subgroup}`} />}
       <Widget
-        selected={selected || ''}
+        selected={focusableGarment}
         paramsSelectedCount={params.length}
         assets={params}
         onClickAsset={this.handleClickAsset}

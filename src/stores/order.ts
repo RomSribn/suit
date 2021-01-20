@@ -118,6 +118,7 @@ export class OrderStore implements IOrderStore {
         pants: null
     };
     @observable orderDummyParams = observable.array<string>();
+    @observable focusableGarment: string = '';
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
     @observable previewElement: ActivePreviewElement | null = null;
@@ -595,6 +596,11 @@ export class OrderStore implements IOrderStore {
         });
         this.order = newValue;
         this.partOfShirtToggle = basisPart;
+    }
+
+    @action
+    setFocusableGarment = (ourCode: string) => {
+        this.focusableGarment = ourCode;
     }
 }
 

@@ -13,12 +13,21 @@ import { routes as defaultRoutes } from '../../../config/routes';
 import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
+import { GarmentViewController } from '../GarmentViewController';
+import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 
-@inject(({ app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered } }) => ({
+@inject(({
+    app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered, lang },
+    garments: {
+        garments: { currentActiveGarment }
+    }
+}) => ({
     setDummyY,
     dummyY,
     isMenuUncovered,
-    setIsMenuUncovered
+    setIsMenuUncovered,
+    currentActiveGarment,
+    lang
 }))
 @observer
 class MainSection extends React.Component<MainSectionProps> {
@@ -35,7 +44,15 @@ class MainSection extends React.Component<MainSectionProps> {
         const {
             isIndexPage,
             detailsDeep,
+            isMenuUncovered,
+            setIsMenuUncovered,
+            currentActiveGarment,
+            lang = 'ru'
         } = this.props;
+
+        const {
+            inititalTouch
+        } = this.state;
 
         const isRealIndexPage =
             window.location.pathname ===
@@ -46,7 +63,7 @@ class MainSection extends React.Component<MainSectionProps> {
                 <div
                     className="main__middle"
                     style={!isRealIndexPage ? {
-                        transform: isMobile() ? `translateY(${this.props.isMenuUncovered ? 10 : 70}%)` : 'unset',
+                        transform: isMobile() ? `translateY(${isMenuUncovered ? 10 : 70}%)` : 'unset',
                         transition: '0.5s',
                         justifyContent: 'space-between',
                     } : {
@@ -57,6 +74,14 @@ class MainSection extends React.Component<MainSectionProps> {
                             justifyContent: 'space-around',
                         }}
                 >
+                    {!isMenuUncovered && isMobile() && (
+                        <div className="above-content">
+                            <div className="above-content__garment">
+                                <span>{loc[lang][currentActiveGarment]}</span>
+                            </div>
+                            <GarmentViewController />
+                        </div>
+                    )}
                     <Filter />
                     {isRealIndexPage && <Demo />}
                     {isRealIndexPage && <GarmentChoise isNavigationGarments={false} />}
@@ -85,9 +110,9 @@ class MainSection extends React.Component<MainSectionProps> {
                         onTouchEnd={
                             (event: React.TouchEvent<HTMLInputElement>) => {
                                 if ((event.changedTouches[0].clientY -
-                                    this.state.inititalTouch) < -10) {
-                                    this.props.setIsMenuUncovered!(!!(event.changedTouches[0].clientY
-                                        < this.state.inititalTouch));
+                                    inititalTouch) < -10) {
+                                    setIsMenuUncovered!(!!(event.changedTouches[0].clientY
+                                        < inititalTouch));
                                 }
                             }
                         }

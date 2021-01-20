@@ -12,9 +12,9 @@ interface Props {
 }))
 @observer
 class ViewControl extends React.Component<Props> {
-     onClick = (element: string) => () => {
-         this.props.orderStore!.toggleHiddenElement(element);
-     }
+    onClick = (element: string) => () => {
+        this.props.orderStore!.toggleHiddenElement(element);
+    }
     render() {
         const {
             text
@@ -23,17 +23,17 @@ class ViewControl extends React.Component<Props> {
         const activeElementCode = orderStore.activeElement && orderStore.activeElement.our_code || '';
         const elementShown = !orderStore.hiddenElements.includes(activeElementCode);
         return (
-        <button
-            onClick={this.onClick(activeElementCode)}
-            className={classNames(
-                'btn',
-                {
-                    'tools__item tools__item--view': elementShown,
-                    'tools__item tools__item--view--hide': !elementShown,
-                }
-            )}
-            title={text}
-        />
+            <div
+                onClick={this.onClick(activeElementCode)}
+                className={classNames(
+                    'btn',
+                    {
+                        'tools__item tools__item--view': elementShown,
+                        'tools__item tools__item--view--hide': !elementShown,
+                    }
+                )}
+                title={text}
+            />
         );
     }
 }

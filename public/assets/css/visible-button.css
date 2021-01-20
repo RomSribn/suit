@@ -1,0 +1,120 @@
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+.visible-button {
+  position: relative;
+  align-items: center;
+  background-color: #ebeeee;
+  display: flex;
+  justify-content: center;
+  height: calc(2.5333rem + 1px);
+  width: calc(2.5333rem + 1px);
+}
+.ripple {
+  position: absolute;
+  z-index: 90;
+  right: 0;
+  transition: transform 0.2s;
+  transition: transform 0.2s;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 25px;
+  overflow: hidden;
+  border-radius: 100vw;
+  pointer-events: none;
+}
+.ripple.animate:before {
+  animation: clicked 0.4s forwards cubic-bezier(0.5, 0.61, 0.36, 1);
+}
+.ripple:before {
+  content: '';
+  background: rgba(0, 0, 0, 0.1);
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  right: 41px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(50%, -50%) scale(0.5);
+  pointer-events: none;
+}
+@keyframes clicked {
+  0% {
+    opacity: 0;
+    transform: translate(50%, -50%) scale(0.5);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(50%, -50%) scale(1.2);
+  }
+}
+.visible-button__toggle {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  z-index: 100;
+  right: 0;
+  top: 0;
+  transition: transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border-radius: 100vw;
+  cursor: pointer;
+  transform: scale(0.8);
+}
+.visible-button__toggle:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  height: 1px;
+  background: black;
+  transform-origin: top left;
+  transform: rotateZ(46deg);
+  transition: width 0.13s ease-out;
+}
+.visible-button__toggle[data-state='visible']:before {
+  width: 25px;
+}
+.visible-button__toggle[data-state='hidden']:before {
+  width: 0;
+}
+.visible-button__toggle .eye {
+  fill: #000;
+  transition: transform 0.13s linear;
+  stroke-width: 0;
+  transform: scale(1) rotateY(0);
+}
+.visible-button__toggle .eye path {
+  fill: none;
+  stroke-width: 1;
+  stroke-miterlimit: 5;
+  stroke: #000;
+}
+.visible-button__toggle:active {
+  transform: scale(0.9);
+}
+.visible-button__toggle:active s + input {
+  transform: rotateY(1deg);
+  letter-spacing: 1.5px;
+  box-shadow: 3px 0px 15px 0px #c1e6d0;
+  cursor: text;
+}
+.visible-button__toggle:active s + input.password {
+  letter-spacing: 3px;
+}
+.visible-button__toggle:active:before {
+  transform: rotateZ(46deg) rotateY(5deg);
+}
+.visible-button__toggle:active .eye {
+  transform: scale(0.75) rotateY(5deg);
+}

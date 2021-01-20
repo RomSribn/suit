@@ -1,8 +1,9 @@
 import { observable, action, get } from 'mobx';
-import * as _ from 'lodash';
+import { basisPart } from '../pages/Order/ToggleBar';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
-import { basisPart } from '../pages/Order/ToggleBar';
+import * as _ from 'lodash';
+import GarmentsStore from './garments/garments';
 
 type CloneOrderObject = (order: Order) => Order;
 const cloneOrderObject: CloneOrderObject = (order) => {
@@ -111,7 +112,13 @@ export class OrderStore implements IOrderStore {
     @observable defaultExceptions: OrderItemException | null = null;
     @observable defaultValues: Order | null = null;
     @observable order: Order = {} as Order;
+    @observable visibleGarments: IVisibleGarments = {
+        shirt: null,
+        jacket: null,
+        pants: null
+    };
     @observable orderDummyParams = observable.array<string>();
+    @observable focusableGarment: string = '';
     @observable activeElement: GalleryStoreItem | null = null;
     @observable activeSubGroup: string = '';
     @observable previewElement: ActivePreviewElement | null = null;
@@ -228,6 +235,24 @@ export class OrderStore implements IOrderStore {
                 }
             }
         }
+    }
+
+    @action
+    setVisibleGarments = (activeGarments: string[]) => {
+        const garment: string = GarmentsStore.currentActiveGarment;
+        const newValue = { ...this.visibleGarments };
+        const selectedGarment: string | null = newValue[garment];
+
+        if (selectedGarment) {
+            newValue[garment] = null;
+            const visibleDummyParams = activeGarments.filter(activeGarment => !newValue[activeGarment]);
+            this.setOrderDummyParams(visibleDummyParams);
+        } else {
+            newValue[garment] = garment;
+            const visibleDummyParams = activeGarments.filter(activeGarment => !newValue[activeGarment]);
+            this.setOrderDummyParams(visibleDummyParams);
+        }
+        this.visibleGarments = newValue;
     }
 
     @action
@@ -571,6 +596,11 @@ export class OrderStore implements IOrderStore {
         });
         this.order = newValue;
         this.partOfShirtToggle = basisPart;
+    }
+
+    @action
+    setFocusableGarment = (ourCode: string) => {
+        this.focusableGarment = ourCode;
     }
 }
 

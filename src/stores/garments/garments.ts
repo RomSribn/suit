@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
-import { callApi } from '../../utils/apiAxios';
 import { API_ROOT, services } from '../../config/routes';
+import { basisPart } from '../../pages/Order/ToggleBar';
+import { callApi } from '../../utils/apiAxios';
+import { order } from '../order';
 import GarmentStore from './garment';
 
 export const ADD: string = 'ADD_ACTIVE_GARMENT';
@@ -55,8 +57,8 @@ class GarmentsStore {
     if (_action === ADD) {
       // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
       if (this.activeGarments.findIndex(el => garment === el) === -1) {
-      this.activeGarments.push(garment);
-      this.currentActiveGarment = this.activeGarments[0];
+        this.activeGarments.push(garment);
+        this.currentActiveGarment = this.activeGarments[0];
       }
     } else if (_action === REMOVE) {
       this.activeGarments.remove(garment);
@@ -71,6 +73,7 @@ class GarmentsStore {
   @action
   setCurrentActiveGarment = (garment: string) => {
     this.currentActiveGarment = garment;
+    order.setPartOfShirtToggle(basisPart);
   }
   @action
   setActiveGarment = (garment: string) => {

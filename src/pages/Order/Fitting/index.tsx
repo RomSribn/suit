@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { TRANSITION_DUARAION } from '../../../config/constants';
 import { Fitting as Component } from './component';
+import { inject, observer } from 'mobx-react';
+import { TRANSITION_DUARAION } from '../../../config/constants';
 
-@inject(({app, order, garments: { GalleryStore }}, nextProps: FittingContainerProps) => {
+@inject(({ app, order, garments: { GalleryStore } }, nextProps: FittingContainerProps) => {
     const {
         garment,
         group,
@@ -37,13 +37,13 @@ class Fitting extends React.Component<FittingContainerProps> {
                 transitionEnterTimeout={TRANSITION_DUARAION}
                 transitionLeaveTimeout={TRANSITION_DUARAION}
             >
-            <Component
-                garmentInfo={garmentInfo}
-                orderStore={orderStore}
-                key={galleryStore.items.toString()}
-                lang={lang}
-                items={[...galleryStore.items]}
-            />
+                <Component
+                    garmentInfo={garmentInfo}
+                    orderStore={orderStore}
+                    key={galleryStore.items.toString()}
+                    lang={lang}
+                    items={[...galleryStore.items]}
+                />
             </ReactCSSTransitionGroup>
         );
     }

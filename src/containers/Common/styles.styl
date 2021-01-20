@@ -8,6 +8,26 @@
     &--bg-grey
         background-color #eceeee
 
+    .above-content
+        position absolute
+        display flex
+        align-items stretch
+        justify-content space-between
+        height auto
+        top -41px
+        left calc(0% + 10px)
+        opacity 0.8
+
+        &__garment 
+            display flex
+            font-size 18px
+            font-weight 500
+            align-items center
+            padding 4.5px
+            margin-right 10px
+            text-transform uppercase
+            background-color #ebeeee
+
     @media only screen and (max-width: 450px), only screen and (max-height: 450px)
         width 100%
         // height
@@ -19,12 +39,10 @@
             width 100%
             padding: 1.5rem 1rem;
 
-    @media only screen and (max-width: 450px){
-        .main__middle{
+    @media only screen and (max-width: 450px)
+        .main__middle 
             background: #fff;
-        }
-    }
-
-.main.main--full .main__middle{
+        
+.main.main--full .main__middle {
     background: transparent;
 }

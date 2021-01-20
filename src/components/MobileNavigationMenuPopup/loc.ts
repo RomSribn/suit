@@ -12,6 +12,9 @@ interface Locale {
   forHer: string;
   logIn: string;
   chat: string;
+  shirt: string;
+  pants: string;
+  jacket: string;
 }
 
 const makeLocale: MakeLocale<Locale> = {
@@ -29,6 +32,9 @@ const makeLocale: MakeLocale<Locale> = {
     forHim: 'for him',
     forHer: 'for her',
     chat: 'chat',
+    shirt: 'shirt',
+    pants: 'pants',
+    jacket: 'jacket'
   },
   ru: {
     order: 'заказать',
@@ -44,6 +50,9 @@ const makeLocale: MakeLocale<Locale> = {
     forHim: 'для него',
     forHer: 'для нее',
     chat: 'чат',
+    shirt: ' рубашка',
+    pants: 'брюки',
+    jacket: 'пиджак'
   },
 };
 

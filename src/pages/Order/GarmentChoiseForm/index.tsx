@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { GarmentChoise as GarmentChoiseComponent } from './component';
 
-@inject(({ app, garments: { garments }, routing, order }) => {
+@inject(({ app, garments: { garments }, routing }) => {
     return {
         lang: app.lang,
         pushOrderPathitem: app.pushOrderPathItem,
@@ -15,8 +15,6 @@ import { GarmentChoise as GarmentChoiseComponent } from './component';
         currentActiveGarment: garments.currentActiveGarment,
         setCurrentActiveGarment: garments.setCurrentActiveGarment,
         path: routing.location.pathname,
-        order: order.order,
-        makeOrder: order.fetchInitialOrder,
     };
 })
 @observer
@@ -29,11 +27,10 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
             toggleGarment,
             path,
             fetchGarments,
-            makeOrder,
             pushOrderPathitem,
             isNavigationGarments,
             currentActiveGarment,
-            setCurrentActiveGarment
+            setCurrentActiveGarment,
         } = this.props;
         return (
             <GarmentChoiseComponent
@@ -46,7 +43,6 @@ class GarmentChoise extends React.Component<GarmentChoiceFormProps> {
                 activeGarments={activeGarments}
                 toggleGarment={toggleGarment}
                 path={path}
-                makeOrder={makeOrder}
                 pushOrderPathitem={pushOrderPathitem}
             />
         );

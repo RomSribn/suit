@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import {  Switch, Route } from 'react-router';
+import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { TRANSITION_DUARAION } from '../../config/constants';
@@ -29,10 +29,10 @@ const Common = (props: CommonProps) => {
         switch (choiceItem.id) {
             case 'initials_text':
                 return choiceItem.status && typeof choiceItem.status === 'string'
-                && choiceItem.status !== loc[lang].noStatus;
+                    && choiceItem.status !== loc[lang].noStatus;
             default:
                 return choiceItem.isSubclear !== null &&
-                choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
+                    choiceItem.ourCode && choiceItem.ourCode !== choiceItem.defaultCode;
         }
     };
 
@@ -84,12 +84,12 @@ const Common = (props: CommonProps) => {
                                     // TODO: check the structure for intials_text
                                     return renderClearButton(item) && !isMobile() ?
                                         <span onClick={clearClick(garment, item.id!)}>{loc[lang!].clear}</span> :
-                                    null;
+                                        null;
                                 }}
                             />
                         </Switch>
                     </span>
-                : null
+                    : null
             }
         </div>
     );
@@ -105,7 +105,7 @@ interface LinkProps {
 }
 class CustomLink extends React.PureComponent<LinkProps> {
 
-    render () {
+    render() {
         const {
             item,
             basicRoute,
@@ -188,23 +188,23 @@ class CustomInput extends React.PureComponent<InputProps> {
             clearClick,
         } = this.props;
         return (
-       <Common
-           item={item}
-           clearClick={clearClick}
-           noCursorPointer={true}
-           lang={lang}
-       >
-           <input
-               type="text"
-               maxLength={8}
-               placeholder={loc[lang!].noStatus}
-               value={item.status}
-               onChange={this.onChange}
-               onFocus={this.onFocus}
-               onBlur={this.onBLur}
-               ref={this.input}
-           />
-       </Common>
+            <Common
+                item={item}
+                clearClick={clearClick}
+                noCursorPointer={true}
+                lang={lang}
+            >
+                <input
+                    type="text"
+                    maxLength={8}
+                    placeholder={loc[lang!].noStatus}
+                    value={item.status}
+                    onChange={this.onChange}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBLur}
+                    ref={this.input}
+                />
+            </Common>
         );
     }
 }
@@ -224,12 +224,25 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
         this.props.pushOrderPathItem!(nextOrderPath);
     }
     clearClick = (garment: string, element: string) => (e: React.MouseEvent) => {
+        const {
+            removeVisitedChoiceItem,
+            orderStore,
+            activeGarments = []
+        } = this.props;
+        const {
+            clearException,
+            clearElement,
+            setActiveItem,
+            setOrderDummyParams
+        } = orderStore!;
         e.preventDefault();
         e.stopPropagation();
-        this.props.removeVisitedChoiceItem!(element);
-        const orderStore = this.props.orderStore!;
-        orderStore.clearException(garment, element, 'click');
-        orderStore.clearElement(garment, element, 'click');
+        removeVisitedChoiceItem!(element);
+
+        clearException(garment, element, 'click');
+        clearElement(garment, element, 'click');
+        setActiveItem(null);
+        setOrderDummyParams(activeGarments);
     }
 
     render() {
@@ -240,40 +253,40 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
             visitedChoiceItems,
         } = this.props;
         return (
-        <ReactCSSTransitionGroup
-            transitionName="height-fade-in"
-            transitionEnterTimeout={TRANSITION_DUARAION}
-            transitionLeaveTimeout={TRANSITION_DUARAION}
-            className={'design-items-wrapper'}
-        >
-            {items.map(
-            (item: SubgroupChoiceItem) => (
-                    item.isInput ?
-                    <CustomInput
-                        lang={lang}
-                        item={item}
-                        clearClick={this.clearClick}
-                        orderStore={this.props.orderStore!}
-                        key={`custom-input-${item.id}`}
-                    /> :
-                    <CustomLink
-                        lang={lang}
-                        basicRoute={basicRoute}
-                        item={
-                            {
-                                ...item,
-                                linkName: lang &&
-                                    loc[lang].garments[item.linkName.toLowerCase()] || item.linkName
-                            }
-                        }
-                        onClick={this.onClick}
-                        clearClick={this.clearClick}
-                        key={`custom-link-${item.id}`}
-                        visitedChoiceItems={visitedChoiceItems}
-                    />
-                )
-        )}
-        </ReactCSSTransitionGroup>
+            <ReactCSSTransitionGroup
+                transitionName="height-fade-in"
+                transitionEnterTimeout={TRANSITION_DUARAION}
+                transitionLeaveTimeout={TRANSITION_DUARAION}
+                className={'design-items-wrapper'}
+            >
+                {items.map(
+                    (item: SubgroupChoiceItem) => (
+                        item.isInput ?
+                            <CustomInput
+                                lang={lang}
+                                item={item}
+                                clearClick={this.clearClick}
+                                orderStore={this.props.orderStore!}
+                                key={`custom-input-${item.id}`}
+                            /> :
+                            <CustomLink
+                                lang={lang}
+                                basicRoute={basicRoute}
+                                item={
+                                    {
+                                        ...item,
+                                        linkName: lang &&
+                                            loc[lang].garments[item.linkName.toLowerCase()] || item.linkName
+                                    }
+                                }
+                                onClick={this.onClick}
+                                clearClick={this.clearClick}
+                                key={`custom-link-${item.id}`}
+                                visitedChoiceItems={visitedChoiceItems}
+                            />
+                    )
+                )}
+            </ReactCSSTransitionGroup>
         );
 
     }

@@ -41,6 +41,7 @@ const galleryCache = {};
         lang: app.lang,
         activeOrderItem: activeElement,
         orderStore: order,
+        focusableGarment: order.focusableGarment,
         galleryStore: galleryCache[cacheName],
         filterStore: filterStore,
         Subgroups: Subgroups,
@@ -51,12 +52,6 @@ const galleryCache = {};
 })
 @observer
 class GalleryBlock extends React.Component<GalleryContainerProps> {
-    // componentWillUnmount() {
-    //     const filterStore = this.props.filterStore!;
-    //     filterStore.closeFilter();
-    //     filterStore.clearUserFilters();
-    //     filterStore.clearFilters();
-    // }
     render() {
         const orderStore = this.props.orderStore!;
         if (orderStore.isEmptyOrder()) {
@@ -185,6 +180,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
                                 group={group}
                                 filterStore={filterStore}
                                 orderStore={orderStore}
+                                focusableGarment={this.props.focusableGarment}
                                 activeElement={orderStore.activeElement}
                                 previewElement={orderStore.previewElement}
                                 activeOrderItem={this.props.activeOrderItem}

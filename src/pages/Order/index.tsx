@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
+import { listeners } from '../../utils';
 import { MainSection } from './SectionMain';
 import { makeRoutes } from './routes';
-import { parseQuery } from '../../utils/common';
-import { listeners } from '../../utils';
-// import { DemoSection } from '../../components/SectionDemo';
-import { Route } from 'react-router-dom';
 import { Paralax } from './OrderDecorationBlocks';
+import { parseQuery } from '../../utils/common';
+import { Route } from 'react-router-dom';
 
 let wasRendered = false;
 
@@ -66,7 +65,7 @@ class Container extends React.Component<any>{ //tslint:disable-line
             if (query.order_id) {
                 orderStore.fetchInitialOrder(
                     Object.keys(garmentsStore.garmentsList),
-                    (garments) => garmentsStore.setChosenGarments(garments)
+                    (garments) => garmentsStore.setChosenGarments(['shirt'])
                 )
                     .then(() => {
                         orderStore.fetchOrder(query.order_id)
@@ -80,12 +79,15 @@ class Container extends React.Component<any>{ //tslint:disable-line
             } else {
                 orderStore.fetchInitialOrder(
                     Object.keys(garmentsStore.garmentsList),
-                    (garments) => garmentsStore.setChosenGarments(garments)
+                    (garments) => garmentsStore.setChosenGarments(['shirt'])
                 );
             }
             return null;
         } else {
-            if (query.order_id && query.order_id !== String((orderStore.orderInfo && orderStore.orderInfo.orderId))) {
+            if (
+                (query.order_id && query.order_id) !==
+                String((orderStore.orderInfo && orderStore.orderInfo.orderId))
+            ) {
                 orderStore.fetchOrder(query.order_id)
                     .then(() => {
                         if (isOnBase) {

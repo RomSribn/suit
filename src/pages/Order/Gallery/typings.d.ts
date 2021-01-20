@@ -17,6 +17,7 @@ interface GalleryProps {
     Subgroups?: any; // tslint:disable-line no-any
     SubgroupsStore?: any; // tslint:disable-line no-any
     defaultValues?: OrderItem;
+    focusableGarment?: string;
 
 }
 

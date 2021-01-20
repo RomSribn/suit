@@ -19,7 +19,10 @@ type Props = {
 };
 
 type SubmenuItem = {
-  name: string,
+  name: {
+    ru: string,
+    en: string
+  },
   id: string,
 };
 
@@ -37,27 +40,39 @@ const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] => activeGa
 
   if (garment === 'shirt') {
     return {
-      name: 'Рубашка',
+      name: {
+        ru: 'Рубашка',
+        en: garment
+      },
       id: garment
     };
   }
 
   if (garment === 'jacket') {
     return {
-      name: 'Пиджак',
+      name: {
+        ru: 'Пиджак',
+        en: garment
+      },
       id: garment
     };
   }
 
   if (garment === 'pants') {
     return {
-      name: 'Брюки',
+      name: {
+        ru: 'Брюки',
+        en: garment
+      },
       id: garment
     };
   }
 
   return {
-    name: 'Рубашка',
+    name: {
+      ru: 'Рубашка',
+      en: garment
+    },
     id: 'shirt'
   };
 
@@ -221,18 +236,17 @@ export default ({
                                   pathname.includes('order/details') ?
                                     window.location.pathname.replace(currentActiveGarment || '', item.id) :
                                     `/order/details/${item.id}/fabric_ref/fabric`;
-
                                 return (
                                   <Link
                                     className="navigation-item submenu-item"
                                     to={redirectingPath}
-                                    key={item.name}
+                                    key={item.id}
                                     onClick={(e) => {
                                       callList([closeMenu]);
                                       setCurrentActiveGarment!(item.id);
                                     }}
                                   >
-                                    <span>{item.name}</span>
+                                    <span>{item.name[currentLang]}</span>
                                     {!isOrder && (<svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       width="20"

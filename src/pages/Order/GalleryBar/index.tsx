@@ -6,12 +6,23 @@ import { SwiperPopup } from '../../../components/SwiperPopup';
 import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
+interface GalleryItemState extends ImageLoadState {
+    isActive: boolean;
+}
+
 interface P {
+    setSelectedItems?: (props: ISetSelectedItemsProps) => void;
+    group?: string;
+    subgroup?: string;
+    selectedItems?: any; //tslint:disable-line
+    garment?: string;
     app?: IAppStore;
     item: GalleryStoreItem;
     shownItem: GalleryStoreItem;
     orderStore?: IOrderStore;
-    filterStore?: IFilterStore;
+    partOfShirtToggle?: string;
+    closeFilter?: () => void;
+    userFilters?: UserFilters;
     zoomId: string | null;
     setZoomId: (id: string) => void;
     onClick(): void;
@@ -21,20 +32,25 @@ interface P {
     incremetLoadedCount(): void;
 }
 
-interface GalleryItemState extends ImageLoadState {
-}
-
 // TODO: переделать GalleryItem под observer компоненту и убрать ненужно прокинутые пропсы
 @inject(({
     order,
-    filterStore,
+    filterStore: {
+        selectedItems,
+        setSelectedItems,
+        closeFilter,
+        userFilters
+    },
     app
 }) => ({
     orderStore: order,
-    filterStore,
-    app
-})
-)
+    partOfShirtToggle: order.partOfShirtToggle,
+    closeFilter,
+    app,
+    selectedItems,
+    setSelectedItems,
+    userFilters
+}))
 @observer
 class GalleryItem extends React.Component<P, GalleryItemState> {
     constructor(props: P) {
@@ -42,10 +58,102 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         this.state = {
             load: {
                 error: null,
-                success: null,
+                success: null
             },
+            isActive: false
         };
     }
+
+    handleSelectGarment(props: P) {
+        if (!props) {
+            return;
+        }
+        const {
+            item: {
+                elementInfo,
+                our_code
+            },
+            onClick,
+            setOrderDummyParams,
+            setSelectedItems,
+            closeFilter,
+            setZoomId
+        } = props;
+        const garment = elementInfo && elementInfo.garment;
+        const group = elementInfo && elementInfo.group;
+        const subGroup = elementInfo && elementInfo.subGroup;
+        setZoomId(our_code);
+        closeFilter!();
+        onClick();
+        setSelectedItems!({ garment, group, subGroup, our_code });
+        setOrderDummyParams();
+    }
+
+    handleToggleSwipe(props: P) {
+        if (!props) {
+            return;
+        }
+        const {
+            app
+        } = props;
+        app!.toggleSwiperPopup();
+    }
+
+    isActive() {
+        const {
+            item: {
+                elementInfo,
+                our_code,
+            },
+            partOfShirtToggle,
+            selectedItems,
+        } = this.props;
+        const garment = elementInfo && elementInfo.garment;
+        const group = elementInfo && elementInfo.group;
+        const subGroup = elementInfo && elementInfo.subGroup;
+        const orderStore = this.props.orderStore!;
+
+        const codeInOrder =
+            _.get(orderStore, `order[${garment}][0][${group}][${subGroup}].our_code`, '');
+        const codeInStore =
+            _.get(selectedItems, `[${garment}][${group}][${subGroup}]`, '');
+        const codeInStoreShirt =
+            _.get(selectedItems, `[${garment}][${group}][${partOfShirtToggle}]`, '');
+
+        if (garment === 'shirt' && group === 'fabric_ref') {
+            const comparedValue = codeInStoreShirt || codeInOrder;
+            return comparedValue === our_code;
+        }
+        if (!Object.values(selectedItems).length || !codeInStore) {
+            return codeInOrder === our_code;
+        }
+        return codeInStore === our_code;
+    }
+
+    componentDidUpdate(prevProps: P) {
+        if (!_.isEqual(prevProps, this.props)) {
+            const {
+                item: {
+                    our_code,
+                },
+                orderStore
+            } = this.props;
+            const {
+                focusableGarment,
+                setFocusableGarment
+            } = orderStore!;
+
+            const isActive = this.isActive();
+            this.setState({ isActive });
+            if (isActive && focusableGarment !== our_code) {
+                setFocusableGarment(our_code);
+            }
+            if (this.props.app && this.state.isActive) {
+                this.props.app!.setSwiperPopupData(this.props.item);
+            }
+        }
+    }
+
     componentDidMount() {
         try {
             const { item: { img_url_2d: imageUrl }, incremetLoadedCount } = this.props;
@@ -78,10 +186,13 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         const {
             onMouseEnter,
             onMouseLeave,
-            shownItem,
-            onClick,
-            setOrderDummyParams
+            userFilters,
+            item
         } = this.props;
+
+        const {
+            isActive
+        } = this.state;
 
         const {
             img_url_2d: image,
@@ -96,36 +207,18 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
 
         // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
         // только при рефакторе всего проекта
-        if (this.props.filterStore) {
-            const filters = this.props.filterStore.userFilters;
-            const filterNames = Object.keys(filters);
+        if (userFilters) {
+            const filterNames = Object.keys(userFilters);
 
             for (const name in filterNames) {
                 // Если в массиве значений данного фильтра filters[name]
                 // есть такое же значение, как у данного элемента галлереи,
                 // тогда выходим с метода
-                if (filters[name] && filters[name].includes(this.props.item[name].filterValue)) {
+                if (userFilters[name] && userFilters[name].includes(item[name].filterValue)) {
                     return null;
                 }
             }
         }
-        const orderStore = this.props.orderStore!;
-        const active =
-            _.get(orderStore, 'activeElement.our_code', '') === id ||
-            shownItem.our_code === id;
-        const click = () => {
-            this.props.setZoomId(id);
-            this.props.filterStore!.closeFilter();
-            onClick();
-            setOrderDummyParams();
-        };
-        if (this.props.app && active) {
-            this.props.app!.setSwiperPopupData(this.props.item);
-        }
-
-        const toggleSwipe = () => {
-            this.props.app!.toggleSwiperPopup();
-        };
 
         const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
         const hoverImg = isFabricImg ?
@@ -144,14 +237,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 this.props.app.currentSearchValue.toLowerCase()
                             ))) && (
                         <div
-                            onClick={click}
+                            onClick={() => this.handleSelectGarment(this.props)}
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
                             className={classnames('gallery__item-blc', {
                                 landscape: isMobile() && isLandscape(),
                             })}
                         >
-                            <div className={classnames('gallery__item', { active })}>
+                            <div className={classnames('gallery__item', { active: isActive })}>
                                 <img
                                     src={hoverImg}
                                     className="gallery__item--hover-image"
@@ -164,9 +257,12 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 />
                                 {this.props.app &&
                                     this.props.app.changeSearchedItemsCount()}
-                                {this.props.zoomId === id &&
+                                {isActive &&
                                     this.props.app && (
-                                        <span onClick={toggleSwipe} className="zoom-icon" />
+                                        <span
+                                            onClick={() => this.handleToggleSwipe(this.props)}
+                                            className="zoom-icon"
+                                        />
                                     )}
                             </div>
                         </div>
@@ -270,13 +366,19 @@ type State = {
 @inject(({
     app,
     filterStore,
-    garments: { garments },
-    order: { setOrderDummyParams }
+    garments: {
+        garments
+    },
+    order: {
+        setOrderDummyParams,
+        setFocusableGarment
+    }
 }) => ({
     app,
     filterStore,
     activeGarments: [...garments.activeGarments],
-    setOrderDummyParams
+    setOrderDummyParams,
+    setFocusableGarment
 })
 )
 @observer
@@ -341,6 +443,13 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     hideExceptionPopup = () => this.setState({ isShowedExceptionPopup: false });
 
     setZoomId = (id: string) => this.setState({ zoomId: id });
+
+    componentWillUnmount() {
+        const {
+            setFocusableGarment
+        } = this.props;
+        setFocusableGarment!('fab34');
+    }
 
     render() {
         const {

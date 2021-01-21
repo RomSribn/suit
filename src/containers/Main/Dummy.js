@@ -265,7 +265,7 @@ export default class App extends Component {
     let selected = '';
     const focusableGarment = orderStore.focusableGarment;
     const activeElement = orderStore.activeElement || {};
-    const visibleGarments = orderStore.visibleGarments || {};
+    const hiddenGarments = orderStore.hiddenGarments || {};
     const initials = {};
     /**
      * Need to create deep copy of any arrays elements. 
@@ -285,7 +285,7 @@ export default class App extends Component {
       if (
         !_.isEmpty(activeElement) &&
         activeElement.elementInfo &&
-        !visibleGarments[activeElement.elementInfo.garment]
+        !hiddenGarments[activeElement.elementInfo.garment]
       ) {
         // Если в параметрах нет активного элемента
         // Может случиться, если по дефолту у элемента нет заданного значения

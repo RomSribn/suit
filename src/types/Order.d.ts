@@ -2,6 +2,7 @@ interface IOrderStore {
     orderInfo: OrderInfo | null;
     defaultValues: Order | null;
     hiddenElements: string[];
+    hiddenGarments: IHiddenGarments;
     order: Order;
     isFetching: boolean;
     activeSubGroup: string;

@@ -1,6 +1,7 @@
 interface IGarmentChoiceFormProps {
     activeGarments?: string[];
     currentActiveGarment?: string;
-    setVisibleGarments?: (activeGarments: string[]) => void;
-    visibleGarments?: IVisibleGarments;
+    setHiddenGarments?: (activeGarments: string[]) => void;
+    hiddenGarments?: IHiddenGarments;
+    setOrderDummyParams?: (activeGarments: string[]) => void;
 }

@@ -11,6 +11,8 @@ interface GalleryItemState extends ImageLoadState {
 }
 
 interface P {
+    activeGarments?: string[];
+    hiddenGarments?: IHiddenGarments;
     setSelectedItems?: (props: ISetSelectedItemsProps) => void;
     group?: string;
     subgroup?: string;
@@ -26,7 +28,7 @@ interface P {
     zoomId: string | null;
     setZoomId: (id: string) => void;
     onClick(): void;
-    setOrderDummyParams(): void;
+    setOrderDummyParams(activeGarments: string[]): void;
     onMouseEnter(): void;
     onMouseLeave(): void;
     incremetLoadedCount(): void;
@@ -41,9 +43,14 @@ interface P {
         closeFilter,
         userFilters
     },
+    garments: {
+        garments
+    },
     app
 }) => ({
     orderStore: order,
+    hiddenGarments: order.hiddenGarments,
+    activeGarments: garments.activeGarments,
     partOfShirtToggle: order.partOfShirtToggle,
     closeFilter,
     app,
@@ -75,6 +82,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             },
             onClick,
             setOrderDummyParams,
+            activeGarments,
+            hiddenGarments,
             setSelectedItems,
             closeFilter,
             setZoomId
@@ -82,11 +91,13 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         const garment = elementInfo && elementInfo.garment;
         const group = elementInfo && elementInfo.group;
         const subGroup = elementInfo && elementInfo.subGroup;
+        const parsedActiveGarments =
+            activeGarments!.filter(el => !Object.values(hiddenGarments!).includes(el));
         setZoomId(our_code);
         closeFilter!();
         onClick();
         setSelectedItems!({ garment, group, subGroup, our_code });
-        setOrderDummyParams();
+        setOrderDummyParams(parsedActiveGarments);
     }
 
     handleToggleSwipe(props: P) {
@@ -335,9 +346,7 @@ const makeGalleryItems: makeGalleryItems = (
                 item={item}
                 onClick={setActiveElementIndex(elementIndex)}
                 shownItem={shownItem}
-                setOrderDummyParams={() => {
-                    setOrderDummyParams(activeGarments);
-                }}
+                setOrderDummyParams={setOrderDummyParams}
                 onMouseEnter={() => {
                     setPreviewElementIndex(elementIndex, 'enter');
                 }}

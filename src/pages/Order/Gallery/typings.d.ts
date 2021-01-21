@@ -18,7 +18,6 @@ interface GalleryProps {
     SubgroupsStore?: any; // tslint:disable-line no-any
     defaultValues?: OrderItem;
     activeGarment?: string;
-
 }
 
 interface GalleryContainerProps extends GalleryProps {

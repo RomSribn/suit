@@ -106,7 +106,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                 our_code,
             },
             partOfShirtToggle,
-            selectedItems,
+            selectedItems
         } = this.props;
         const garment = elementInfo && elementInfo.garment;
         const group = elementInfo && elementInfo.group;
@@ -145,7 +145,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
 
             const isActive = this.isActive();
             this.setState({ isActive });
-            if (isActive && focusableGarment !== our_code) {
+            if (isActive && (focusableGarment !== our_code)) {
                 setFocusableGarment(our_code);
             }
             if (this.props.app && this.state.isActive) {

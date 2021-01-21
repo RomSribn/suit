@@ -510,7 +510,6 @@ export class OrderStore implements IOrderStore {
                 [this.activeElement.elementInfo.subGroup] = this.activeElement.our_code;
             }
         }
-
         return callApi({
             url: services.orderDeliveryInfo,
             method: 'POST',

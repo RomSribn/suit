@@ -206,7 +206,12 @@ export default class App extends Component {
     const isActiveGarmentsChanged = !_.isEqual(prevProps.activeGarments, this.props.activeGarments);
     if (isActiveGarmentsChanged) {
       const { orderStore, activeGarments } = this.props;
-      orderStore.setOrderDummyParams(activeGarments);
+      const {
+        hiddenGarments
+      } = orderStore;
+      const parsedActiveGarments =
+        activeGarments.filter(el => !Object.values(hiddenGarments).includes(el));
+      orderStore.setOrderDummyParams(parsedActiveGarments);
     }
   }
   update = (subgroup) => {

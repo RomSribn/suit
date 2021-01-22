@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { isMobile, isLandscape } from '../../../utils';
 import { PopUp } from '../../../containers/Popup';
 import { SwiperPopup } from '../../../components/SwiperPopup';
+import { SquareSpinner } from './SquareSpinner';
 import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
@@ -14,6 +15,8 @@ interface P {
     activeGarments?: string[];
     hiddenGarments?: IHiddenGarments;
     setSelectedItems?: (props: ISetSelectedItemsProps) => void;
+    setIsGarmentLoaded?: (isGarmentLoaded: boolean) => void;
+    isGarmentLoaded?: boolean;
     group?: string;
     subgroup?: string;
     selectedItems?: any; //tslint:disable-line
@@ -52,6 +55,8 @@ interface P {
     hiddenGarments: order.hiddenGarments,
     activeGarments: garments.activeGarments,
     partOfShirtToggle: order.partOfShirtToggle,
+    setIsGarmentLoaded: app.setIsGarmentLoaded,
+    isGarmentLoaded: app.isGarmentLoaded,
     closeFilter,
     app,
     selectedItems,
@@ -71,7 +76,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         };
     }
 
-    handleSelectGarment(props: P) {
+    handleSelectGarment(e: React.MouseEvent<HTMLDivElement, MouseEvent>, props: P) {
         if (!props) {
             return;
         }
@@ -86,8 +91,12 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             hiddenGarments,
             setSelectedItems,
             closeFilter,
-            setZoomId
+            setZoomId,
+            setIsGarmentLoaded
         } = props;
+        if (!this.isActive()) {
+            setIsGarmentLoaded!(false);
+        }
         const garment = elementInfo && elementInfo.garment;
         const group = elementInfo && elementInfo.group;
         const subGroup = elementInfo && elementInfo.subGroup;
@@ -198,7 +207,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             onMouseEnter,
             onMouseLeave,
             userFilters,
-            item
+            item,
+            isGarmentLoaded
         } = this.props;
 
         const {
@@ -248,14 +258,14 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 this.props.app.currentSearchValue.toLowerCase()
                             ))) && (
                         <div
-                            onClick={() => this.handleSelectGarment(this.props)}
+                            onClick={(e) => this.handleSelectGarment(e, this.props)}
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
                             className={classnames('gallery__item-blc', {
                                 landscape: isMobile() && isLandscape(),
                             })}
                         >
-                            <div className={classnames('gallery__item', { active: isActive })}>
+                            <div className={classnames('gallery__item', { active: isActive && isGarmentLoaded })}>
                                 <img
                                     src={hoverImg}
                                     className="gallery__item--hover-image"
@@ -268,6 +278,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
                                 />
                                 {this.props.app &&
                                     this.props.app.changeSearchedItemsCount()}
+                                {isActive && !isGarmentLoaded && <SquareSpinner />}
                                 {isActive &&
                                     this.props.app && (
                                         <span

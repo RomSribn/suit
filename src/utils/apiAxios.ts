@@ -6,7 +6,7 @@ type AnyFunction<A = any, B = any> = (firts?: A, second?: B) => any;
 
 /* tslint:disable no-any no-console */
 export function callApi(
-    /* tslint:enable no-any */
+  /* tslint:enable no-any */
   config: Axios.RequestConfig,
   onRequest?: AnyFunction,
   onRequestSuccess?: AnyFunction,
@@ -16,8 +16,8 @@ export function callApi(
   }
   if (
     Boolean(localStorage.getItem('AuthUser') &&
-    JSON.parse(localStorage.getItem('AuthUser')!)
-  )) {
+      JSON.parse(localStorage.getItem('AuthUser')!)
+    )) {
     const user = JSON.parse(localStorage.getItem('AuthUser')!);
     const tokenType = {
       CUSTOMER: 'customer-token',

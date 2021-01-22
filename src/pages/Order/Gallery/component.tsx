@@ -40,7 +40,8 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
                 const {
                     garment,
                     group,
-                    subgroup } = match.params;
+                    subgroup
+                } = match.params;
                 const orderValue = orderStore.order;
                 activeIndex = items.findIndex(i => i.our_code === (orderValue[garment][0][group][subgroup] && orderValue[garment][0][group][subgroup].our_code || '')); // tslint:disable-line
             }
@@ -69,7 +70,8 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             previewElement,
             galleryStore,
             orderStore,
-            activeGarment
+            activeGarment,
+            filterStore
         } = this.props;
 
         const {
@@ -91,6 +93,18 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             item = items.find(i => i.our_code === codeInOrder);
         }
 
+        if (_.isEmpty(item)) {
+            item = items[0];
+            if (items[0]) {
+                filterStore!.setSelectedItems({
+                    garment,
+                    subGroup,
+                    group,
+                    our_code: items[0].our_code
+                });
+            }
+        }
+
         if (!_.isEmpty(item)) {
             item!.elementInfo = {
                 garment: garment,
@@ -110,6 +124,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
             return;
         }
         const { img_url_2d: imageUrl } = item;
+
         if (this.state.load.success === imageUrl) {
             return;
         }

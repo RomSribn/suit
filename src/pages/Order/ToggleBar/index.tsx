@@ -40,9 +40,14 @@ class ToggleBar extends React.Component<ToggleBarProps> {
             activeGarments,
             clearSelectedItems
         } = this.props;
+        const {
+            hiddenGarments
+        } = orderStore!;
+        const parsedActiveGarments =
+            activeGarments!.filter(el => !Object.values(hiddenGarments!).includes(el));
         clearSelectedItems!();
         orderStore!.clearAdditionalFabric(garment);
-        orderStore!.setOrderDummyParams(activeGarments!);
+        orderStore!.setOrderDummyParams(parsedActiveGarments!);
     }
 
     render() {

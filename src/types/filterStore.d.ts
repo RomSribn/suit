@@ -1,6 +1,7 @@
 type EmptyFunction = () => void;
 type UserFilterAction = (filtername: string) => (value: string) => void;
 type UserFilterGroupAction = (filtername: string) => void;
+type SelectedItemsAction = (props: ISetSelectedItemsProps) => void;
 
 declare interface ISetSelectedItemsProps {
     our_code: string;
@@ -23,5 +24,6 @@ declare interface IFilterStore {
     removeUserGroupFilter: UserFilterGroupAction;
     clearUserFilters: EmptyFunction;
     clearFilters: EmptyFunction;
+    setSelectedItems: SelectedItemsAction;
     clearSelectedItems: EmptyFunction;
 }

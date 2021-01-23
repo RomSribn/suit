@@ -25,11 +25,22 @@ let wasRendered = false;
 const baseDummyElements = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
 let demoSectionWidth = 400;
 
-@inject(({ order, garments: { Subgroups }, app: { setDummyY, isMenuUncovered } }) => ({
+@inject(({
+  order,
+  garments: {
+    Subgroups
+  },
+  app: {
+    setDummyY,
+    isMenuUncovered,
+    setIsGarmentLoaded
+  }
+}) => ({
   orderStore: order,
   SubgroupsStore: new Subgroups('shirt'),
   setDummyY,
-  isMenuUncovered
+  isMenuUncovered,
+  setIsGarmentLoaded
 }))
 class Widget extends PureComponent {
   constructor(props) {
@@ -173,6 +184,13 @@ class Widget extends PureComponent {
     }
   }
 
+  handleUpdated = () => {
+    const {
+      setIsGarmentLoaded
+    } = this.props;
+    setIsGarmentLoaded(true);
+  }
+
   render() {
     return (
       <div
@@ -181,10 +199,6 @@ class Widget extends PureComponent {
         style={{ width: `${demoSectionWidth}%`, height: '100%' }}
       />
     );
-  }
-
-  handleUpdated = (props) => {
-    console.log('updated');
   }
 }
 

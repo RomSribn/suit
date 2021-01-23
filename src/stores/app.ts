@@ -37,6 +37,7 @@ export class App implements IAppStore {
   @observable currentSearchValue = ' ';
   @observable isSearchBarOpened = false;
   @observable dummyY = 0;
+  @observable isGarmentLoaded = true;
   @observable isMenuUncovered = true;
   @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
@@ -139,6 +140,11 @@ export class App implements IAppStore {
   @action
   setSwiperPopupData = (value: {}) => {
     this.swiperPopupData = value;
+  }
+
+  @action
+  setIsGarmentLoaded = (isGarmentLoaded: boolean) => {
+    this.isGarmentLoaded = isGarmentLoaded;
   }
 
 }

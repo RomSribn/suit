@@ -317,7 +317,7 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // // // Minify the code.
+    // // Minify the code.
     // new UglifyJsPlugin({
     //   parallel: true,
     //   cache: true,
@@ -343,32 +343,33 @@ module.exports = {
     //   },
     //   sourceMap: shouldUseSourceMap,
     // }),
-    new webpack.optimize.UglifyJsPlugin({
-      parallel: true,
-      cache: true,
-      uglifyOptions: {
-        ecma: 8,
-        compress: {
-          warnings: false,
-          // Disabled because of an issue with Uglify breaking seemingly valid code:
-          // https://github.com/facebookincubator/create-react-app/issues/2376
-          // Pending further investigation:
-          // https://github.com/mishoo/UglifyJS2/issues/2011
-          comparisons: false,
-        },
-        mangle: {
-          safari10: true,
-        },
-        output: {
-          comments: false,
-          // Turned on because emoji and regex is not minified properly using default
-          // https://github.com/facebookincubator/create-react-app/issues/2488
-          ascii_only: true,
-        },
-      },
-      sourceMap: shouldUseSourceMap,
-    }), //minify everything
-    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
+    //revert ORDER151
+    // new webpack.optimize.UglifyJsPlugin({
+    //   parallel: true,
+    //   cache: true,
+    //   uglifyOptions: {
+    //     ecma: 8,
+    //     compress: {
+    //       warnings: false,
+    //       // Disabled because of an issue with Uglify breaking seemingly valid code:
+    //       // https://github.com/facebookincubator/create-react-app/issues/2376
+    //       // Pending further investigation:
+    //       // https://github.com/mishoo/UglifyJS2/issues/2011
+    //       comparisons: false,
+    //     },
+    //     mangle: {
+    //       safari10: true,
+    //     },
+    //     output: {
+    //       comments: false,
+    //       // Turned on because emoji and regex is not minified properly using default
+    //       // https://github.com/facebookincubator/create-react-app/issues/2488
+    //       ascii_only: true,
+    //     },
+    //   },
+    //   sourceMap: shouldUseSourceMap,
+    // }), //minify everything
+    // new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,

@@ -1,11 +1,11 @@
 const express = require('express');
 const path = require('path');
-//revert ORDER151
-// const compression = require('compression'); //import to express app
+
+const compression = require('compression'); //import to express app
 
 const app = express();
 
-// app.use(compression()); //add this as the 1st middleware
+app.use(compression()); //add this as the 1st middleware
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/*', (req, res) => {

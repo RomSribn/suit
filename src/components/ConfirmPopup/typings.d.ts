@@ -1,3 +1,7 @@
+declare type TextFields = 'confirm' | 'back' | 'confirmText' | 'defaultActionText';
+
+declare type Locale = Record<TextFields, string>;
+
 type TOnAcceptClick = (...args: any[]) => any;
 
 declare interface ConfirmPopUpState {

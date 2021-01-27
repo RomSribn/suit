@@ -1,7 +1,3 @@
-type TextFields = 'confirm' | 'back' | 'confirmText' | 'defaultActionText';
-
-type Locale = Record<TextFields, string>;
-
 const loc: Translations<Locale> = {
     en: {
         confirm: 'confirm',

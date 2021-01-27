@@ -31,6 +31,6 @@ const loc = {
             email: 'Электронный адрес'
         }
     }
-}
+};
 
 export { loc };

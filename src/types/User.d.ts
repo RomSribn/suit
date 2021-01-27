@@ -19,10 +19,8 @@ interface IUserStore {
   isAuth: boolean;
   profile: Profile | null;
   isFetching: boolean;
-  error: Error | null
-
+  error: Error | null;
   fetchLogin: (username: string, password: string) => Promise<any>;
-  logout: () => Promise<any> | void
-
-  removeAuth: () => void
+  logout: () => Promise<any> | void;
+  removeAuth: () => void;
 }

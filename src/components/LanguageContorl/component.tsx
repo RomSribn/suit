@@ -9,7 +9,9 @@ type MakeLanguageItems = (
     list: string[],
     locale: Languages,
     currentLang: string,
-    changeLanguage: ChangeLanguage) => React.ReactNode[];
+    changeLanguage: ChangeLanguage
+) => React.ReactNode[];
+
 const makeLanguageItems: MakeLanguageItems = (
     langList,
     locale,
@@ -34,7 +36,9 @@ const makeLanguageItems: MakeLanguageItems = (
 class LanguageControl extends React.PureComponent<LanguageControlProps> {
     static defaultProps = {
         lang: 'en',
-        changeLanguage: () => { }, // tslint:disable-line
+        changeLanguage: () => {
+            return;
+        },
         theme: 'white'
     };
     render() {

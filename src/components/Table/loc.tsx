@@ -87,8 +87,8 @@ const loc: Translations<Loc> = {
     isConfirmed: 'Yes',
     notConfirmed: 'No',
     confirmCustomer: (name: string) => `create customer profile ${name}`,
-    // tslint:disable-next-line:max-line-length
     confirmInfo:
+      // tslint:disable-next-line:max-line-length
       'The client\'s username and password have been sent to your email address. If there is no message, check the "Spam" folder',
     password: 'Password',
     login: 'Login',

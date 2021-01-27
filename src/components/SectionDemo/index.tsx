@@ -1,10 +1,9 @@
 import * as React from 'react';
 import DemoDummy from '../../containers/Main/Dummy';
-
 import './style.styl';
 
+// tslint:disable-next-line
 const DemoSection = (props: any) => {
-  // tslint:disable-line no-any
   const isIndexPage = window.location.pathname === '/order';
 
   return (

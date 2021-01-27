@@ -175,9 +175,9 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
                   <input
                     type="text"
                     className={classNames(inputBoxClass + '-input')}
-                    onChange={(e: { target: HTMLInputElement }) =>
-                      this.setField('dateFrom', e.target.value)
-                    }
+                    onChange={(e: { target: HTMLInputElement }) => {
+                      return this.setField('dateFrom', e.target.value);
+                    }}
                     placeholder={'00.00.0000'}
                     value={dateFrom}
                     onBlur={() => this.setActiveCalendar()}
@@ -225,9 +225,9 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
                   <input
                     type="text"
                     className={classNames(inputBoxClass + '-input')}
-                    onChange={(e: { target: HTMLInputElement }) =>
-                      this.setField('dateTo', e.target.value)
-                    }
+                    onChange={(e: { target: HTMLInputElement }) => {
+                      return this.setField('dateTo', e.target.value);
+                    }}
                     placeholder={'00.00.0000'}
                     value={dateTo}
                     onBlur={() => this.setActiveCalendar()}

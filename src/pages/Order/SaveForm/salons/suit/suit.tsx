@@ -166,9 +166,7 @@ class SaveForm extends React.PureComponent<
               {loc[lang].licenseAgreement}{' '}
               <a
                 className="order-confirmation__link"
-                href={
-                  `/personal_dates.${lang}.` + process.env.SALON_ID + '.pdf'
-                }
+                href={`/personal_dates.${lang}.${process.env.SALON_ID}.pdf`}
                 target="_blank"
               >
                 {loc[lang].personalData}

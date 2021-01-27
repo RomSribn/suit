@@ -58,7 +58,8 @@ class MainSection extends React.Component<MainSectionProps> {
 
     const { inititalTouch } = this.state;
 
-    const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage; // isIndexPage из пропсов работает неправильно.
+    // isIndexPage из пропсов работает неправильно.
+    const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
 
     return (
       <React.Fragment key="order main content">
@@ -125,10 +126,7 @@ class MainSection extends React.Component<MainSectionProps> {
               <Route
                 exact={true}
                 path={routes.garment}
-                // @ts-ignore
-                component={(
-                  props, // tslint:disable-line
-                ) => (
+                component={(props: TRouteProps) => (
                   <Redirect
                     to={routes.fabric.replace(
                       ':garment',

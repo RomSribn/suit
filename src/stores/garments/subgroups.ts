@@ -36,8 +36,8 @@ class Subgroups {
         this.error = e;
         this.isFetching = false;
       },
+      // tslint:disable-next-line
     ).then((response: any): Subgroup[] => {
-      //tslint:disable-line
       return response.data;
     });
   };

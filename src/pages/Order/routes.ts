@@ -93,18 +93,21 @@ const getCombinedPathAndTitle = (routeKey: RootKey) => ({
   routeKey,
   title:
     routes[routeKey].indexOf(':') !== -1
-      ? (<string>routes[routeKey])
-          .split('/')
-          .filter((item: string) => item.indexOf(':') !== -1)
-          .reduce((acc, cur) => {
-            const curClear = cur.replace(':', '');
-            acc[curClear] = translations[curClear];
-            return acc;
-          }, {})
-      : Object.keys(translations.baseRoute).reduce((acc, cur) => {
-          acc[cur] = translations.baseRoute[cur][routeKey];
+      ? (
+        <string>
+        routes[routeKey]
+      )
+        .split('/')
+        .filter((item: string) => item.indexOf(':') !== -1)
+        .reduce((acc, cur) => {
+          const curClear = cur.replace(':', '');
+          acc[curClear] = translations[curClear];
           return acc;
-        }, {}),
+        }, {})
+      : Object.keys(translations.baseRoute).reduce((acc, cur) => {
+        acc[cur] = translations.baseRoute[cur][routeKey];
+        return acc;
+      }, {}),
 });
 
 export { makeRoutes, routes, getCombinedPathAndTitle };

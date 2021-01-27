@@ -8,3 +8,7 @@ interface MainSectionProps extends OrderSectionInterface {
   currentActiveGarment?: string;
   lang?: string;
 }
+
+declare interface TRouteProps {
+  match: Match;
+}

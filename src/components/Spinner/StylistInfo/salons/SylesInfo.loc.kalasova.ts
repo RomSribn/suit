@@ -11,7 +11,7 @@ const translations: Localization = {
   en: {
     header: {
       yourStylist: 'Your stylist is Georgiy',
-      waitForIt: "Wait for a few seconds please. He's gonna join soon",
+      waitForIt: `Wait for a few seconds please. He's gonna join soon`,
     },
   },
   ru: {

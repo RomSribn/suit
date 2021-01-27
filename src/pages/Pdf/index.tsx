@@ -54,8 +54,8 @@ const InfoSubSection = ({ title, data }: InfoSubSectionProps) => (
   }),
 )
 @observer
+// tslint:disable-next-line
 class Pdf extends React.Component<any> {
-  //tslint:disable-line
   componentDidMount() {
     const query = parseQuery(this.props.routingStore.location.search);
     const orderStore = this.props.orderStore;
@@ -151,8 +151,8 @@ class Pdf extends React.Component<any> {
         <div className="navbar navbar--white">
           <Header />
         </div>
+        {/* tslint:disable-next-line:no-console */}
         <DemoSection onDummyLoad={() => console.log('loaded')} />{' '}
-        {/* tslint:disable-line:no-console */}
         <div className="main main--white">
           <InfoRow name={loc[lang].info} />
           <div className="info-block__wrapper">

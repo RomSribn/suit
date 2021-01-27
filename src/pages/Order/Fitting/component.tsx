@@ -17,8 +17,8 @@ class FittingItem extends React.PureComponent<Props, State> {
   static Ftest(val: string): boolean {
     return !val.replace(/\d*\.?\d*/, '').length;
   }
-  focuseOnLabel = (e: React.ChangeEvent<any>) => {
-    // tslint:disable-line
+  // tslint:disable-next-line
+  focuseOnLabel = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target;
     const val = input.value.trim();
     if (val && FittingItem.Ftest(val)) {
@@ -75,9 +75,10 @@ class FittingItem extends React.PureComponent<Props, State> {
             value={this.state.value}
             onChange={this.focuseOnLabel}
             onBlur={this.onBlur}
+            // tslint:disable-next-line
             onInput={(e: any) => {
               e.preventDefault();
-            }} // tslint:disable-line
+            }}
           />
           <span className="size__output-lines-group">
             <span className="size__output-line size__output-line--1" />

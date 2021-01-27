@@ -19,7 +19,7 @@ const makeLocale = (): Translations<Locale> => ({
     save: 'next',
     update: 'update',
     repeat: 'repeat',
-    errorMessage: "Something's wrong. We recommend to try again.",
+    errorMessage: `Something's wrong. We recommend to try again.`,
     okay: 'ok',
     oops: 'Oops',
     done: 'done',

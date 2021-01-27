@@ -9,10 +9,10 @@ import { Route } from 'react-router-dom';
 
 let wasRendered = false;
 
+// tslint:disable-next-line
 class Order extends React.PureComponent<any> {
-  //tslint:disable-line
+  // tslint:disable-next-line
   constructor(props: any) {
-    //tslint:disable-line
     super(props);
     wasRendered = false;
   }
@@ -47,8 +47,8 @@ class Order extends React.PureComponent<any> {
   clearVisitedChoiceItems: app.clearVisitedChoiceItems,
 }))
 @observer
+// tslint:disable-next-line
 class Container extends React.Component<any> {
-  //tslint:disable-line
   componentDidMount() {
     listeners.resize.subscribe(() => this.setState({}));
   }

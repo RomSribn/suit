@@ -99,8 +99,8 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
           />
           <Route
             path={routes.subgroupChoice}
+            // tslint:disable-next-line
             component={(props: any) => {
-              // tslint:disable-line
               return (
                 <Link
                   to={routes.design.replace(

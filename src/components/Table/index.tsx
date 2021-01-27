@@ -195,8 +195,8 @@ class Table extends React.Component<TProps, TState> {
       ? {
           options: filterItemParams.selectValues || [],
           setFilterValue: setFilterValue
-            ? (value: any) => {
-                // tslint:disable-line
+            ? // tslint:disable-next-line
+              (value: any) => {
                 setFilterValue(value);
                 setTimeout(() => {
                   updateCallback && updateCallback(value); // tslint:disable-line

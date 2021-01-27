@@ -79,8 +79,8 @@ const Common = (props: CommonProps) => {
             <Route exact={true} path="/order/details" />
             <Route
               path="/order/details/:garment"
+              // tslint:disable-next-line
               component={(...args: any[]) => {
-                // tslint:disable-line no-any
                 const garment = args[0].match.params.garment;
                 // TODO: check the structure for intials_text
                 return renderClearButton(item) && !isMobile() ? (
@@ -167,8 +167,8 @@ class CustomInput extends React.PureComponent<InputProps> {
   onFocus = () => {
     const { orderStore } = this.props;
     orderStore.setActiveItem({
-      // tslint:disable-next-line
       our_code:
+        // tslint:disable-next-line
         orderStore.order.shirt[0].design['initials_arrangement'].our_code,
     } as GalleryStoreItem);
   };

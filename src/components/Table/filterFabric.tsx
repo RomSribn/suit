@@ -11,10 +11,12 @@ interface FilterParams {
   selectValeus?: string[];
 }
 
+interface Props {
+  onChange: (value: string) => void;
+}
+
 function filterFabric(params: FilterParams) {
-  // tslint:disable-line no-any
-  return (props: any) => {
-    // tslint:disable-line no-any
+  return (props: Props) => {
     const onChange = props.onChange;
     const baseClass = 'orders__title';
     if (params.type === 'select') {

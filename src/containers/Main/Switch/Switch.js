@@ -1,12 +1,10 @@
-import React from 'react'
-import Switch from 'Components/Main/Switch'
+import React from 'react';
+import Switch from 'Components/Main/Switch';
 
 class SwitchContainer extends React.Component {
-  render () {
-    return (
-      <Switch />
-    )
+  render() {
+    return <Switch />;
   }
 }
 
-export default SwitchContainer
+export default SwitchContainer;

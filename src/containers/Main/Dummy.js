@@ -22,26 +22,29 @@ const SALON_API_ID = process.env.SALON_API_ID;
 let wasRendered = false;
 
 /** Эти элементы рендерятся при первой отрисовке для снижения трафика */
-const baseDummyElements = ['body', 'eyes', 'head', 'shoes', 'trousers', 'shirt'];
+const baseDummyElements = [
+  'body',
+  'eyes',
+  'head',
+  'shoes',
+  'trousers',
+  'shirt',
+];
 let demoSectionWidth = 400;
 
-@inject(({
-  order,
-  garments: {
-    Subgroups
-  },
-  app: {
+@inject(
+  ({
+    order,
+    garments: { Subgroups },
+    app: { setDummyY, isMenuUncovered, setIsGarmentLoaded },
+  }) => ({
+    orderStore: order,
+    SubgroupsStore: new Subgroups('shirt'),
     setDummyY,
     isMenuUncovered,
-    setIsGarmentLoaded
-  }
-}) => ({
-  orderStore: order,
-  SubgroupsStore: new Subgroups('shirt'),
-  setDummyY,
-  isMenuUncovered,
-  setIsGarmentLoaded
-}))
+    setIsGarmentLoaded,
+  }),
+)
 class Widget extends PureComponent {
   constructor(props) {
     super(props);
@@ -50,15 +53,17 @@ class Widget extends PureComponent {
     demoSectionWidth = 200;
   }
   componentWillUnmount = () => {
-    listeners.orientationchange.unsubscribe(this.orientationchangeListenerIndex);
+    listeners.orientationchange.unsubscribe(
+      this.orientationchangeListenerIndex,
+    );
     listeners.resize.unsubscribe(this.resizeListenerIndex);
-  }
+  };
   componentDidMount() {
-    const { resize } = listeners
+    const { resize } = listeners;
     /**
      * setting a lot of errors at the console, try to disable and test
      * P.S. It has been here, early
-    */
+     */
     // if (isMobile() || isTablet() || isIpadPro()) {
     //   document.ontouchmove = function (e) {
     //     e.preventDefault();
@@ -66,7 +71,8 @@ class Widget extends PureComponent {
     // }
 
     this.resizeListenerIndex = resize.subscribe(() => {
-      this.widget3d && this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight)
+      this.widget3d &&
+        this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
     });
 
     this.widget3d = new Widget3D(this.widgetContainer, {
@@ -82,19 +88,17 @@ class Widget extends PureComponent {
       onRotate: ({ y }) => {
         const { setDummyY, isMenuUncovered } = this.props;
         isMobile() && isMenuUncovered && setDummyY(y);
-      }
-    }
-    );
+      },
+    });
     try {
       this.widget3d.firstUpdate.then(() => {
         this.props.onDummyLoad();
         this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
       });
 
-      this.widget3d.update(this.props.assets)
-        .then(this.handleUpdated);
+      this.widget3d.update(this.props.assets).then(this.handleUpdated);
     } catch (err) {
-      console.log('Ошибка при рендере манекена', err)
+      console.log('Ошибка при рендере манекена', err);
     }
   }
 
@@ -102,38 +106,57 @@ class Widget extends PureComponent {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
     if (!isEqualProps) {
-      const exceptions = _.get(this, "props.orderStore.exceptions", []);
-      const activeExceptions = _.get(this, "props.orderStore.activeElement.exception", []);
-      const activeElementCode = _.get(this, "props.orderStore.activeElement.our_code", null);
-      const subGroup = _.get(this, "props.orderStore.activeElement.elementInfo.subGroup");
-      const defaultValues = _.get(this, "props.orderStore.defaultValues", {});
-      let allExceptions = exceptions ?
-        Object.keys(exceptions).reduce((ac, garmentKey) => {
-          Object.keys(exceptions[garmentKey]).forEach(elementKey => {
-            if (elementKey !== subGroup && exceptions[garmentKey][elementKey].exceptions) {
-              ac.push(...exceptions[garmentKey][elementKey].exceptions)
-            }
-          })
+      const exceptions = _.get(this, 'props.orderStore.exceptions', []);
+      const activeExceptions = _.get(
+        this,
+        'props.orderStore.activeElement.exception',
+        [],
+      );
+      const activeElementCode = _.get(
+        this,
+        'props.orderStore.activeElement.our_code',
+        null,
+      );
+      const subGroup = _.get(
+        this,
+        'props.orderStore.activeElement.elementInfo.subGroup',
+      );
+      const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
+      let allExceptions = exceptions
+        ? Object.keys(exceptions).reduce((ac, garmentKey) => {
+            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
+              if (
+                elementKey !== subGroup &&
+                exceptions[garmentKey][elementKey].exceptions
+              ) {
+                ac.push(...exceptions[garmentKey][elementKey].exceptions);
+              }
+            });
 
-          return ac
-        }, [])
+            return ac;
+          }, [])
         : [];
 
-      const defaultItemValues = {}
+      const defaultItemValues = {};
       if (defaultValues) {
         Object.keys(defaultValues)
-          .filter(item => !item.includes(['manequin']))
-          .map(filteredGarment =>
-            defaultValues[filteredGarment].reduce((ac, i) => [...ac, i], [])
-              .map(garmentObject => Object.keys(garmentObject.design)
-                .forEach(
-                  elementKey => defaultItemValues[elementKey] = garmentObject.design[elementKey].our_code
-                )
-              )
-          )
+          .filter((item) => !item.includes(['manequin']))
+          .map((filteredGarment) =>
+            defaultValues[filteredGarment]
+              .reduce((ac, i) => [...ac, i], [])
+              .map((garmentObject) =>
+                Object.keys(garmentObject.design).forEach(
+                  (elementKey) =>
+                    (defaultItemValues[elementKey] =
+                      garmentObject.design[elementKey].our_code),
+                ),
+              ),
+          );
       }
-      const assetsIds = this.props.assets.map(asset => asset.id || asset);
-      const mutuallyExclusiveItems = activeExceptions.filter(activeExceptionCode => assetsIds.includes(activeExceptionCode));
+      const assetsIds = this.props.assets.map((asset) => asset.id || asset);
+      const mutuallyExclusiveItems = activeExceptions.filter(
+        (activeExceptionCode) => assetsIds.includes(activeExceptionCode),
+      );
 
       if (mutuallyExclusiveItems.length && exceptions) {
         mutuallyExclusiveItems.forEach((item) => {
@@ -141,29 +164,38 @@ class Widget extends PureComponent {
             Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
               if (
                 exceptions[garmentKey][elementKey].exceptions &&
-                exceptions[garmentKey][elementKey].exceptions.includes(activeElementCode)
+                exceptions[garmentKey][elementKey].exceptions.includes(
+                  activeElementCode,
+                )
               ) {
                 allExceptions = allExceptions.filter((i) => {
-                  if (exceptions[garmentKey][elementKey].exceptions.includes(i) && !exceptions[garmentKey][elementKey].is_active_clear) {
-                    if (defaultItemValues[elementKey] && !this.props.assets.includes(defaultItemValues[elementKey])) {
-                      this.props.assets.push(defaultItemValues[elementKey])
+                  if (
+                    exceptions[garmentKey][elementKey].exceptions.includes(i) &&
+                    !exceptions[garmentKey][elementKey].is_active_clear
+                  ) {
+                    if (
+                      defaultItemValues[elementKey] &&
+                      !this.props.assets.includes(defaultItemValues[elementKey])
+                    ) {
+                      this.props.assets.push(defaultItemValues[elementKey]);
                     }
                   }
 
-                  return !exceptions[garmentKey][elementKey].exceptions.includes(i)
-                })
+                  return !exceptions[garmentKey][
+                    elementKey
+                  ].exceptions.includes(i);
+                });
               }
-            })
-          })
-        })
+            });
+          });
+        });
       }
 
       const actualExceptions = [...allExceptions, ...activeExceptions];
-      const nextAssets = this.props.assets
-        .filter(asset => {
-          const id = asset.id ? asset.id : asset;
-          return !actualExceptions.includes(id)
-        })
+      const nextAssets = this.props.assets.filter((asset) => {
+        const id = asset.id ? asset.id : asset;
+        return !actualExceptions.includes(id);
+      });
 
       /**
        * При загрузке без кеша все хорошо.
@@ -185,17 +217,15 @@ class Widget extends PureComponent {
   }
 
   handleUpdated = () => {
-    const {
-      setIsGarmentLoaded
-    } = this.props;
+    const { setIsGarmentLoaded } = this.props;
     setIsGarmentLoaded(true);
-  }
+  };
 
   render() {
     return (
       <div
         className="widget3d"
-        ref={(node) => this.widgetContainer = node}
+        ref={(node) => (this.widgetContainer = node)}
         style={{ width: `${demoSectionWidth}%`, height: '100%' }}
       />
     );
@@ -212,38 +242,41 @@ export default class App extends Component {
     super(props);
     this.state = {
       elementChanged: false,
-      subgroup: null
+      subgroup: null,
     };
   }
 
   componentDidUpdate(prevProps) {
-    const isActiveGarmentsChanged = !_.isEqual(prevProps.activeGarments, this.props.activeGarments);
+    const isActiveGarmentsChanged = !_.isEqual(
+      prevProps.activeGarments,
+      this.props.activeGarments,
+    );
     if (isActiveGarmentsChanged) {
       const { orderStore, activeGarments } = this.props;
-      const {
-        hiddenGarments
-      } = orderStore;
-      const parsedActiveGarments =
-        activeGarments.filter(el => !Object.values(hiddenGarments).includes(el));
+      const { hiddenGarments } = orderStore;
+      const parsedActiveGarments = activeGarments.filter(
+        (el) => !Object.values(hiddenGarments).includes(el),
+      );
       orderStore.setOrderDummyParams(parsedActiveGarments);
     }
   }
   update = (subgroup) => {
     const items = currentItems;
 
-    const {
-      orderStore
-    } = this.props;
+    const { orderStore } = this.props;
 
-    const codeInOrder =
-      _.get(orderStore, `order.shirt[0].design.${subgroup}.our_code`, null);
-    const item = items.find(i => i.our_code === codeInOrder);
+    const codeInOrder = _.get(
+      orderStore,
+      `order.shirt[0].design.${subgroup}.our_code`,
+      null,
+    );
+    const item = items.find((i) => i.our_code === codeInOrder);
 
     if (!_.isEmpty(item)) {
       item.elementInfo = {
         garment: 'shirt',
         group: 'design',
-        subgroup
+        subgroup,
       };
     }
     orderStore.setActiveItem(item);
@@ -262,19 +295,16 @@ export default class App extends Component {
      */
     return;
     /* eslint-disable */
-    const {
-      orderStore
-    } = this.props;
-    const subgroup =
-      _.findKey(
-        orderStore.order.shirt[0].design,
-        ['our_code', id]
-      );
+    const { orderStore } = this.props;
+    const subgroup = _.findKey(orderStore.order.shirt[0].design, [
+      'our_code',
+      id,
+    ]);
     if (id !== this.state.subgroup) {
       this.update(subgroup);
       this.setState({
-        subgroup
-      })
+        subgroup,
+      });
     }
     /* eslint-enable */
   };
@@ -287,9 +317,9 @@ export default class App extends Component {
     const hiddenGarments = orderStore.hiddenGarments || {};
     const initials = {};
     /**
-     * Need to create deep copy of any arrays elements. 
+     * Need to create deep copy of any arrays elements.
      * I think, this is an old mobx version issue
-     * @todo try to updating all mobx extensions 
+     * @todo try to updating all mobx extensions
      * P.S. I've tried to do this, got a lot of new issues
      */
 
@@ -308,31 +338,38 @@ export default class App extends Component {
       ) {
         // Если в параметрах нет активного элемента
         // Может случиться, если по дефолту у элемента нет заданного значения
-        if (!params.find(param => (
-          activeElement.our_code === param ||
-          (param && (activeElement.our_code === param.id)) ||
-          // Если подразделу (воротник и тд) назначена отдельная ткань,
-          // то нужно проверять наличие activeElement в массиве materials)
-          (param && param.materials && param.materials.includes(activeElement.our_code))
-        ))) {
+        if (
+          !params.find(
+            (param) =>
+              activeElement.our_code === param ||
+              (param && activeElement.our_code === param.id) ||
+              // Если подразделу (воротник и тд) назначена отдельная ткань,
+              // то нужно проверять наличие activeElement в массиве materials)
+              (param &&
+                param.materials &&
+                param.materials.includes(activeElement.our_code)),
+          )
+        ) {
           // Добавляем его в к параметрам отображения
           params.push(activeElement.our_code);
         }
-
       }
     }
 
     wasRendered = true;
-    return (<React.Fragment>
-      {subgroup && <Redirect to={`/order/details/shirt/design/${subgroup}`} />}
-      <Widget
-        selected={focusableGarment}
-        paramsSelectedCount={params.length}
-        assets={params}
-        onClickAsset={this.handleClickAsset}
-        onDummyLoad={this.props.onDummyLoad}
-      />
-    </React.Fragment>);
+    return (
+      <React.Fragment>
+        {subgroup && (
+          <Redirect to={`/order/details/shirt/design/${subgroup}`} />
+        )}
+        <Widget
+          selected={focusableGarment}
+          paramsSelectedCount={params.length}
+          assets={params}
+          onClickAsset={this.handleClickAsset}
+          onDummyLoad={this.props.onDummyLoad}
+        />
+      </React.Fragment>
+    );
   }
-
 }

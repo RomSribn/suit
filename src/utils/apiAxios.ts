@@ -10,14 +10,17 @@ export function callApi(
   config: Axios.RequestConfig,
   onRequest?: AnyFunction,
   onRequestSuccess?: AnyFunction,
-  onRequestFailure?: AnyFunction) {
+  onRequestFailure?: AnyFunction,
+) {
   if (onRequest) {
     onRequest();
   }
   if (
-    Boolean(localStorage.getItem('AuthUser') &&
-      JSON.parse(localStorage.getItem('AuthUser')!)
-    )) {
+    Boolean(
+      localStorage.getItem('AuthUser') &&
+        JSON.parse(localStorage.getItem('AuthUser')!),
+    )
+  ) {
     const user = JSON.parse(localStorage.getItem('AuthUser')!);
     const tokenType = {
       CUSTOMER: 'customer-token',
@@ -37,22 +40,26 @@ export function callApi(
     ...config,
     params: {
       ...config.params,
-      salonId: process.env.SALON_API_ID
-    }
+      salonId: process.env.SALON_API_ID,
+    },
   };
 
-  return axios(config).then((response): Axios.Response => {
-    if (typeof onRequestSuccess === 'function') {
-      onRequestSuccess(response.data, response.headers);
-    }
-    return response as Axios.Response;
-  }).catch((error) => {
-    if (error.response.status === 401) {
-      localStorage.removeItem('AuthUser');
-      history.push('/login');
-    }
-    if (typeof onRequestFailure === 'function') {
-      onRequestFailure(error);
-    }
-  });
+  return axios(config)
+    .then(
+      (response): Axios.Response => {
+        if (typeof onRequestSuccess === 'function') {
+          onRequestSuccess(response.data, response.headers);
+        }
+        return response as Axios.Response;
+      },
+    )
+    .catch((error) => {
+      if (error.response.status === 401) {
+        localStorage.removeItem('AuthUser');
+        history.push('/login');
+      }
+      if (typeof onRequestFailure === 'function') {
+        onRequestFailure(error);
+      }
+    });
 }

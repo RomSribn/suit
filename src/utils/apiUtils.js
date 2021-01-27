@@ -4,13 +4,14 @@ import jwt_decode from 'jwt-decode';
 //import { browserHistory } from 'react-router'
 
 export function checkStatus(response) {
-  if (!response.ok) {   // (response.status < 200 || response.status > 300)
+  if (!response.ok) {
+    // (response.status < 200 || response.status > 300)
     // const error = new Error(response.statusText);
     // error.response = response;
     // throw error;
-    return Promise.reject(new Error(response.statusText))
+    return Promise.reject(new Error(response.statusText));
   }
-  return Promise.resolve(response)
+  return Promise.resolve(response);
   // return response;
 }
 
@@ -29,19 +30,23 @@ export function parseJSON(response) {
  * @param onRequestFailure The callback function to create request failure action.
  *                 The function expects error as its argument.
  */
-export function callApi(url, config, request, onRequestSuccess, onRequestFailure) {
-  return dispatch => {
+export function callApi(
+  url,
+  config,
+  request,
+  onRequestSuccess,
+  onRequestFailure,
+) {
+  return (dispatch) => {
     dispatch(request);
 
-    let requestConf = {...config,
-      headers: new Headers()
-    }
+    let requestConf = { ...config, headers: new Headers() };
     //if(config && config.body) {
-      requestConf.headers.set('Content-Type', 'application/json')
+    requestConf.headers.set('Content-Type', 'application/json');
     //}
 
-    if(loadIdToken()) {
-      requestConf.headers.set('x-auth-token', loadIdToken())
+    if (loadIdToken()) {
+      requestConf.headers.set('x-auth-token', loadIdToken());
     }
     return fetch(url, requestConf)
       .then(checkStatus)
@@ -62,7 +67,7 @@ export function callApi(url, config, request, onRequestSuccess, onRequestFailure
         } else {
           error.status = response.status;
           error.statusText = response.statusText;
-          response.text().then( (text) => {
+          response.text().then((text) => {
             try {
               const json = JSON.parse(text);
               error.message = json.message;
@@ -71,7 +76,7 @@ export function callApi(url, config, request, onRequestSuccess, onRequestFailure
             }
             dispatch(onRequestFailure(error));
           });
-      }
+        }
       });
   };
 }
@@ -89,12 +94,15 @@ export function setIdToken(idToken) {
  */
 export function setUserInfo(userInfo) {
   setIdToken(userInfo.idToken);
-  localStorage.setItem(USER_INFO, JSON.stringify({
-    user: userInfo.user,
-    token:  userInfo.token,
-    createDate: userInfo.createDate,
-    role: userInfo.role,
-  }));
+  localStorage.setItem(
+    USER_INFO,
+    JSON.stringify({
+      user: userInfo.user,
+      token: userInfo.token,
+      createDate: userInfo.createDate,
+      role: userInfo.role,
+    }),
+  );
 }
 
 /**
@@ -107,7 +115,7 @@ export function getUserInfo() {
 /**
  * Сбрасывает информацию о полтзователе в localStorage
  */
-export function resetUserInfo () {
+export function resetUserInfo() {
   removeIdToken();
   localStorage.removeItem(USER_INFO);
 }
@@ -132,8 +140,8 @@ export function loadUserProfile() {
   try {
     const idToken = localStorage.getItem(ID_TOKEN);
     const userProfile = jwt_decode(idToken);
-    const now = new Date().getTime() / 1000;   // Date().getTime() returns milliseconds.
-                                               // So divide by 1000 to get seconds
+    const now = new Date().getTime() / 1000; // Date().getTime() returns milliseconds.
+    // So divide by 1000 to get seconds
     if (now > userProfile.exp) {
       // user profile has expired.
       removeIdToken();
@@ -144,7 +152,6 @@ export function loadUserProfile() {
     return null;
   }
 }
-
 
 /**
  * Тип объкта пользовательских данных

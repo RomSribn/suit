@@ -1,4 +1,2 @@
 // TODO: is useless ?
-interface DemoSectionProps {
-
-}
+interface DemoSectionProps {}

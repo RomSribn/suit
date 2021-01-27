@@ -9,23 +9,26 @@ const loc: Translations<Locale> = {
     index: 'main',
     order: 'order',
     garments: 'garments',
-    shirt: 'shirt'
+    shirt: 'shirt',
   },
   ru: {
     index: 'главная',
     order: 'заказать',
     garments: 'изделия',
-    shirt: 'рубашка'
+    shirt: 'рубашка',
   },
 };
 
-const makeInitionalOrderPath = (lang: Lang) => [{
-  value: loc[lang].order,
-  link: '/order/details/shirt',
-}, {
-  value: loc[lang].shirt,
-  link: '/order/details/shirt',
-}];
+const makeInitionalOrderPath = (lang: Lang) => [
+  {
+    value: loc[lang].order,
+    link: '/order/details/shirt',
+  },
+  {
+    value: loc[lang].shirt,
+    link: '/order/details/shirt',
+  },
+];
 
 export class App implements IAppStore {
   @observable lang: Lang;
@@ -56,100 +59,99 @@ export class App implements IAppStore {
       this.searchedItemsCount = 0;
       this.currentSearchValue = text;
     }
-  }
+  };
 
   @action
   changeSearchedItemsCount = () => {
     this.searchedItemsCount = 2;
-  }
+  };
 
   @action
   toggleMobileMenu = () => {
     this.showMobileMenu = !this.showMobileMenu;
-  }
+  };
 
   @action
   toggleLoginForm = () => {
     this.showLoginForm = !this.showLoginForm;
-  }
+  };
 
   @action
   setDummyY = (y: number) => {
     this.dummyY = y;
-  }
+  };
 
   @action
   setIsMenuUncovered = (isMenuUncovered: boolean) => {
     this.isMenuUncovered = isMenuUncovered;
-  }
+  };
 
   @action
   toggleIsSearchBarOpened = () => {
     this.isSearchBarOpened = !this.isSearchBarOpened;
-  }
+  };
 
   @action
   setLang = (lang: Lang) => {
     this.lang = lang;
     this.orderPath[0].value = loc[lang].order;
     this.orderPath[1].value = loc[lang].shirt;
-  }
+  };
   @action
   pushOrderPathItem = (item: OrderPathItem) => {
     this.orderPath.push(item);
-  }
+  };
   @action
   popOrderPathItem = () => {
     this.orderPath.pop();
-  }
+  };
   @action
   cutOrderPath = (value: string) => {
-    const valueIndex = this.orderPath.findIndex(el => el.value === value);
+    const valueIndex = this.orderPath.findIndex((el) => el.value === value);
     if (valueIndex > -1) {
       this.orderPath.splice(valueIndex + 1);
     }
-  }
+  };
 
   @action
   resetOrderPath = () => {
-    this.orderPath = observable.array<OrderPathItem>(makeInitionalOrderPath(this.lang));
-  }
+    this.orderPath = observable.array<OrderPathItem>(
+      makeInitionalOrderPath(this.lang),
+    );
+  };
 
   @action
   addVisitedChoiceItem = (name: string) => {
     if (!this.visitedChoiceItems.includes(name)) {
       this.visitedChoiceItems.push(name);
     }
-  }
+  };
 
   @action
   removeVisitedChoiceItem = (name: string) => {
     this.visitedChoiceItems.remove(name);
-  }
+  };
 
   @action
   clearVisitedChoiceItems = () => {
     this.visitedChoiceItems.clear();
-  }
+  };
 
   @action
   toggleSwiperPopup = () => {
     this.showSwiperPopup = !this.showSwiperPopup;
-  }
+  };
 
   @action
   setSwiperPopupData = (value: {}) => {
     this.swiperPopupData = value;
-  }
+  };
 
   @action
   setIsGarmentLoaded = (isGarmentLoaded: boolean) => {
     this.isGarmentLoaded = isGarmentLoaded;
-  }
-
+  };
 }
 const app = new App('ru');
 
-export {
-  app,
-};
+export { app };

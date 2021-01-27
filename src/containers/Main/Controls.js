@@ -1,9 +1,8 @@
-import React from 'react'
-import Controls from 'Components/Main/Controls'
+import React from 'react';
+import Controls from 'Components/Main/Controls';
 
 class ControlsContainer extends React.Component {
-
-  render () {
+  render() {
     return (
       <Controls
         color={this.props.color}
@@ -14,7 +13,7 @@ class ControlsContainer extends React.Component {
         rightIcon={this.props.rightIcon}
         rightText={this.props.rightText}
       />
-    )
+    );
   }
 }
 

@@ -306,7 +306,7 @@ type makeGalleryItems = (
     setZoomId: (id: string) => void,
     filterStore: IFilterStore,
     activeGarments: string[],
-    setOrderDummyParams: (params: string[]) => void
+    setOrderDummyParams: TSetOrderDummyParams
 ) => React.ReactNode[];
 
 const makeGalleryItems: makeGalleryItems = (

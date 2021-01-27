@@ -1,3 +1,21 @@
+type TSetOrderDummyParams = (acriveGarments: string[]) => void;
+type TClearElement = (garment: string, element: string, actionType: ClearElementActionType) => void;
+type TSetMutuallyExclusivePopup = (callbackFunction: any) => void
+type TSetFitting = (garment: string, fitting: { id: string; value: number }) => void;
+type TGetFitting = (garment: string) => (fittingName: string) => number;
+type TSetPartOfShirtToggle = (value: string) => void;
+type TClearAdditionalFabric = (garment: string) => void;
+type TSetActiveItem = (item: GalleryStoreItem | null) => void;
+type TSetGarmentValue = (garment: string, value: any) => void;
+type TSetOrder = (_o: Order, exception?: OrderItemException) => void;
+type TSaveOrder = (customerInfo?: User) => Promise<any>;
+type TUpdateOrderInfo = (order: Order, customerInfo?: User) => Promise<any>;
+type TToggleHiddenElement = (element: string) => void;
+type TSetShirtInitials = (initials: string) => void;
+type TFetchOrder = (orderId: string, superUserToken?: string) => Promise<any>;
+type TFetchInitialOrder = (garments: string[], callback?: (...args: any[]) => any) => Promise<any>;
+type TSetFocusableGarment = (our_code: string) => void;
+
 interface IOrderStore {
     orderInfo: OrderInfo | null;
     defaultValues: Order | null;
@@ -12,31 +30,31 @@ interface IOrderStore {
     mutuallyExclusivePopup: MutuallyExclusive | null;
     focusableGarment: string;
     isEmptyOrder: () => boolean;
-    clearElement: (garment: string, element: string, actionType: ClearElementActionType) => void;
-    clearException: (garment: string, subGroup: string, actionType: ClearElementActionType) => void;
-    setMutuallyExclusivePopup: (callbackFunction: any) => void;
+    clearElement: TClearElement;
+    clearException: TClearElement;
+    setMutuallyExclusivePopup: TSetMutuallyExclusivePopup;
     activeElement: GalleryStoreItem | null;
     previewElement: ActivePreviewElement | null;
     error: object | null;
-    setFitting: (garment: string, fitting: { id: string; value: number }) => void;
-    getFitting: (garment: string) => (fittingName: string) => number;
+    setFitting: TSetFitting;
+    getFitting: TGetFitting;
     partOfShirtToggle: string;
-    setPartOfShirtToggle: (value: string) => void;
-    clearAdditionalFabric: (garment: string) => void;
-    setActiveItem(item: GalleryStoreItem | null): void;
-    setGarmentValue(garment: string, value: any): void;
-    setOrder(_o: Order, exception?: OrderItemException): void;
-    saveOrder(customerInfo?: User): Promise<any>;
-    updateOrderInfo(order: Order, customerInfo?: User): Promise<any>;
-    toggleHiddenElement(element: string): void;
-    setShirtInitials(initials: string): void;
+    setPartOfShirtToggle: TSetPartOfShirtToggle;
+    clearAdditionalFabric: TClearAdditionalFabric;
+    setActiveItem: TSetActiveItem;
+    setGarmentValue: TSetGarmentValue;
+    setOrder: TSetOrder;
+    saveOrder: TSaveOrder;
+    updateOrderInfo: TUpdateOrderInfo;
+    toggleHiddenElement: TToggleHiddenElement;
+    setShirtInitials: TSetShirtInitials;
     getShirtInitials(): string;
-    fetchOrder(orderId: string, superUserToken?: string): Promise<any>;
-    fetchInitialOrder(garments: string[], callback?: (...args: any[]) => any): Promise<any>;
-    clearOrderInfo(): void;
-    setOrderDummyParams: (acriveGarments: string[]) => void;
-    setHiddenGarments: (acriveGarments: string[]) => void;
-    setFocusableGarment: (our_code: string) => void;
+    fetchOrder: TFetchOrder;
+    fetchInitialOrder: TFetchInitialOrder;
+    clearOrderInfo: () => void;
+    setOrderDummyParams: TSetOrderDummyParams;
+    setHiddenGarments: TSetOrderDummyParams;
+    setFocusableGarment: TSetFocusableGarment;
 }
 
 interface Order {

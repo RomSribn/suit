@@ -24,7 +24,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
     }
     onAccetpClick = () => {
         const acceptClickResult = this.props.onAcceptClick!();
-        if (acceptClickResult &&  acceptClickResult instanceof Promise) {
+        if (acceptClickResult && acceptClickResult instanceof Promise) {
             acceptClickResult.then(this.closePopup);
         } else {
             this.closePopup();
@@ -39,7 +39,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
         } = this.props as AllProps;
         return (
             <React.Fragment>
-                 <span onClick={() => this.setState({ isOpen: true })}>{this.props.children}</span>
+                <span onClick={() => this.setState({ isOpen: true })}>{this.props.children}</span>
                 <PopUp
                     open={isOpen}
                     onClose={this.closePopup}
@@ -56,7 +56,7 @@ class ConfirmPopup extends React.PureComponent<ConfirmPopupProps, ConfirmPopUpSt
                                     className={`${baseClassName}__controls-item`}
                                     onClick={this.onAccetpClick}
                                 >
-                                {loc[lang].confirm}
+                                    {loc[lang].confirm}
                                 </Button>
                                 <Button
                                     className={`${baseClassName}__controls-item no-margin`}

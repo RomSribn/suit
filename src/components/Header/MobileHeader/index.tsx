@@ -9,7 +9,7 @@ import { Navlinks } from '../HeaderContent/navlinks';
 import { inject, observer } from 'mobx-react';
 
 type Props = {
-    openMenu: () => void;
+    openMenu: TOpenMenu;
     lang: Lang;
     isLandscape: boolean;
     isAuth?: boolean;

@@ -2,9 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { PopUp } from '../../../containers/Popup';
 import Login from '../../Login';
-
 import './styles.styl';
-import { HeaderBarProps } from '../typings';
 import { isMobile } from '../../../utils';
 import { routes } from '../../../config/routes';
 

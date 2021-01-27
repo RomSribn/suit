@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Header as Component } from './component';
-import { HeaderContainerProps } from './typings';
 
 @inject(({ user, routing, app }, nextProps: HeaderContainerProps) => {
     return {

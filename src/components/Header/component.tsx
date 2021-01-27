@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HeaderBar } from './HeaderBar';
 import { HeaderContent } from './HeaderContent';
 import MobileHeader from './MobileHeader';
-import { HeaderProps } from './typings';
+// import { HeaderProps } from './typings';
 import { routes } from '../../config/routes';
 
 import './style.styl';

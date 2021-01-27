@@ -1,26 +1,22 @@
-interface HeaderBarProps {
+declare type TOpenMenu = () => void;
+
+declare interface HeaderBarProps {
     userStore: IUserStore;
     lang: Lang;
     isAuth: boolean;
 }
 
-interface HeaderProps {
+declare interface HeaderProps {
     appStore: IAppStore;
     userStore: IUserStore;
     lang: Lang;
     path?: string;
     isAuth: boolean;
-    openMenu: () => void;
+    openMenu: TOpenMenu;
 }
 
-interface HeaderContainerProps extends Partial<HeaderProps> {
+declare interface HeaderContainerProps extends Partial<HeaderProps> {
     userStore?: IUserStore;
     appStore?: IAppStore;
     location?: Location;
 }
-
-export {
-    HeaderProps,
-    HeaderContainerProps,
-    HeaderBarProps,
-};

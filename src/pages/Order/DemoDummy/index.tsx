@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Dummy from '../../../containers/Main/Dummy';
 
-const DemoDummy = (props: any) => { // tslint:disable-line no-any
-    return (
-        <Dummy {...props} />
-    );
+// tslint:disable-next-line
+const DemoDummy = (props: any) => {
+  return <Dummy {...props} />;
 };
 
-export {
-    DemoDummy,
-};
+export { DemoDummy };

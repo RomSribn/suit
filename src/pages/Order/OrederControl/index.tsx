@@ -3,13 +3,12 @@ import { FooterBar } from '../FooterBar';
 import { OrderInfo } from '../OrderInfo';
 
 const OrderControl = () => {
-    return (
+  return (
     <div className="main__footer">
-        <OrderInfo />
-        <FooterBar />
-    </div>);
+      <OrderInfo />
+      <FooterBar />
+    </div>
+  );
 };
 
-export {
-    OrderControl,
-};
+export { OrderControl };

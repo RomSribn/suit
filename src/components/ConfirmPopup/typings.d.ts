@@ -1,13 +1,23 @@
-interface ConfirmPopUpState {
-    isOpen: boolean,
+declare type TextFields =
+  | 'confirm'
+  | 'back'
+  | 'confirmText'
+  | 'defaultActionText';
+
+declare type Locale = Record<TextFields, string>;
+
+type TOnAcceptClick = (...args: any[]) => any;
+
+declare interface ConfirmPopUpState {
+  isOpen: boolean;
 }
 
 interface DefaultProps {
-    lang: Lang;
-    actionText: string;
-    onAcceptClick: (...args: any[]) => any;
+  lang: Lang;
+  actionText: string;
+  onAcceptClick: TOnAcceptClick;
 }
 
-type ConfirmPopupProps = {
-    children?: React.ReactNode;
+declare type ConfirmPopupProps = {
+  children?: React.ReactNode;
 } & Partial<DefaultProps>;

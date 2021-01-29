@@ -3,31 +3,35 @@ import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
 class CustomersStore implements ICustomerStore {
-    @observable isFetching = false;
-    @observable error: Error | null = null;
-    @observable customers = observable.array<User>();
+  @observable isFetching = false;
+  @observable error: Error | null = null;
+  @observable customers = observable.array<User>();
 
-    @action fetch() {
-        this.error = null;
+  @action fetch() {
+    this.error = null;
 
-        return callApi({
-                method: 'GET',
-                url: services.customers,
-                params: { searchType: 'CONFIRMED' },
-            },
-            () => { this.isFetching = true; },
-            this._onSuccess,
-            this._onError);
-    }
+    return callApi(
+      {
+        method: 'GET',
+        url: services.customers,
+        params: { searchType: 'CONFIRMED' },
+      },
+      () => {
+        this.isFetching = true;
+      },
+      this._onSuccess,
+      this._onError,
+    );
+  }
 
-    _onSuccess = (data: User[]) => {
-        this.customers = observable.array(data);
-        this.isFetching = false;
-    }
-    _onError = (e: Error) => {
-        this.error = e;
-        this.isFetching = false;
-    }
+  _onSuccess = (data: User[]) => {
+    this.customers = observable.array(data);
+    this.isFetching = false;
+  };
+  _onError = (e: Error) => {
+    this.error = e;
+    this.isFetching = false;
+  };
 }
 
 export default new CustomersStore();

@@ -27,35 +27,38 @@ class UserClass implements IUserStore {
 
   @action fetchLogin(userName: string, password: string) {
     this.isFetching = true;
-    return axios.post(services.login, {
-      login: userName,
-      password
-    }).then((response: AxiosResponse<responseUserData>) => {
-      this.profile = {
-        user: userName,
-        ...response.data
-      };
-      this.isFetching = false;
-      if (response.data.token) {
-        const data = response.data;
-        const userInfo = {
-          token: data.token,
-          createDate: data.createDate,
+    return axios
+      .post(services.login, {
+        login: userName,
+        password,
+      })
+      .then((response: AxiosResponse<responseUserData>) => {
+        this.profile = {
           user: userName,
-          role: data.role,
+          ...response.data,
         };
-        setUserInfo(userInfo);
-        this.isAuth = true;
-        return userInfo;
-      } else {
-        throw new Error('Unathorized');
-      }
-    }).catch((error) => {
-      this.error = error;
-      return {
-        error
-      };
-    });
+        this.isFetching = false;
+        if (response.data.token) {
+          const data = response.data;
+          const userInfo = {
+            token: data.token,
+            createDate: data.createDate,
+            user: userName,
+            role: data.role,
+          };
+          setUserInfo(userInfo);
+          this.isAuth = true;
+          return userInfo;
+        } else {
+          throw new Error('Unathorized');
+        }
+      })
+      .catch((error) => {
+        this.error = error;
+        return {
+          error,
+        };
+      });
   }
 
   @action logout() {
@@ -68,7 +71,6 @@ class UserClass implements IUserStore {
     this.isAuth = false;
     resetUserInfo();
   }
-
 }
 
 export default new UserClass();

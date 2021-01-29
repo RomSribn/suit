@@ -1,3 +1,3 @@
 interface IVisibleButtonProps {
-    isHide: boolean;
+  isHide: boolean;
 }

@@ -1,2 +1,1 @@
-interface FooterProps {
-}
+interface FooterProps {}

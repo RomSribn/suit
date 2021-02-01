@@ -266,7 +266,7 @@
   }
 
   .catalog__item {
-    width: 13rem;
+    width: calc(50% - 0.5rem);
     margin: 0;
   }
 

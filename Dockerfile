@@ -1,57 +1,39 @@
-FROM node:8.16.0
+FROM node:8.16.0 AS build
 
-RUN mkdir -p /usr/src/application
+WORKDIR /app
 
-RUN mkdir -p ~/.ssh
-RUN chmod 777 ~/.ssh
-
+COPY . .
 
 ARG ssh_prv_key
 ARG ssh_pub_key
 ARG ssh_known_hosts
 
-RUN apt-get update && \
-    apt-get install -y
-
-# Authorize SSH Host
-RUN mkdir -p /root/.ssh && \
-    chmod 0700 /root/.ssh
-
 # Add the keys and set permissions
-RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
+RUN mkdir -p /root/.ssh && \
+    echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
     echo "$ssh_known_hosts" > /root/.ssh/known_hosts && \
     chmod 600 /root/.ssh/id_rsa && \
-    chmod 600 /root/.ssh/id_rsa.pub
+    chmod 600 /root/.ssh/id_rsa.pub && \
+    npm install && \
+    rm -r /root/.ssh && \
+    npm run build && \
+    ls | grep -P -v "(build|server)" | xargs -d"\n" rm -rf
 
+FROM node:8.16.0
 # Define working directory and copy source
 WORKDIR /application
-COPY . .
+COPY  --from=build /app .
+RUN chown -R node:node /application
 # Install dependencies and build whatever you have to build
 
-RUN npm cache clean --force
-RUN rm -rf ~/.npm
-# In the project folder:
-RUN rm -rf node_modules
+USER node
 
+#COPY server.config.js server.config.js
 
-RUN npm install
-
-COPY server.config.js server.config.js
-RUN npm run build
-
-RUN ls -d */ | grep -P -v "(build|server)" | xargs -d"\n" rm -r
-
-RUN ls | grep -P -v "(build|server)" | xargs -d"\n" rm
-
-RUN npm i express
+RUN npm install express compression
 
 EXPOSE 3000
-
-RUN rm -r ~/.ssh
-
-# bad thing for fixing widget build bug
-RUN npm install compress
 
 # Start the app
 CMD ["node", "server/index.js"]

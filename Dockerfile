@@ -50,5 +50,8 @@ EXPOSE 3000
 
 RUN rm -r ~/.ssh
 
+# bad thing for fixing widget build bug
+RUN npm install compress
+
 # Start the app
 CMD ["node", "server/index.js"]

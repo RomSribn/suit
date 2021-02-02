@@ -4,7 +4,8 @@ import { FooterBar as Component } from './component';
 import { trim } from '../../../config/routes';
 import { FooterBarProps } from './typings';
 
-@inject(({ routing, app, order, garments: { Subgroups }, user  }, nextProps) => ({
+@inject(
+  ({ routing, app, order, garments: { Subgroups }, user }, nextProps) => ({
     lang: app.lang,
     orderStore: order,
     mutuallyExclusivePopup: order.mutuallyExclusivePopup,
@@ -15,53 +16,51 @@ import { FooterBarProps } from './typings';
     subgroupsStore: new Subgroups('shirt'),
     Subgroups,
     backLink:
-        '/' + trim(
-        routing
-            .location
-            .pathname
-            .split('/')
-            .reduce(
-                (acc: string,
-                 cur: string,
-                 i: number,
-                 arr: string[]) => `${acc}/${i === arr.length - 1 ? '' : cur}`, ''),
-        '/'
-        ),
+      '/' +
+      trim(
+        routing.location.pathname
+          .split('/')
+          .reduce(
+            (acc: string, cur: string, i: number, arr: string[]) =>
+              `${acc}/${i === arr.length - 1 ? '' : cur}`,
+            '',
+          ),
+        '/',
+      ),
     ...(nextProps as object),
-}))
+  }),
+)
 @observer
 class FooterBar extends React.Component<FooterBarProps> {
-    render() {
-        const {
-            lang,
-            backLink,
-            popOrderPathitem,
-            orderStore,
-            mutuallyExclusivePopup,
-            orderId,
-            routing,
-            subgroupsStore,
-            Subgroups,
-            isAuth,
-        } = this.props;
+  render() {
+    const {
+      lang,
+      backLink,
+      popOrderPathitem,
+      orderStore,
+      mutuallyExclusivePopup,
+      orderId,
+      routing,
+      subgroupsStore,
+      Subgroups,
+      isAuth,
+    } = this.props;
 
-        return (
-            <Component
-                lang={lang}
-                isAuth={isAuth}
-                backLink={backLink}
-                mutuallyExclusivePopup={mutuallyExclusivePopup}
-                popOrderPathitem={popOrderPathitem}
-                orderStore={orderStore!}
-                subgroupsStore={subgroupsStore!}
-                Subgroups={Subgroups}
-                orderId={orderId}
-                routing={routing!}
-            />
-        );
-    }
+    return (
+      <Component
+        lang={lang}
+        isAuth={isAuth}
+        backLink={backLink}
+        mutuallyExclusivePopup={mutuallyExclusivePopup}
+        popOrderPathitem={popOrderPathitem}
+        orderStore={orderStore!}
+        subgroupsStore={subgroupsStore!}
+        Subgroups={Subgroups}
+        orderId={orderId}
+        routing={routing!}
+      />
+    );
+  }
 }
 
-export {
-    FooterBar
-};
+export { FooterBar };

@@ -1,12 +1,10 @@
-import React from 'react'
-import CustomizeList from 'Components/Main/Customize/CustomizeList/CustomizeList'
+import React from 'react';
+import CustomizeList from 'Components/Main/Customize/CustomizeList/CustomizeList';
 
 class CustomizeListContainer extends React.Component {
-  render () {
-    return (
-      <CustomizeList />
-    )
+  render() {
+    return <CustomizeList />;
   }
 }
 
-export default CustomizeListContainer
+export default CustomizeListContainer;

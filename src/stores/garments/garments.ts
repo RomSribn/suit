@@ -28,26 +28,28 @@ class GarmentsStore {
 
   @action
   fetchGarmentsList = () => {
-    callApi({
-      method: 'GET',
-      url: `${API_ROOT}/${services.garments}`,
-    },
-      () => { this.isFetching = true; },
+    callApi(
+      {
+        method: 'GET',
+        url: `${API_ROOT}/${services.garments}`,
+      },
+      () => {
+        this.isFetching = true;
+      },
       this.garmentsLoaded,
-      (e: Error) => this.error);
-  }
+      (e: Error) => this.error,
+    );
+  };
   garmentsLoaded = (data: GarmentsFromServer) => {
     const reduceCallback: GarmentsFromServerToGarmentsObject = (acc, cur) => {
-      const {
-        id,
-      } = cur;
+      const { id } = cur;
       acc[id] = cur;
       return acc;
     };
     const list = data.reduce(reduceCallback, {});
     this.garmentsList = list;
     this.isFetching = false;
-  }
+  };
   @action
   toggleGarment = (garment: string) => (_action: string) => {
     // Старая заглушка
@@ -56,7 +58,7 @@ class GarmentsStore {
     // }
     if (_action === ADD) {
       // this.activeGarments = observable.array(); // <--- ДЛЯ ОДНОГО ГАРМЕНТА В РЯДУ ЗА РАЗ, СДЕЛАТЬ ДУБЛИКАТ
-      if (this.activeGarments.findIndex(el => garment === el) === -1) {
+      if (this.activeGarments.findIndex((el) => garment === el) === -1) {
         this.activeGarments.push(garment);
         this.currentActiveGarment = this.activeGarments[0];
       }
@@ -69,12 +71,12 @@ class GarmentsStore {
       console.error(`You have provided ${_action}-action which is not one of
       ${ADD} or ${REMOVE}`);
     }
-  }
+  };
   @action
   setCurrentActiveGarment = (garment: string) => {
     this.currentActiveGarment = garment;
     order.setPartOfShirtToggle(basisPart);
-  }
+  };
   @action
   setActiveGarment = (garment: string) => {
     let clickedGarment = this.garmentsList[garment];
@@ -82,14 +84,14 @@ class GarmentsStore {
       clickedGarment = new GarmentStore(garment, this);
     }
     this.active = garment;
-  }
+  };
 
   @action
   setChosenGarments = (garments: string[]) => {
     const garmentsArray = observable.array(garments);
     this.activeGarments = garmentsArray;
     this.currentActiveGarment = garmentsArray[0];
-  }
+  };
 }
 
 export default new GarmentsStore();

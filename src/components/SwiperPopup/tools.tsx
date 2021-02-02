@@ -16,7 +16,7 @@ export const createPackOfSlides = (imagesArray: string) => {
           src={urlNormilizer3000(imagesArray[i])}
           alt={`Slide-num-${i}`}
         />
-      </SwiperSlide>
+      </SwiperSlide>,
     );
   }
 
@@ -34,7 +34,7 @@ export const createPackOfThumbs = (imagesArray: string) => {
           src={urlNormilizer3000(imagesArray[i])}
           alt={`Slide-num-${i}`}
         />
-      </SwiperSlide>
+      </SwiperSlide>,
     );
   }
 

@@ -6,19 +6,17 @@ interface Loc {
 
 const makeLoc: MakeLocale<Loc> = () => ({
   en: {
-      for: 'for',
-      basis: 'basis',
-      reset: 'reset'
+    for: 'for',
+    basis: 'basis',
+    reset: 'reset',
   },
   ru: {
-      for: 'на',
-      basis: 'основу',
-      reset: 'сбросить'
+    for: 'на',
+    basis: 'основу',
+    reset: 'сбросить',
   },
 });
 
 const loc = makeLoc();
 
-export {
-  loc
-};
+export { loc };

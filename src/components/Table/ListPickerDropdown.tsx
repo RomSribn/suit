@@ -24,73 +24,65 @@ const getOffset = (el: HTMLElement | null) => {
 
 class ListPickerDropdown extends React.PureComponent<TProps, TState> {
   static defaultProps = {
-    setFilterValue: () => undefined
+    setFilterValue: () => undefined,
   };
   listPickerInner?: HTMLElement;
   constructor(props: TProps) {
     super(props);
     this.state = {
-      initialDatePickerPosition: null
+      initialDatePickerPosition: null,
     };
   }
-  
-  onClickItem = ({ item, index }: {item: ListItem, index: number}) => {
-    const {
-      data
-    } = this.props;
+
+  onClickItem = ({ item, index }: { item: ListItem; index: number }) => {
+    const { data } = this.props;
     data!.setFilterValue!(item.value); // tslint:disable-line
-  }
+  };
   componentDidMount() {
-    const {
-      show,
-    } = this.props;
+    const { show } = this.props;
     if (show) {
       this.setPosition();
     }
   }
   componentDidUpdate(prevProps: TProps) {
-    if ((this.props.show !== prevProps.show && this.props.show) 
-      || this.props.data !== prevProps.data) {
+    if (
+      (this.props.show !== prevProps.show && this.props.show) ||
+      this.props.data !== prevProps.data
+    ) {
       this.setPosition();
     }
   }
   setPosition = () => {
-    const {
-      data
-    } = this.props;
-    const {
-      initialDatePickerPosition
-    } = this.state;
+    const { data } = this.props;
+    const { initialDatePickerPosition } = this.state;
     if (data!.inputRef && data!.inputRef.current && this.listPickerInner) {
       const wrapperElementPosition = getOffset(data!.inputRef.current);
-      const listPickerPosition = initialDatePickerPosition || getOffset(this.listPickerInner!);
-      !initialDatePickerPosition && this.setState({ initialDatePickerPosition: listPickerPosition }) // tslint:disable-line
-      this.listPickerInner!.style.left = (
-          wrapperElementPosition.left - (listPickerPosition.left * 1)
-        ) + 'px';
-      this.listPickerInner!.style.top = (
-          wrapperElementPosition.top - (listPickerPosition.top / 2)
-        ) + 'px';
+      const listPickerPosition =
+        initialDatePickerPosition || getOffset(this.listPickerInner!);
+      !initialDatePickerPosition &&
+        this.setState({ initialDatePickerPosition: listPickerPosition }); // tslint:disable-line
+      this.listPickerInner!.style.left =
+        wrapperElementPosition.left - listPickerPosition.left * 1 + 'px';
+      this.listPickerInner!.style.top =
+        wrapperElementPosition.top - listPickerPosition.top / 2 + 'px';
     }
-  }
-  renderListItem = ({ item, index }: { item: ListItem, index: number }) => {
+  };
+  renderListItem = ({ item, index }: { item: ListItem; index: number }) => {
     return (
-      <div onClick={() => this.onClickItem({item, index})} className="list-item">
-        <p className="list-item-text">
-          {item.text}
-        </p>
+      <div
+        onClick={() => this.onClickItem({ item, index })}
+        className="list-item"
+      >
+        <p className="list-item-text">{item.text}</p>
       </div>
     );
-  }
+  };
 
-  keyExtractorListItem = (key: string, idx: number) => 'listItem_' + key + '_' + idx;
+  keyExtractorListItem = (key: string, idx: number) =>
+    'listItem_' + key + '_' + idx;
 
   render() {
-    const {
-      show,
-      onClickOuterPopup,
-      data
-    } = this.props;
+    const { show, onClickOuterPopup, data } = this.props;
     if (!show) {
       return null;
     }
@@ -101,30 +93,31 @@ class ListPickerDropdown extends React.PureComponent<TProps, TState> {
         className={classNames(baseClassConst, baseClassConst + '__wrapper')}
       >
         <div
-          ref={comp => this.listPickerInner = comp!}
-          onClick={e => {
+          ref={(comp) => (this.listPickerInner = comp!)}
+          onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
           }}
           className={classNames(baseClassConst, baseClassConst + '__inner')}
         >
-          {
-            data! && data!.title && (
-              <div className="list__title">
-                <p className="list__title list__title-text">
-                  {data! && data!.title}
-                </p>
-              </div>
-            )
-          }
+          {data! && data!.title && (
+            <div className="list__title">
+              <p className="list__title list__title-text">
+                {data! && data!.title}
+              </p>
+            </div>
+          )}
           <div className="list-wrapper">
-            {
-              data! && data!.options && data!.options!.map((item: ListItem, idx: number) => (
-                <div key={this.keyExtractorListItem(item.value, idx)} className="list-item-wrapper">
-                  {this.renderListItem({item, index: idx})}
+            {data! &&
+              data!.options &&
+              data!.options!.map((item: ListItem, idx: number) => (
+                <div
+                  key={this.keyExtractorListItem(item.value, idx)}
+                  className="list-item-wrapper"
+                >
+                  {this.renderListItem({ item, index: idx })}
                 </div>
-              ))
-            }
+              ))}
           </div>
         </div>
       </div>
@@ -132,6 +125,4 @@ class ListPickerDropdown extends React.PureComponent<TProps, TState> {
   }
 }
 
-export {
-  ListPickerDropdown
-};
+export { ListPickerDropdown };

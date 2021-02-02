@@ -1,5 +1,10 @@
 {
-    "extends": "react-app",
+    "extends": [
+        "react-app",
+        "@typescript-eslint/parser",
+        "tslint-eslint-rules",
+        "tslint-config-prettier"
+    ],
     "parser": "babel-eslint",
     "plugins": [
         "react",

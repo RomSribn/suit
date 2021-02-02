@@ -1,9 +1,11 @@
 export const trim = (s: string, c: string): string => {
-  if (c === ']') { c = '\\]'; }
-  if (c === '\\') { c = '\\\\'; }
-  return s.replace(new RegExp(
-    '^[' + c + ']+|[' + c + ']+$', 'g'
-  ), '');
+  if (c === ']') {
+    c = '\\]';
+  }
+  if (c === '\\') {
+    c = '\\\\';
+  }
+  return s.replace(new RegExp('^[' + c + ']+|[' + c + ']+$', 'g'), '');
 };
 
 const _API_ROOT = trim(process.env.API_ROOT || '', '/');
@@ -11,8 +13,8 @@ export const API_ROOT =
   _API_ROOT.indexOf('https://') === 0
     ? _API_ROOT
     : _API_ROOT.indexOf('http://') === 0
-      ? _API_ROOT
-      : `http://${_API_ROOT}`;
+    ? _API_ROOT
+    : `http://${_API_ROOT}`;
 
 export const services = {
   garments: 'api/garments',
@@ -47,7 +49,7 @@ const makeNavigationRoutes: MakeNavigationRoutes = () => ({
   store: '/store',
   analytics: '/analytics',
   settings: '/settings',
-  ordersList: routes.orderList
+  ordersList: routes.orderList,
 });
 const navigationRoutes = makeNavigationRoutes();
 
@@ -74,20 +76,28 @@ const routesTranslations = {
   },
 };
 
-type RootKey = 'index' | 'order' | 'panel' | 'customersList' | 'calendar'
-  | 'store' | 'analytics' | 'settings' | 'ordersList';
+type RootKey =
+  | 'index'
+  | 'order'
+  | 'panel'
+  | 'customersList'
+  | 'calendar'
+  | 'store'
+  | 'analytics'
+  | 'settings'
+  | 'ordersList';
 
-const getCombinedPathAndTitle = (routeKey: RootKey) =>
-  ({
-    path: navigationRoutes[routeKey], title: Object.keys(routesTranslations).reduce((acc, cur) => {
-      acc[cur] = routesTranslations[cur][routeKey];
-      return acc;
-    }, {})
-  });
+const getCombinedPathAndTitle = (routeKey: RootKey) => ({
+  path: navigationRoutes[routeKey],
+  title: Object.keys(routesTranslations).reduce((acc, cur) => {
+    acc[cur] = routesTranslations[cur][routeKey];
+    return acc;
+  }, {}),
+});
 
 export {
   navigationRoutes,
   routesTranslations,
   routes,
-  getCombinedPathAndTitle
+  getCombinedPathAndTitle,
 };

@@ -1,6 +1,6 @@
 import { app } from './app';
-import { routingStore as routing} from './routingStore';
-import user from './user'
+import { routingStore as routing } from './routingStore';
+import user from './user';
 import * as garments from './garments';
 import { order } from './order';
 import { ordersStore } from './orders';
@@ -18,4 +18,4 @@ export default {
   ordersStore,
   customersStore,
   pdfStore,
-}
+};

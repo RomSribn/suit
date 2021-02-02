@@ -1,4 +1,4 @@
 interface ListCustomersProps {
-    customersStore?: ICustomerStore;
-    appStore?: IAppStore;
+  customersStore?: ICustomerStore;
+  appStore?: IAppStore;
 }

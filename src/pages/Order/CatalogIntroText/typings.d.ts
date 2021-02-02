@@ -1,4 +1,4 @@
 interface Props {
-    lang: string;
-    isClearSubmit: boolean;
+  lang: string;
+  isClearSubmit: boolean;
 }

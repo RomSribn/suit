@@ -1,12 +1,10 @@
-import React from 'react'
-import Main from 'Components/Main/Main'
+import React from 'react';
+import Main from 'Components/Main/Main';
 
 class MainContainer extends React.Component {
-  render () {
-    return (
-      <Main />
-    )
+  render() {
+    return <Main />;
   }
 }
 
-export default MainContainer
+export default MainContainer;

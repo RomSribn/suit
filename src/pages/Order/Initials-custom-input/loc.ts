@@ -1,23 +1,19 @@
 interface Loc {
-    title: string;
-    placeholder: string;
-  }
-  
+  title: string;
+  placeholder: string;
+}
+
 const makeLoc: MakeLocale<Loc> = () => ({
-    en: {
-        title: 'text',
-        placeholder: 'not chosen'
+  en: {
+    title: 'text',
+    placeholder: 'not chosen',
+  },
+  ru: {
+    title: 'текст',
+    placeholder: 'не выбрано',
+  },
+});
 
-    },
-    ru: {
-        title: 'текст',
-        placeholder: 'не выбрано'
-
-    },
-  });
-  
 const loc = makeLoc();
-  
-export {
-    loc
-  };
+
+export { loc };

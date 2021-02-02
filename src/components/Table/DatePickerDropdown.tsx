@@ -41,93 +41,88 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
     this.state = {
       fields,
       activeCalendar: '',
-      initialDatePickerPosition: null
+      initialDatePickerPosition: null,
     };
   }
 
   setActiveCalendar = (calendarType?: string) => {
     const { activeCalendar } = this.state;
     this.setState({
-      activeCalendar: activeCalendar === calendarType || !calendarType
-        ? ''
-        : calendarType
+      activeCalendar:
+        activeCalendar === calendarType || !calendarType ? '' : calendarType,
     });
-  }
+  };
 
   onClickClear = () => {
     this.setState({
       fields: {
         dateFrom: '',
-        dateTo: ''
-      }
+        dateTo: '',
+      },
     });
-  }
+  };
 
   onClickSubmit = () => {
-    const {
-      data
-    } = this.props;
-    const {
-      fields
-    } = this.state;
+    const { data } = this.props;
+    const { fields } = this.state;
     data!.setFilterValue && data!.setFilterValue!(fields); // tslint:disable-line
-  }
+  };
   componentDidMount() {
-    const {
-      show,
-    } = this.props;
+    const { show } = this.props;
     if (show) {
       this.updatePosition();
     }
   }
   updatePosition = () => {
-    const {
-      data
-    } = this.props;
-    const {
-      initialDatePickerPosition
-    } = this.state;
+    const { data } = this.props;
+    const { initialDatePickerPosition } = this.state;
     if (data!.inputRef && data!.inputRef.current && this.datePickerInner) {
       const wrapperElementPosition = getOffset(data!.inputRef.current);
-      const datePickerPosition = initialDatePickerPosition || getOffset(this.datePickerInner!);
-      !initialDatePickerPosition && this.setState({initialDatePickerPosition: datePickerPosition}) //tslint:disable-line
+      const datePickerPosition =
+        initialDatePickerPosition || getOffset(this.datePickerInner!);
+      !initialDatePickerPosition &&
+        this.setState({ initialDatePickerPosition: datePickerPosition }); //tslint:disable-line
       this.datePickerInner!.style.left =
-        (
-          wrapperElementPosition.left - (datePickerPosition.left * 1.02)
-        ) + 'px';
+        wrapperElementPosition.left - datePickerPosition.left * 1.02 + 'px';
       this.datePickerInner!.style.top =
-        (
-          wrapperElementPosition.top - (datePickerPosition.top / 2)
-        ) + 'px';
+        wrapperElementPosition.top - datePickerPosition.top / 2 + 'px';
     }
-  }
+  };
   componentDidUpdate(prevProps: TProps) {
-    if ((this.props.show !== prevProps.show && this.props.show)
-      || this.props.data !== prevProps.data) {
+    if (
+      (this.props.show !== prevProps.show && this.props.show) ||
+      this.props.data !== prevProps.data
+    ) {
       this.updatePosition();
     }
   }
 
   valueIsValid = (fieldName: string, value: string) => {
     const { fields } = this.state;
-    const {
-      dateFrom,
-      dateTo
-    } = fields;
+    const { dateFrom, dateTo } = fields;
     if (fieldName === 'dateFrom') {
-      return dateTo === '' ||
-        value.length !== 10 || moment(value, 'DD.MM.YYYY').isBefore(moment(dateTo, 'DD.MM.YYYY'));
+      return (
+        dateTo === '' ||
+        value.length !== 10 ||
+        moment(value, 'DD.MM.YYYY').isBefore(moment(dateTo, 'DD.MM.YYYY'))
+      );
     } else if (fieldName === 'dateTo') {
-      return dateFrom === '' ||
-        value.length !== 10 || moment(value, 'DD.MM.YYYY').isAfter(moment(dateFrom, 'DD.MM.YYYY'));
+      return (
+        dateFrom === '' ||
+        value.length !== 10 ||
+        moment(value, 'DD.MM.YYYY').isAfter(moment(dateFrom, 'DD.MM.YYYY'))
+      );
     }
     return true;
-  }
+  };
 
   setField = (fieldName: string, value: string) => {
     if (this.valueIsValid(fieldName, value)) {
       const newStateFileds = this.state.fields;
-      if (value.length < newStateFileds[fieldName].length || value.length >= 8 && value.length <= 10) {
+      if (
+        value.length < newStateFileds[fieldName].length ||
+        (value.length >= 8 && value.length <= 10)
+      ) {
         newStateFileds[fieldName] = value;
         this.setState({ fields: newStateFileds });
       } else {
@@ -145,33 +140,26 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
         }
       }
     }
-  }
+  };
 
   render() {
-    const {
-      show,
-      onClickOuterDatePickerFilter,
-      lang
-    } = this.props;
-    const {
-      fields,
-      activeCalendar
-    } = this.state;
-    const {
-      dateFrom,
-      dateTo
-    } = fields;
+    const { show, onClickOuterDatePickerFilter, lang } = this.props;
+    const { fields, activeCalendar } = this.state;
+    const { dateFrom, dateTo } = fields;
     if (!show) {
       return null;
     }
     return (
       <div
         onClick={onClickOuterDatePickerFilter}
-        className={classNames(ordersDatePickerClass, ordersDatePickerClass + '__wrapper')}
+        className={classNames(
+          ordersDatePickerClass,
+          ordersDatePickerClass + '__wrapper',
+        )}
       >
         <div
-          ref={comp => this.datePickerInner = comp!}
-          onClick={e => {
+          ref={(comp) => (this.datePickerInner = comp!)}
+          onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
           }}
@@ -187,23 +175,44 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
                   <input
                     type="text"
                     className={classNames(inputBoxClass + '-input')}
-                    onChange={(e: { target: HTMLInputElement; }) => this.setField('dateFrom', e.target.value)}
+                    onChange={(e: { target: HTMLInputElement }) => {
+                      return this.setField('dateFrom', e.target.value);
+                    }}
                     placeholder={'00.00.0000'}
                     value={dateFrom}
                     onBlur={() => this.setActiveCalendar()}
                   />
                 </span>
               </span>
-              <span onClick={() => this.setActiveCalendar('dateFrom')} className="datepicker__icon"/>
+              <span
+                onClick={() => this.setActiveCalendar('dateFrom')}
+                className="datepicker__icon"
+              />
             </div>
           </div>
-          <div className={classNames('picker-wrapper', { active: activeCalendar === 'dateFrom' })}>
+          <div
+            className={classNames('picker-wrapper', {
+              active: activeCalendar === 'dateFrom',
+            })}
+          >
             <DayPicker
               selectedDays={[moment(dateFrom, 'DD.MM.YYYY').toDate()]}
               locale={lang}
               months={loc[lang].months}
-              weekdaysShort={loc[lang].weekDaysShort  as [string, string, string, string, string, string, string]} // tslint:disable-line
-              onDayClick={day => this.setField('dateFrom', moment(day).format('DD.MM.YYYY'))}
+              weekdaysShort={
+                loc[lang].weekDaysShort as [
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                ]
+              } // tslint:disable-line
+              onDayClick={(day) =>
+                this.setField('dateFrom', moment(day).format('DD.MM.YYYY'))
+              }
             />
           </div>
           <div className="bottom-input-wrapper">
@@ -216,39 +225,54 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
                   <input
                     type="text"
                     className={classNames(inputBoxClass + '-input')}
-                    onChange={(e: { target: HTMLInputElement; }) => this.setField('dateTo', e.target.value)}
+                    onChange={(e: { target: HTMLInputElement }) => {
+                      return this.setField('dateTo', e.target.value);
+                    }}
                     placeholder={'00.00.0000'}
                     value={dateTo}
                     onBlur={() => this.setActiveCalendar()}
                   />
                 </span>
               </span>
-              <span onClick={() => this.setActiveCalendar('dateTo')} className="datepicker__icon"/>
+              <span
+                onClick={() => this.setActiveCalendar('dateTo')}
+                className="datepicker__icon"
+              />
             </span>
           </div>
-          <div className={classNames('picker-wrapper', { active: activeCalendar === 'dateTo' })}>
+          <div
+            className={classNames('picker-wrapper', {
+              active: activeCalendar === 'dateTo',
+            })}
+          >
             <DayPicker
               selectedDays={[moment(dateTo, 'DD.MM.YYYY').toDate()]}
               locale={lang}
               months={loc[lang].months}
-              weekdaysShort={loc[lang].weekDaysShort as [string, string, string, string, string, string, string]} // tslint:disable-line
-              onDayClick={day => this.setField('dateTo', moment(day).format('DD.MM.YYYY'))}
+              weekdaysShort={
+                loc[lang].weekDaysShort as [
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                  string,
+                ]
+              } // tslint:disable-line
+              onDayClick={(day) =>
+                this.setField('dateTo', moment(day).format('DD.MM.YYYY'))
+              }
             />
           </div>
           <div className="btns-wrapper">
             <div className="btn-wrapper">
-              <Button
-                onClick={this.onClickClear}
-                theme="white"
-              >
+              <Button onClick={this.onClickClear} theme="white">
                 <p>{loc[lang].clear.toUpperCase()}</p>
               </Button>
             </div>
             <div className="btn-wrapper">
-              <Button
-                onClick={this.onClickSubmit}
-                theme="black"
-              >
+              <Button onClick={this.onClickSubmit} theme="black">
                 <p>{loc[lang].submit}</p>
               </Button>
             </div>
@@ -259,6 +283,4 @@ class DatePickerDropdown extends React.Component<TProps, TState> {
   }
 }
 
-export {
-  DatePickerDropdown
-};
+export { DatePickerDropdown };

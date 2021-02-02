@@ -34,7 +34,7 @@ const makeLocale: MakeLocale<Locale> = {
     chat: 'chat',
     shirt: 'shirt',
     pants: 'pants',
-    jacket: 'jacket'
+    jacket: 'jacket',
   },
   ru: {
     order: 'заказать',
@@ -52,14 +52,11 @@ const makeLocale: MakeLocale<Locale> = {
     chat: 'чат',
     shirt: ' рубашка',
     pants: 'брюки',
-    jacket: 'пиджак'
+    jacket: 'пиджак',
   },
 };
 
 const loc = makeLocale;
 const localesList = Object.keys(makeLocale);
 
-export {
-  loc,
-  localesList
-};
+export { loc, localesList };

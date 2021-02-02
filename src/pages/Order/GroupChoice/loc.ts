@@ -5,17 +5,15 @@ interface Loc {
 
 const makeLoc: MakeLocale<Loc> = () => ({
   en: {
-      noStatus: 'not chosen',
-      search: 'Search ...'
+    noStatus: 'not chosen',
+    search: 'Search ...',
   },
   ru: {
-      noStatus: 'не выбрано',
-      search: 'Поиск ...'
+    noStatus: 'не выбрано',
+    search: 'Поиск ...',
   },
 });
 
 const loc = makeLoc();
 
-export {
-  loc
-};
+export { loc };

@@ -17,7 +17,7 @@ interface State {
   showErrorModal: boolean;
 }
 @inject(({ app, order, routing, garments: { Subgroups }, user }, props) => {
-  return ({
+  return {
     app,
     orderStore: order,
     Subgroups: Subgroups,
@@ -26,50 +26,43 @@ interface State {
     setActiveOrderItem: order.setActiveItem,
     lang: app.lang,
     profile: user.profile,
-  });
+  };
 })
-
 @observer
 class SaveButton extends React.Component<SaveButtonProps, State> {
   static defaultProps = {
     saveCallback: () => undefined,
-    lang: 'en'
+    lang: 'en',
   };
   constructor(props: SaveButtonProps) {
     super(props);
     this.state = {
       open: false,
       isExceptionPopupOpen: false,
-      showErrorModal: false
+      showErrorModal: false,
     };
-
   }
 
   onCloseExcetionPopup = () => {
     this.setState({ isExceptionPopupOpen: false });
-  }
+  };
 
   onOpenExcetionPopup = () => {
     this.setState({ isExceptionPopupOpen: true });
-  }
+  };
 
   onClose = (e: React.MouseEvent) => {
-    const {
-      saveCallback
-    } = this.props;
+    const { saveCallback } = this.props;
     this.hidePopup();
-    saveCallback && saveCallback() // tslint:disable-line
-  }
+    saveCallback && saveCallback(); // tslint:disable-line
+  };
 
   hidePopup = () => {
     this.setState({ open: false });
-  }
+  };
 
   onClick = () => {
-    const {
-      saveCallback,
-      profile,
-    } = this.props;
+    const { saveCallback, profile } = this.props;
     const isCustomer = profile && profile.role === 'CUSTOMER';
     if (this.props.isUpdate) {
       this.updateOrder();
@@ -79,16 +72,18 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       saveCallback && saveCallback(); // tslint:disable-line
     } else if (isCustomer) {
       const customer = { phone: profile!.user, name: '' };
-      this.props.orderStore!.saveOrder(customer)
-          .then(() => {
-            this.setState({
-              open: true,
-            }, () => setTimeout(this.hidePopup, 3000));
-          });
+      this.props.orderStore!.saveOrder(customer).then(() => {
+        this.setState(
+          {
+            open: true,
+          },
+          () => setTimeout(this.hidePopup, 3000),
+        );
+      });
     } else {
       this.setState({ open: true });
     }
-  }
+  };
 
   updateOrder = () => {
     const props = this.props;
@@ -97,7 +92,7 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
       Subgroups: props.Subgroups,
       orderStore: props.orderStore!,
     });
-  }
+  };
 
   onCallbackErrorModal = (result: string) => {
     const { saveCallback } = this.props;
@@ -112,45 +107,44 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
           return saveCallback!();
       }
     });
-  }
+  };
 
   render() {
-    const {
-      children,
-      lang,
-      link,
-      profile,
-    } = this.props;
-    const {
-      showErrorModal,
-      open
-    } = this.state;
-    const orderId: number = _.get(this, 'props.orderStore.orderInfo.orderId', 0);
+    const { children, lang, link, profile } = this.props;
+    const { showErrorModal, open } = this.state;
+    const orderId: number = _.get(
+      this,
+      'props.orderStore.orderInfo.orderId',
+      0,
+    );
     const errorModalData = {
       desc: loc[lang!].errorMessage,
       buttons: [
         {
           key: 'repeat',
           text: loc[lang!].repeat,
-          theme: 'black'
+          theme: 'black',
         },
         {
           key: 'back',
           text: loc[lang!].back,
-          theme: 'white'
+          theme: 'white',
         },
-      ] as ButtonType[]
+      ] as ButtonType[],
     };
     const isCustomer = profile && profile.role === 'CUSTOMER';
-    const ThanksPopup = () => open ? (
+    const ThanksPopup = () =>
+      open ? (
         <div className="order-form__container">
           <div className="order-form__content">
-                  <div className="order-form__header">{loc[lang!].thanksHeader}</div>
-                  <span className="order-form__subtitle">{loc[lang!].thanksText}</span>
-                  <Redirect to="#thank_you"/>
-                </div>
+            <div className="order-form__header">{loc[lang!].thanksHeader}</div>
+            <span className="order-form__subtitle">
+              {loc[lang!].thanksText}
+            </span>
+            <Redirect to="#thank_you" />
+          </div>
         </div>
-    ) : null;
+      ) : null;
 
     return (
       <React.Fragment key="order save popup">
@@ -158,8 +152,13 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
           className={this.props.className}
           onClick={this.onClick}
           theme="black"
-          link={link ? `${link}?${orderId && 'active_order_id=' + orderId}` : undefined}
-        >{children}
+          link={
+            link
+              ? `${link}?${orderId && 'active_order_id=' + orderId}`
+              : undefined
+          }
+        >
+          {children}
         </Button>
         <PopUp onClose={this.onClose} open={open}>
           {isCustomer ? <ThanksPopup /> : <SaveForm close={this.onClose} />}
@@ -176,6 +175,4 @@ class SaveButton extends React.Component<SaveButtonProps, State> {
   }
 }
 
-export {
-  SaveButton,
-};
+export { SaveButton };

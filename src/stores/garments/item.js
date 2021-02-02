@@ -1,12 +1,11 @@
-import { observable } from 'mobx'
+import { observable } from 'mobx';
 
 class item {
-  @observable checked = false
+  @observable checked = false;
 
   constructor(props) {
-    Object.assign(this, props)
-    
+    Object.assign(this, props);
   }
 }
 
-export default item
+export default item;

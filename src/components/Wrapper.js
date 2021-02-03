@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Common } from '../containers/Common';
 import { ListCustomers } from '../pages/ListCustomers';
 import { ListOrders } from '../pages/ListOrders';
+import { Store } from '../pages/Store';
 import { observer, inject } from 'mobx-react';
 import { Order } from '../pages/Order';
 import { PopUp } from '../containers/Popup';
@@ -142,6 +143,9 @@ class Wrapper extends Component {
                   <Switch>
                     <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
                       <ListOrders />
+                    </CrumbRoute>
+                    <CrumbRoute {...getCombinedPathAndTitle('store')}>
+                      <Store />
                     </CrumbRoute>
                     <CrumbRoute {...getCombinedPathAndTitle('customersList')}>
                       {isStylist ? (

@@ -1,0 +1,29 @@
+.price-list-item
+    padding 1.4rem 1.24rem 1.4rem 2.2rem
+    cursor pointer
+    .title-info
+        display flex
+        justify-content space-between
+        flex-wrap wrap
+        margin -10px
+        @media only screen and (min-width: 768px)
+            margin 0
+        & > *
+            margin 10px
+            @media only screen and (min-width: 768px)
+                margin 0
+        &__title 
+            -webkit-transition 0.35s ease
+            font-size 1.4rem
+            font-weight 400
+            line-height 1
+            color #000
+            text-transform uppercase
+        &__price
+            font-size 1.4rem
+            color #046b71
+    &__description 
+        margin-top 1rem
+
+    &:hover
+        background linear-gradient(to right, #436263, #436263 14px, #eceeee 14px, #eceeee)

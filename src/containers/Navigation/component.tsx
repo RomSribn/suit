@@ -7,6 +7,7 @@ import { TRANSITION_DUARAION } from '../../config/constants';
 
 import { navigationRoutes as routes } from '../../config/routes';
 import { routes as defaultRoutes } from '../../config/routes';
+import { API_ROOT } from '../../config/routes';
 import { loc } from './loc';
 
 import './styles.styl';
@@ -23,11 +24,16 @@ export const Header = (props: HeaderProps) => {
           className="logo"
           src={
             !isRealIndexPage
-              ? process.env.STATIC_IMAGES +
+              ? API_ROOT +
+                process.env.STATIC_IMAGES +
                 'logo/' +
                 process.env.SALON_ID +
                 '.svg'
-              : 'https://ordersystem.ru/assets/img/logo/suit_white.svg'
+              : API_ROOT +
+                process.env.STATIC_IMAGES +
+                'logo/' +
+                process.env.SALON_ID +
+                '_white.svg'
           }
         />
       </a>

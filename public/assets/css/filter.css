@@ -164,12 +164,13 @@ input:checked + .filter__label-color:before {
 
 .popup__container .filter {
   width: 92.5vw;
-  top: unset;
+  top: 0;
   bottom: 0;
   left: 50%;
   right: 0;
   overflow: unset;
   max-height: 98vh;
+  height: 85%;
   transform: translateX(-50%);
   padding-bottom: 74px;
   flex-direction: column;

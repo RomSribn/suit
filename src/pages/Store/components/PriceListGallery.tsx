@@ -5,12 +5,19 @@ import '../styles/priceListGallery.styl';
 const PriceListGallery = ({
   priceList,
   lang,
-  onClose,
+  togglePopUp,
+  setSelectedStoreId,
 }: PriceListGalleryProps) => {
   return (
     <div className="price-list-gallery">
       {priceList.map((priceListItem: priceListItem) => (
-        <PriceListItem {...priceListItem[lang]} onClose={onClose} />
+        <PriceListItem
+          key={priceListItem.id}
+          id={priceListItem.id}
+          {...priceListItem[lang]}
+          togglePopUp={togglePopUp}
+          setSelectedStoreId={setSelectedStoreId}
+        />
       ))}
     </div>
   );

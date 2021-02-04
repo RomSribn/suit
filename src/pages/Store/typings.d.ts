@@ -1,35 +1,51 @@
-type PriceBlock = {
+type TPriceBlock = {
     leftInfo: string;
     price: number;
     currency: string;
 }
 
-interface priceListItemLocale {
+interface PriceListItemLocale {
     title: string;
     description: string;
-    priceBlock: PriceBlock;
+    priceBlock: TPriceBlock;
 }
 
 interface priceListItem {
-    ru: priceListItemLocale;
-    en: priceListItemLocale;
+    id: number;
+    ru: PriceListItemLocale;
+    en: PriceListItemLocale;
 }
 
 interface PriceListGalleryProps {
     priceList: priceListItem[];
     lang: Lang;
-    onClose: () => void;
+    togglePopUp: () => void;
+    setSelectedStoreId: TSetSelectedStoreId;
 }
 
-interface PriceListItemProps extends priceListItemLocale {
-    onClose: () => void;
+interface PriceListItemProps extends PriceListItemLocale {
+    id: number;
+    togglePopUp: () => void;
+    setSelectedStoreId: TSetSelectedStoreId;
 }
 
 interface PriceListItemDescriptionProps {
+    lang: Lang;
     open: boolean;
-    onClose: () => void;
+    togglePopUp: () => void;
+    selectedStoreId: TSelectedStoreId;
+}
+
+interface ViewStoreItemProps extends PriceListItemLocale {
+}
+
+interface StoreItemTitleProps {
+    title: string;
+    priceBlock: TPriceBlock;
 }
 
 interface StoreProps {
-    appStore: IAppStore;
+    selectedStoreId: TSelectedStoreId;
+    setSelectedStoreId: TSetSelectedStoreId;
+    lang: Lang;
 }

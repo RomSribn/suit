@@ -6,24 +6,30 @@ import { priceList } from './priceList';
 import { observer, inject } from 'mobx-react';
 import './index.styl';
 
-@inject(({ customersStore, app }) => ({
-  customersStore,
-  appStore: app,
-}))
+@inject(
+  ({
+    customersStore: { setSelectedStoreId, selectedStoreId },
+    app: { lang },
+  }) => ({
+    selectedStoreId,
+    setSelectedStoreId,
+    lang,
+  }),
+)
 @observer
 class Store extends React.Component<StoreProps> {
   state = {
     open: false,
   };
-  onClose = () => {
+  togglePopUp = () => {
     this.setState({
       open: !this.state.open,
     });
   };
+
   render() {
-    const { appStore } = this.props;
+    const { lang, setSelectedStoreId, selectedStoreId } = this.props;
     const { open } = this.state;
-    const lang = appStore.lang;
     return (
       <div className="main__middle">
         <PanelRow lang={lang} />
@@ -31,9 +37,15 @@ class Store extends React.Component<StoreProps> {
           <PriceListGallery
             priceList={priceList}
             lang={lang}
-            onClose={this.onClose}
+            setSelectedStoreId={setSelectedStoreId}
+            togglePopUp={this.togglePopUp}
           />
-          <PriceListItemDescription open={open} onClose={this.onClose} />
+          <PriceListItemDescription
+            lang={lang}
+            open={open}
+            togglePopUp={this.togglePopUp}
+            selectedStoreId={selectedStoreId}
+          />
         </div>
       </div>
     );

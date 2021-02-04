@@ -6,8 +6,10 @@ class CustomersStore implements ICustomerStore {
   @observable isFetching = false;
   @observable error: Error | null = null;
   @observable customers = observable.array<User>();
+  @observable selectedStoreId: number | null = null;
 
-  @action fetch() {
+  @action
+  fetch() {
     this.error = null;
 
     return callApi(
@@ -22,6 +24,11 @@ class CustomersStore implements ICustomerStore {
       this._onSuccess,
       this._onError,
     );
+  }
+
+  @action
+  setSelectedStoreId = (id: number) => {
+    this.selectedStoreId = id;
   }
 
   _onSuccess = (data: User[]) => {

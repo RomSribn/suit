@@ -1,5 +1,6 @@
 export const priceList: priceListItem[] = [
     {
+        id: 1,
         ru: {
             title: `добавить свой каталог тканей`,
             description:
@@ -23,6 +24,7 @@ export const priceList: priceListItem[] = [
             }
         }
     }, {
+        id: 2,
         ru: {
             title: `заказать картинки готовых изделий`,
             description:
@@ -48,6 +50,7 @@ export const priceList: priceListItem[] = [
             }
         }
     }, {
+        id: 3,
         ru: {
             title: `добавить свой логотип`,
             description:
@@ -71,6 +74,7 @@ export const priceList: priceListItem[] = [
             }
         }
     }, {
+        id: 4,
         ru: {
             title: `добавить свой 2D каталог`,
             description:
@@ -96,6 +100,7 @@ export const priceList: priceListItem[] = [
             }
         }
     }, {
+        id: 5,
         ru: {
             title: `добавить свой 3D каталог`,
             description:

@@ -20,6 +20,9 @@ RUN mkdir -p /root/.ssh && \
     npm run build && \
     ls | grep -P -v "(build|server)" | xargs -d"\n" rm -rf
 
+# Set server configuration
+COPY server.config.js server.config.js
+
 FROM node:8.16.0
 # Define working directory and copy source
 WORKDIR /application
@@ -28,8 +31,6 @@ RUN chown -R node:node /application
 # Install dependencies and build whatever you have to build
 
 USER node
-
-#COPY server.config.js server.config.js
 
 RUN npm install express compression
 

@@ -12,6 +12,7 @@ interface PriceListItemLocale {
 
 interface priceListItem {
     id: number;
+    video: string;
     ru: PriceListItemLocale;
     en: PriceListItemLocale;
 }
@@ -20,12 +21,14 @@ interface PriceListGalleryProps {
     priceList: priceListItem[];
     lang: Lang;
     togglePopUp: () => void;
+    selectedStoreId: TSelectedStoreId;
     setSelectedStoreId: TSetSelectedStoreId;
 }
 
 interface PriceListItemProps extends PriceListItemLocale {
     id: number;
     togglePopUp: () => void;
+    selectedStoreId: TSelectedStoreId;
     setSelectedStoreId: TSetSelectedStoreId;
 }
 
@@ -37,6 +40,7 @@ interface PriceListItemDescriptionProps {
 }
 
 interface ViewStoreItemProps extends PriceListItemLocale {
+    video: string;
 }
 
 interface StoreItemTitleProps {

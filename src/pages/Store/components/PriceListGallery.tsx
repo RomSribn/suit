@@ -6,6 +6,7 @@ const PriceListGallery = ({
   priceList,
   lang,
   togglePopUp,
+  selectedStoreId,
   setSelectedStoreId,
 }: PriceListGalleryProps) => {
   return (
@@ -16,6 +17,7 @@ const PriceListGallery = ({
           id={priceListItem.id}
           {...priceListItem[lang]}
           togglePopUp={togglePopUp}
+          selectedStoreId={selectedStoreId}
           setSelectedStoreId={setSelectedStoreId}
         />
       ))}

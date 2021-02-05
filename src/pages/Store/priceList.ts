@@ -1,6 +1,7 @@
 export const priceList: priceListItem[] = [
     {
         id: 1,
+        video: `https://www.youtube.com/watch?v=nlDAPQT5d0A`,
         ru: {
             title: `добавить свой каталог тканей`,
             description:
@@ -9,7 +10,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 картинка -`,
                 price: 378,
-                currency: '₽'
+                currency: `₽`
             }
         },
         en: {
@@ -20,11 +21,12 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 картинка -`,
                 price: 5,
-                currency: '$'
+                currency: `$`
             }
         }
     }, {
         id: 2,
+        video: `https://youtu.be/tG2GJZcBKOE`,
         ru: {
             title: `заказать картинки готовых изделий`,
             description:
@@ -34,7 +36,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 картинка -`,
                 price: 680,
-                currency: '₽'
+                currency: `₽`
             }
         },
         en: {
@@ -46,11 +48,12 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 картинка -`,
                 price: 9,
-                currency: '$'
+                currency: `$`
             }
         }
     }, {
         id: 3,
+        video: `https://www.youtube.com/watch?v=E4NBGXtky0E`,
         ru: {
             title: `добавить свой логотип`,
             description:
@@ -59,7 +62,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 месяц -`,
                 price: 1510,
-                currency: '₽'
+                currency: `₽`
             }
         },
         en: {
@@ -70,11 +73,12 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `1 месяц -`,
                 price: 20,
-                currency: '$'
+                currency: `$`
             }
         }
     }, {
         id: 4,
+        video: `https://www.youtube.com/watch?v=MruNugpHDV0`,
         ru: {
             title: `добавить свой 2D каталог`,
             description:
@@ -84,7 +88,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: ``,
                 price: 181210,
-                currency: '₽'
+                currency: `₽`
             }
         },
         en: {
@@ -96,11 +100,12 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: ``,
                 price: 2400,
-                currency: '$'
+                currency: `$`
             }
         }
     }, {
         id: 5,
+        video: `https://www.youtube.com/watch?v=3kbdGHavGKg`,
         ru: {
             title: `добавить свой 3D каталог`,
             description:
@@ -110,7 +115,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `от -`,
                 price: 513427,
-                currency: '₽'
+                currency: `₽`
             }
         },
         en: {
@@ -122,7 +127,7 @@ export const priceList: priceListItem[] = [
             priceBlock: {
                 leftInfo: `от -`,
                 price: 6800,
-                currency: '$'
+                currency: `$`
             }
         }
     }

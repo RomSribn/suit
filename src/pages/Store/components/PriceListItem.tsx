@@ -1,22 +1,29 @@
 import * as React from 'react';
 import { StoreItemTitle } from './StoreItemTitle';
+import * as classNames from 'classnames';
 import '../styles/priceListItem.styl';
 
-const PriceListItem = (props: PriceListItemProps) => {
-  const {
-    title,
-    description,
-    priceBlock,
-    togglePopUp,
-    id,
-    setSelectedStoreId,
-  } = props;
+const PriceListItem = ({
+  title,
+  description,
+  priceBlock,
+  togglePopUp,
+  id,
+  selectedStoreId,
+  setSelectedStoreId,
+}: PriceListItemProps) => {
   const onClick = () => {
     setSelectedStoreId(id);
     togglePopUp();
   };
+
   return (
-    <div className="price-list-item" onClick={onClick}>
+    <div
+      className={classNames('price-list-item', {
+        _active: id === selectedStoreId,
+      })}
+      onClick={onClick}
+    >
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="price-list-item__description">
         <span>{description}</span>

@@ -37,6 +37,7 @@ class Store extends React.Component<StoreProps> {
           <PriceListGallery
             priceList={priceList}
             lang={lang}
+            selectedStoreId={selectedStoreId}
             setSelectedStoreId={setSelectedStoreId}
             togglePopUp={this.togglePopUp}
           />

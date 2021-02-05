@@ -3,6 +3,7 @@ import { PopUp } from '../../../containers/Popup';
 import { isMobile } from '../../../utils';
 import { priceList } from '../priceList';
 import { ViewStoreItem } from './ViewStoreItem';
+import { Button } from '../../../components/Button';
 import '../styles/priceListItemDescription.styl';
 
 const PriceListItemDescription = ({
@@ -13,7 +14,9 @@ const PriceListItemDescription = ({
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
-
+  const onClick = () => {
+    return lang;
+  };
   return isMobile() ? (
     <div className="wrapper">
       <PopUp open={open} onClose={togglePopUp}>
@@ -21,13 +24,25 @@ const PriceListItemDescription = ({
           <div className="close-popup" onClick={togglePopUp}>
             X
           </div>
-          <ViewStoreItem {...selectedStoreItem[lang]} />
+          <ViewStoreItem
+            {...selectedStoreItem[lang]}
+            video={selectedStoreItem.video}
+          />
+          <Button theme={'black'} onClick={onClick} className="approve-button">
+            <span>Запросить стоимость</span>
+          </Button>
         </div>
       </PopUp>
     </div>
   ) : (
     <div className="price-list-item--description">
-      <ViewStoreItem {...selectedStoreItem[lang]} />
+      <ViewStoreItem
+        {...selectedStoreItem[lang]}
+        video={selectedStoreItem.video}
+      />
+      <Button theme={'black'} onClick={onClick} className="approve-button">
+        <span>Запросить стоимость</span>
+      </Button>
     </div>
   );
 };

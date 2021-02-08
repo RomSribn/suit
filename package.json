@@ -126,6 +126,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-day-picker": "7.3.2",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^11.3.0",
     "react-final-form": "^6.3.0",
     "react-inlinesvg": "^0.7.5",
     "react-input-mask": "^2.0.4",

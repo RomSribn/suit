@@ -8,11 +8,22 @@ import './index.styl';
 
 @inject(
   ({
-    customersStore: { setSelectedStoreId, selectedStoreId },
+    customersStore: {
+      setSelectedStoreId,
+      selectedStoreId,
+      setUsersStoreItems,
+      usersStoreItems,
+      removeSpecificFileFromItem,
+      submitUserStoreItems,
+    },
     app: { lang },
   }) => ({
     selectedStoreId,
     setSelectedStoreId,
+    setUsersStoreItems,
+    usersStoreItems,
+    removeSpecificFileFromItem,
+    submitUserStoreItems,
     lang,
   }),
 )
@@ -28,7 +39,15 @@ class Store extends React.Component<StoreProps> {
   };
 
   render() {
-    const { lang, setSelectedStoreId, selectedStoreId } = this.props;
+    const {
+      lang,
+      setSelectedStoreId,
+      selectedStoreId,
+      setUsersStoreItems,
+      usersStoreItems,
+      removeSpecificFileFromItem,
+      submitUserStoreItems,
+    } = this.props;
     const { open } = this.state;
     return (
       <div className="main__middle">
@@ -46,6 +65,10 @@ class Store extends React.Component<StoreProps> {
             open={open}
             togglePopUp={this.togglePopUp}
             selectedStoreId={selectedStoreId}
+            setUsersStoreItems={setUsersStoreItems}
+            usersStoreItems={usersStoreItems}
+            removeSpecificFileFromItem={removeSpecificFileFromItem}
+            submitUserStoreItems={submitUserStoreItems!}
           />
         </div>
       </div>

@@ -12,10 +12,11 @@ const PriceListItemDescription = ({
   open,
   togglePopUp,
   selectedStoreId: id = 1,
-  setUsersStoreItems,
+  setUsersStoreFiles,
   usersStoreItems,
   removeSpecificFileFromItem,
   submitUserStoreItems,
+  setTextInputFields,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
@@ -30,9 +31,10 @@ const PriceListItemDescription = ({
         droppMsg={loc[lang].dropMsg}
         video={selectedStoreItem.video}
         isFileInput={selectedStoreItem.isFileInput}
-        setUsersStoreItems={setUsersStoreItems}
+        setUsersStoreFiles={setUsersStoreFiles}
         usersStoreItems={usersStoreItems}
         removeSpecificFileFromItem={removeSpecificFileFromItem}
+        setTextInputFields={setTextInputFields}
       />
       <Button theme={'black'} onClick={onClick} className="approve-button">
         <span>{loc[lang].submitBtn}</span>

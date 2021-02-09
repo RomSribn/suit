@@ -39,10 +39,11 @@ interface PriceListItemDescriptionProps {
   open: boolean;
   togglePopUp: () => void;
   selectedStoreId: TSelectedStoreId;
-  setUsersStoreItems: TSetUsersStoreItems;
+  setUsersStoreFiles: TSetUsersStoreFiles;
   usersStoreItems: IUsersStoreItems[];
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   submitUserStoreItems: TSubmitUserStoreItems;
+  setTextInputFields: TSetTextInputFields;
 }
 
 interface ViewStoreItemProps extends PriceListItemLocale {
@@ -50,9 +51,10 @@ interface ViewStoreItemProps extends PriceListItemLocale {
   video: string;
   isFileInput: boolean;
   droppMsg: string;
-  setUsersStoreItems: TSetUsersStoreItems;
+  setUsersStoreFiles: TSetUsersStoreFiles;
   usersStoreItems: IUsersStoreItems[];
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
+  setTextInputFields: TSetTextInputFields;
 }
 
 interface StoreItemTitleProps {
@@ -63,9 +65,10 @@ interface StoreItemTitleProps {
 interface StoreProps {
   selectedStoreId: TSelectedStoreId;
   setSelectedStoreId: TSetSelectedStoreId;
-  setUsersStoreItems: TSetUsersStoreItems;
+  setUsersStoreFiles: TSetUsersStoreFiles;
   usersStoreItems: IUsersStoreItems[];
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   submitUserStoreItems?: TSubmitUserStoreItems;
+  setTextInputFields: TSetTextInputFields;
   lang: Lang;
 }

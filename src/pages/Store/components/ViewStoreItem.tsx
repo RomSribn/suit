@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StoreItemTitle } from './StoreItemTitle';
 import { CustomFileInput } from '../../../components/FileInput';
 import ReactPlayer from 'react-player';
+import { TextInput } from '../../../components/TextInput';
 import '../styles/viewStoreItem.styl';
 
 const ViewStoreItem = ({
@@ -13,27 +14,56 @@ const ViewStoreItem = ({
   video,
   droppMsg,
   isFileInput,
-  setUsersStoreItems,
+  setUsersStoreFiles,
   usersStoreItems,
   removeSpecificFileFromItem,
+  setTextInputFields,
 }: ViewStoreItemProps) => {
   const [files, setFiles] = React.useState({ id, droppedFiles: [] });
+  const [inputValues, setInputValues] = React.useState<IInputsData>({
+    id,
+    title,
+    fields: inputs,
+    files: [],
+    textInputs: {},
+  });
   const currentUsersStoreItems = usersStoreItems.find((item) => item.id === id);
   const currentFiles = currentUsersStoreItems
     ? currentUsersStoreItems.files
     : files.id === id
     ? files.droppedFiles
     : [];
+  const currentInputValues = currentUsersStoreItems
+    ? currentUsersStoreItems.textInputs
+    : inputValues.id === id
+    ? inputValues.textInputs
+    : {};
+
   // tslint:disable-next-line
   const onDrop = (droppedFiles: any) => {
     setFiles({ id, droppedFiles });
-    setUsersStoreItems({
+    setUsersStoreFiles({
       id,
       title,
       files: droppedFiles,
       fields: inputs,
+      textInputs: currentInputValues,
     });
   };
+
+  const onInputChange = (value: string) => {
+    const [inputTitle, inputPlaceholder] = value.split(':');
+    const data = {
+      id,
+      title,
+      files: [],
+      fields: inputs,
+      textInputs: { ...inputValues.textInputs, [inputTitle]: inputPlaceholder },
+    };
+    setInputValues(data);
+    setTextInputFields(data);
+  };
+
   const renderFileInputs = () => {
     return isFileInput
       ? inputs.map((inputTitle, index) => (
@@ -50,6 +80,28 @@ const ViewStoreItem = ({
       : '';
   };
 
+  const renderTextInputs = () => {
+    return !isFileInput ? (
+      <div className="text-inputs">
+        {inputs.map((input) => {
+          const [inputTitle, inputPlaceholder] = input.split(':');
+          const value = currentInputValues[inputTitle];
+          return (
+            <TextInput
+              key={input}
+              title={inputTitle}
+              placeholder={inputPlaceholder}
+              onChange={onInputChange}
+              value={value && value.trim()}
+            />
+          );
+        })}
+      </div>
+    ) : (
+      ''
+    );
+  };
+
   return (
     <div className="view-store-item">
       <ReactPlayer url={video} width="100%" height="50%" controls={true} />
@@ -62,6 +114,7 @@ const ViewStoreItem = ({
         <p>{description}</p>
       </div>
       {renderFileInputs()}
+      {renderTextInputs()}
     </div>
   );
 };

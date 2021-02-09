@@ -7,7 +7,7 @@ class CustomersStore implements ICustomerStore {
   @observable error: Error | null = null;
   @observable storeError: Error | null = null;
   @observable customers = observable.array<User>();
-  @observable selectedStoreId: TSelectedStoreId = null;
+  @observable selectedStoreId: TSelectedStoreId = 1;
   @observable usersStoreItems: IUsersStoreItems[] = observable.array();
 
   @action
@@ -34,27 +34,8 @@ class CustomersStore implements ICustomerStore {
   };
 
   @action
-  setUsersStoreItems = (data: IUsersStoreItems) => {
-    const currentUsersItems = this.usersStoreItems.find(
-      (item) => item.id === data.id,
-    );
-
-    if (!currentUsersItems) {
-      this.usersStoreItems.push(data);
-      return;
-    }
-
-    const newData = this.usersStoreItems.map((item) => {
-      if (item.id === currentUsersItems.id) {
-        return {
-          ...item,
-          files: data.files,
-        };
-      }
-      return item;
-    });
-
-    this.usersStoreItems = newData;
+  setUsersStoreFiles = (data: IUsersStoreItems) => {
+    this._setUsersStoreItems('files', data);
   };
 
   @action
@@ -68,6 +49,10 @@ class CustomersStore implements ICustomerStore {
       }
       return item;
     });
+  };
+  @action
+  setTextInputFields = (data: IInputsData) => {
+    this._setUsersStoreItems('textInputs', data);
   };
 
   @action
@@ -92,6 +77,32 @@ class CustomersStore implements ICustomerStore {
       (): null => null,
       this._onError,
     );
+  };
+
+  _setUsersStoreItems = (
+    itemId: 'textInputs' | 'files',
+    data: IUsersStoreItems,
+  ) => {
+    const currentUsersItems = this.usersStoreItems.find(
+      (item) => item.id === data.id,
+    );
+
+    if (!currentUsersItems) {
+      this.usersStoreItems.push(data);
+      return;
+    }
+
+    const newData = this.usersStoreItems.map((item) => {
+      if (item.id === currentUsersItems.id) {
+        return {
+          ...item,
+          [itemId]: data[itemId],
+        };
+      }
+      return item;
+    });
+
+    this.usersStoreItems = newData;
   };
 
   _onSuccess = (data: User[]) => {

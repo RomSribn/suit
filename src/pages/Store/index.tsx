@@ -11,19 +11,21 @@ import './index.styl';
     customersStore: {
       setSelectedStoreId,
       selectedStoreId,
-      setUsersStoreItems,
+      setUsersStoreFiles,
       usersStoreItems,
       removeSpecificFileFromItem,
       submitUserStoreItems,
+      setTextInputFields,
     },
     app: { lang },
   }) => ({
     selectedStoreId,
     setSelectedStoreId,
-    setUsersStoreItems,
+    setUsersStoreFiles,
     usersStoreItems,
     removeSpecificFileFromItem,
     submitUserStoreItems,
+    setTextInputFields,
     lang,
   }),
 )
@@ -43,10 +45,11 @@ class Store extends React.Component<StoreProps> {
       lang,
       setSelectedStoreId,
       selectedStoreId,
-      setUsersStoreItems,
+      setUsersStoreFiles,
       usersStoreItems,
       removeSpecificFileFromItem,
       submitUserStoreItems,
+      setTextInputFields,
     } = this.props;
     const { open } = this.state;
     return (
@@ -65,10 +68,11 @@ class Store extends React.Component<StoreProps> {
             open={open}
             togglePopUp={this.togglePopUp}
             selectedStoreId={selectedStoreId}
-            setUsersStoreItems={setUsersStoreItems}
+            setUsersStoreFiles={setUsersStoreFiles}
             usersStoreItems={usersStoreItems}
             removeSpecificFileFromItem={removeSpecificFileFromItem}
             submitUserStoreItems={submitUserStoreItems!}
+            setTextInputFields={setTextInputFields!}
           />
         </div>
       </div>

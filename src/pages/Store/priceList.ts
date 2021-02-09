@@ -1,12 +1,16 @@
+import { API_ROOT } from '../../config/routes';
+
 export const priceList: priceListItem[] = [
   {
     id: 1,
-    video: `https://www.youtube.com/watch?v=nlDAPQT5d0A`,
+    video: `${API_ROOT}/assets/video/add_your_fabric_catalog.webm`,
+    file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: false,
     ru: {
       title: `добавить свой каталог тканей`,
       description: `Укажите, каталог какого производителя добавляете, Выберите для чего предназначена ткань: пиджака, брюк или 
         сорочки. Мы запросим образцы тканей у производителя или фабрики, выгрузим в данную форму заказа.`,
+      fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
         leftInfo: `1 картинка -`,
         price: 400,
@@ -23,6 +27,7 @@ export const priceList: priceListItem[] = [
       description: `Write the name of a manufacturer or factory which catalog you are adding. List the 
                 catalog names separated by commas. We will request samples of fabrics from the 
                 manufacturer or factory. We will upload them to this order form.`,
+      fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
         leftInfo: `1 fabric -`,
         price: 5,
@@ -37,13 +42,15 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 2,
-    video: `https://youtu.be/tG2GJZcBKOE`,
+    video: `${API_ROOT}/assets/video/order_pictures_of_finished_garments.webm`,
+    file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: false,
     ru: {
       title: `заказать картинки готовых изделий`,
       description: `Укажите, для какого производителя и каталога заказываете картинки пиджака, брюк, сорочки. Мы запросим образцы
             тканей у производителя или фабрики, подготовим картинки с помощью 3D визуализации. Обходимся без фотосессий
             и пошива изделий. Стоимость указана за одну картинку.`,
+      fileBtnTitle: `заказать картинки готовых изделий`,
       priceBlock: {
         leftInfo: `1 картинка -`,
         price: 700,
@@ -61,6 +68,7 @@ export const priceList: priceListItem[] = [
                 catalog names separated by commas. We will request samples of fabrics from the 
                 manufacturer or factory and prepare pictures using 3D render. We’ll prepear these 
                 images without photo shoots and tailoring.`,
+      fileBtnTitle: `look at the example of the image`,
       priceBlock: {
         leftInfo: `1 image -`,
         price: 9,
@@ -75,7 +83,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 3,
-    video: `https://www.youtube.com/watch?v=E4NBGXtky0E`,
+    video: `${API_ROOT}/assets/video/add_your_logo.webm`,
+    file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {
       title: `добавить свой логотип`,
@@ -102,13 +111,15 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 4,
-    video: `https://www.youtube.com/watch?v=MruNugpHDV0`,
+    video: `${API_ROOT}/assets/video/add_2d_catalogs_of_your_garments.webm`,
+    file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {
       title: `добавить свой 2D каталог`,
       description: `Выгрузите свой каталог доступных опций и мерки для сорочки, пиджака и брюк. Наш художник подготовит картинки
             и выгрузит их в данную форму заказа.Это позволит оформить заказ в системе, создать аккаунт клиента для 
             повторных удаленных заказов. Скачать pdf заказа для клиента.`,
+      fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
         leftInfo: `от -`,
         price: 181300,
@@ -122,6 +133,7 @@ export const priceList: priceListItem[] = [
                 trousers. Our artist will prepare pictures and upload them to this order form. This will 
                 allow you to place an order in the system, create a customer account for repeated 
                 remote orders. Download example of pdf order for client.`,
+      fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
         leftInfo: `from -`,
         price: 2400,
@@ -132,7 +144,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 5,
-    video: `https://www.youtube.com/watch?v=3kbdGHavGKg`,
+    video: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
+    file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {
       title: `добавить свой 3D каталог`,

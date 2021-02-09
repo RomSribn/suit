@@ -8,12 +8,14 @@ interface PriceListItemLocale {
   title: string;
   description: string;
   priceBlock: TPriceBlock;
+  fileBtnTitle?: string;
   inputs: string[];
 }
 
 interface priceListItem {
   id: number;
   video: string;
+  file?: string;
   isFileInput: boolean;
   ru: PriceListItemLocale;
   en: PriceListItemLocale;
@@ -57,6 +59,7 @@ interface ViewStoreItemProps extends PriceListItemLocale {
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   setTextInputFields: TSetTextInputFields;
   storeError: TError;
+  file?: string;
 }
 
 interface StoreItemTitleProps {

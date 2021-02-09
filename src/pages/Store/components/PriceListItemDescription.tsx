@@ -29,6 +29,7 @@ const PriceListItemDescription = ({
       <ViewStoreItem
         {...selectedStoreItem[lang]}
         id={id}
+        file={selectedStoreItem.file}
         droppMsg={loc[lang].dropMsg}
         video={selectedStoreItem.video}
         isFileInput={selectedStoreItem.isFileInput}

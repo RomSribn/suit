@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StoreItemTitle } from './StoreItemTitle';
+import { Link } from 'react-router-dom';
 import { CustomFileInput } from '../../../components/FileInput';
 import ReactPlayer from 'react-player';
 import { TextInput } from '../../../components/TextInput';
@@ -19,6 +20,8 @@ const ViewStoreItem = ({
   removeSpecificFileFromItem,
   setTextInputFields,
   storeError,
+  file,
+  fileBtnTitle,
 }: ViewStoreItemProps) => {
   const [files, setFiles] = React.useState({ id, droppedFiles: [] });
   const [inputValues, setInputValues] = React.useState<IInputsData>({
@@ -65,6 +68,16 @@ const ViewStoreItem = ({
     setTextInputFields(data);
   };
 
+  const renderPreviewFileDownload = () => {
+    return file ? (
+      <Link to={file} className="pdf-link" target="_blank" download={true}>
+        {fileBtnTitle}
+      </Link>
+    ) : (
+      ''
+    );
+  };
+
   const renderFileInputs = () => {
     return isFileInput
       ? inputs.map((inputTitle, index) => (
@@ -109,9 +122,7 @@ const ViewStoreItem = ({
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="view-store-item__description">
-        <span className="pdf-link">
-          {`скачать пример pdf заказа для клиента`}
-        </span>
+        {renderPreviewFileDownload()}
         <p>{description}</p>
       </div>
       <span className="error-message">{storeError && storeError.message}</span>

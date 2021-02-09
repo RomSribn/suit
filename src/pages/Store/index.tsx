@@ -16,6 +16,7 @@ import './index.styl';
       removeSpecificFileFromItem,
       submitUserStoreItems,
       setTextInputFields,
+      storeError,
     },
     app: { lang },
   }) => ({
@@ -26,6 +27,7 @@ import './index.styl';
     removeSpecificFileFromItem,
     submitUserStoreItems,
     setTextInputFields,
+    storeError,
     lang,
   }),
 )
@@ -50,6 +52,7 @@ class Store extends React.Component<StoreProps> {
       removeSpecificFileFromItem,
       submitUserStoreItems,
       setTextInputFields,
+      storeError,
     } = this.props;
     const { open } = this.state;
     return (
@@ -73,6 +76,7 @@ class Store extends React.Component<StoreProps> {
             removeSpecificFileFromItem={removeSpecificFileFromItem}
             submitUserStoreItems={submitUserStoreItems!}
             setTextInputFields={setTextInputFields!}
+            storeError={storeError!}
           />
         </div>
       </div>

@@ -44,6 +44,7 @@ interface PriceListItemDescriptionProps {
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   submitUserStoreItems: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
+  storeError: TError;
 }
 
 interface ViewStoreItemProps extends PriceListItemLocale {
@@ -55,6 +56,7 @@ interface ViewStoreItemProps extends PriceListItemLocale {
   usersStoreItems: IUsersStoreItems[];
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   setTextInputFields: TSetTextInputFields;
+  storeError: TError;
 }
 
 interface StoreItemTitleProps {
@@ -70,5 +72,6 @@ interface StoreProps {
   removeSpecificFileFromItem?: TRemoveSpecificFileFromItem;
   submitUserStoreItems?: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
+  storeError: TError;
   lang: Lang;
 }

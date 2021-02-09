@@ -8,7 +8,7 @@ const TextInput = ({
   onChange,
 }: ITextInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange!(`${title}: ${e.target.value}`);
+    onChange!(`${title}:${e.target.value}`);
   };
   return (
     <label className="text-input">

@@ -4,6 +4,7 @@ type TSetUsersStoreFiles = (data: IUsersStoreItems) => void;
 type TRemoveSpecificFileFromItem = (file: File, id: number) => void;
 type TSetTextInputFields = (data: IInputsData) => void;
 type TSubmitUserStoreItems = () => void;
+type TError = Error | null;
 
 interface IInputsData {
   id: TSelectedStoreId;
@@ -11,7 +12,7 @@ interface IInputsData {
   fields: string[];
   files: File[];
   // tslint:disable-next-line:no-any
-  textInputs: any;
+  textInputs: Record<any, string>;
 }
 
 interface IUsersStoreItems {
@@ -20,12 +21,13 @@ interface IUsersStoreItems {
   files: File[];
   fields: string[];
   // tslint:disable-next-line:no-any
-  textInputs: any;
+  textInputs: Record<any, string>;
 }
 
 interface ICustomerStore {
   isFetching: boolean;
-  error: Error | null;
+  error: TError;
+  storeError: TError;
   customers: User[];
   // tslint:disable-next-line:no-any
   fetch: () => Promise<any>;

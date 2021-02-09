@@ -18,6 +18,7 @@ const ViewStoreItem = ({
   usersStoreItems,
   removeSpecificFileFromItem,
   setTextInputFields,
+  storeError,
 }: ViewStoreItemProps) => {
   const [files, setFiles] = React.useState({ id, droppedFiles: [] });
   const [inputValues, setInputValues] = React.useState<IInputsData>({
@@ -92,7 +93,7 @@ const ViewStoreItem = ({
               title={inputTitle}
               placeholder={inputPlaceholder}
               onChange={onInputChange}
-              value={value && value.trim()}
+              value={value}
             />
           );
         })}
@@ -113,6 +114,7 @@ const ViewStoreItem = ({
         </span>
         <p>{description}</p>
       </div>
+      <span className="error-message">{storeError && storeError.message}</span>
       {renderFileInputs()}
       {renderTextInputs()}
     </div>

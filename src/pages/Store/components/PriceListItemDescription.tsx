@@ -17,6 +17,7 @@ const PriceListItemDescription = ({
   removeSpecificFileFromItem,
   submitUserStoreItems,
   setTextInputFields,
+  storeError,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
@@ -35,6 +36,7 @@ const PriceListItemDescription = ({
         usersStoreItems={usersStoreItems}
         removeSpecificFileFromItem={removeSpecificFileFromItem}
         setTextInputFields={setTextInputFields}
+        storeError={storeError}
       />
       <Button theme={'black'} onClick={onClick} className="approve-button">
         <span>{loc[lang].submitBtn}</span>

@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
 
@@ -65,17 +65,36 @@ class CustomersStore implements ICustomerStore {
       return;
     }
 
+    const data = toJS({
+      ...currentItems,
+      textInputs: Object.entries(currentItems.textInputs).flat(),
+    });
+
+    const formData = new FormData();
+
+    for (let key in data) {
+      if (key !== 'files') {
+        formData.append(key, data[key]);
+      }
+    }
+    for (let index = 0; index < data.files.length; index++) {
+      formData.append(`file${index + 1}`, data.files[index]);
+    }
+
     this.storeError = null;
 
     return callApi(
       {
         url: services.shopData,
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
         method: 'POST',
-        data: currentItems,
+        data: formData,
       },
       (): null => null,
       (): null => null,
-      this._onError,
+      this._onStoreError,
     );
   };
 

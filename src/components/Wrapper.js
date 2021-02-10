@@ -13,6 +13,7 @@ import CrumbRoute from '../utils/CrumbRoute';
 import Login from './Login';
 import MobileNavigationMenuPopup from '../components/MobileNavigationMenuPopup';
 import Pdf from '../pages/Pdf';
+import history from '../history';
 
 let dummyWasRendered = false;
 
@@ -65,25 +66,18 @@ class Wrapper extends Component {
         {this.state.showSpinner && <Spinner />}
         <Common onDummyLoad={this.hideSpinner}>
           <PopUp open={showMobileMenu}>
-            {showMobileMenu && isAuth ? (
-              <MobileNavigationMenuPopup
-                currentLang={lang}
-                closeMenu={toggleMobileMenu}
-                setLang={setLang}
-                sideEffects={{
-                  logout: logout.bind(userStore),
-                }}
-                role={role}
-                activeGarments={activeGarments}
-                currentActiveGarment={currentActiveGarment}
-                setCurrentActiveGarment={setCurrentActiveGarment}
-              />
-            ) : (
-              <Login
-                loginCallback={toggleMobileMenu}
-                closeForm={toggleMobileMenu}
-              />
-            )}
+            <MobileNavigationMenuPopup
+              currentLang={lang}
+              closeMenu={toggleMobileMenu}
+              setLang={setLang}
+              sideEffects={{
+                logout: logout.bind(userStore),
+              }}
+              role={role}
+              activeGarments={activeGarments}
+              currentActiveGarment={currentActiveGarment}
+              setCurrentActiveGarment={setCurrentActiveGarment}
+            />
           </PopUp>
           <Route
             path={routes.order}
@@ -96,7 +90,12 @@ class Wrapper extends Component {
           <Switch>
             <Route
               path={routes.login}
-              component={() => <Login shouldRedirect={true} />}
+              component={() => (
+                <Login
+                  shouldRedirect={true}
+                  closeForm={() => history.push('/')}
+                />
+              )}
             />
             <Route
               exact
@@ -109,6 +108,9 @@ class Wrapper extends Component {
                 return <Redirect to={'/order'} />;
               }}
             />
+            <CrumbRoute {...getCombinedPathAndTitle('store')}>
+              <Store />
+            </CrumbRoute>
             {!userStore.isAuth && (
               <Route
                 path={`${routes.details}/:garment/fitting`}
@@ -143,9 +145,6 @@ class Wrapper extends Component {
                   <Switch>
                     <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
                       <ListOrders />
-                    </CrumbRoute>
-                    <CrumbRoute {...getCombinedPathAndTitle('store')}>
-                      <Store />
                     </CrumbRoute>
                     <CrumbRoute {...getCombinedPathAndTitle('customersList')}>
                       {isStylist ? (

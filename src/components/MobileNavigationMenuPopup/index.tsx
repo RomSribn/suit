@@ -111,16 +111,25 @@ export default ({
 
   const anonMenuList: MenuLink[] = [
     {
-      name: 'logIn',
-      url: '/',
-      withoutArrow: true,
-      unusualSideEffect: toggleLoginForm,
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || []),
+    },
+    {
+      name: 'store',
+      url: '/store',
     },
     {
       name: 'chat',
       url: 'javascript:jivo_api.open()',
       withoutArrow: true,
       withoutBaseUrl: true,
+    },
+    {
+      name: 'logIn',
+      url: '/login',
+      withoutArrow: true,
+      unusualSideEffect: toggleLoginForm,
     },
   ];
 

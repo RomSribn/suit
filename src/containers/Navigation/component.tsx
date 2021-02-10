@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
-
 import { navigationRoutes as routes } from '../../config/routes';
 import { routes as defaultRoutes } from '../../config/routes';
+import { NotificationIcon } from '../../components/NotificationIcon';
 import { loc } from './loc';
 
 import './styles.styl';
@@ -43,6 +43,14 @@ interface NavigationItemProps {
 class NavigationItem extends React.Component<NavigationItemProps> {
   render() {
     const { linkName, lang, showActiveClassName } = this.props;
+    const renderNotificationIcon = () =>
+      linkName === 'store' ? (
+        <div className="nav-notification">
+          <NotificationIcon count={1} />
+        </div>
+      ) : (
+        ''
+      );
     return (
       <li>
         <NavLink
@@ -60,6 +68,7 @@ class NavigationItem extends React.Component<NavigationItemProps> {
           >
             <span key={lang}>{loc[lang].navigation[linkName]}</span>
           </ReactCSSTransitionGroup>
+          {renderNotificationIcon()}
         </NavLink>
       </li>
     );

@@ -1,0 +1,3 @@
+interface INotificationIconProps {
+  count: number;
+}

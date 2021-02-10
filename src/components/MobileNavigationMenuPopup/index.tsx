@@ -3,6 +3,7 @@ import * as classNames from 'classnames';
 import { loc, localesList } from './loc';
 import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
+import { NotificationIcon } from '../../components/NotificationIcon';
 import './style.styl';
 import { callList } from '../../utils/index';
 
@@ -290,7 +291,12 @@ export default ({
                         }
                       }}
                     >
-                      <span>{loc[currentLang][navItem.name]}</span>
+                      <span>
+                        {loc[currentLang][navItem.name]}
+                        {navItem.name === 'store' && (
+                          <NotificationIcon count={1} />
+                        )}
+                      </span>
                       {window.location.pathname.includes(navItem.url) && (
                         <span>
                           <i

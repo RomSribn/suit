@@ -7,6 +7,7 @@ import { TRANSITION_DUARAION } from '../../config/constants';
 import { navigationRoutes as routes } from '../../config/routes';
 import { routes as defaultRoutes } from '../../config/routes';
 import { NotificationIcon } from '../../components/NotificationIcon';
+import { isStorePageVisitedId } from '../../utils/variables';
 import { loc } from './loc';
 
 import './styles.styl';
@@ -43,14 +44,21 @@ interface NavigationItemProps {
 class NavigationItem extends React.Component<NavigationItemProps> {
   render() {
     const { linkName, lang, showActiveClassName } = this.props;
-    const renderNotificationIcon = () =>
-      linkName === 'store' ? (
+    const renderNotificationIcon = () => {
+      const isStorePageVisitedValue = JSON.parse(
+        localStorage.getItem(isStorePageVisitedId)!,
+      );
+      const isStorePageVisited =
+        (isStorePageVisitedValue && !isStorePageVisitedValue.value) ||
+        !isStorePageVisitedValue;
+      return linkName === 'store' && isStorePageVisited ? (
         <div className="nav-notification">
           <NotificationIcon count={1} />
         </div>
       ) : (
         ''
       );
+    };
     return (
       <li>
         <NavLink

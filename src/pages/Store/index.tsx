@@ -4,6 +4,7 @@ import { PriceListGallery } from './components/PriceListGallery';
 import { PriceListItemDescription } from './components/PriceListItemDescription';
 import { priceList } from './priceList';
 import { observer, inject } from 'mobx-react';
+import { isStorePageVisitedId } from '../../utils/variables';
 import './index.styl';
 
 @inject(
@@ -40,6 +41,14 @@ class Store extends React.Component<StoreProps> {
     this.setState({
       open: !this.state.open,
     });
+  };
+
+  componentDidMount = () => {
+    const isStorePageVisitedValue = { value: true };
+    localStorage.setItem(
+      isStorePageVisitedId,
+      JSON.stringify(isStorePageVisitedValue),
+    );
   };
 
   render() {

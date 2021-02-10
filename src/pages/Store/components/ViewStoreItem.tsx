@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CustomFileInput } from '../../../components/FileInput';
 import ReactPlayer from 'react-player';
 import { TextInput } from '../../../components/TextInput';
+import { isMobile } from '../../../utils';
 import '../styles/viewStoreItem.styl';
 
 const ViewStoreItem = ({
@@ -118,7 +119,12 @@ const ViewStoreItem = ({
 
   return (
     <div className="view-store-item">
-      <ReactPlayer url={video} width="100%" height="50%" controls={true} />
+      <ReactPlayer
+        url={video}
+        width="100%"
+        height={isMobile() ? 'auto' : '50%'}
+        controls={true}
+      />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="view-store-item__description">

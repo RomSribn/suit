@@ -18,6 +18,9 @@ const PriceListItemDescription = ({
   submitUserStoreItems,
   setTextInputFields,
   storeError,
+  isAuth,
+  anonUserInfo,
+  setAnonUserInfo,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
@@ -38,6 +41,11 @@ const PriceListItemDescription = ({
         removeSpecificFileFromItem={removeSpecificFileFromItem}
         setTextInputFields={setTextInputFields}
         storeError={storeError}
+        isAuth={isAuth}
+        anonUserInfo={anonUserInfo}
+        setAnonUserInfo={setAnonUserInfo}
+        nameBtn={loc[lang].nameBtn}
+        emailBtn={loc[lang].emailBtn}
       />
       <Button theme={'black'} onClick={onClick} className="approve-button">
         <span>{loc[lang].submitBtn}</span>
@@ -48,9 +56,16 @@ const PriceListItemDescription = ({
     <div className="wrapper">
       <PopUp open={open} onClose={togglePopUp}>
         <div className="price-list-item--description">
-          <div className="close-popup" onClick={togglePopUp}>
+          {/* <div className="close-popup" onClick={togglePopUp}>
             X
-          </div>
+          </div> */}
+          <button className="close-popup close-button" onClick={togglePopUp}>
+            <img
+              src="/assets/img/controls/close.svg"
+              alt="close button"
+              className="close-button-img"
+            />
+          </button>
           {renderViewStoreItem()}
         </div>
       </PopUp>

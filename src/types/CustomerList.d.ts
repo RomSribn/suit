@@ -5,6 +5,7 @@ type TRemoveSpecificFileFromItem = (file: File, id: number) => void;
 type TSetTextInputFields = (data: IInputsData) => void;
 type TSubmitUserStoreItems = () => void;
 type TError = Error | null;
+type TSetAnonUserInfo = (anonUserInfo: IAnonUserInfo) => void;
 
 interface IInputsData {
   id: TSelectedStoreId;
@@ -13,6 +14,11 @@ interface IInputsData {
   files: File[];
   // tslint:disable-next-line:no-any
   textInputs: Record<any, string>;
+}
+
+interface IAnonUserInfo {
+  name: string;
+  email: string;
 }
 
 interface IUsersStoreItems {
@@ -38,4 +44,6 @@ interface ICustomerStore {
   removeSpecificFileFromItem: TRemoveSpecificFileFromItem;
   submitUserStoreItems: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
+  anonUserInfo: IAnonUserInfo;
+  setAnonUserInfo: TSetAnonUserInfo;
 }

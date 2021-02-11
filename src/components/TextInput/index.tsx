@@ -6,22 +6,30 @@ const TextInput = ({
   placeholder,
   value = '',
   onChange,
+  required,
+  type,
 }: ITextInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange!(`${title}:${e.target.value}`);
+    onChange!(`${title}:${e.target.value}`, e);
   };
   return (
     <label className="text-input">
       <span className="text-input__title">{`${title}:`}</span>
       <input
-        type="text"
         placeholder={placeholder}
         className="input"
         value={value}
         onChange={handleChange}
+        required={required}
+        type={type}
       />
     </label>
   );
+};
+
+TextInput.defaultProps = {
+  required: false,
+  type: 'text',
 };
 
 export { TextInput };

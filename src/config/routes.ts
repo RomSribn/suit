@@ -13,8 +13,8 @@ export const API_ROOT =
   _API_ROOT.indexOf('https://') === 0
     ? _API_ROOT
     : _API_ROOT.indexOf('http://') === 0
-      ? _API_ROOT
-      : `http://${_API_ROOT}`;
+    ? _API_ROOT
+    : `http://${_API_ROOT}`;
 
 export const services = {
   garments: 'api/garments',
@@ -57,23 +57,15 @@ const navigationRoutes = makeNavigationRoutes();
 const routesTranslations = {
   en: {
     order: 'order',
-    panel: 'panel',
     customersList: 'clients',
     ordersList: 'order list',
-    calendar: 'calendar',
     store: 'store',
-    analytics: 'analytics',
-    settings: 'settings',
   },
   ru: {
     order: 'заказать',
-    panel: 'панель',
     customersList: 'клиенты',
     ordersList: 'заказы',
-    calendar: 'календарь',
     store: 'магазин',
-    analytics: 'аналтика',
-    settings: 'настройки',
   },
 };
 

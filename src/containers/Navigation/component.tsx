@@ -136,13 +136,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
   render() {
     const { lang, isLogin, role } = this.props;
     const stylistNavLinks = Object.keys(loc[lang].navigation);
-    const customerNavLinks = [
-      'order',
-      'panel',
-      'ordersList',
-      'calendar',
-      'settings',
-    ];
+    const customerNavLinks = ['order', 'ordersList'];
     const navLinksByRole = {
       STYLIST: stylistNavLinks,
       CUSTOMER: customerNavLinks,

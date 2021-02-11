@@ -136,7 +136,8 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
   render() {
     const { lang, isLogin, role } = this.props;
     const stylistNavLinks = Object.keys(loc[lang].navigation);
-    const customerNavLinks = [
+    const sharedNavLinks: string[] = ['order', 'store'];
+    const customerNavLinks: string[] = [
       'order',
       'panel',
       'ordersList',
@@ -146,7 +147,9 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
     const navLinksByRole = {
       STYLIST: stylistNavLinks,
       CUSTOMER: customerNavLinks,
+      ANON: sharedNavLinks,
     };
+    const navigationLinks = isLogin ? navLinksByRole[role!] : sharedNavLinks;
     return (
       <div
         className={classNames('navbar', {
@@ -155,23 +158,21 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         })}
       >
         <Header />
-        {isLogin && (
-          <div className="navbar__middle">
-            <nav
-              className={`main-menu`}
-              onMouseEnter={this.mouseEnter}
-              onMouseLeave={this.mouseLeave}
-            >
-              <ul>
-                {makeNavigationLinks(
-                  navLinksByRole[role!],
-                  this.state.showActiveClassName,
-                  lang,
-                )}
-              </ul>
-            </nav>
-          </div>
-        )}
+        <div className="navbar__middle">
+          <nav
+            className={`main-menu`}
+            onMouseEnter={this.mouseEnter}
+            onMouseLeave={this.mouseLeave}
+          >
+            <ul>
+              {makeNavigationLinks(
+                navigationLinks,
+                this.state.showActiveClassName,
+                lang,
+              )}
+            </ul>
+          </nav>
+        </div>
         <Footer lang={lang} />
       </div>
     );

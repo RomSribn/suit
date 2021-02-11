@@ -4,6 +4,7 @@ import { loc, localesList } from './loc';
 import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import { NotificationIcon } from '../../components/NotificationIcon';
+import { isStorePageVisitedId } from '../../utils/variables';
 import './style.styl';
 import { callList } from '../../utils/index';
 
@@ -159,6 +160,13 @@ export default ({
                 // tslint:disable-next-line
                 component={(...props: any[]) => {
                   const isOrder: boolean = navItem.name === 'order';
+                  const isStorePageVisitedValue = JSON.parse(
+                    localStorage.getItem(isStorePageVisitedId)!,
+                  );
+                  const isStorePageVisited =
+                    (isStorePageVisitedValue &&
+                      !isStorePageVisitedValue.value) ||
+                    !isStorePageVisitedValue;
                   return navItem.withoutBaseUrl ? (
                     <a
                       className="navigation-item"
@@ -293,7 +301,7 @@ export default ({
                     >
                       <span>
                         {loc[currentLang][navItem.name]}
-                        {navItem.name === 'store' && (
+                        {navItem.name === 'store' && isStorePageVisited && (
                           <NotificationIcon count={1} />
                         )}
                       </span>

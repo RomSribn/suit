@@ -7,9 +7,58 @@
     &__title
         font-weight 400
         padding-right 5px
+        white-space: nowrap;
+        overflow: hidden;
+        animation showTitle 0.2s linear
+        will-change opacity, transform, display
+        cursor pointer
         &::first-letter
             text-transform capitalize
+    &__title.animation
+        white-space: nowrap;
+        overflow: hidden;
+        max-width 0
+        width 100%
+        opacity 0
+        animation hideTitle 0.2s linear
+        will-change opacity, transform, display
+        cursor pointer
     .input
         border none
         outline none
-        width 40%
+        width 100%
+.hide
+    opacity 0
+    width 1px !important
+
+@keyframes hideTitle {
+  0% {
+    max-width: 320px;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  99% {
+    max-width: 0;
+    visibility: hidden;
+    opacity: 1;
+  }
+
+  100% {
+    max-width: 0;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes showTitle {
+    0% {
+    max-width: 0;
+  }
+
+  100% {
+    max-width: 320px;
+  }
+
+  
+}

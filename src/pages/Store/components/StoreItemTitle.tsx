@@ -8,7 +8,6 @@ const StoreItemTitle = ({ title, priceBlock }: StoreItemTitleProps) => {
     priceStringify.length >= 6
       ? `${priceStringify.slice(0, 3)} ${priceStringify.slice(3)}`
       : priceStringify;
-  debugger;
   return (
     <div className="title-info">
       <span className="title-info__title">{title}</span>

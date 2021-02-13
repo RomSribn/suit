@@ -32,4 +32,5 @@ interface IFileInputProps {
   files: File[];
   isShowThumb: boolean;
   handleRemove: TRemoveSpecificFileFromItem;
+  limitOfFiles?: number;
 }

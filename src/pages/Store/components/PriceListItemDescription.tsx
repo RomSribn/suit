@@ -48,9 +48,7 @@ const PriceListItemDescription = ({
     <div className="wrapper">
       <PopUp open={open} onClose={togglePopUp}>
         <div className="price-list-item--description">
-          <div className="close-popup" onClick={togglePopUp}>
-            X
-          </div>
+          <div className="btn close-swiper-popup" onClick={togglePopUp} />
           {renderViewStoreItem()}
         </div>
       </PopUp>

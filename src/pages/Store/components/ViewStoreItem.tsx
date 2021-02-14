@@ -90,6 +90,7 @@ const ViewStoreItem = ({
             isShowThumb={inputs.length - 1 === index}
             handleRemove={removeSpecificFileFromItem!}
             id={id!}
+            limitOfFiles={7}
           />
         ))
       : '';
@@ -122,8 +123,9 @@ const ViewStoreItem = ({
       <ReactPlayer
         url={video}
         width="100%"
-        height={isMobile() ? 'auto' : '50%'}
+        height={isMobile() ? 'auto' : '30%'}
         controls={true}
+        playing={true}
       />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />

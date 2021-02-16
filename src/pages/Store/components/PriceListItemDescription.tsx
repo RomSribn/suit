@@ -31,6 +31,7 @@ const PriceListItemDescription = ({
         textInputs && textInputs.some((input) => !!input);
       const isFileExist = currentItems.files.length;
       setThanksPopUp(!!isTextInputsExist || !!isFileExist);
+      setTimeout(() => setThanksPopUp(false), 5000);
     }
   };
   const renderViewStoreItem = () => (

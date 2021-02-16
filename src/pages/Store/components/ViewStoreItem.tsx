@@ -123,7 +123,6 @@ const ViewStoreItem = ({
       <ReactPlayer
         url={video}
         width="100%"
-        height={isMobile() ? 'auto' : '30%'}
         controls={true}
         playing={true}
         loop={true}
@@ -133,7 +132,7 @@ const ViewStoreItem = ({
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="view-store-item__description">
         {renderPreviewFileDownload()}
-        <p>{description}</p>
+        <p>{isMobile() ? description : description.slice(0, 140) + '…'}</p>
       </div>
       <span className="error-message">{storeError && storeError.message}</span>
       {renderFileInputs()}

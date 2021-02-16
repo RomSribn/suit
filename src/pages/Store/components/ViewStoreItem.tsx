@@ -126,6 +126,8 @@ const ViewStoreItem = ({
         height={isMobile() ? 'auto' : '30%'}
         controls={true}
         playing={true}
+        loop={true}
+        className={'react-player'}
       />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />

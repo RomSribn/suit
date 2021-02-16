@@ -3,8 +3,19 @@
     height 100%
     overflow-y scroll
     overflow-x hidden
+    .react-player 
+        position: relative;
+        height 30%
+        overflow: hidden;
     video
         outline none
+        width: 100%;
+        @media only screen and (min-width: 769px)
+            height auto !important
+            position absolute
+            left 50%
+            top 20%
+            transform translate(-50%, -50%)
     &__description
         margin-top 1rem
         .pdf-link
@@ -18,7 +29,11 @@
         &__price, &__title
             margin 5px
     .error-message
+        position absolute
+        bottom 9rem
         display block
         margin-top 1rem
         color red
         font-weight: 400;
+        @media only screen and (min-width: 768px)
+            bottom 1rem

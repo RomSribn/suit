@@ -1,6 +1,7 @@
 import { observable, action, toJS } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { services } from '../config/routes';
+import { app } from './app';
 
 class CustomersStore implements ICustomerStore {
   @observable isFetching = false;
@@ -60,8 +61,15 @@ class CustomersStore implements ICustomerStore {
     const currentItems = this.usersStoreItems.find(
       (item) => item.id === this.selectedStoreId,
     );
-    if (!currentItems) {
-      this._onStoreError(new Error('The fields are empty!'));
+    const textInputs = currentItems && Object.values(currentItems!.textInputs);
+    const isTextInputsExist = textInputs && textInputs.some((input) => !!input);
+    const isFileExist = currentItems && currentItems.files.length;
+    if (!currentItems || (!isTextInputsExist && !isFileExist)) {
+      const errorMsg = {
+        ru: 'Некоторые поля пустые!',
+        en: 'Some fields are empty!',
+      };
+      this._onStoreError(new Error(errorMsg[app.lang]));
       return;
     }
 

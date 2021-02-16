@@ -18,11 +18,21 @@ const PriceListItemDescription = ({
   submitUserStoreItems,
   setTextInputFields,
   storeError,
+  setThanksPopUp,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
   const onClick = () => {
+    const currentItems = usersStoreItems.find((item) => item.id === id);
     submitUserStoreItems();
+    if (currentItems) {
+      const textInputs = Object.values(currentItems.textInputs);
+      const isTextInputsExist =
+        textInputs && textInputs.some((input) => !!input);
+      const isFileExist = currentItems.files.length;
+      setThanksPopUp(!!isTextInputsExist || !!isFileExist);
+      setTimeout(() => setThanksPopUp(false), 5000);
+    }
   };
   const renderViewStoreItem = () => (
     <>

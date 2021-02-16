@@ -5,6 +5,8 @@ import { PriceListItemDescription } from './components/PriceListItemDescription'
 import { priceList } from './priceList';
 import { observer, inject } from 'mobx-react';
 import { isStorePageVisitedId } from '../../utils/variables';
+import { PopUp } from '../../containers/Popup';
+import { loc } from './loc';
 import './index.styl';
 
 @inject(
@@ -36,6 +38,7 @@ import './index.styl';
 class Store extends React.Component<StoreProps> {
   state = {
     open: false,
+    thanksPopUp: false,
   };
   togglePopUp = () => {
     this.setState({
@@ -51,6 +54,10 @@ class Store extends React.Component<StoreProps> {
     );
   };
 
+  setThanksPopUp = (thanksPopUp: boolean) => {
+    this.setState({ thanksPopUp });
+  };
+
   render() {
     const {
       lang,
@@ -63,7 +70,17 @@ class Store extends React.Component<StoreProps> {
       setTextInputFields,
       storeError,
     } = this.props;
-    const { open } = this.state;
+    const { open, thanksPopUp } = this.state;
+    const ThanksPopup = () => (
+      <PopUp
+        open={thanksPopUp && !storeError}
+        onClose={() => this.setThanksPopUp(false)}
+      >
+        <div className="thanks-popup">
+          <span>{loc[lang].requestSuccess}</span>
+        </div>
+      </PopUp>
+    );
     return (
       <div className="main__middle">
         <PanelRow lang={lang} />
@@ -86,8 +103,10 @@ class Store extends React.Component<StoreProps> {
             submitUserStoreItems={submitUserStoreItems!}
             setTextInputFields={setTextInputFields!}
             storeError={storeError!}
+            setThanksPopUp={this.setThanksPopUp}
           />
         </div>
+        <ThanksPopup />
       </div>
     );
   }

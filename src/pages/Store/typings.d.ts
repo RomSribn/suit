@@ -47,6 +47,7 @@ interface PriceListItemDescriptionProps {
   submitUserStoreItems: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
   storeError: TError;
+  setThanksPopUp: (thanksPopPup: boolean) => void;
 }
 
 interface ViewStoreItemProps extends PriceListItemLocale {

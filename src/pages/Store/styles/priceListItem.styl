@@ -1,9 +1,27 @@
 .price-list-item
-    padding 1.4rem 1.24rem 1.4rem 2.2rem
+    padding 0.867rem
     cursor pointer
+    background: none;
+    border-left: 2px solid #436263;
+    margin-bottom: 10px;
+    border: 1px solid rgba(149,161,177,0.2);
+    border-radius: 4px;
+    @media only screen and (min-width: 450px)
+        padding 1.4rem 1.24rem 1.4rem 2.2rem
+        border none
+        border-radius 0
+        margin-bottom 0
+
     &__description 
         margin-top 1rem
 
     &:hover,
     &._active
-        background linear-gradient(to right, #436263, #436263 14px, #eceeee 14px, #eceeee)
+        border-left: 2px solid #436263;
+        @media only screen and (min-width: 450px)
+            background linear-gradient(to right, #436263, #436263 14px, #eceeee 14px, #eceeee)
+            border-left none
+
+
+
+

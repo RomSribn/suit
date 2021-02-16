@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CustomFileInput } from '../../../components/FileInput';
 import ReactPlayer from 'react-player';
 import { TextInput } from '../../../components/TextInput';
+import { isMobile } from '../../../utils';
 import '../styles/viewStoreItem.styl';
 
 const ViewStoreItem = ({
@@ -89,6 +90,7 @@ const ViewStoreItem = ({
             isShowThumb={inputs.length - 1 === index}
             handleRemove={removeSpecificFileFromItem!}
             id={id!}
+            limitOfFiles={7}
           />
         ))
       : '';
@@ -118,12 +120,19 @@ const ViewStoreItem = ({
 
   return (
     <div className="view-store-item">
-      <ReactPlayer url={video} width="100%" height="50%" controls={true} />
+      <ReactPlayer
+        url={video}
+        width="100%"
+        controls={true}
+        playing={true}
+        loop={true}
+        className={'react-player'}
+      />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="view-store-item__description">
         {renderPreviewFileDownload()}
-        <p>{description}</p>
+        <p>{isMobile() ? description : description.slice(0, 140) + '…'}</p>
       </div>
       <span className="error-message">{storeError && storeError.message}</span>
       {renderFileInputs()}

@@ -39,28 +39,41 @@ interface NavigationItemProps {
   linkName: string;
   lang: string;
   showActiveClassName: boolean;
+  isHidden: boolean;
 }
 class NavigationItem extends React.Component<NavigationItemProps> {
   render() {
-    const { linkName, lang, showActiveClassName } = this.props;
+    const { linkName, lang, showActiveClassName, isHidden } = this.props;
     return (
       <li>
-        <NavLink
-          activeClassName={showActiveClassName ? 'active' : ''}
-          className={classNames(
-            'main-menu__link ',
-            `main-menu__link--${linkName}`,
-          )}
-          to={routes[linkName]}
-        >
-          <ReactCSSTransitionGroup
-            transitionName="fade-in-absolute"
-            transitionEnterTimeout={TRANSITION_DUARAION}
-            transitionLeaveTimeout={TRANSITION_DUARAION}
+        {!isHidden ? (
+          <NavLink
+            activeClassName={showActiveClassName ? 'active' : ''}
+            className={classNames(
+              'main-menu__link ',
+              `main-menu__link--${linkName}`,
+            )}
+            to={routes[linkName]}
+          >
+            <ReactCSSTransitionGroup
+              transitionName="fade-in-absolute"
+              transitionEnterTimeout={TRANSITION_DUARAION}
+              transitionLeaveTimeout={TRANSITION_DUARAION}
+            >
+              <span key={lang}>{loc[lang].navigation[linkName]}</span>
+            </ReactCSSTransitionGroup>
+          </NavLink>
+        ) : (
+          <div
+            className={classNames(
+              'main-menu__link ',
+              'link-hidden',
+              `main-menu__link--${linkName}`,
+            )}
           >
             <span key={lang}>{loc[lang].navigation[linkName]}</span>
-          </ReactCSSTransitionGroup>
-        </NavLink>
+          </div>
+        )}
       </li>
     );
   }
@@ -68,11 +81,13 @@ class NavigationItem extends React.Component<NavigationItemProps> {
 
 type MakeNavigationLinks = (
   linkNames: string[],
+  hiddenNavLinks: string[],
   showActiveClassName: boolean,
   lang: string,
 ) => React.ReactElement<NavigationItemProps>[];
 const makeNavigationLinks: MakeNavigationLinks = (
   linkNames,
+  hiddenNavLinks,
   showActiveClassName,
   lang = 'en',
 ) => {
@@ -82,6 +97,7 @@ const makeNavigationLinks: MakeNavigationLinks = (
       linkName={name}
       showActiveClassName={showActiveClassName}
       lang={lang}
+      isHidden={hiddenNavLinks.includes(name)}
     />
   ));
 };
@@ -127,12 +143,15 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
       'calendar',
       'settings',
     ];
+    const hiddenNavLinks: string[] = !isLogin
+      ? ['panel', 'customersList', 'calendar', 'analytics', 'settings']
+      : [];
     const navLinksByRole = {
       STYLIST: stylistNavLinks,
       CUSTOMER: customerNavLinks,
       ANON: sharedNavLinks,
     };
-    const navigationLinks = isLogin ? navLinksByRole[role!] : sharedNavLinks;
+    const navigationLinks = isLogin ? navLinksByRole[role!] : stylistNavLinks;
     return (
       <div
         className={classNames('navbar', {
@@ -150,6 +169,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
             <ul>
               {makeNavigationLinks(
                 navigationLinks,
+                hiddenNavLinks,
                 this.state.showActiveClassName,
                 lang,
               )}

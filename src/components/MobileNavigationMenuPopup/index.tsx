@@ -108,19 +108,56 @@ export default ({
   const customerMenuList = menuList.filter(
     (item) => !['customersList', 'store', 'analytics'].includes(item.name),
   );
-
   const anonMenuList: MenuLink[] = [
     {
-      name: 'logIn',
-      url: '/',
-      withoutArrow: true,
-      unusualSideEffect: toggleLoginForm,
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || []),
+    },
+    {
+      name: 'panel',
+      url: '/panel',
+      isHidden: true,
+    },
+    {
+      name: 'customersList',
+      url: '/customersList',
+      isHidden: true,
+    },
+    {
+      name: 'orderList',
+      url: '/orders/list',
+    },
+    {
+      name: 'calendar',
+      url: '/calendar',
+      isHidden: true,
+    },
+    {
+      name: 'store',
+      url: '/store',
+    },
+    {
+      name: 'analytics',
+      url: '/analytics',
+      isHidden: true,
+    },
+    {
+      name: 'settings',
+      url: '/settings',
+      isHidden: true,
     },
     {
       name: 'chat',
       url: 'javascript:jivo_api.open()',
       withoutArrow: true,
       withoutBaseUrl: true,
+    },
+    {
+      name: 'logIn',
+      url: '/login',
+      withoutArrow: true,
+      unusualSideEffect: toggleLoginForm,
     },
   ];
 
@@ -160,7 +197,9 @@ export default ({
                   const isOrder: boolean = navItem.name === 'order';
                   return navItem.withoutBaseUrl ? (
                     <a
-                      className="navigation-item"
+                      className={classNames('navigation-item', {
+                        hidden: !!navItem.isHidden,
+                      })}
                       href={navItem.url}
                       onClick={(e) => {
                         if (navItem.unusualSideEffect) {
@@ -190,7 +229,9 @@ export default ({
                   ) : navItem.submenu ? (
                     <div>
                       <Link
-                        className="navigation-item"
+                        className={classNames('navigation-item', {
+                          hidden: !!navItem.isHidden,
+                        })}
                         to={`/order`}
                         onClick={(e) => {
                           if (navItem.unusualSideEffect) {
@@ -274,7 +315,9 @@ export default ({
                     </div>
                   ) : (
                     <Link
-                      className="navigation-item"
+                      className={classNames('navigation-item', {
+                        hidden: !!navItem.isHidden,
+                      })}
                       to={navItem.url}
                       onClick={(e) => {
                         if (navItem.unusualSideEffect) {

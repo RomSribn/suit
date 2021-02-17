@@ -10,7 +10,6 @@ export const priceList: priceListItem[] = [
       title: `добавить свой каталог тканей`,
       description: `Укажите, каталог какого производителя добавляете, Выберите для чего предназначена ткань: пиджака, брюк или 
         сорочки. Мы запросим образцы тканей у производителя или фабрики, выгрузим в данную форму заказа.`,
-      fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
         leftInfo: `1 картинка -`,
         price: 400,
@@ -27,7 +26,6 @@ export const priceList: priceListItem[] = [
       description: `Write the name of a manufacturer or factory which catalog you are adding. List the 
                 catalog names separated by commas. We will request samples of fabrics from the 
                 manufacturer or factory. We will upload them to this order form.`,
-      fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
         leftInfo: `1 fabric -`,
         price: 5,
@@ -50,7 +48,7 @@ export const priceList: priceListItem[] = [
       description: `Укажите, для какого производителя и каталога заказываете картинки пиджака, брюк, сорочки. Мы запросим образцы
             тканей у производителя или фабрики, подготовим картинки с помощью 3D визуализации. Обходимся без фотосессий
             и пошива изделий. Стоимость указана за одну картинку.`,
-      fileBtnTitle: `заказать картинки готовых изделий`,
+      fileBtnTitle: `скачать пример картинки`,
       priceBlock: {
         leftInfo: `1 картинка -`,
         price: 700,
@@ -152,6 +150,7 @@ export const priceList: priceListItem[] = [
       description: `Выгрузите каталог доступных опций и мерки для сорочки, пиджака и брюк. Наш художник подготовит картинки, 3D 
             модели и выгрузит их в данную форму заказа.Это позволит вам показать на манекене каждую опцию и оформить 
             заказ в системе, создать аккаунт клиента для повторных удаленных заказов. Скачать pdf файл заказа для клиента.`,
+      fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
         leftInfo: `от -`,
         price: 513500,
@@ -165,6 +164,7 @@ export const priceList: priceListItem[] = [
                 Our artist will prepare pictures and upload them to this order form. This will allow you to 
                 show each option on the mannequin and place an order in the system. Create a customer 
                 account for repeated remote orders. Download example of pdf order for client.`,
+      fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
         leftInfo: `from -`,
         price: 6800,

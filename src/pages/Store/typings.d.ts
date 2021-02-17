@@ -50,6 +50,7 @@ interface PriceListItemDescriptionProps {
   isAuth: boolean;
   anonUserInfo: IAnonUserInfo;
   setAnonUserInfo: TSetAnonUserInfo;
+  setThanksPopUp: (thanksPopPup: boolean) => void;
 }
 
 interface ViewStoreItemProps extends PriceListItemLocale {

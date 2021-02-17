@@ -21,11 +21,21 @@ const PriceListItemDescription = ({
   isAuth,
   anonUserInfo,
   setAnonUserInfo,
+  setThanksPopUp,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
     priceList.find((priceListItem) => priceListItem.id === id) || priceList[0];
   const onClick = () => {
+    const currentItems = usersStoreItems.find((item) => item.id === id);
     submitUserStoreItems();
+    if (currentItems) {
+      const textInputs = Object.values(currentItems.textInputs);
+      const isTextInputsExist =
+        textInputs && textInputs.some((input) => !!input);
+      const isFileExist = currentItems.files.length;
+      setThanksPopUp(!!isTextInputsExist || !!isFileExist);
+      setTimeout(() => setThanksPopUp(false), 5000);
+    }
   };
   const renderViewStoreItem = () => (
     <>
@@ -56,9 +66,6 @@ const PriceListItemDescription = ({
     <div className="wrapper">
       <PopUp open={open} onClose={togglePopUp}>
         <div className="price-list-item--description">
-          {/* <div className="close-popup" onClick={togglePopUp}>
-            X
-          </div> */}
           <button className="close-popup close-button" onClick={togglePopUp}>
             <img
               src="/assets/img/controls/close.svg"
@@ -66,6 +73,7 @@ const PriceListItemDescription = ({
               className="close-button-img"
             />
           </button>
+          <div className="btn close-swiper-popup" onClick={togglePopUp} />
           {renderViewStoreItem()}
         </div>
       </PopUp>

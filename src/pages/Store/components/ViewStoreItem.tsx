@@ -95,6 +95,7 @@ const ViewStoreItem = ({
             isShowThumb={inputs.length - 1 === index}
             handleRemove={removeSpecificFileFromItem!}
             id={id!}
+            limitOfFiles={7}
           />
         ))
       : '';
@@ -157,12 +158,16 @@ const ViewStoreItem = ({
         width="100%"
         height={isMobile() ? 'auto' : '50%'}
         controls={true}
+        controls={true}
+        playing={true}
+        loop={true}
+        className={'react-player'}
       />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />
       <div className="view-store-item__description">
         {renderPreviewFileDownload()}
-        <p>{description}</p>
+        <p>{isMobile() ? description : description.slice(0, 140) + '…'}</p>
       </div>
       <span className="error-message">{storeError && storeError.message}</span>
       {renderFileInputs()}

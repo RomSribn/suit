@@ -3,6 +3,7 @@ interface Loc {
   dropMsg: string;
   nameBtn: string;
   emailBtn: string;
+  requestSuccess: string;
 }
 
 const makeLoc: MakeLocale<Loc> = () => ({
@@ -11,12 +12,14 @@ const makeLoc: MakeLocale<Loc> = () => ({
     dropMsg: 'drop here...',
     nameBtn: 'name',
     emailBtn: 'email',
+    requestSuccess: 'request has been sent...',
   },
   ru: {
     submitBtn: 'запросить стоимость',
     dropMsg: 'загрузить...',
     nameBtn: 'имя',
     emailBtn: 'почта',
+    requestSuccess: 'запрос отправлен...',
   },
 });
 

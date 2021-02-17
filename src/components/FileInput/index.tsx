@@ -11,11 +11,21 @@ const CustomFileInput = ({
   isShowThumb = true,
   handleRemove,
   id,
+  limitOfFiles,
 }: IFileInputProps) => {
   // tslint:disable-next-line
   const onDrop = (acceptedFiles: any) => {
-    const acceptedFilesNew = files.concat(acceptedFiles);
-    action(acceptedFilesNew);
+    // do nothing if no files
+    const resultFiles = files.concat(acceptedFiles);
+    if (resultFiles.length === 0) {
+      return;
+    }
+    if (resultFiles.length > limitOfFiles!) {
+      // here i am checking on the number of files
+      return 'error';
+    }
+    action(resultFiles);
+    return resultFiles;
   };
 
   const removeItem = (file: File) => {

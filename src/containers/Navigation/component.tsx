@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Footer } from './Footer';
 import { TRANSITION_DUARAION } from '../../config/constants';
-
 import { navigationRoutes as routes } from '../../config/routes';
 import { routes as defaultRoutes } from '../../config/routes';
 import { loc } from './loc';

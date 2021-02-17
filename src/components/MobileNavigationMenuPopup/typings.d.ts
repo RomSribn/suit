@@ -26,4 +26,5 @@ declare type MenuLink = {
   withoutBaseUrl?: boolean;
   unusualSideEffect?: () => void;
   submenu?: Array<SubmenuItem>;
+  isHidden?: boolean;
 };

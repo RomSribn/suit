@@ -115,7 +115,6 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
       );
     }
     const items = [...galleryStore.items];
-    const isFabric = subgroup === 'fabric';
 
     return group === 'fitting' ? (
       <Fitting
@@ -178,8 +177,7 @@ class GalleryBlock extends React.Component<GalleryContainerProps> {
         )}
         <div
           style={{
-            display: isFabric ? 'contents' : 'block',
-            marginTop: isFabric ? 0 : 45,
+            display: 'contents',
             visibility:
               this.props.app && this.props.app.searchedItemsCount
                 ? 'visible'

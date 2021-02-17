@@ -27,6 +27,7 @@ export const services = {
   customers: `${API_ROOT}/api/customers`,
   customerOrders: `${API_ROOT}/api/customers/orders`,
   pdfs: `${API_ROOT}/api/pdfs`,
+  shopData: `${API_ROOT}/api/shop/saveShopData`,
 };
 
 const routes = {

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { loc, localesList } from './loc';
-import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
-import { NotificationIcon } from '../../components/NotificationIcon';
-import './style.styl';
 import { callList } from '../../utils/index';
+import { isStorePageVisitedId } from '../../utils/variables';
+import { Link } from 'react-router-dom';
+import { loc, localesList } from './loc';
+import { NotificationIcon } from '../../components/NotificationIcon';
+import { Switch, Route } from 'react-router';
+import './style.styl';
 
 const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
   activeGarments.map((garment) => {
@@ -142,6 +143,12 @@ export default ({
 
   const currentRole = role || 'ANON';
   console.log(role); // tslint:disable-line
+  const isStorePageVisitedValue = JSON.parse(
+    localStorage.getItem(isStorePageVisitedId)!,
+  );
+  const isStorePageVisited =
+    (isStorePageVisitedValue && !isStorePageVisitedValue.value) ||
+    !isStorePageVisitedValue;
 
   return (
     <div className="mobile-menu">
@@ -302,7 +309,7 @@ export default ({
                     >
                       <span>
                         {loc[currentLang][navItem.name]}
-                        {navItem.name === 'store' && (
+                        {navItem.name === 'store' && isStorePageVisited && (
                           <NotificationIcon count={1} />
                         )}
                       </span>

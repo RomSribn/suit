@@ -127,7 +127,7 @@ const ViewStoreItem = ({
     const name = anonUserInfo ? anonUserInfo.name : '';
     const email = anonUserInfo ? anonUserInfo.email : '';
     return !isAuth ? (
-      <>
+      <div className="anon-userinfo-inputs">
         <TextInput
           title={nameBtn}
           placeholder={nameBtn}
@@ -145,7 +145,7 @@ const ViewStoreItem = ({
           value={email}
           type={emailBtn}
         />
-      </>
+      </div>
     ) : (
       ''
     );

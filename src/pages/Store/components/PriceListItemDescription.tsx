@@ -66,13 +66,6 @@ const PriceListItemDescription = ({
     <div className="wrapper">
       <PopUp open={open} onClose={togglePopUp}>
         <div className="price-list-item--description">
-          <button className="close-popup close-button" onClick={togglePopUp}>
-            <img
-              src="/assets/img/controls/close.svg"
-              alt="close button"
-              className="close-button-img"
-            />
-          </button>
           <div className="btn close-swiper-popup" onClick={togglePopUp} />
           {renderViewStoreItem()}
         </div>

@@ -158,7 +158,6 @@ const ViewStoreItem = ({
         width="100%"
         height={isMobile() ? 'auto' : '50%'}
         controls={true}
-        controls={true}
         playing={true}
         loop={true}
         className={'react-player'}

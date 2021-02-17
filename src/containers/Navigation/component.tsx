@@ -78,6 +78,7 @@ class NavigationItem extends React.Component<NavigationItemProps> {
             >
               <span key={lang}>{loc[lang].navigation[linkName]}</span>
             </ReactCSSTransitionGroup>
+            {renderNotificationIcon()}
           </NavLink>
         ) : (
           <div
@@ -90,7 +91,6 @@ class NavigationItem extends React.Component<NavigationItemProps> {
             <span key={lang}>{loc[lang].navigation[linkName]}</span>
           </div>
         )}
-        {renderNotificationIcon()}
       </li>
     );
   }

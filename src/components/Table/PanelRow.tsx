@@ -306,11 +306,20 @@ class PanelRow extends React.Component<PanelRowProps, PanelRowState> {
               </>
             )}
             <li className={itemClassName}>
-              <span
-                className="controls__link controls__link--pdf"
-                onClick={this.generatePdf}
-                title={loc[lang].controls.pdf}
-              />
+              {this.props.role ? (
+                <span
+                  className="controls__link controls__link--pdf"
+                  onClick={this.generatePdf}
+                  title={loc[lang].controls.pdf}
+                />
+              ) : (
+                <Link
+                  to={'/assets/files/pdf-store-example.pdf'}
+                  className="controls__link controls__link--pdf"
+                  target="_blank"
+                  download={true}
+                />
+              )}
               {isFetchingPdf && spinner}
             </li>
           </ul>

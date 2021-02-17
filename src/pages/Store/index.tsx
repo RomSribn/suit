@@ -4,6 +4,7 @@ import { PriceListGallery } from './components/PriceListGallery';
 import { PriceListItemDescription } from './components/PriceListItemDescription';
 import { priceList } from './priceList';
 import { observer, inject } from 'mobx-react';
+import { isStorePageVisitedId } from '../../utils/variables';
 import { PopUp } from '../../containers/Popup';
 import { loc } from './loc';
 import './index.styl';
@@ -19,8 +20,11 @@ import './index.styl';
       submitUserStoreItems,
       setTextInputFields,
       storeError,
+      anonUserInfo,
+      setAnonUserInfo,
     },
     app: { lang },
+    user: { isAuth },
   }) => ({
     selectedStoreId,
     setSelectedStoreId,
@@ -31,6 +35,9 @@ import './index.styl';
     setTextInputFields,
     storeError,
     lang,
+    isAuth,
+    anonUserInfo,
+    setAnonUserInfo,
   }),
 )
 @observer
@@ -43,6 +50,14 @@ class Store extends React.Component<StoreProps> {
     this.setState({
       open: !this.state.open,
     });
+  };
+
+  componentDidMount = () => {
+    const isStorePageVisitedValue = { value: true };
+    localStorage.setItem(
+      isStorePageVisitedId,
+      JSON.stringify(isStorePageVisitedValue),
+    );
   };
 
   setThanksPopUp = (thanksPopUp: boolean) => {
@@ -60,6 +75,9 @@ class Store extends React.Component<StoreProps> {
       submitUserStoreItems,
       setTextInputFields,
       storeError,
+      isAuth,
+      anonUserInfo,
+      setAnonUserInfo,
     } = this.props;
     const { open, thanksPopUp } = this.state;
     const ThanksPopup = () => (
@@ -94,6 +112,9 @@ class Store extends React.Component<StoreProps> {
             submitUserStoreItems={submitUserStoreItems!}
             setTextInputFields={setTextInputFields!}
             storeError={storeError!}
+            isAuth={isAuth}
+            anonUserInfo={anonUserInfo}
+            setAnonUserInfo={setAnonUserInfo}
             setThanksPopUp={this.setThanksPopUp}
           />
         </div>

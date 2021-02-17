@@ -1,5 +1,16 @@
 .navbar
     @media only screen and (max-width: 450px), only screen and (max-height: 450px)
         display none
+.nav-notification
+    position absolute
+    top 0
+    width 1.6rem
+    height 1.56rem
+    transition .25s ease
+.main-menu__link.active,
+.main-menu__link:hover
+    .nav-notification   
+        width 2.9rem
+        height 2.6666rem
 .link-hidden
     opacity .3

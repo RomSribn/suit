@@ -7,10 +7,12 @@ const TextInput = ({
   placeholder,
   value = '',
   onChange,
+  required,
+  type,
 }: ITextInput) => {
   const [animation, setAnimation] = React.useState(!!value.length);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange!(`${title}:${e.target.value}`);
+    onChange!(`${title}:${e.target.value}`, e);
   };
   React.useEffect(() => {
     if (!value.length) {
@@ -25,16 +27,22 @@ const TextInput = ({
         {`${title}:`}
       </span>
       <input
-        type="text"
         placeholder={placeholder}
         className={classNames('input', { hide: !animation })}
         value={value}
         onChange={handleChange}
+        required={required}
+        type={type}
         onFocus={() => setAnimation(true)}
         onBlur={() => !value.length && setAnimation(false)}
       />
     </label>
   );
+};
+
+TextInput.defaultProps = {
+  required: false,
+  type: 'text',
 };
 
 export { TextInput };

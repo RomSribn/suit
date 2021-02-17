@@ -11,16 +11,18 @@ const PriceListGallery = ({
 }: PriceListGalleryProps) => {
   return (
     <div className="price-list-gallery">
-      {priceList.map((priceListItem: priceListItem) => (
-        <PriceListItem
-          key={priceListItem.id}
-          id={priceListItem.id}
-          {...priceListItem[lang]}
-          togglePopUp={togglePopUp}
-          selectedStoreId={selectedStoreId}
-          setSelectedStoreId={setSelectedStoreId}
-        />
-      ))}
+      <div>
+        {priceList.map((priceListItem: priceListItem) => (
+          <PriceListItem
+            key={priceListItem.id}
+            id={priceListItem.id}
+            {...priceListItem[lang]}
+            togglePopUp={togglePopUp}
+            selectedStoreId={selectedStoreId}
+            setSelectedStoreId={setSelectedStoreId}
+          />
+        ))}
+      </div>
     </div>
   );
 };

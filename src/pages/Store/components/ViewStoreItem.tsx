@@ -23,6 +23,11 @@ const ViewStoreItem = ({
   storeError,
   file,
   fileBtnTitle,
+  isAuth,
+  anonUserInfo,
+  setAnonUserInfo,
+  nameBtn,
+  emailBtn,
 }: ViewStoreItemProps) => {
   const [files, setFiles] = React.useState({ id, droppedFiles: [] });
   const [inputValues, setInputValues] = React.useState<IInputsData>({
@@ -118,11 +123,40 @@ const ViewStoreItem = ({
     );
   };
 
+  const renderAnonUserInfoInputs = () => {
+    const name = anonUserInfo ? anonUserInfo.name : '';
+    const email = anonUserInfo ? anonUserInfo.email : '';
+    return !isAuth ? (
+      <div className="anon-userinfo-inputs">
+        <TextInput
+          title={nameBtn}
+          placeholder={nameBtn}
+          onChange={(userStoresValue, e) =>
+            setAnonUserInfo({ name: e.target.value, email })
+          }
+          value={name}
+        />
+        <TextInput
+          title={emailBtn}
+          placeholder={emailBtn}
+          onChange={(userStoresValue, e) =>
+            setAnonUserInfo({ name, email: e.target.value })
+          }
+          value={email}
+          type={emailBtn}
+        />
+      </div>
+    ) : (
+      ''
+    );
+  };
+
   return (
     <div className="view-store-item">
       <ReactPlayer
         url={video}
         width="100%"
+        height={isMobile() ? 'auto' : '50%'}
         controls={true}
         playing={true}
         loop={true}
@@ -137,6 +171,7 @@ const ViewStoreItem = ({
       <span className="error-message">{storeError && storeError.message}</span>
       {renderFileInputs()}
       {renderTextInputs()}
+      {renderAnonUserInfoInputs()}
     </div>
   );
 };

@@ -47,6 +47,9 @@ interface PriceListItemDescriptionProps {
   submitUserStoreItems: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
   storeError: TError;
+  isAuth: boolean;
+  anonUserInfo: IAnonUserInfo;
+  setAnonUserInfo: TSetAnonUserInfo;
   setThanksPopUp: (thanksPopPup: boolean) => void;
 }
 
@@ -61,6 +64,11 @@ interface ViewStoreItemProps extends PriceListItemLocale {
   setTextInputFields: TSetTextInputFields;
   storeError: TError;
   file?: string;
+  isAuth: boolean;
+  anonUserInfo: IAnonUserInfo;
+  setAnonUserInfo: TSetAnonUserInfo;
+  nameBtn: string;
+  emailBtn: string;
 }
 
 interface StoreItemTitleProps {
@@ -77,5 +85,8 @@ interface StoreProps {
   submitUserStoreItems?: TSubmitUserStoreItems;
   setTextInputFields: TSetTextInputFields;
   storeError: TError;
+  isAuth: boolean;
+  anonUserInfo: IAnonUserInfo;
+  setAnonUserInfo: TSetAnonUserInfo;
   lang: Lang;
 }

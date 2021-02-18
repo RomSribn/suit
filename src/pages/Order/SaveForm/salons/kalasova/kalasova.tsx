@@ -11,19 +11,9 @@ import * as classnames from 'classnames';
 import { PopUp } from '../../../../../containers/Popup';
 import Login from '../../../../../components/Login';
 
-const validatePhone = (lang: string) => (value: string) => {
-  if (!value) {
-    return loc[lang].required;
-  }
-  if (value && value.length < 12) {
-    return loc[lang].phoneRequirements;
-  }
-};
-
 const FIELDS: Field[] = [
   {
     name: 'phone',
-    parse: (value: string = '') => value.replace(/[^+\d]/g, ''),
     // tslint:disable-next-line:no-any
     render: (props: any) => {
       return (
@@ -44,7 +34,8 @@ const FIELDS: Field[] = [
         </>
       );
     },
-    validate: validatePhone,
+    validate: (lang: string) => (value: string) =>
+      value ? null : loc[lang].required,
     type: 'phone',
   },
   {

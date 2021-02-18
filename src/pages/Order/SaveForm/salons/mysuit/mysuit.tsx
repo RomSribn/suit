@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Form, Field } from 'react-final-form';
 import { translations as loc } from './mysuits.loc';
 import { Button } from '../../../../../components/Button';
-
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 import './mysuits.styles.styl';
 import { Redirect } from 'react-router';
-import InputMask from 'react-input-mask';
 import * as classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { PopUp } from '../../../../../containers/Popup';
@@ -23,17 +23,19 @@ const validatePhone = (lang: string) => (value: string) => {
 const FIELDS: Field[] = [
   {
     name: 'phone',
-    parse: (value: string) => value.replace(/[^+\d]/g, ''),
+    parse: (value: string = '') => value.replace(/[^+\d]/g, ''),
     // tslint:disable-next-line:no-any
     render: (props: any) => {
       return (
         <>
-          <InputMask
-            disabled={false}
-            mask="+7 (999) 999-99-99"
+          <PhoneInput
             {...props.input}
+            international={true}
             className={props.className}
+            defaultCountry="RU"
             placeholder={props.placeholder}
+            value={props.input.value}
+            onChange={props.input.onChange}
             required={true}
           />
           {props.meta.error && props.meta.touched && (

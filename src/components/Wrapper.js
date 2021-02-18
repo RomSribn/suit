@@ -133,6 +133,9 @@ class Wrapper extends Component {
                 return <Order {...props} order={this.props.order} />;
               }}
             />
+            <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
+              <ListOrders />
+            </CrumbRoute>
 
             {/* // Закрытые страницы  */}
             <Route
@@ -143,9 +146,6 @@ class Wrapper extends Component {
                 }
                 return (
                   <Switch>
-                    <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>
-                      <ListOrders />
-                    </CrumbRoute>
                     <CrumbRoute {...getCombinedPathAndTitle('customersList')}>
                       {isStylist ? (
                         <ListCustomers />

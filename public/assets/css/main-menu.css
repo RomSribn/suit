@@ -78,13 +78,19 @@
 .main-menu__link:not(.link-hidden):hover {
   opacity: 1;
 }
-.main-menu__link.active:not(.link-hidden):before,
-.main-menu__link:not(.link-hidden):hover:before {
-  height: 2.6666rem;
-  width: 3.5333rem;
+
+.nav-notification {
+  transition: 0.35s ease;
 }
 
-.main-menu__link:after:not(.link-hidden) {
+.main-menu__link.active:not(.link-hidden):before,
+.main-menu__link:not(.link-hidden):hover:before,
+.main-menu__link:not(.link-hidden):hover .nav-notification {
+  transform: scale(1.5);
+  transform-origin: left;
+}
+
+.main-menu__link:after {
   content: '';
   display: block;
   width: 2px;
@@ -104,12 +110,11 @@
 .navbar--white .main-menu__link:after {
   background: #000;
 }
-.main-menu__link.active:after:not(.link-hidden),
-.main-menu__link:hover:after:not(.link-hidden) {
-  height: -webkit-calc(100% - 4px);
-  height: -moz-calc(100% - 4px);
-  height: calc(100% - 4px);
-  margin-top: -1px;
+.main-menu__link:not(.link-hidden).active:after,
+.main-menu__link:not(.link-hidden):hover:after {
+  height: -webkit-calc(127%);
+  height: -moz-calc(127%);
+  height: calc(127%);
 }
 
 .navbar--white .main-menu__link {

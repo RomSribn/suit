@@ -67,10 +67,6 @@ export default ({
       submenu: getGarmentsSubMenu(activeGarments || []),
     },
     {
-      name: 'panel',
-      url: '/panel',
-    },
-    {
       name: 'customersList',
       url: '/customer/list',
     },
@@ -79,20 +75,8 @@ export default ({
       url: '/orders/list',
     },
     {
-      name: 'calendar',
-      url: '/calendar',
-    },
-    {
       name: 'store',
       url: '/store',
-    },
-    {
-      name: 'analytics',
-      url: '/analytics',
-    },
-    {
-      name: 'settings',
-      url: '/settings',
     },
     {
       name: 'logOut',
@@ -171,13 +155,6 @@ export default ({
 
   const currentRole = role || 'ANON';
   console.log(role); // tslint:disable-line
-  const isStorePageVisitedValue = JSON.parse(
-    localStorage.getItem(isStorePageVisitedId)!,
-  );
-  const isStorePageVisited =
-    (isStorePageVisitedValue && !isStorePageVisitedValue.value) ||
-    !isStorePageVisitedValue;
-
   return (
     <div className="mobile-menu">
       <header className="mobile-menu-header">
@@ -203,6 +180,13 @@ export default ({
                 // tslint:disable-next-line
                 component={(...props: any[]) => {
                   const isOrder: boolean = navItem.name === 'order';
+                  const isStorePageVisitedValue = JSON.parse(
+                    localStorage.getItem(isStorePageVisitedId)!,
+                  );
+                  const isStorePageVisited =
+                    (isStorePageVisitedValue &&
+                      !isStorePageVisitedValue.value) ||
+                    !isStorePageVisitedValue;
                   return navItem.withoutBaseUrl ? (
                     <a
                       className={classNames('navigation-item', {

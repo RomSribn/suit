@@ -18,6 +18,9 @@ const PriceListItemDescription = ({
   submitUserStoreItems,
   setTextInputFields,
   storeError,
+  isAuth,
+  anonUserInfo,
+  setAnonUserInfo,
   setThanksPopUp,
 }: PriceListItemDescriptionProps) => {
   const selectedStoreItem =
@@ -48,6 +51,11 @@ const PriceListItemDescription = ({
         removeSpecificFileFromItem={removeSpecificFileFromItem}
         setTextInputFields={setTextInputFields}
         storeError={storeError}
+        isAuth={isAuth}
+        anonUserInfo={anonUserInfo}
+        setAnonUserInfo={setAnonUserInfo}
+        nameBtn={loc[lang].nameBtn}
+        emailBtn={loc[lang].emailBtn}
       />
       <Button theme={'black'} onClick={onClick} className="approve-button">
         <span>{loc[lang].submitBtn}</span>

@@ -2,9 +2,13 @@ import { routesTranslations } from '../../config/routes';
 interface Locale {
   navigation: {
     order: string;
+    panel: string;
     customersList: string;
     ordersList: string;
+    calendar: string;
     store: string;
+    analytics: string;
+    settings: string;
   };
   hideShow: string;
 }

@@ -74,8 +74,8 @@
   background-image: url(../img/menu/white/settings.svg);
 }
 
-.main-menu__link.active,
-.main-menu__link:hover {
+.main-menu__link.active:not(.link-hidden),
+.main-menu__link:not(.link-hidden):hover {
   opacity: 1;
 }
 
@@ -83,24 +83,12 @@
   transition: 0.35s ease;
 }
 
-.main-menu__link.active:before,
-.main-menu__link:hover:before,
-.main-menu__link:hover .nav-notification {
+.main-menu__link.active:not(.link-hidden):before,
+.main-menu__link:not(.link-hidden):hover:before,
+.main-menu__link:not(.link-hidden):hover .nav-notification {
   transform: scale(1.5);
   transform-origin: left;
 }
-
-/* .main-menu__link.active > span,
-.main-menu__link > span {
-  transition: 0.35s ease;
-}
-
-.main-menu__link.active > span,
-.main-menu__link:hover > span {
-  transform: scale(0.9);
-  transform-origin: top left;
-  transition: all 0.35s ease;
-} */
 
 .main-menu__link:after {
   content: '';
@@ -122,8 +110,8 @@
 .navbar--white .main-menu__link:after {
   background: #000;
 }
-.main-menu__link.active:after,
-.main-menu__link:hover:after {
+.main-menu__link:not(.link-hidden).active:after,
+.main-menu__link:not(.link-hidden):hover:after {
   height: -webkit-calc(127%);
   height: -moz-calc(127%);
   height: calc(127%);

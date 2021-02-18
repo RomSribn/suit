@@ -20,8 +20,11 @@ import './index.styl';
       submitUserStoreItems,
       setTextInputFields,
       storeError,
+      anonUserInfo,
+      setAnonUserInfo,
     },
     app: { lang },
+    user: { isAuth },
   }) => ({
     selectedStoreId,
     setSelectedStoreId,
@@ -32,6 +35,9 @@ import './index.styl';
     setTextInputFields,
     storeError,
     lang,
+    isAuth,
+    anonUserInfo,
+    setAnonUserInfo,
   }),
 )
 @observer
@@ -69,6 +75,9 @@ class Store extends React.Component<StoreProps> {
       submitUserStoreItems,
       setTextInputFields,
       storeError,
+      isAuth,
+      anonUserInfo,
+      setAnonUserInfo,
     } = this.props;
     const { open, thanksPopUp } = this.state;
     const ThanksPopup = () => (
@@ -103,6 +112,9 @@ class Store extends React.Component<StoreProps> {
             submitUserStoreItems={submitUserStoreItems!}
             setTextInputFields={setTextInputFields!}
             storeError={storeError!}
+            isAuth={isAuth}
+            anonUserInfo={anonUserInfo}
+            setAnonUserInfo={setAnonUserInfo}
             setThanksPopUp={this.setThanksPopUp}
           />
         </div>

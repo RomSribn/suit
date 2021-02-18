@@ -10,6 +10,7 @@ class CustomersStore implements ICustomerStore {
   @observable customers = observable.array<User>();
   @observable selectedStoreId: TSelectedStoreId = 1;
   @observable usersStoreItems: IUsersStoreItems[] = observable.array();
+  @observable anonUserInfo: IAnonUserInfo = { name: '', email: '' };
 
   @action
   fetch() {
@@ -104,6 +105,11 @@ class CustomersStore implements ICustomerStore {
       (): null => null,
       this._onStoreError,
     );
+  };
+
+  @action
+  setAnonUserInfo = ({ name, email }: IAnonUserInfo) => {
+    this.anonUserInfo = { name, email };
   };
 
   _setUsersStoreItems = (

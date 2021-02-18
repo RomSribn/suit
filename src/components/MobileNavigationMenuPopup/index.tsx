@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { loc, localesList } from './loc';
-import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
-import { NotificationIcon } from '../../components/NotificationIcon';
-import { isStorePageVisitedId } from '../../utils/variables';
-import './style.styl';
 import { callList } from '../../utils/index';
+import { isStorePageVisitedId } from '../../utils/variables';
+import { Link } from 'react-router-dom';
+import { loc, localesList } from './loc';
+import { NotificationIcon } from '../../components/NotificationIcon';
+import { Switch, Route } from 'react-router';
+import './style.styl';
 
 const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
   activeGarments.map((garment) => {
@@ -94,19 +94,56 @@ export default ({
   const customerMenuList = menuList.filter(
     (item) => !['customersList', 'store', 'analytics'].includes(item.name),
   );
-
   const anonMenuList: MenuLink[] = [
     {
-      name: 'logIn',
-      url: '/',
-      withoutArrow: true,
-      unusualSideEffect: toggleLoginForm,
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || []),
+    },
+    {
+      name: 'panel',
+      url: '/panel',
+      isHidden: true,
+    },
+    {
+      name: 'customersList',
+      url: '/customersList',
+      isHidden: true,
+    },
+    {
+      name: 'orderList',
+      url: '/orders/list',
+    },
+    {
+      name: 'calendar',
+      url: '/calendar',
+      isHidden: true,
+    },
+    {
+      name: 'store',
+      url: '/store',
+    },
+    {
+      name: 'analytics',
+      url: '/analytics',
+      isHidden: true,
+    },
+    {
+      name: 'settings',
+      url: '/settings',
+      isHidden: true,
     },
     {
       name: 'chat',
       url: 'javascript:jivo_api.open()',
       withoutArrow: true,
       withoutBaseUrl: true,
+    },
+    {
+      name: 'logIn',
+      url: '/login',
+      withoutArrow: true,
+      unusualSideEffect: toggleLoginForm,
     },
   ];
 
@@ -118,7 +155,6 @@ export default ({
 
   const currentRole = role || 'ANON';
   console.log(role); // tslint:disable-line
-
   return (
     <div className="mobile-menu">
       <header className="mobile-menu-header">
@@ -153,7 +189,9 @@ export default ({
                     !isStorePageVisitedValue;
                   return navItem.withoutBaseUrl ? (
                     <a
-                      className="navigation-item"
+                      className={classNames('navigation-item', {
+                        hidden: !!navItem.isHidden,
+                      })}
                       href={navItem.url}
                       onClick={(e) => {
                         if (navItem.unusualSideEffect) {
@@ -183,7 +221,9 @@ export default ({
                   ) : navItem.submenu ? (
                     <div>
                       <Link
-                        className="navigation-item"
+                        className={classNames('navigation-item', {
+                          hidden: !!navItem.isHidden,
+                        })}
                         to={`/order`}
                         onClick={(e) => {
                           if (navItem.unusualSideEffect) {
@@ -267,7 +307,9 @@ export default ({
                     </div>
                   ) : (
                     <Link
-                      className="navigation-item"
+                      className={classNames('navigation-item', {
+                        hidden: !!navItem.isHidden,
+                      })}
                       to={navItem.url}
                       onClick={(e) => {
                         if (navItem.unusualSideEffect) {

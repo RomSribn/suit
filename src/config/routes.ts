@@ -57,15 +57,23 @@ const navigationRoutes = makeNavigationRoutes();
 const routesTranslations = {
   en: {
     order: 'order',
+    panel: 'panel',
     customersList: 'clients',
     ordersList: 'order list',
+    calendar: 'calendar',
     store: 'store',
+    analytics: 'analytics',
+    settings: 'settings',
   },
   ru: {
     order: 'заказать',
+    panel: 'панель',
     customersList: 'клиенты',
     ordersList: 'заказы',
+    calendar: 'календарь',
     store: 'магазин',
+    analytics: 'аналтика',
+    settings: 'настройки',
   },
 };
 

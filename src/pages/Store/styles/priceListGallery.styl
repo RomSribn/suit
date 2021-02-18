@@ -1,8 +1,15 @@
 .price-list-gallery
-    padding 0.667rem
     width 100%
-    background-color #fff
     color: #8a8a8a;
     overflow auto
+    padding: 0.667rem;
+    background-color: #fff;
+
+    & > div:first-child
+        height 100%
+        overflow-y  scroll
+
+    .price-list-item:last-child
+        margin-bottom 0 
     @media only screen and (min-width: 450px) and (min-height: 450px)
         width 60%

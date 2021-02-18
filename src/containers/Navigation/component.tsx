@@ -70,14 +70,22 @@ class NavigationItem extends React.Component<NavigationItemProps> {
           to={routes[linkName]}
         >
           <ReactCSSTransitionGroup
+            className="main-menu__link__title"
             transitionName="fade-in-absolute"
             transitionEnterTimeout={TRANSITION_DUARAION}
             transitionLeaveTimeout={TRANSITION_DUARAION}
           >
-            <span key={lang}>{loc[lang].navigation[linkName]}</span>
+            <span key={lang} className="main-menu__link__title">
+              {loc[lang].navigation[linkName]}
+            </span>
           </ReactCSSTransitionGroup>
           {renderNotificationIcon()}
         </NavLink>
+        {/* <NavLink to={routes[linkName]}>
+          <span key={lang} className="main-menu__link__title">
+            {loc[lang].navigation[linkName]}
+          </span>
+        </NavLink> */}
       </li>
     );
   }

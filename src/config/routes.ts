@@ -72,7 +72,7 @@ const routesTranslations = {
     ordersList: 'заказы',
     calendar: 'календарь',
     store: 'магазин',
-    analytics: 'аналтика',
+    analytics: 'аналитика',
     settings: 'настройки',
   },
 };

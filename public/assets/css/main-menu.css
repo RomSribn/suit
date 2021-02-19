@@ -32,7 +32,7 @@
   line-height: 0.8;
   opacity: 0.8;
 }
-.main-menu__link span {
+.main-menu__link > span {
   display: block;
   height: 0.7333rem;
   margin-top: 0.5rem;
@@ -88,6 +88,17 @@
 .main-menu__link:not(.link-hidden):hover .nav-notification {
   transform: scale(1.5);
   transform-origin: left;
+}
+
+.main-menu__link.active:not(.link-hidden) > span,
+.main-menu__link:not(.link-hidden) > span {
+  transition: 0.35s ease;
+}
+
+.main-menu__link.active:not(.link-hidden) > span,
+.main-menu__link:not(.link-hidden):hover > span {
+  transform: translateY(5px);
+  transform-origin: left bottom;
 }
 
 .main-menu__link:after {

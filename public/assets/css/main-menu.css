@@ -10,7 +10,7 @@
   margin-top: -1.2rem;
 }
 .main-menu ul {
-  margin-top: 35px;
+  margin-top: 1.8rem;
 }
 .main-menu li {
   margin-top: 1.8rem;
@@ -91,6 +91,7 @@
 .main-menu__link:not(.link-hidden):hover .nav-notification {
   transform: scale(1.5);
   transform-origin: bottom left;
+  margin-top: 0.8rem;
 }
 
 .main-menu__link:after {
@@ -115,9 +116,9 @@
 }
 .main-menu__link:not(.link-hidden).active:after,
 .main-menu__link:not(.link-hidden):hover:after {
-  height: -webkit-calc(100%);
-  height: -moz-calc(100%);
-  height: calc(100%);
+  height: -webkit-calc(65%);
+  height: -moz-calc(65%);
+  height: calc(65%);
 }
 
 .navbar--white .main-menu__link {
@@ -163,6 +164,6 @@
     font-size: 11px;
   }
   .main-menu li {
-    margin: 1.55rem 0;
+    margin: 1.65rem 0;
   }
 }

@@ -87,7 +87,8 @@
 .main-menu__link:not(.link-hidden):hover:before,
 .main-menu__link:not(.link-hidden):hover .nav-notification {
   transform: scale(1.5);
-  transform-origin: left;
+  transform-origin: bottom left;
+  margin-top: 0.8rem;
 }
 
 .main-menu__link:after {
@@ -112,9 +113,9 @@
 }
 .main-menu__link:not(.link-hidden).active:after,
 .main-menu__link:not(.link-hidden):hover:after {
-  height: -webkit-calc(127%);
-  height: -moz-calc(127%);
-  height: calc(127%);
+  height: -webkit-calc(100% - 4px);
+  height: -moz-calc(100% - 4px);
+  height: calc(100% - 4px);
 }
 
 .navbar--white .main-menu__link {
@@ -159,9 +160,6 @@
   .main-menu__link {
     font-size: 11px;
   }
-}
-
-@media only screen and (max-height: 700px) {
   .main-menu li {
     margin: 1.4rem 0;
   }

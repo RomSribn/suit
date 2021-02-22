@@ -88,7 +88,9 @@ class NavigationItem extends React.Component<NavigationItemProps> {
               `main-menu__link--${linkName}`,
             )}
           >
-            <span key={lang}>{loc[lang].navigation[linkName]}</span>
+            <span key={lang}>
+              <span>{loc[lang].navigation[linkName]}</span>
+            </span>
           </div>
         )}
       </li>

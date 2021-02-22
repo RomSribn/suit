@@ -67,6 +67,10 @@ export default ({
       submenu: getGarmentsSubMenu(activeGarments || []),
     },
     {
+      name: 'panel',
+      url: '/panel',
+    },
+    {
       name: 'customersList',
       url: '/customer/list',
     },
@@ -75,8 +79,20 @@ export default ({
       url: '/orders/list',
     },
     {
+      name: 'calendar',
+      url: '/calendar',
+    },
+    {
       name: 'store',
       url: '/store',
+    },
+    {
+      name: 'analytics',
+      url: '/analytics',
+    },
+    {
+      name: 'settings',
+      url: '/settings',
     },
     {
       name: 'logOut',

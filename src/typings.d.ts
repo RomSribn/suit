@@ -1,8 +1,3 @@
-interface Window {
-  // tslint:disable-nest-line
-  safari: any;
-}
-
 interface NavigationRoutes {
   index: string;
   order: string;

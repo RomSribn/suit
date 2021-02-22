@@ -105,6 +105,7 @@ class Paralax extends React.PureComponent {
             autoPlay={true}
             loop={true}
             preload="auto"
+            playsinline={true}
           >
             <source
               src={process.env.STATIC_VIDEOS + 'video.mp4'}

@@ -151,20 +151,20 @@ const ViewStoreItem = ({
       ''
     );
   };
-
-  const isSafariBrowser = typeof window !== 'undefined' && window.safari;
-
   return (
     <div className="view-store-item">
-      {/* Because safari can't support webm video format (webRTC experimental codec) */}
       <ReactPlayer
-        url={isSafariBrowser ? videoMp4 : videoWebm}
         width="100%"
         height={isMobile() ? 'auto' : '50%'}
         controls={true}
         playing={true}
+        playsinline={true}
         loop={true}
         className={'react-player'}
+        url={[
+          { src: videoWebm, type: 'video/webm' },
+          { src: videoMp4, type: 'video/mp4' },
+        ]}
       />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />

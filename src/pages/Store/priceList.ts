@@ -3,7 +3,8 @@ import { API_ROOT } from '../../config/routes';
 export const priceList: priceListItem[] = [
   {
     id: 1,
-    video: `${API_ROOT}/assets/video/add_your_fabric_catalog.webm`,
+    videoWebm: `${API_ROOT}/assets/video/add_your_fabric_catalog.webm`,
+    videoMp4: `${API_ROOT}/assets/video/add_your_fabric_catalog.mp4`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: false,
     ru: {
@@ -40,7 +41,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 2,
-    video: `${API_ROOT}/assets/video/order_pictures_of_finished_garments.webm`,
+    videoWebm: `${API_ROOT}/assets/video/order_pictures_of_finished_garments.webm`,
+    videoMp4: `${API_ROOT}/assets/video/order_pictures_of_finished_garments.mp4`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: false,
     ru: {
@@ -81,7 +83,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 3,
-    video: `${API_ROOT}/assets/video/add_your_logo.webm`,
+    videoWebm: `${API_ROOT}/assets/video/add_your_logo.webm`,
+    videoMp4: `${API_ROOT}/assets/video/add_your_logo.mp4`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {
@@ -109,7 +112,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 4,
-    video: `${API_ROOT}/assets/video/add_2d_catalogs_of_your_garments.webm`,
+    videoWebm: `${API_ROOT}/assets/video/add_2d_catalogs_of_your_garments.webm`,
+    videoMp4: `${API_ROOT}/assets/video/add_2d_catalogs_of_your_garments.mp4`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {
@@ -142,7 +146,8 @@ export const priceList: priceListItem[] = [
   },
   {
     id: 5,
-    video: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
+    videoWebm: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
+    videoMp4: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {

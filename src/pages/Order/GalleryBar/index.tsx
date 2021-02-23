@@ -401,12 +401,15 @@ type State = {
   ({
     app,
     filterStore,
-    garments: { garments },
+    garments: {
+      garments: { activeGarments, currentActiveGarment },
+    },
     order: { setOrderDummyParams, setFocusableGarment },
   }) => ({
     app,
     filterStore,
-    activeGarments: [...garments.activeGarments],
+    activeGarments,
+    currentActiveGarment,
     setOrderDummyParams,
     setFocusableGarment,
   }),
@@ -495,6 +498,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       shownItem,
       isMouseOverElement,
       activeGarments,
+      currentActiveGarment,
+      app,
       setOrderDummyParams,
     } = this.props;
     const { renderedElementsCount } = this.state;
@@ -508,17 +513,16 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
         onScroll={this.handleScroll}
         id="js-bar-wrap"
       >
-        {this.props.app &&
-          this.props.app.showSwiperPopup &&
-          this.props.app.swiperPopupData && (
-            <PopUp open={this.props.app.showSwiperPopup}>
-              <SwiperPopup
-                item={this.props.app.swiperPopupData}
-                closeButton={this.props.app.toggleSwiperPopup}
-                lang={this.props.app.lang}
-              />
-            </PopUp>
-          )}
+        {app && app.showSwiperPopup && app.swiperPopupData && (
+          <PopUp open={app.showSwiperPopup}>
+            <SwiperPopup
+              item={app.swiperPopupData}
+              currentActiveGarment={currentActiveGarment}
+              closeButton={app.toggleSwiperPopup}
+              lang={app.lang}
+            />
+          </PopUp>
+        )}
         <div
           ref={this.galleryBar}
           className="gallery__bar-cont"

@@ -25,7 +25,7 @@ export const loc: MakeLocale<Locale> = {
     clothSelected: 'cloth selected',
     designSelected: 'Design selected',
     continue: 'continue',
-    currency: '€',
+    currency: '$',
     productInfo: 'Product info',
     manufacturer: 'Manufacturer:',
     fabricColor: 'Fabric color:',

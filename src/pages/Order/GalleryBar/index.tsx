@@ -207,6 +207,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       userFilters,
       item,
       isGarmentLoaded,
+      app,
     } = this.props;
 
     const { isActive } = this.state;
@@ -217,6 +218,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       our_code: id,
       title,
       elementInfo,
+      manufacturer,
+      catalog,
     } = this.props.item;
     if (!this.state.load.success) {
       return null;
@@ -240,56 +243,64 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       }
     }
 
+    const isSearchedValue =
+      app &&
+      app.currentSearchValue &&
+      (id.includes(app.currentSearchValue.toLowerCase()) ||
+        title.en.toLowerCase().includes(app.currentSearchValue.toLowerCase()) ||
+        manufacturer.manufacturerName
+          .toLocaleLowerCase()
+          .includes(app.currentSearchValue.toLowerCase()) ||
+        catalog.catalogName
+          .toLocaleLowerCase()
+          .includes(app.currentSearchValue.toLowerCase()));
+
     const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
     const hoverImg = isFabricImg
-      ? `${process.env.API_ROOT}${
-          (img_url_2d_list.length > 1 && img_url_2d_list[1].slice(5)) || id
-        }`
+      ? `${process.env.API_ROOT}${(img_url_2d_list.length > 1 && img_url_2d_list[1].slice(5)) || id
+      }`
       : image;
     return (
       <>
         {this.props.app &&
           (window.location.pathname.includes('design')
             ? true
-            : (this.props.app.currentSearchValue &&
-                id.includes(this.props.app.currentSearchValue.toLowerCase())) ||
-              title.en
-                .toLowerCase()
-                .includes(this.props.app.currentSearchValue.toLowerCase())) && (
-            <div
-              onClick={(e) => this.handleSelectGarment(e, this.props)}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
-              className={classnames('gallery__item-blc', {
-                landscape: isMobile() && isLandscape(),
-              })}
-            >
+            : isSearchedValue && (
               <div
-                className={classnames('gallery__item', {
-                  active: isActive && isGarmentLoaded,
+                onClick={(e) => this.handleSelectGarment(e, this.props)}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+                className={classnames('gallery__item-blc', {
+                  landscape: isMobile() && isLandscape(),
                 })}
               >
-                <img
-                  src={hoverImg}
-                  className="gallery__item--hover-image"
-                  alt={`${id}`}
-                />
-                <img
-                  src={image}
-                  className="gallery__item--main-image"
-                  alt={`${id}`}
-                />
-                {this.props.app && this.props.app.changeSearchedItemsCount()}
-                {isActive && !isGarmentLoaded && <SquareSpinner />}
-                {isActive && this.props.app && (
-                  <span
-                    onClick={() => this.handleToggleSwipe(this.props)}
-                    className="zoom-icon"
+                <div
+                  className={classnames('gallery__item', {
+                    active: isActive && isGarmentLoaded,
+                  })}
+                >
+                  <img
+                    src={hoverImg}
+                    className="gallery__item--hover-image"
+                    alt={`${id}`}
                   />
-                )}
+                  <img
+                    src={image}
+                    className="gallery__item--main-image"
+                    alt={`${id}`}
+                  />
+                  {this.props.app &&
+                    this.props.app.changeSearchedItemsCount()}
+                  {isActive && !isGarmentLoaded && <SquareSpinner />}
+                  {isActive && this.props.app && (
+                    <span
+                      onClick={() => this.handleToggleSwipe(this.props)}
+                      className="zoom-icon"
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            ))}
       </>
     );
   }

@@ -14,7 +14,8 @@ interface PriceListItemLocale {
 
 interface priceListItem {
   id: number;
-  video: string;
+  videoWebm: string;
+  videoMp4: string;
   file?: string;
   isFileInput: boolean;
   ru: PriceListItemLocale;
@@ -55,7 +56,8 @@ interface PriceListItemDescriptionProps {
 
 interface ViewStoreItemProps extends PriceListItemLocale {
   id: TSelectedStoreId;
-  video: string;
+  videoWebm: string;
+  videoMp4: string;
   isFileInput: boolean;
   droppMsg: string;
   setUsersStoreFiles: TSetUsersStoreFiles;

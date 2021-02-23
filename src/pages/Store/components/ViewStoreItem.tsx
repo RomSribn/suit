@@ -13,7 +13,8 @@ const ViewStoreItem = ({
   description,
   priceBlock,
   inputs,
-  video,
+  videoWebm,
+  videoMp4,
   droppMsg,
   isFileInput,
   setUsersStoreFiles,
@@ -150,17 +151,20 @@ const ViewStoreItem = ({
       ''
     );
   };
-
   return (
     <div className="view-store-item">
       <ReactPlayer
-        url={video}
         width="100%"
         height={isMobile() ? 'auto' : '50%'}
         controls={true}
         playing={true}
+        playsinline={true}
         loop={true}
         className={'react-player'}
+        url={[
+          { src: videoWebm, type: 'video/webm' },
+          { src: videoMp4, type: 'video/mp4' },
+        ]}
       />
 
       <StoreItemTitle title={title} priceBlock={priceBlock} />

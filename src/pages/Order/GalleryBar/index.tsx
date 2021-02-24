@@ -248,10 +248,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       app.currentSearchValue &&
       (id.includes(app.currentSearchValue.toLowerCase()) ||
         title.en.toLowerCase().includes(app.currentSearchValue.toLowerCase()) ||
-        manufacturer.manufacturerName
+        manufacturer && manufacturer.manufacturerName
           .toLocaleLowerCase()
           .includes(app.currentSearchValue.toLowerCase()) ||
-        catalog.catalogName
+        catalog && catalog.catalogName
           .toLocaleLowerCase()
           .includes(app.currentSearchValue.toLowerCase()));
 

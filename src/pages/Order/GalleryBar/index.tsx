@@ -263,44 +263,43 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
     return (
       <>
         {this.props.app &&
-          (window.location.pathname.includes('design')
-            ? true
-            : isSearchedValue && (
+          (window.location.pathname.includes('design') || isSearchedValue)
+          && (
+            <div
+              onClick={(e) => this.handleSelectGarment(e, this.props)}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+              className={classnames('gallery__item-blc', {
+                landscape: isMobile() && isLandscape(),
+              })}
+            >
               <div
-                onClick={(e) => this.handleSelectGarment(e, this.props)}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                className={classnames('gallery__item-blc', {
-                  landscape: isMobile() && isLandscape(),
+                className={classnames('gallery__item', {
+                  active: isActive && isGarmentLoaded,
                 })}
               >
-                <div
-                  className={classnames('gallery__item', {
-                    active: isActive && isGarmentLoaded,
-                  })}
-                >
-                  <img
-                    src={hoverImg}
-                    className="gallery__item--hover-image"
-                    alt={`${id}`}
+                <img
+                  src={hoverImg}
+                  className="gallery__item--hover-image"
+                  alt={`${id}`}
+                />
+                <img
+                  src={image}
+                  className="gallery__item--main-image"
+                  alt={`${id}`}
+                />
+                {this.props.app &&
+                  this.props.app.changeSearchedItemsCount()}
+                {isActive && !isGarmentLoaded && <SquareSpinner />}
+                {isActive && this.props.app && (
+                  <span
+                    onClick={() => this.handleToggleSwipe(this.props)}
+                    className="zoom-icon"
                   />
-                  <img
-                    src={image}
-                    className="gallery__item--main-image"
-                    alt={`${id}`}
-                  />
-                  {this.props.app &&
-                    this.props.app.changeSearchedItemsCount()}
-                  {isActive && !isGarmentLoaded && <SquareSpinner />}
-                  {isActive && this.props.app && (
-                    <span
-                      onClick={() => this.handleToggleSwipe(this.props)}
-                      className="zoom-icon"
-                    />
-                  )}
-                </div>
+                )}
               </div>
-            ))}
+            </div>
+          )}
       </>
     );
   }

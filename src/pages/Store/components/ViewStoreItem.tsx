@@ -42,13 +42,13 @@ const ViewStoreItem = ({
   const currentFiles = currentUsersStoreItems
     ? currentUsersStoreItems.files
     : files.id === id
-    ? files.droppedFiles
-    : [];
+      ? files.droppedFiles
+      : [];
   const currentInputValues = currentUsersStoreItems
     ? currentUsersStoreItems.textInputs
     : inputValues.id === id
-    ? inputValues.textInputs
-    : {};
+      ? inputValues.textInputs
+      : {};
 
   // tslint:disable-next-line
   const onDrop = (droppedFiles: any) => {
@@ -81,24 +81,25 @@ const ViewStoreItem = ({
         {fileBtnTitle}
       </Link>
     ) : (
-      ''
-    );
+        ''
+      );
   };
 
   const renderFileInputs = () => {
     return isFileInput
       ? inputs.map((inputTitle, index) => (
-          <CustomFileInput
-            title={inputTitle}
-            dropMsg={droppMsg}
-            onDrop={onDrop}
-            files={currentFiles}
-            isShowThumb={inputs.length - 1 === index}
-            handleRemove={removeSpecificFileFromItem!}
-            id={id!}
-            limitOfFiles={7}
-          />
-        ))
+        <CustomFileInput
+          key={inputTitle + id}
+          title={inputTitle}
+          dropMsg={droppMsg}
+          onDrop={onDrop}
+          files={currentFiles}
+          isShowThumb={inputs.length - 1 === index}
+          handleRemove={removeSpecificFileFromItem!}
+          id={id!}
+          limitOfFiles={7}
+        />
+      ))
       : '';
   };
 
@@ -120,8 +121,8 @@ const ViewStoreItem = ({
         })}
       </div>
     ) : (
-      ''
-    );
+        ''
+      );
   };
 
   const renderAnonUserInfoInputs = () => {
@@ -148,8 +149,8 @@ const ViewStoreItem = ({
         />
       </div>
     ) : (
-      ''
-    );
+        ''
+      );
   };
   return (
     <div className="view-store-item">

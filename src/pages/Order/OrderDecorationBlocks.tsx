@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { isMobile } from '../../utils';
+import { API_ROOT } from '../../config/routes';
 
 const Demo = () => (
   <div
@@ -42,8 +43,8 @@ class Paralax extends React.PureComponent {
   componentDidMount() {
     if (document.getElementById('js-paralax-bg')) {
       const paralaxBlc = document.getElementById(
-          'js-paralax-bg',
-        ) as HTMLElement,
+        'js-paralax-bg',
+      ) as HTMLElement,
         paralaxImg = document.getElementById('js-paralax-img') as HTMLElement,
         paralaxRect = document.getElementById('js-paralax-rect') as HTMLElement,
         word1 = document.getElementById('js-word-1') as HTMLElement,
@@ -70,9 +71,8 @@ class Paralax extends React.PureComponent {
           distY = mousePos.y - boxerCenterY;
         paralaxRect.style.marginRight = `${distX / 40}px`;
         paralaxRect.style.marginBottom = `${distY / 40}px`;
-        paralaxImg.style.transform = `translate(0px, 0px) matrix(1, 0, 0, 1, ${
-          -distX / 50
-        }, ${-distY / 50})`;
+        paralaxImg.style.transform = `translate(0px, 0px) matrix(1, 0, 0, 1, ${-distX / 50
+          }, ${-distY / 50})`;
         // "translate(0px, 0px) matrix(1, 0, 0, 1, " + -(distX/50) + ", " + -(distY/50) + ")";
 
         if (word1) {
@@ -105,18 +105,18 @@ class Paralax extends React.PureComponent {
             autoPlay={true}
             loop={true}
             preload="auto"
-            playsinline={true}
+            playsInline={true}
           >
             <source
-              src={process.env.STATIC_VIDEOS + 'video.mp4'}
-              type="video/mp4"
-            />
-            <source
-              src={process.env.STATIC + 'video/video.webm'}
+              src={`${API_ROOT}/assets/video/video.webm`}
               type="video/webm"
             />
             <source
-              src={process.env.STATIC + 'video/video.ogv'}
+              src={`${API_ROOT}/assets/video/video.mp4`}
+              type="video/mp4"
+            />
+            <source
+              src={`${API_ROOT}/assets/video/video.ogv`}
               type="video/ogg"
             />
           </video>
@@ -127,11 +127,11 @@ class Paralax extends React.PureComponent {
             <rect width="177" height="100" />
           </svg>
         ) : (
-          <svg id="js-paralax-rect" className="paralax-bg__rect">
-            <rect width="277" height="200" />
-            <rect width="277" height="200" />
-          </svg>
-        )}
+            <svg id="js-paralax-rect" className="paralax-bg__rect">
+              <rect width="277" height="200" />
+              <rect width="277" height="200" />
+            </svg>
+          )}
       </div>
     );
   }

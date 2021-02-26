@@ -6,13 +6,25 @@ import './styles.css';
 import { createPackOfSlides, createPackOfThumbs } from './tools';
 import { Button } from '../Button';
 import { loc } from './loc';
+import { loc as MobileNavigationMenuPopupLoc } from '../MobileNavigationMenuPopup/loc';
 
 SwiperCore.use([Pagination, Thumbs]);
 
 const SwiperPopup = (props: SwiperPopupProps) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState();
-  const { lang } = props;
-
+  const { lang, currentActiveGarment } = props;
+  const renderValue = ({ title, itemTitle }: RenderValue) => {
+    const locValue =
+      props.item &&
+      props.item[itemTitle] &&
+      props.item[itemTitle].title &&
+      props.item[itemTitle].title[lang];
+    const value =
+      props.item &&
+      props.item[itemTitle] &&
+      props.item[itemTitle][`${itemTitle}Name`];
+    return `${loc[lang][title]} ${locValue || value}`;
+  };
   return (
     <div className="swiper-popup-container">
       <div className="text-block">
@@ -56,7 +68,9 @@ const SwiperPopup = (props: SwiperPopupProps) => {
           <div className="text-block__breadcrumbs">
             <a href="/">{loc[lang].order}</a>
             <span>/</span>
-            <a onClick={props!.closeButton}>{loc[lang].shirt}</a>
+            <a onClick={props!.closeButton}>
+              {MobileNavigationMenuPopupLoc[lang][currentActiveGarment]}
+            </a>
             <span>/</span>
             <a onClick={props!.closeButton}>
               {props.item!.elementInfo!.group === 'fabric_ref'
@@ -79,25 +93,20 @@ const SwiperPopup = (props: SwiperPopupProps) => {
           <h2>{loc[lang].productInfo}</h2>
           {props.item!.elementInfo!.group === 'fabric_ref' ? (
             <>
-              <p>Brand: Andrezza & Castelli</p>
+              <p>
+                {renderValue({
+                  title: 'manufacturer',
+                  itemTitle: 'manufacturer',
+                })}
+              </p>
               <p>{props.item!.description![lang]}</p>
               <p>
-                {loc[lang].fabricColor}
-                {props.item &&
-                  props.item.main_color &&
-                  props!.item.main_color.title[lang]}
+                {renderValue({ title: 'fabricColor', itemTitle: 'main_color' })}
               </p>
-              <p>
-                {loc[lang].fabric}{' '}
-                {props.item &&
-                  props.item.pattern &&
-                  props.item.pattern.title[lang]}
-              </p>
-              <p>{loc[lang].density}</p>
+              <p>{renderValue({ title: 'pattern', itemTitle: 'pattern' })}</p>
+              <p>{renderValue({ title: 'weight', itemTitle: 'weight' })}</p>
               <p>{loc[lang].composition}</p>
-              <p>{loc[lang].catalog}</p>
-              <p>{loc[lang].category}</p>
-              <p>{loc[lang].design}</p>
+              <p>{renderValue({ title: 'catalog', itemTitle: 'catalog' })}</p>
               <p>{loc[lang].clothLeft}</p>
             </>
           ) : (

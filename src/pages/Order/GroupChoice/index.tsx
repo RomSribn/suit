@@ -16,11 +16,14 @@ import { Navlinks } from '../../../components/Header/HeaderContent/navlinks';
 import { PopUp } from '../../../containers/Popup';
 
 @inject<CommonStores, GroupChoiceProps, {}, unknown>(
-  ({ order, app, filterStore, user, garments: { Subgroups, garments } }) => {
+  (
+    { order, app, filterStore, user, garments: { Subgroups, garments } },
+    nextProps,
+  ) => {
     return {
       userStore: user,
       activeGarments: [...garments!.activeGarments],
-      subgroupsStore: new Subgroups('shirt'),
+      subgroupsStore: new Subgroups(nextProps.match.params.garment),
       app,
       filterStore,
       orderStore: order,
@@ -93,7 +96,7 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
         !isLandscape() &&
         choiceItemValue &&
         choiceItemValue!.length > 15) ||
-      !(isMobile || (isTablet() && !isLandscape()))
+        !(isMobile || (isTablet() && !isLandscape()))
         ? choiceItemValue!.slice(0, 12) + '…'
         : choiceItemValue;
 
@@ -112,7 +115,6 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
     let matchUrlPathArray = this.props.match.url.split('/');
     const pathArray = window.location.pathname.split('/');
     const lastParametr = pathArray[pathArray.length - 1];
-
     const content = (
       <>
         <span className="custom__content">
@@ -123,16 +125,16 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
               lang={lang}
             />
           ) : (
-            <>
-              <span className="custom__name">{name}:</span>
-              <span className="custom__status">{itemValue}</span>
-              {lastParametr !== 'fabric' && (
-                <div className="custom__control-btn">
-                  <span className="span" />
-                </div>
-              )}
-            </>
-          )}
+              <>
+                <span className="custom__name">{name}:</span>
+                <span className="custom__status">{itemValue}</span>
+                {lastParametr !== 'fabric' && (
+                  <div className="custom__control-btn">
+                    <span className="span" />
+                  </div>
+                )}
+              </>
+            )}
         </span>
       </>
     );
@@ -157,8 +159,8 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
                 style={{
                   display:
                     lastParametr === 'fabric' ||
-                    lastParametr === 'design' ||
-                    lastParametr === 'fitting'
+                      lastParametr === 'design' ||
+                      lastParametr === 'fitting'
                       ? 'block'
                       : 'none',
                   cursor: 'pointer',
@@ -167,8 +169,8 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
                     this.props.app && this.props.app.isSearchBarOpened
                       ? 'unset'
                       : isMobile
-                      ? 'translateX(60%)'
-                      : 'translateX(74%)',
+                        ? 'translateX(60%)'
+                        : 'translateX(74%)',
                 }}
                 className="search"
               >
@@ -219,12 +221,11 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
                   />
                   <span
                     className={`icon-close search__clear search__fabric
-                                        ${
-                                          this.props.app &&
-                                          this.props.app.isSearchBarOpened
-                                            ? 'show'
-                                            : ''
-                                        }`}
+                                        ${this.props.app &&
+                        this.props.app.isSearchBarOpened
+                        ? 'show'
+                        : ''
+                      }`}
                     title="Clear"
                     onClick={() => {
                       this.props.app!.toggleIsSearchBarOpened();

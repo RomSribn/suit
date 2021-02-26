@@ -7,13 +7,11 @@ interface Locale {
   continue: string;
   currency: string;
   productInfo: string;
+  manufacturer: string;
   fabricColor: string;
-  figure: string;
-  density: string;
-  composition: string;
+  pattern: string;
+  weight: string;
   catalog: string;
-  category: string;
-  design: string;
   clothLeft: string;
   designLink: string;
 }
@@ -27,15 +25,13 @@ export const loc: MakeLocale<Locale> = {
     clothSelected: 'cloth selected',
     designSelected: 'Design selected',
     continue: 'continue',
-    currency: '€',
+    currency: '$',
     productInfo: 'Product info',
+    manufacturer: 'Manufacturer:',
     fabricColor: 'Fabric color:',
-    figure: 'Figure:',
-    density: 'Density: 120-140',
-    composition: 'Composition: cotton',
-    catalog: 'Catalog: CLASSIC A-1',
-    category: 'Category: 40-50s Classic',
-    design: 'Design: 50',
+    pattern: 'Pattern:',
+    weight: 'Weight:',
+    catalog: 'Catalog:',
     clothLeft: 'Cloth left: 22m',
   },
   ru: {
@@ -48,13 +44,11 @@ export const loc: MakeLocale<Locale> = {
     continue: 'продолжить',
     currency: '₽',
     productInfo: 'Информация о товаре',
+    manufacturer: 'Производитель:',
     fabricColor: 'Цвет ткани:',
-    figure: 'Рисунок:',
-    density: 'Плотность: 120-140',
-    composition: 'Состав: Хлопок',
-    catalog: 'Каталог: CLASSIC A-1',
-    category: 'Категория: 40-50s Classic',
-    design: 'Конструкция: 50',
+    pattern: 'Рисунок:',
+    weight: 'Вес:',
+    catalog: 'Каталог:',
     clothLeft: 'Осталось ткани: 22 м',
   },
 };

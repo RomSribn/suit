@@ -8,6 +8,7 @@ interface GalleryBarProps {
   activeElementIndex: number;
   filterStore?: IFilterStore;
   activeGarments?: string[];
+  currentActiveGarment?: string;
   setOrderDummyParams?: (params: string[]) => void;
   setFocusableGarment?: (our_code: string) => void;
 }

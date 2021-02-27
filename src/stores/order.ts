@@ -169,10 +169,10 @@ export class OrderStore implements IOrderStore {
             this,
             `defaultValues.${garment}[0].${group}.${element}.isItemClear`,
           ) &&
-            _.get(
-              this,
-              `defaultValues.${garment}[0].${group}.${element}.isSubClear`,
-            )
+          _.get(
+            this,
+            `defaultValues.${garment}[0].${group}.${element}.isSubClear`,
+          )
             ? null
             : _.get(this, `defaultValues.${garment}[0].${group}.${element}`);
       }
@@ -347,9 +347,9 @@ export class OrderStore implements IOrderStore {
                 } else {
                   const value = additionalFabric
                     ? {
-                      id: activeElement.our_code,
-                      materials: [additionalFabric],
-                    }
+                        id: activeElement.our_code,
+                        materials: [additionalFabric],
+                      }
                     : activeElement.our_code;
                   acc.push(value);
                 }
@@ -653,9 +653,9 @@ export class OrderStore implements IOrderStore {
             [_.get(_cur, 'subsectionOurCode')]: {
               exceptions: _.get(_cur, 'exception')
                 ? _.get(_cur, 'exception')
-                  .split(',')
-                  .map((subException: string) => subException.trim())
-                  .filter((subException: string) => subException !== '')
+                    .split(',')
+                    .map((subException: string) => subException.trim())
+                    .filter((subException: string) => subException !== '')
                 : [],
               titleSubGroup: _.get(_cur, 'subsectionTitle'),
               titleElement: _.get(_cur, 'title'),

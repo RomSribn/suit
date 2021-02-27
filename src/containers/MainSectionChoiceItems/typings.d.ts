@@ -8,4 +8,5 @@ interface ChoiceItemsProps {
   addVisitedChoiceItem?(name: string): void;
   removeVisitedChoiceItem?(name: string): void;
   activeGarments?: string[];
+  setSelectedItems?: SelectedItemsAction;
 }

@@ -14,7 +14,7 @@ interface GalleryItemState extends ImageLoadState {
 interface P {
   activeGarments?: string[];
   hiddenGarments?: IHiddenGarments;
-  setSelectedItems?: (props: ISetSelectedItemsProps) => void;
+  setSelectedItems?: SelectedItemsAction;
   setIsGarmentLoaded?: (isGarmentLoaded: boolean) => void;
   isGarmentLoaded?: boolean;
   group?: string;
@@ -139,7 +139,6 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       `[${garment}][${group}][${partOfShirtToggle}]`,
       '',
     );
-
     if (garment === 'shirt' && group === 'fabric_ref') {
       const comparedValue = codeInStoreShirt || codeInOrder;
       return comparedValue === our_code;

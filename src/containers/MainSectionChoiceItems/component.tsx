@@ -221,21 +221,28 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
       removeVisitedChoiceItem,
       orderStore,
       activeGarments = [],
+      setSelectedItems
     } = this.props;
     const {
       clearException,
       clearElement,
       setActiveItem,
       setOrderDummyParams,
+      defaultValues,
+      activeElement,
     } = orderStore!;
+    const elementInfo = activeElement!.elementInfo;
     e.preventDefault();
     e.stopPropagation();
     removeVisitedChoiceItem!(element);
-
     clearException(garment, element, 'click');
     clearElement(garment, element, 'click');
     setActiveItem(null);
     setOrderDummyParams(activeGarments);
+    setSelectedItems!({
+      ...elementInfo,
+      our_code: defaultValues![garment][0][elementInfo.group][element].our_code,
+    });
   };
 
   render() {

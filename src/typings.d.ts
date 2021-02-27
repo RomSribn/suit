@@ -114,6 +114,8 @@ interface GalleryStoreItem {
   price: Translations<number>;
   defaultItem: boolean;
   fabric_code: string;
+  manufacturer: { id: number; manufacturerName: string };
+  catalog: { id: number; catalogName: string };
   elementInfo: {
     garment: string;
     group: 'fitting' | 'design' | 'fabric_ref';

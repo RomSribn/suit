@@ -111,7 +111,6 @@ class Widget extends PureComponent {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
     if (!isEqualProps) {
-      debugger;
       const garment =
         _.get(this, 'props.orderStore.activeElement.elementInfo.garment') ||
         'shirt';
@@ -126,105 +125,12 @@ class Widget extends PureComponent {
         'props.orderStore.activeElement.our_code',
         null,
       );
-      // const subGroup = _.get(
-      //   this,
-      //   'props.orderStore.activeElement.elementInfo.subGroup',
-      // );
       const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
-      // const trimmedActiveElementCode = activeElementCode.slice(0, 3);
-      // const codeActiveElementSubgroup =
-      //   ourCodesToSubgroup[garment][trimmedActiveElementCode];
       const defaultExceptions = _.get(
         this,
         `props.orderStore.defaultExceptions[${garment}][${group.id}].exceptions`,
         [],
       );
-
-      // let allExceptions = exceptions
-      //   ? Object.keys(exceptions).reduce((ac, garmentKey) => {
-      //       Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-      //         if (
-      //           elementKey !== subGroup &&
-      //           exceptions[garmentKey][elementKey].exceptions
-      //         ) {
-      //           ac.push(...exceptions[garmentKey][elementKey].exceptions);
-      //         }
-      //       });
-
-      //       return ac;
-      //     }, [])
-      //   : [];
-
-      // const defaultItemValues = {
-      //   shirt: {},
-      //   jacket: {},
-      //   pants: {},
-      // };
-      // if (defaultValues) {
-      //   Object.keys(defaultValues)
-      //     .filter((item) => !item.includes(['manequin']))
-      //     .map((filteredGarment) =>
-      //       defaultValues[filteredGarment]
-      //         .reduce((ac, i) => [...ac, i], [])
-      //         .map((garmentObject) =>
-      //           Object.keys(garmentObject.design).forEach(
-      //             (elementKey) =>
-      //               (defaultItemValues[filteredGarment][elementKey] =
-      //                 garmentObject.design[elementKey].our_code),
-      //           ),
-      //         ),
-      //     );
-      // }
-      // debugger;
-      // const assetsIds = this.props.assets.map((asset) => asset.id || asset);
-      // const mutuallyExclusiveItems = activeExceptions.filter(
-      //   (activeExceptionCode) => assetsIds.includes(activeExceptionCode),
-      // );
-
-      // if (mutuallyExclusiveItems.length && exceptions) {
-      //   mutuallyExclusiveItems.forEach((item) => {
-      //     Object.keys(exceptions).forEach((garmentKey) => {
-      //       Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-      //         if (
-      //           exceptions[garmentKey][elementKey].exceptions &&
-      //           exceptions[garmentKey][elementKey].exceptions.includes(
-      //             activeElementCode,
-      //           )
-      //         ) {
-      //           allExceptions = allExceptions.filter((i) => {
-      //             if (
-      //               // exceptions[garment][elementKey].exceptions.includes(i) &&
-      //               // !exceptions[garmentKey][elementKey].is_active_clear
-      //               true
-      //             ) {
-      //               if (
-      //                 Object.keys(defaultItemValues[garment][elementKey])
-      //                   .length &&
-      //                 !this.props.assets.includes(
-      //                   defaultItemValues[garment][elementKey],
-      //                 )
-      //               ) {
-      //                 this.props.assets.push(
-      //                   defaultItemValues[garment][elementKey],
-      //                 );
-      //                 // this.props.assets.push(defaultItemValues[elementKey]);
-      //               }
-      //             }
-      //             return !exceptions[garmentKey][
-      //               elementKey
-      //             ].exceptions.includes(i);
-      //           });
-      //         }
-      //       });
-      //     });
-      //   });
-      // }
-
-      // const actualExceptions = [...allExceptions, ...activeExceptions];
-      // const nextAssets = this.props.assets.filter((asset) => {
-      //   const id = asset.id ? asset.id : asset;
-      //   return !actualExceptions.includes(id);
-      // });
 
       const exception = [...activeExceptions, ...defaultExceptions];
 
@@ -250,7 +156,6 @@ class Widget extends PureComponent {
           return;
         });
       }
-      debugger;
       /**
        * При загрузке без кеша все хорошо.
        * Но по какой-то непонятной ссаной бесовщине при перезагузке
@@ -416,7 +321,6 @@ export default class App extends Component {
         {subgroup && (
           <Redirect to={`/order/details/shirt/design/${subgroup}`} />
         )}
-        {params.join(', ')}
         <Widget
           selected={focusableGarment}
           paramsSelectedCount={params.length}

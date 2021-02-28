@@ -38,8 +38,10 @@ let demoSectionWidth = 400;
     order,
     garments: { Subgroups, garments },
     app: { setDummyY, isMenuUncovered, setIsGarmentLoaded, orderPath },
+    filterStore: { setSelectedItems },
     galleryStore,
   }) => ({
+    setSelectedItems,
     orderStore: order,
     group: [...orderPath].pop(),
     garments,
@@ -114,7 +116,7 @@ class Widget extends PureComponent {
       const garment =
         _.get(this, 'props.orderStore.activeElement.elementInfo.garment') ||
         'shirt';
-      const group = _.get(this, 'props.group', '');
+      const group = _.get(this, 'props.group', { id: 'design' });
       const activeExceptions = _.get(
         this,
         'props.orderStore.activeElement.exception',
@@ -138,7 +140,6 @@ class Widget extends PureComponent {
         const id = asset.id ? asset.id : asset;
         return !exception.includes(id);
       });
-
       if (exception.length) {
         exception.forEach((item) => {
           const trimmedCode = item.slice(0, 3);
@@ -149,6 +150,21 @@ class Widget extends PureComponent {
               `props.orderStore.order[${garment}][0].design[${codeSubgroup}].isItemClear`,
             )
           ) {
+            // TODO: let order get visible elements to the store,
+            //       without multiply elements effects ( move to the mobx )
+            const newOrder = {
+              ...this.props.orderStore.order,
+            };
+            newOrder[garment][0].design[codeSubgroup] =
+              defaultValues[garment][0].design[codeSubgroup];
+            this.props.orderStore.setOrder(newOrder);
+
+            this.props.setSelectedItems({
+              our_code: defaultValues[garment][0].design[codeSubgroup].our_code,
+              garment,
+              group: 'design',
+              subGroup: codeSubgroup,
+            });
             defaultValues[garment][0].design[codeSubgroup] &&
               nextAssets.push(
                 defaultValues[garment][0].design[codeSubgroup].our_code,
@@ -157,6 +173,11 @@ class Widget extends PureComponent {
           return;
         });
       }
+      const parsedActiveGarments = this.props.garments.activeGarments.filter(
+        (el) =>
+          !Object.values(this.props.orderStore.hiddenGarments).includes(el),
+      );
+      this.props.orderStore.setOrderDummyParams(parsedActiveGarments);
       /**
        * При загрузке без кеша все хорошо.
        * Но по какой-то непонятной ссаной бесовщине при перезагузке
@@ -315,13 +336,13 @@ export default class App extends Component {
         }
       }
     }
-
     wasRendered = true;
     return (
       <React.Fragment>
         {subgroup && (
           <Redirect to={`/order/details/shirt/design/${subgroup}`} />
         )}
+        {params.join(', ')}
         <Widget
           selected={focusableGarment}
           paramsSelectedCount={params.length}

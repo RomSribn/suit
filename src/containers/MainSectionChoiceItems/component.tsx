@@ -227,7 +227,11 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
       clearElement,
       setActiveItem,
       setOrderDummyParams,
+      hiddenGarments
     } = orderStore!;
+    const parsedActiveGarments = activeGarments!.filter(
+      (el) => !Object.values(hiddenGarments!).includes(el),
+    );
     e.preventDefault();
     e.stopPropagation();
     removeVisitedChoiceItem!(element);
@@ -235,7 +239,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
     clearException(garment, element, 'click');
     clearElement(garment, element, 'click');
     setActiveItem(null);
-    setOrderDummyParams(activeGarments);
+    setOrderDummyParams(parsedActiveGarments);
   };
 
   render() {

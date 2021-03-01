@@ -113,6 +113,7 @@ class Widget extends PureComponent {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
     if (!isEqualProps) {
+      const newOrder = { ...this.props.orderStore.order };
       const garment =
         _.get(this, 'props.orderStore.activeElement.elementInfo.garment') ||
         'shirt';
@@ -128,6 +129,7 @@ class Widget extends PureComponent {
         null,
       );
       const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
+      _.set(defaultValues, 'shirt[0].design.sleeves.our_code', 'slv1');
       const defaultExceptions = _.get(
         this,
         `props.orderStore.defaultExceptions[${garment}][${group.id}].exceptions`,
@@ -152,13 +154,12 @@ class Widget extends PureComponent {
           ) {
             // TODO: let order get visible elements to the store,
             //       without multiply elements effects ( move to the mobx )
-            const newOrder = {
-              ...this.props.orderStore.order,
-            };
+            // if (item.includes('cfs')) {
+            //   delete newOrder.shirt[0].design.cuffs;
+            // }
             newOrder[garment][0].design[codeSubgroup] =
               defaultValues[garment][0].design[codeSubgroup];
             this.props.orderStore.setOrder(newOrder);
-
             this.props.setSelectedItems({
               our_code: defaultValues[garment][0].design[codeSubgroup].our_code,
               garment,
@@ -166,11 +167,13 @@ class Widget extends PureComponent {
               subGroup: codeSubgroup,
             });
             defaultValues[garment][0].design[codeSubgroup] &&
+              !nextAssets.includes(
+                defaultValues[garment][0].design[codeSubgroup].our_code,
+              ) &&
               nextAssets.push(
                 defaultValues[garment][0].design[codeSubgroup].our_code,
               );
           }
-          return;
         });
       }
       const parsedActiveGarments = this.props.garments.activeGarments.filter(
@@ -342,7 +345,6 @@ export default class App extends Component {
         {subgroup && (
           <Redirect to={`/order/details/shirt/design/${subgroup}`} />
         )}
-        {params.join(', ')}
         <Widget
           selected={focusableGarment}
           paramsSelectedCount={params.length}

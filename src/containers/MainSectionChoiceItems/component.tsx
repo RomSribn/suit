@@ -239,10 +239,12 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
     clearElement(garment, element, 'click');
     setActiveItem(null);
     setOrderDummyParams(activeGarments);
-    setSelectedItems!({
-      ...elementInfo,
-      our_code: defaultValues![garment][0][elementInfo.group][element].our_code,
-    });
+    if (defaultValues![garment][0][elementInfo.group]) {
+      setSelectedItems!({
+        ...elementInfo,
+        our_code: defaultValues![garment][0][elementInfo.group].our_code,
+      });
+    }
   };
 
   render() {

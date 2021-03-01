@@ -129,7 +129,13 @@ class Widget extends PureComponent {
         null,
       );
       const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
+      // TODO:because of weird reset of standard sleeves value to slv4
       _.set(defaultValues, 'shirt[0].design.sleeves.our_code', 'slv1');
+      _.set(defaultValues, 'shirt[0].design.sleeves.title', {
+        en: 'standard',
+        ru: 'стандартный',
+      });
+
       const defaultExceptions = _.get(
         this,
         `props.orderStore.defaultExceptions[${garment}][${group.id}].exceptions`,

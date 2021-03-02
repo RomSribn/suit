@@ -200,14 +200,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
   }
 
   render() {
-    const {
-      onMouseEnter,
-      onMouseLeave,
-      userFilters,
-      item,
-      isGarmentLoaded,
-      app,
-    } = this.props;
+    const { onMouseEnter, onMouseLeave, isGarmentLoaded } = this.props;
 
     const { isActive } = this.state;
 
@@ -215,90 +208,55 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       img_url_2d: image,
       img_url_2d_list,
       our_code: id,
-      title,
       elementInfo,
-      manufacturer,
-      catalog,
     } = this.props.item;
     if (!this.state.load.success) {
       return null;
     }
 
-    // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
-    // только при рефакторе всего проекта
-    if (userFilters) {
-      const filterNames = Object.keys(userFilters);
-
-      for (const name in filterNames) {
-        // Если в массиве значений данного фильтра filters[name]
-        // есть такое же значение, как у данного элемента галлереи,
-        // тогда выходим с метода
-        if (
-          userFilters[name] &&
-          userFilters[name].includes(item[name].filterValue)
-        ) {
-          return null;
-        }
-      }
-    }
-
-    const isSearchedValue =
-      app &&
-      app.currentSearchValue &&
-      (id.includes(app.currentSearchValue.toLowerCase()) ||
-        title.en.toLowerCase().includes(app.currentSearchValue.toLowerCase()) ||
-        manufacturer && manufacturer.manufacturerName
-          .toLocaleLowerCase()
-          .includes(app.currentSearchValue.toLowerCase()) ||
-        catalog && catalog.catalogName
-          .toLocaleLowerCase()
-          .includes(app.currentSearchValue.toLowerCase()));
-
     const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
     const hoverImg = isFabricImg
-      ? `${process.env.API_ROOT}${(img_url_2d_list.length > 1 && img_url_2d_list[1].slice(5)) || id
-      }`
+      ? `${process.env.API_ROOT}${
+          (img_url_2d_list.length > 1 && img_url_2d_list[1].slice(5)) || id
+        }`
       : image;
     return (
       <>
-        {this.props.app &&
-          (window.location.pathname.includes('design') || isSearchedValue)
-          && (
+        {this.props.app && (
+          <div
+            onClick={(e) => this.handleSelectGarment(e, this.props)}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className={classnames('gallery__item-blc', {
+              landscape: isMobile() && isLandscape(),
+            })}
+          >
             <div
-              onClick={(e) => this.handleSelectGarment(e, this.props)}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
-              className={classnames('gallery__item-blc', {
-                landscape: isMobile() && isLandscape(),
+              className={classnames('gallery__item', {
+                active: isActive && isGarmentLoaded,
               })}
             >
-              <div
-                className={classnames('gallery__item', {
-                  active: isActive && isGarmentLoaded,
-                })}
-              >
-                <img
-                  src={hoverImg}
-                  className="gallery__item--hover-image"
-                  alt={`${id}`}
+              <img
+                src={hoverImg}
+                className="gallery__item--hover-image"
+                alt={`${id}`}
+              />
+              <img
+                src={image}
+                className="gallery__item--main-image"
+                alt={`${id}`}
+              />
+              {this.props.app && this.props.app.changeSearchedItemsCount()}
+              {isActive && !isGarmentLoaded && <SquareSpinner />}
+              {isActive && this.props.app && (
+                <span
+                  onClick={() => this.handleToggleSwipe(this.props)}
+                  className="zoom-icon"
                 />
-                <img
-                  src={image}
-                  className="gallery__item--main-image"
-                  alt={`${id}`}
-                />
-                {this.props.app &&
-                  this.props.app.changeSearchedItemsCount()}
-                {isActive && !isGarmentLoaded && <SquareSpinner />}
-                {isActive && this.props.app && (
-                  <span
-                    onClick={() => this.handleToggleSwipe(this.props)}
-                    className="zoom-icon"
-                  />
-                )}
-              </div>
+              )}
             </div>
-          )}
+          </div>
+        )}
       </>
     );
   }
@@ -392,6 +350,7 @@ const makeGalleryItems: makeGalleryItems = (
       />
     );
   });
+
   galleryItemsCache[cache] = result;
   return result;
 };
@@ -510,12 +469,53 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       currentActiveGarment,
       app,
       setOrderDummyParams,
+      filterStore,
     } = this.props;
     const { renderedElementsCount } = this.state;
+    const filteredItems = window.location.pathname.includes('design')
+      ? items
+      : items.filter((item: GalleryStoreItem) => {
+          const { our_code: id, title, manufacturer, catalog } = item;
+          const userFilters = filterStore && filterStore.userFilters;
+          // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
+          // только при рефакторе всего проекта
+          if (userFilters) {
+            const filterNames = Object.keys(userFilters);
+
+            for (const name in filterNames) {
+              // Если в массиве значений данного фильтра filters[name]
+              // есть такое же значение, как у данного элемента галлереи,
+              // тогда выходим с метода
+              if (
+                userFilters[name] &&
+                userFilters[name].includes(item[name].filterValue)
+              ) {
+                return false;
+              }
+            }
+          }
+          const isSearchedValue =
+            app &&
+            app.currentSearchValue &&
+            (id.includes(app.currentSearchValue.toLowerCase()) ||
+              title.en
+                .toLowerCase()
+                .includes(app.currentSearchValue.toLowerCase()) ||
+              (manufacturer &&
+                manufacturer.manufacturerName
+                  .toLocaleLowerCase()
+                  .includes(app.currentSearchValue.toLowerCase())) ||
+              (catalog &&
+                catalog.catalogName
+                  .toLocaleLowerCase()
+                  .includes(app.currentSearchValue.toLowerCase())));
+
+          return isSearchedValue;
+        });
     const activeItems =
-      renderedElementsCount > items.length
-        ? items
-        : items.slice(0, renderedElementsCount);
+      renderedElementsCount > filteredItems.length
+        ? filteredItems
+        : filteredItems.slice(0, renderedElementsCount);
     return (
       <div
         className="gallery__bar"

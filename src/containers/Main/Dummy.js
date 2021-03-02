@@ -4,6 +4,7 @@ import './styles.demo.styl';
 import { API_ROOT } from '../../config/routes';
 import { currentItems } from '../../stores/garments/galleryStore';
 import { isMobile, listeners } from '../../utils';
+import { ourCodesToSubgroup } from '../../utils/variables';
 import { observer, inject } from 'mobx-react';
 import { Redirect } from 'react-router';
 import { toJS } from 'mobx';
@@ -35,10 +36,16 @@ let demoSectionWidth = 400;
 @inject(
   ({
     order,
-    garments: { Subgroups },
-    app: { setDummyY, isMenuUncovered, setIsGarmentLoaded },
+    garments: { Subgroups, garments },
+    app: { setDummyY, isMenuUncovered, setIsGarmentLoaded, orderPath },
+    filterStore: { setSelectedItems },
+    galleryStore,
   }) => ({
+    setSelectedItems,
     orderStore: order,
+    group: [...orderPath].pop(),
+    garments,
+    galleryStore,
     SubgroupsStore: new Subgroups('shirt'),
     setDummyY,
     isMenuUncovered,
@@ -106,7 +113,11 @@ class Widget extends PureComponent {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
     if (!isEqualProps) {
-      const exceptions = _.get(this, 'props.orderStore.exceptions', []);
+      const newOrder = { ...this.props.orderStore.order };
+      const garment =
+        _.get(this, 'props.orderStore.activeElement.elementInfo.garment') ||
+        'shirt';
+      const group = _.get(this, 'props.group', { id: 'design' });
       const activeExceptions = _.get(
         this,
         'props.orderStore.activeElement.exception',
@@ -117,86 +128,65 @@ class Widget extends PureComponent {
         'props.orderStore.activeElement.our_code',
         null,
       );
-      const subGroup = _.get(
-        this,
-        'props.orderStore.activeElement.elementInfo.subGroup',
-      );
       const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
-      let allExceptions = exceptions
-        ? Object.keys(exceptions).reduce((ac, garmentKey) => {
-            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-              if (
-                elementKey !== subGroup &&
-                exceptions[garmentKey][elementKey].exceptions
-              ) {
-                ac.push(...exceptions[garmentKey][elementKey].exceptions);
-              }
-            });
-
-            return ac;
-          }, [])
-        : [];
-
-      const defaultItemValues = {};
-      if (defaultValues) {
-        Object.keys(defaultValues)
-          .filter((item) => !item.includes(['manequin']))
-          .map((filteredGarment) =>
-            defaultValues[filteredGarment]
-              .reduce((ac, i) => [...ac, i], [])
-              .map((garmentObject) =>
-                Object.keys(garmentObject.design).forEach(
-                  (elementKey) =>
-                    (defaultItemValues[elementKey] =
-                      garmentObject.design[elementKey].our_code),
-                ),
-              ),
-          );
-      }
-      const assetsIds = this.props.assets.map((asset) => asset.id || asset);
-      const mutuallyExclusiveItems = activeExceptions.filter(
-        (activeExceptionCode) => assetsIds.includes(activeExceptionCode),
-      );
-
-      if (mutuallyExclusiveItems.length && exceptions) {
-        mutuallyExclusiveItems.forEach((item) => {
-          Object.keys(exceptions).forEach((garmentKey) => {
-            Object.keys(exceptions[garmentKey]).forEach((elementKey) => {
-              if (
-                exceptions[garmentKey][elementKey].exceptions &&
-                exceptions[garmentKey][elementKey].exceptions.includes(
-                  activeElementCode,
-                )
-              ) {
-                allExceptions = allExceptions.filter((i) => {
-                  if (
-                    exceptions[garmentKey][elementKey].exceptions.includes(i) &&
-                    !exceptions[garmentKey][elementKey].is_active_clear
-                  ) {
-                    if (
-                      defaultItemValues[elementKey] &&
-                      !this.props.assets.includes(defaultItemValues[elementKey])
-                    ) {
-                      this.props.assets.push(defaultItemValues[elementKey]);
-                    }
-                  }
-
-                  return !exceptions[garmentKey][
-                    elementKey
-                  ].exceptions.includes(i);
-                });
-              }
-            });
-          });
-        });
-      }
-
-      const actualExceptions = [...allExceptions, ...activeExceptions];
-      const nextAssets = this.props.assets.filter((asset) => {
-        const id = asset.id ? asset.id : asset;
-        return !actualExceptions.includes(id);
+      // TODO:because of weird reset of standard sleeves value to slv4
+      _.set(defaultValues, 'shirt[0].design.sleeves.our_code', 'slv1');
+      _.set(defaultValues, 'shirt[0].design.sleeves.title', {
+        en: 'standard',
+        ru: 'стандартный',
       });
 
+      const defaultExceptions = _.get(
+        this,
+        `props.orderStore.defaultExceptions[${garment}][${group.id}].exceptions`,
+        [],
+      );
+
+      const exception = [...activeExceptions, ...defaultExceptions];
+
+      const nextAssets = this.props.assets.filter((asset) => {
+        const id = asset.id ? asset.id : asset;
+        return !exception.includes(id);
+      });
+      if (exception.length) {
+        exception.forEach((item) => {
+          const trimmedCode = item.slice(0, 3);
+          const codeSubgroup = ourCodesToSubgroup[garment][trimmedCode];
+          if (
+            !_.get(
+              this,
+              `props.orderStore.order[${garment}][0].design[${codeSubgroup}].isItemClear`,
+            )
+          ) {
+            // TODO: let order get visible elements to the store,
+            //       without multiply elements effects ( move to the mobx )
+            // if (item.includes('cfs')) {
+            //   delete newOrder.shirt[0].design.cuffs;
+            // }
+            newOrder[garment][0].design[codeSubgroup] =
+              defaultValues[garment][0].design[codeSubgroup];
+            this.props.orderStore.setOrder(newOrder);
+            this.props.setSelectedItems({
+              our_code: defaultValues[garment][0].design[codeSubgroup].our_code,
+              garment,
+              group: 'design',
+              subGroup: codeSubgroup,
+            });
+            defaultValues[garment][0].design[codeSubgroup] &&
+              !nextAssets.includes(
+                defaultValues[garment][0].design[codeSubgroup].our_code,
+              ) &&
+              nextAssets.push(
+                defaultValues[garment][0].design[codeSubgroup].our_code,
+              );
+          }
+        });
+      }
+      const parsedActiveGarments = this.props.garments.activeGarments.filter(
+        (el) =>
+          !Object.values(this.props.orderStore.hiddenGarments).includes(el),
+      );
+      this.props.orderStore.setOrderDummyParams(parsedActiveGarments);
       /**
        * При загрузке без кеша все хорошо.
        * Но по какой-то непонятной ссаной бесовщине при перезагузке
@@ -355,7 +345,6 @@ export default class App extends Component {
         }
       }
     }
-
     wasRendered = true;
     return (
       <React.Fragment>

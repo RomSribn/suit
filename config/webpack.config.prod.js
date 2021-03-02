@@ -1,5 +1,3 @@
-
-
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -13,7 +11,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -45,7 +43,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-  { publicPath: Array(cssFilename.split('/').length).join('../') }
+    { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -70,7 +68,7 @@ module.exports = {
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: info =>
+    devtoolModuleFilenameTemplate: (info) =>
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
@@ -82,7 +80,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: ['node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -103,7 +101,6 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -150,7 +147,6 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
               compact: true,
             },
           },
@@ -183,7 +179,7 @@ module.exports = {
           {
             test: /\.styl$/,
             use: [
-              require.resolve("style-loader"),
+              require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
@@ -211,12 +207,12 @@ module.exports = {
                 },
               },
               {
-                loader: "stylus-loader",
+                loader: 'stylus-loader',
                 options: {
                   sourceMap: true,
                 },
               },
-            ]
+            ],
           },
           {
             test: /\.css$/,
@@ -260,8 +256,8 @@ module.exports = {
                     },
                   ],
                 },
-                extractTextPluginOptions
-              )
+                extractTextPluginOptions,
+              ),
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
@@ -317,32 +313,32 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // // Minify the code.
-    // new UglifyJsPlugin({
-    //   parallel: true,
-    //   cache: true,
-    //   uglifyOptions: {
-    //     ecma: 8,
-    //     compress: {
-    //       warnings: false,
-    //       // Disabled because of an issue with Uglify breaking seemingly valid code:
-    //       // https://github.com/facebookincubator/create-react-app/issues/2376
-    //       // Pending further investigation:
-    //       // https://github.com/mishoo/UglifyJS2/issues/2011
-    //       comparisons: false,
-    //     },
-    //     mangle: {
-    //       safari10: true,
-    //     },
-    //     output: {
-    //       comments: false,
-    //       // Turned on because emoji and regex is not minified properly using default
-    //       // https://github.com/facebookincubator/create-react-app/issues/2488
-    //       ascii_only: true,
-    //     },
-    //   },
-    //   sourceMap: shouldUseSourceMap,
-    // }),
+    // Minify the code.
+    new UglifyJsPlugin({
+      parallel: true,
+      cache: true,
+      uglifyOptions: {
+        ecma: 8,
+        compress: {
+          warnings: false,
+          // Disabled because of an issue with Uglify breaking seemingly valid code:
+          // https://github.com/facebookincubator/create-react-app/issues/2376
+          // Pending further investigation:
+          // https://github.com/mishoo/UglifyJS2/issues/2011
+          comparisons: false,
+        },
+        mangle: {
+          safari10: true,
+        },
+        output: {
+          comments: false,
+          // Turned on because emoji and regex is not minified properly using default
+          // https://github.com/facebookincubator/create-react-app/issues/2488
+          ascii_only: true,
+        },
+      },
+      sourceMap: shouldUseSourceMap,
+    }),
     //revert ORDER151
     // new webpack.optimize.UglifyJsPlugin({
     //   parallel: true,
@@ -369,7 +365,8 @@ module.exports = {
     //   },
     //   sourceMap: shouldUseSourceMap,
     // }), //minify everything
-    // new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
+    // new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,

@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { prepareTableData } from './utils';
 import { parseQuery } from '../../utils/common';
 import { CommonStores } from '../../types/commonStores';
+import { testOrder1, testOrder2 } from './testOrder';
 
 @inject<CommonStores, ListOrdersProps, {}, {}>(
   ({ ordersStore, routing, user, app }) => {
@@ -25,17 +26,22 @@ class ListOrders extends React.Component<ListOrdersProps> {
     const fetchByRole = {
       STYLIST: this.props.ordersStore!.fetch,
       CUSTOMER: this.props.ordersStore!.fetchCustomerOrders,
+      ANON: this.props.ordersStore!.fetch,
     };
-    fetchByRole[this.props.role!]();
+    const role = this.props.role || 'ANON';
+    fetchByRole[role]();
   }
   render() {
     const ordersStore = this.props.ordersStore!;
+    const orders = this.props.role
+      ? this.props.ordersStore!.orders
+      : [testOrder1, testOrder2];
     const lang = this.props.appStore!.lang;
 
     return (
       <div className="main__middle">
         <Table
-          orders={prepareTableData(ordersStore.orders, lang)}
+          orders={prepareTableData(orders, lang)}
           lang={lang}
           ordersStore={ordersStore}
           userToken={this.props.userToken}

@@ -14,7 +14,7 @@ interface GalleryItemState extends ImageLoadState {
 interface P {
   activeGarments?: string[];
   hiddenGarments?: IHiddenGarments;
-  setSelectedItems?: (props: ISetSelectedItemsProps) => void;
+  setSelectedItems?: SelectedItemsAction;
   setIsGarmentLoaded?: (isGarmentLoaded: boolean) => void;
   isGarmentLoaded?: boolean;
   group?: string;
@@ -139,7 +139,6 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       `[${garment}][${group}][${partOfShirtToggle}]`,
       '',
     );
-
     if (garment === 'shirt' && group === 'fabric_ref') {
       const comparedValue = codeInStoreShirt || codeInOrder;
       return comparedValue === our_code;
@@ -201,13 +200,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
   }
 
   render() {
-    const {
-      onMouseEnter,
-      onMouseLeave,
-      userFilters,
-      item,
-      isGarmentLoaded,
-    } = this.props;
+    const { onMouseEnter, onMouseLeave, isGarmentLoaded } = this.props;
 
     const { isActive } = this.state;
 
@@ -215,29 +208,10 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       img_url_2d: image,
       img_url_2d_list,
       our_code: id,
-      title,
       elementInfo,
     } = this.props.item;
     if (!this.state.load.success) {
       return null;
-    }
-
-    // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
-    // только при рефакторе всего проекта
-    if (userFilters) {
-      const filterNames = Object.keys(userFilters);
-
-      for (const name in filterNames) {
-        // Если в массиве значений данного фильтра filters[name]
-        // есть такое же значение, как у данного элемента галлереи,
-        // тогда выходим с метода
-        if (
-          userFilters[name] &&
-          userFilters[name].includes(item[name].filterValue)
-        ) {
-          return null;
-        }
-      }
     }
 
     const isFabricImg = elementInfo && elementInfo.subGroup === 'fabric';
@@ -248,48 +222,41 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       : image;
     return (
       <>
-        {this.props.app &&
-          (window.location.pathname.includes('design')
-            ? true
-            : (this.props.app.currentSearchValue &&
-                id.includes(this.props.app.currentSearchValue.toLowerCase())) ||
-              title.en
-                .toLowerCase()
-                .includes(this.props.app.currentSearchValue.toLowerCase())) && (
+        {this.props.app && (
+          <div
+            onClick={(e) => this.handleSelectGarment(e, this.props)}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className={classnames('gallery__item-blc', {
+              landscape: isMobile() && isLandscape(),
+            })}
+          >
             <div
-              onClick={(e) => this.handleSelectGarment(e, this.props)}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
-              className={classnames('gallery__item-blc', {
-                landscape: isMobile() && isLandscape(),
+              className={classnames('gallery__item', {
+                active: isActive && isGarmentLoaded,
               })}
             >
-              <div
-                className={classnames('gallery__item', {
-                  active: isActive && isGarmentLoaded,
-                })}
-              >
-                <img
-                  src={hoverImg}
-                  className="gallery__item--hover-image"
-                  alt={`${id}`}
+              <img
+                src={hoverImg}
+                className="gallery__item--hover-image"
+                alt={`${id}`}
+              />
+              <img
+                src={image}
+                className="gallery__item--main-image"
+                alt={`${id}`}
+              />
+              {this.props.app && this.props.app.changeSearchedItemsCount()}
+              {isActive && !isGarmentLoaded && <SquareSpinner />}
+              {isActive && this.props.app && (
+                <span
+                  onClick={() => this.handleToggleSwipe(this.props)}
+                  className="zoom-icon"
                 />
-                <img
-                  src={image}
-                  className="gallery__item--main-image"
-                  alt={`${id}`}
-                />
-                {this.props.app && this.props.app.changeSearchedItemsCount()}
-                {isActive && !isGarmentLoaded && <SquareSpinner />}
-                {isActive && this.props.app && (
-                  <span
-                    onClick={() => this.handleToggleSwipe(this.props)}
-                    className="zoom-icon"
-                  />
-                )}
-              </div>
+              )}
             </div>
-          )}
+          </div>
+        )}
       </>
     );
   }
@@ -383,6 +350,7 @@ const makeGalleryItems: makeGalleryItems = (
       />
     );
   });
+
   galleryItemsCache[cache] = result;
   return result;
 };
@@ -401,12 +369,15 @@ type State = {
   ({
     app,
     filterStore,
-    garments: { garments },
+    garments: {
+      garments: { activeGarments, currentActiveGarment },
+    },
     order: { setOrderDummyParams, setFocusableGarment },
   }) => ({
     app,
     filterStore,
-    activeGarments: [...garments.activeGarments],
+    activeGarments,
+    currentActiveGarment,
     setOrderDummyParams,
     setFocusableGarment,
   }),
@@ -495,30 +466,72 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       shownItem,
       isMouseOverElement,
       activeGarments,
+      currentActiveGarment,
+      app,
       setOrderDummyParams,
+      filterStore,
     } = this.props;
     const { renderedElementsCount } = this.state;
+    const filteredItems = window.location.pathname.includes('design')
+      ? items
+      : items.filter((item: GalleryStoreItem) => {
+          const { our_code: id, title, manufacturer, catalog } = item;
+          const userFilters = filterStore && filterStore.userFilters;
+          // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
+          // только при рефакторе всего проекта
+          if (userFilters) {
+            const filterNames = Object.keys(userFilters);
+
+            for (const name in filterNames) {
+              // Если в массиве значений данного фильтра filters[name]
+              // есть такое же значение, как у данного элемента галлереи,
+              // тогда выходим с метода
+              if (
+                userFilters[name] &&
+                userFilters[name].includes(item[name].filterValue)
+              ) {
+                return false;
+              }
+            }
+          }
+          const isSearchedValue =
+            app &&
+            app.currentSearchValue &&
+            (id.includes(app.currentSearchValue.toLowerCase()) ||
+              title.en
+                .toLowerCase()
+                .includes(app.currentSearchValue.toLowerCase()) ||
+              (manufacturer &&
+                manufacturer.manufacturerName
+                  .toLocaleLowerCase()
+                  .includes(app.currentSearchValue.toLowerCase())) ||
+              (catalog &&
+                catalog.catalogName
+                  .toLocaleLowerCase()
+                  .includes(app.currentSearchValue.toLowerCase())));
+
+          return isSearchedValue;
+        });
     const activeItems =
-      renderedElementsCount > items.length
-        ? items
-        : items.slice(0, renderedElementsCount);
+      renderedElementsCount > filteredItems.length
+        ? filteredItems
+        : filteredItems.slice(0, renderedElementsCount);
     return (
       <div
         className="gallery__bar"
         onScroll={this.handleScroll}
         id="js-bar-wrap"
       >
-        {this.props.app &&
-          this.props.app.showSwiperPopup &&
-          this.props.app.swiperPopupData && (
-            <PopUp open={this.props.app.showSwiperPopup}>
-              <SwiperPopup
-                item={this.props.app.swiperPopupData}
-                closeButton={this.props.app.toggleSwiperPopup}
-                lang={this.props.app.lang}
-              />
-            </PopUp>
-          )}
+        {app && app.showSwiperPopup && app.swiperPopupData && (
+          <PopUp open={app.showSwiperPopup}>
+            <SwiperPopup
+              item={app.swiperPopupData}
+              currentActiveGarment={currentActiveGarment}
+              closeButton={app.toggleSwiperPopup}
+              lang={app.lang}
+            />
+          </PopUp>
+        )}
         <div
           ref={this.galleryBar}
           className="gallery__bar-cont"

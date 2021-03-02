@@ -114,6 +114,8 @@ interface GalleryStoreItem {
   price: Translations<number>;
   defaultItem: boolean;
   fabric_code: string;
+  manufacturer: { id: number; manufacturerName: string };
+  catalog: { id: number; catalogName: string };
   elementInfo: {
     garment: string;
     group: 'fitting' | 'design' | 'fabric_ref';
@@ -140,3 +142,31 @@ type ActivePreviewElement = {
   subGroup: string;
   value: string;
 } | null;
+
+interface IOurCodesToSubgroup {
+  jacket: {
+    bak: string;
+    buo: string;
+    cpk: string;
+    mdl: string;
+    pks: string;
+    sle: string;
+  };
+  pants: {
+    mds: string;
+  };
+  shirt: {
+    bck: string;
+    btc: string;
+    btn: string;
+    clr: string;
+    cfs: string;
+    frt: string;
+    hem: string;
+    irt: string;
+    inc: string;
+    ist: string;
+    slv: string;
+    yke: string;
+  };
+}

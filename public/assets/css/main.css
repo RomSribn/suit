@@ -106,16 +106,6 @@
   }
 }
 
-.notification {
-  position: relative;
-  margin-right: 2.3rem;
-  background: url(../img/bar-nav/balck/notification.svg) center bottom no-repeat;
-  background-size: contain;
-  width: 1.6rem;
-  height: 1.1333rem;
-  font-size: 0;
-  text-indent: -5000px;
-}
 .profile-link {
   display: block;
   height: 1.3333rem;

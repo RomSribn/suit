@@ -221,21 +221,34 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
       removeVisitedChoiceItem,
       orderStore,
       activeGarments = [],
+      setSelectedItems
     } = this.props;
     const {
       clearException,
       clearElement,
       setActiveItem,
       setOrderDummyParams,
+      defaultValues,
+      activeElement,
+      hiddenGarments
     } = orderStore!;
+    const elementInfo = activeElement!.elementInfo;
+    const parsedActiveGarments = activeGarments!.filter(
+      (el) => !Object.values(hiddenGarments!).includes(el),
+    );
     e.preventDefault();
     e.stopPropagation();
     removeVisitedChoiceItem!(element);
-
     clearException(garment, element, 'click');
     clearElement(garment, element, 'click');
     setActiveItem(null);
-    setOrderDummyParams(activeGarments);
+    setOrderDummyParams(parsedActiveGarments);
+    if (defaultValues![garment][0][elementInfo.group]) {
+      setSelectedItems!({
+        ...elementInfo,
+        our_code: defaultValues![garment][0][elementInfo.group].our_code,
+      });
+    }
   };
 
   render() {
@@ -257,21 +270,21 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
               key={`custom-input-${item.id}`}
             />
           ) : (
-            <CustomLink
-              lang={lang}
-              basicRoute={basicRoute}
-              item={{
-                ...item,
-                linkName:
-                  (lang && loc[lang].garments[item.linkName.toLowerCase()]) ||
-                  item.linkName,
-              }}
-              onClick={this.onClick}
-              clearClick={this.clearClick}
-              key={`custom-link-${item.id}`}
-              visitedChoiceItems={visitedChoiceItems}
-            />
-          ),
+              <CustomLink
+                lang={lang}
+                basicRoute={basicRoute}
+                item={{
+                  ...item,
+                  linkName:
+                    (lang && loc[lang].garments[item.linkName.toLowerCase()]) ||
+                    item.linkName,
+                }}
+                onClick={this.onClick}
+                clearClick={this.clearClick}
+                key={`custom-link-${item.id}`}
+                visitedChoiceItems={visitedChoiceItems}
+              />
+            ),
         )}
       </ReactCSSTransitionGroup>
     );

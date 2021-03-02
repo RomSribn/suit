@@ -167,7 +167,9 @@ class Widget extends PureComponent {
               defaultValues[garment][0].design[codeSubgroup];
             this.props.orderStore.setOrder(newOrder);
             this.props.setSelectedItems({
-              our_code: defaultValues[garment][0].design[codeSubgroup].our_code,
+              our_code:
+                defaultValues[garment][0].design[codeSubgroup] &&
+                defaultValues[garment][0].design[codeSubgroup].our_code,
               garment,
               group: 'design',
               subGroup: codeSubgroup,

@@ -38,8 +38,10 @@ let demoSectionWidth = 400;
     order,
     garments: { Subgroups, garments },
     app: { setDummyY, isMenuUncovered, setIsGarmentLoaded, orderPath },
+    filterStore: { setSelectedItems },
     galleryStore,
   }) => ({
+    setSelectedItems,
     orderStore: order,
     group: [...orderPath].pop(),
     garments,
@@ -111,10 +113,11 @@ class Widget extends PureComponent {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
     if (!isEqualProps) {
+      const newOrder = { ...this.props.orderStore.order };
       const garment =
         _.get(this, 'props.orderStore.activeElement.elementInfo.garment') ||
         'shirt';
-      const group = _.get(this, 'props.group', '');
+      const group = _.get(this, 'props.group', { id: 'design' });
       const activeExceptions = _.get(
         this,
         'props.orderStore.activeElement.exception',
@@ -126,6 +129,13 @@ class Widget extends PureComponent {
         null,
       );
       const defaultValues = _.get(this, 'props.orderStore.defaultValues', {});
+      // TODO:because of weird reset of standard sleeves value to slv4
+      _.set(defaultValues, 'shirt[0].design.sleeves.our_code', 'slv1');
+      _.set(defaultValues, 'shirt[0].design.sleeves.title', {
+        en: 'standard',
+        ru: 'стандартный',
+      });
+
       const defaultExceptions = _.get(
         this,
         `props.orderStore.defaultExceptions[${garment}][${group.id}].exceptions`,
@@ -138,7 +148,6 @@ class Widget extends PureComponent {
         const id = asset.id ? asset.id : asset;
         return !exception.includes(id);
       });
-
       if (exception.length) {
         exception.forEach((item) => {
           const trimmedCode = item.slice(0, 3);
@@ -149,13 +158,35 @@ class Widget extends PureComponent {
               `props.orderStore.order[${garment}][0].design[${codeSubgroup}].isItemClear`,
             )
           ) {
-            nextAssets.push(
-              defaultValues[garment][0].design[codeSubgroup].our_code,
-            );
+            // TODO: let order get visible elements to the store,
+            //       without multiply elements effects ( move to the mobx )
+            // if (item.includes('cfs')) {
+            //   delete newOrder.shirt[0].design.cuffs;
+            // }
+            newOrder[garment][0].design[codeSubgroup] =
+              defaultValues[garment][0].design[codeSubgroup];
+            this.props.orderStore.setOrder(newOrder);
+            this.props.setSelectedItems({
+              our_code: defaultValues[garment][0].design[codeSubgroup].our_code,
+              garment,
+              group: 'design',
+              subGroup: codeSubgroup,
+            });
+            defaultValues[garment][0].design[codeSubgroup] &&
+              !nextAssets.includes(
+                defaultValues[garment][0].design[codeSubgroup].our_code,
+              ) &&
+              nextAssets.push(
+                defaultValues[garment][0].design[codeSubgroup].our_code,
+              );
           }
-          return;
         });
       }
+      const parsedActiveGarments = this.props.garments.activeGarments.filter(
+        (el) =>
+          !Object.values(this.props.orderStore.hiddenGarments).includes(el),
+      );
+      this.props.orderStore.setOrderDummyParams(parsedActiveGarments);
       /**
        * При загрузке без кеша все хорошо.
        * Но по какой-то непонятной ссаной бесовщине при перезагузке
@@ -314,7 +345,6 @@ export default class App extends Component {
         }
       }
     }
-
     wasRendered = true;
     return (
       <React.Fragment>

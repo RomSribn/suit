@@ -274,11 +274,8 @@ type makeGalleryItems = (
   setPreviewElementIndex: (elementIndex: number, action?: string) => void,
   shownItem: GalleryStoreItem,
   incremetLoadedCount: () => void,
-  isMouseOverElement: boolean,
   zoomId: string,
   setZoomId: (id: string) => void,
-  filterStore: IFilterStore,
-  activeGarments: string[],
   setOrderDummyParams: TSetOrderDummyParams,
 ) => React.ReactNode[];
 
@@ -288,11 +285,8 @@ const makeGalleryItems: makeGalleryItems = (
   setPreviewElementIndex,
   shownItem,
   incremetLoadedCount,
-  isMouseOverElement,
   zoomId,
   setZoomId,
-  filterStore,
-  activeGarments,
   setOrderDummyParams,
 ) => {
   const cache =
@@ -309,28 +303,7 @@ const makeGalleryItems: makeGalleryItems = (
   //     return galleryItemsCache[cache];
   // }
 
-  const filtered = (): GalleryStoreItems => {
-    const filters = Object.keys(filterStore.userFilters);
-    const result2 = items.filter((item) => {
-      let res;
-      for (let i = 0; i < filters.length; i++) {
-        if (
-          filterStore.userFilters[filters[i]].includes(item[filters[i]].value)
-        ) {
-          return (res = true);
-        }
-      }
-      return res;
-    });
-
-    if (result2.length < 1) {
-      return items;
-    }
-
-    return result2;
-  };
-
-  const result = filtered().map((item, elementIndex) => {
+  const result = items.map((item, elementIndex) => {
     return (
       <GalleryItem
         key={item.fabric_code + item.our_code}
@@ -464,17 +437,37 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       setActiveElementIndex,
       setPreviewElementIndex,
       shownItem,
-      isMouseOverElement,
-      activeGarments,
       currentActiveGarment,
       app,
       setOrderDummyParams,
       filterStore,
     } = this.props;
     const { renderedElementsCount } = this.state;
+    const withAppliedFilters = (): GalleryStoreItems => {
+      const filters = Object.keys(filterStore!.userFilters);
+      const result2 = items.filter((item) => {
+        let res;
+        for (let i = 0; i < filters.length; i++) {
+          if (
+            filterStore!.userFilters[filters[i]].includes(
+              item[filters[i]].value,
+            )
+          ) {
+            return (res = true);
+          }
+        }
+        return res;
+      });
+
+      if (result2.length < 1) {
+        return items;
+      }
+
+      return result2;
+    };
     const filteredItems = window.location.pathname.includes('design')
       ? items
-      : items.filter((item: GalleryStoreItem) => {
+      : withAppliedFilters().filter((item: GalleryStoreItem) => {
           const { our_code: id, title, manufacturer, catalog } = item;
           const userFilters = filterStore && filterStore.userFilters;
           // TODO: (KMP) убрать стору. Надеюсь, к этому не надо будет притрагиваиться
@@ -543,11 +536,8 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
             setPreviewElementIndex,
             shownItem,
             this.incremetLoadedCount,
-            isMouseOverElement,
             this.state.zoomId,
             this.setZoomId,
-            this.props.filterStore!,
-            activeGarments!,
             setOrderDummyParams!,
           )}
         </div>

@@ -65,7 +65,10 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
   }
 
   componentWillMount() {
-    this.props.filterStore.loadFilters(services.shirtFilters);
+    const { galleryStore } = this.props;
+    const { garment } = galleryStore;
+
+    this.props.filterStore.loadFilters(services.shirtFilters(garment));
   }
 
   get shownItem(): GalleryStoreItem {
@@ -197,8 +200,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
       'style',
       isLandscapeInitial
         ? /** У элемента превью элемента есть отступ 5px */
-        `width: calc(100% - ${ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0
-        }px);`
+          `width: calc(100% - ${
+            ref && ref.offsetHeight ? ref.offsetHeight + 7 : 0
+          }px);`
         : '',
     );
 
@@ -207,13 +211,13 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
       ref.setAttribute(
         'style',
         `width: ${
-        // Исключаем учет border-ов
-        ref.offsetHeight > 7
-          ? Math.max(
-            ref.offsetHeight,
-            this.galleryBarWrapperRef.current.offsetWidth,
-          )
-          : this.galleryBarWrapperRef.current.offsetWidth
+          // Исключаем учет border-ов
+          ref.offsetHeight > 7
+            ? Math.max(
+                ref.offsetHeight,
+                this.galleryBarWrapperRef.current.offsetWidth,
+              )
+            : this.galleryBarWrapperRef.current.offsetWidth
         }px`,
       );
     }
@@ -222,12 +226,14 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
       'style',
       isLandscapeInitial
         ? /** У элемента превью элемента есть отступ 5px + 2 бордеры с обеих сторон по 1px */
-        `width: calc(100% - ${ref && ref.offsetWidth ? ref.offsetWidth + 7 : 0
-        }px);`
-        : `height: calc(100% - ${(ref ? ref.offsetHeight : 0)
-          ? this.galleryBarWrapperRef.current.offsetWidth + 10
-          : 0
-        }px);`,
+          `width: calc(100% - ${
+            ref && ref.offsetWidth ? ref.offsetWidth + 7 : 0
+          }px);`
+        : `height: calc(100% - ${
+            (ref ? ref.offsetHeight : 0)
+              ? this.galleryBarWrapperRef.current.offsetWidth + 10
+              : 0
+          }px);`,
     );
   };
 

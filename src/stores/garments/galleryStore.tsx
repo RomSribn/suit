@@ -38,7 +38,7 @@ class GalleryStore implements GalleryStore {
       // TODO: remove this shit
       callApi(
         {
-          url: `${API_ROOT}/api/garments/shirt/filters/fabric`,
+          url: `${API_ROOT}/api/garments/${this.garment}/filters/fabric`,
           method: 'GET',
         },
         this._filtersLoaded,

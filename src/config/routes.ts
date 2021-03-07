@@ -18,7 +18,7 @@ export const API_ROOT =
 
 export const services = {
   garments: 'api/garments',
-  shirtFilters: (garment: string = 'shirt') =>
+  filters: (garment: string = 'shirt') =>
     `${API_ROOT}/api/garments/${garment}/filters/fabric`,
   garmentsDefaults: `${API_ROOT}/api/garments/defaults`,
   orders: `${API_ROOT}/api/orders`,

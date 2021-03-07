@@ -14,8 +14,8 @@ import { loc } from './loc';
 // import { observer } from 'mobx-react';
 
 interface GalleryState extends ImageLoadState {
-  activeElementIndex: number;
-  previewElementIndex: number;
+  activeElementCode: string;
+  previewElementCode: string;
   mouseOverElement: boolean;
 }
 
@@ -28,10 +28,10 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
     const { match, items } = this.props;
-    let activeIndex;
+    let activeElementCode;
     const orderStore = this.props.orderStore!;
     if (orderStore.activeElement && orderStore.activeElement!.our_code) {
-      activeIndex = items.findIndex(
+      activeElementCode = items.find(
         (i) =>
           i.our_code ===
           ((orderStore.activeElement && orderStore.activeElement!.our_code) ||
@@ -41,7 +41,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
       if (match) {
         const { garment, group, subgroup } = match.params;
         const orderValue = orderStore.order;
-        activeIndex = items.findIndex(
+        activeElementCode = items.find(
           (i) =>
             i.our_code ===
             ((orderValue[garment][0][group][subgroup] &&
@@ -54,8 +54,9 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     this.galleryBarWrapperRef = React.createRef();
     this.resizeSubscriptionIndex = null;
     this.state = {
-      activeElementIndex: activeIndex === -1 || !activeIndex ? 0 : activeIndex,
-      previewElementIndex: 0,
+      activeElementCode:
+        (activeElementCode && activeElementCode.our_code) || '',
+      previewElementCode: '',
       load: {
         success: null,
         error: null,
@@ -68,7 +69,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     const { galleryStore } = this.props;
     const { garment } = galleryStore;
 
-    this.props.filterStore.loadFilters(services.shirtFilters(garment));
+    this.props.filterStore.loadFilters(services.filters(garment), garment);
   }
 
   get shownItem(): GalleryStoreItem {
@@ -257,7 +258,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
       listeners.resize.unsubscribe(this.resizeSubscriptionIndex);
     }
   }
-  setPreviewElementIndex = (elementIndex: number, action?: 'enter') => {
+  setPreviewElementIndex = (ourCode: string, action?: 'enter') => {
     const elementInfo = {
       garment: this.props.galleryStore.garment,
       // TODO: разобраться с путаницей наименований
@@ -268,7 +269,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     if (action === 'enter') {
       this.props.setPreviewElement({
         ...elementInfo,
-        value: this.props.items[elementIndex].our_code,
+        value: ourCode,
       });
     } else {
       this.props.setPreviewElement(null);
@@ -276,7 +277,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
   };
 
   setActiveElementIndex = (
-    i: number,
+    ourCode: string,
     action: string = 'click',
     link = '',
   ) => () => {
@@ -288,10 +289,11 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
     };
     if (action === 'click') {
       const { setActiveOrderItem, items, match, orderStore } = this.props;
-      const newOrderItem = {
-        ...items[i],
+      const newOrderItem = items.find((item) => item.our_code === ourCode) || {
+        ...items[0],
         elementInfo,
       };
+
       setActiveOrderItem(newOrderItem);
       if (match) {
         const { garment, group, subgroup } = match.params;
@@ -336,7 +338,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
   };
   render() {
     const { items, lang, group } = this.props;
-    const { activeElementIndex, load, mouseOverElement } = this.state;
+    const { activeElementCode, load, mouseOverElement } = this.state;
 
     if (!items.length) {
       load.error = 'empty';
@@ -404,7 +406,7 @@ class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
               <GalleryBar
                 items={items}
                 shownItem={item}
-                activeElementIndex={activeElementIndex}
+                activeElementCode={activeElementCode}
                 setActiveElementIndex={this.setActiveElementIndex}
                 setPreviewElementIndex={this.setPreviewElementIndex}
                 isMouseOverElement={mouseOverElement}

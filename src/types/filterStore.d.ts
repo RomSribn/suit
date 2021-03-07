@@ -18,7 +18,7 @@ declare interface IFilterStore {
   filters: Filters | null;
   toggleOpen: EmptyFunction;
   closeFilter: EmptyFunction;
-  loadFilters: (url: string) => void;
+  loadFilters: (url: string, garment: string) => void;
   addUserFilter: UserFilterAction;
   removeUserFilter: UserFilterAction;
   removeUserGroupFilter: UserFilterGroupAction;

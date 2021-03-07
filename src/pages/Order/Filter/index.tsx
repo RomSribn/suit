@@ -3,13 +3,24 @@ import { observer, inject } from 'mobx-react';
 import { FilterComponent } from './Filter';
 import { Controll as ControllComponent } from './Controll';
 
-@inject(({ filterStore, app }) => ({
-  isOpen: filterStore.isOpen,
-  lang: app.lang,
-  filters: filterStore.filters,
-  filterStore: filterStore,
-  userFilters: filterStore.userFilters,
-}))
+@inject(
+  ({
+    filterStore,
+    app: { lang },
+    garments: { currentActiveGarment },
+    order: { activeElement },
+  }) => ({
+    isOpen: filterStore.isOpen,
+    lang,
+    filters: filterStore.filters,
+    filterStore: filterStore,
+    userFilters: filterStore.userFilters,
+    currentActiveGarment:
+      activeElement &&
+      activeElement.elementInfo &&
+      activeElement.elementInfo.garment,
+  }),
+)
 @observer
 class Filter extends React.Component<_FilterProps> {
   render() {
@@ -20,6 +31,7 @@ class Filter extends React.Component<_FilterProps> {
       filterStore,
       onClose,
       userFilters,
+      currentActiveGarment,
     } = this.props;
     return (
       <FilterComponent
@@ -29,6 +41,7 @@ class Filter extends React.Component<_FilterProps> {
         filterStore={filterStore}
         userFilters={userFilters}
         onClose={onClose!}
+        currentActiveGarment={currentActiveGarment}
       />
     );
   }

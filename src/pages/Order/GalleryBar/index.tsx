@@ -266,12 +266,12 @@ const galleryItemsCache: Record<string, React.ReactNode[]> = {};
 type makeGalleryItems = (
   items: GalleryStoreItems,
   setActiveElementIndex: (
-    i: number,
+    ourCode: string,
     action?: string,
     id?: string,
     fabric?: string,
   ) => () => void,
-  setPreviewElementIndex: (elementIndex: number, action?: string) => void,
+  setPreviewElementIndex: (ourCode: string, action?: string) => void,
   shownItem: GalleryStoreItem,
   incremetLoadedCount: () => void,
   zoomId: string,
@@ -308,14 +308,14 @@ const makeGalleryItems: makeGalleryItems = (
       <GalleryItem
         key={item.fabric_code + item.our_code}
         item={item}
-        onClick={setActiveElementIndex(elementIndex)}
+        onClick={setActiveElementIndex(item.our_code)}
         shownItem={shownItem}
         setOrderDummyParams={setOrderDummyParams}
         onMouseEnter={() => {
-          setPreviewElementIndex(elementIndex, 'enter');
+          setPreviewElementIndex(item.our_code, 'enter');
         }}
         onMouseLeave={() => {
-          setPreviewElementIndex(-1, 'leave');
+          setPreviewElementIndex('', 'leave');
         }}
         incremetLoadedCount={incremetLoadedCount}
         zoomId={zoomId}
@@ -374,12 +374,9 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       isShowedExceptionPopup: false,
       titleSubGroup: '',
       titleElement: null,
-      zoomId: this.props.items[this.props.activeElementIndex].our_code,
+      zoomId: this.props.activeElementCode,
     };
-    this.props.setPreviewElementIndex(
-      this.props.activeElementIndex || 0,
-      'enter',
-    );
+    this.props.setPreviewElementIndex(this.props.activeElementCode, 'enter');
     this.galleryBar = React.createRef();
   }
 
@@ -437,19 +434,21 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
       setActiveElementIndex,
       setPreviewElementIndex,
       shownItem,
-      currentActiveGarment,
+      currentActiveGarment = 'shirt',
       app,
       setOrderDummyParams,
       filterStore,
     } = this.props;
     const { renderedElementsCount } = this.state;
     const withAppliedFilters = (): GalleryStoreItems => {
-      const filters = Object.keys(filterStore!.userFilters);
+      const filters = filterStore!.userFilters[currentActiveGarment]
+        ? Object.keys(filterStore!.userFilters[currentActiveGarment])
+        : [];
       const result2 = items.filter((item) => {
         let res;
         for (let i = 0; i < filters.length; i++) {
           if (
-            filterStore!.userFilters[filters[i]].includes(
+            filterStore!.userFilters[currentActiveGarment][filters[i]].includes(
               item[filters[i]].value,
             )
           ) {

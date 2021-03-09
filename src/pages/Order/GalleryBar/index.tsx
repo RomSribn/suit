@@ -89,6 +89,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
       setZoomId,
       setIsGarmentLoaded,
     } = props;
+
     if (!this.isActive()) {
       setIsGarmentLoaded!(false);
     }
@@ -441,28 +442,23 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
     } = this.props;
     const { renderedElementsCount } = this.state;
     const withAppliedFilters = (): GalleryStoreItems => {
-      const filters = filterStore!.userFilters[currentActiveGarment]
-        ? Object.keys(filterStore!.userFilters[currentActiveGarment])
-        : [];
-      const result2 = items.filter((item) => {
-        let res;
-        for (let i = 0; i < filters.length; i++) {
-          if (
-            filterStore!.userFilters[currentActiveGarment][filters[i]].includes(
-              item[filters[i]].value,
-            )
-          ) {
-            return (res = true);
-          }
-        }
-        return res;
-      });
-
-      if (result2.length < 1) {
+      if (!filterStore) {
         return items;
       }
-
-      return result2;
+      const filters = filterStore.userFilters[currentActiveGarment]
+        ? Object.keys(filterStore.userFilters[currentActiveGarment])
+        : [];
+      return items.filter(
+        (item) =>
+          filters &&
+          filters.every(
+            (filterId) =>
+              !filterStore.userFilters[currentActiveGarment][filterId].length ||
+              filterStore.userFilters[currentActiveGarment][filterId].includes(
+                item[filterId].value,
+              ),
+          ),
+      );
     };
     const filteredItems = window.location.pathname.includes('design')
       ? items

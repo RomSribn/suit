@@ -1,11 +1,11 @@
 interface GalleryBarProps {
   items: GalleryStoreItems;
   app?: IAppStore;
-  setActiveElementIndex(i: number, action?: string): () => void;
-  setPreviewElementIndex(elementIndex: number, action?: 'enter'): void;
+  setActiveElementIndex(ourCode: string, action?: string): () => void;
+  setPreviewElementIndex(ourCode: string, action?: 'enter'): void;
   shownItem: GalleryStoreItem;
   isMouseOverElement: boolean;
-  activeElementIndex: number;
+  activeElementCode: string;
   filterStore?: IFilterStore;
   activeGarments?: string[];
   currentActiveGarment?: string;

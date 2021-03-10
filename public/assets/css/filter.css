@@ -16,7 +16,7 @@
 }
 .filter__wrap {
   width: 13.6666rem;
-  padding: 0 1.6666rem 0 0;
+  padding: 0 1.6666rem;
   height: 100%;
   overflow-y: auto;
   opacity: 0;
@@ -27,11 +27,9 @@
 .filter.open .filter__wrap {
   opacity: 1;
 }
-
 .filter__group {
   position: relative;
   margin-bottom: 2.3333rem;
-  padding: 0 1.3333rem;
 }
 .filter__group:last-child {
   margin-bottom: 0;
@@ -40,10 +38,13 @@
   display: flex;
   justify-content: space-between;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
   margin-bottom: 1rem;
   color: #444;
   font-size: 1rem;
+}
+.filter__groupheader .title::first-letter {
+  text-transform: uppercase;
 }
 .filter__groupheader .clear-btn {
   cursor: pointer;

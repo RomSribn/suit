@@ -112,6 +112,11 @@ class Widget extends PureComponent {
   componentDidUpdate(prevProps) {
     const isEqualProps = _.isEqual(prevProps.assets, this.props.assets);
 
+    if (prevProps.currentActiveGarment !== this.props.currentActiveGarment) {
+      debugger;
+      this.widget3d.setGarmentId(this.props.currentActiveGarment);
+    }
+
     if (!isEqualProps) {
       const newOrder = { ...this.props.orderStore.order };
       const garment =
@@ -227,6 +232,7 @@ class Widget extends PureComponent {
 @inject(({ order, garments: { garments } }) => ({
   orderStore: order,
   activeGarments: [...garments.activeGarments],
+  currentActiveGarment: garments.currentActiveGarment,
 }))
 @observer
 export default class App extends Component {
@@ -359,6 +365,7 @@ export default class App extends Component {
           assets={params}
           onClickAsset={this.handleClickAsset}
           onDummyLoad={this.props.onDummyLoad}
+          currentActiveGarment={this.props.currentActiveGarment}
         />
       </React.Fragment>
     );

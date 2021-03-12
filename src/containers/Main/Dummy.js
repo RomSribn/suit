@@ -4,7 +4,7 @@ import './styles.demo.styl';
 import { API_ROOT } from '../../config/routes';
 import { currentItems } from '../../stores/garments/galleryStore';
 import { isMobile, listeners } from '../../utils';
-import { ourCodesToSubgroup } from '../../utils/variables';
+import { ourCodesToSubgroup, dummyAssetsId } from '../../utils/variables';
 import { observer, inject } from 'mobx-react';
 import { Redirect } from 'react-router';
 import { toJS } from 'mobx';
@@ -89,6 +89,7 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
+      dummyAssetsId,
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       },

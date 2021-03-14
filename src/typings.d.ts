@@ -93,9 +93,17 @@ interface Filter {
   values: FilterValue[];
 }
 
-type Filters = Record<string, Filter>;
+type Filters = {
+  shirt?: Filter;
+  pants?: Filter;
+  jacket?: Filter;
+};
 
-type UserFilters = Record<string, string[]>;
+type UserFilters = {
+  shirt: Filter | {};
+  pants: Filter | {};
+  jacket: Filter | {};
+};
 
 interface GalleryStoreItem {
   prevActiveItem?: string | null;

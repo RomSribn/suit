@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { order } from './order';
+import garments from './garments/garments';
 import * as _ from 'lodash';
 
 class FilterStore implements IFilterStore {
@@ -12,7 +13,11 @@ class FilterStore implements IFilterStore {
   filters: Filters | null = null;
 
   @observable
-  userFilters: UserFilters = {};
+  userFilters: UserFilters = {
+    shirt: {},
+    jacket: {},
+    pants: {},
+  };
 
   @action
   toggleOpen = () => {
@@ -23,27 +28,30 @@ class FilterStore implements IFilterStore {
     this.isOpen = false;
   };
   @action
-  loadFilters = (url: string) => {
+  loadFilters = (url: string, garment: string) => {
     callApi(
       { url, method: 'GET' },
       () => {
         this.isFetching = true;
       },
       (filters: ServerFilters) => {
-        this.filters = Object.keys(filters).reduce((acc, filterName) => {
-          const title = filters[filterName][0].title;
-          const values = filters[filterName].map((filter) => ({
-            value: filter.value,
-            id: filter.id,
-            valueTitle: filter.valueTitle,
-          }));
-          acc[filterName] = {
-            name: filterName,
-            title,
-            values,
-          };
-          return acc;
-        }, {});
+        this.filters = {
+          ...this.filters,
+          [garment]: Object.keys(filters).reduce((acc, filterName) => {
+            const title = filters[filterName][0].title;
+            const values = filters[filterName].map((filter) => ({
+              value: filter.value,
+              id: filter.id,
+              valueTitle: filter.valueTitle,
+            }));
+            acc[filterName] = {
+              name: filterName,
+              title,
+              values,
+            };
+            return acc;
+          }, {}),
+        };
       },
       (e: Error) => (this.error = e),
     ).then(() => (this.isFetching = false));
@@ -53,14 +61,25 @@ class FilterStore implements IFilterStore {
   addUserFilter: UserFilterAction = (filterName) => (value) => {
     this.userFilters = {
       ...this.userFilters,
-      [filterName]: _.union(this.userFilters[filterName], [value]),
+      [garments.currentActiveGarment]: {
+        ...this.userFilters[garments.currentActiveGarment],
+        [filterName]: _.union(
+          this.userFilters[garments.currentActiveGarment][filterName],
+          [value],
+        ),
+      },
     };
   };
   @action
   removeUserFilter: UserFilterAction = (filter) => (value) => {
     this.userFilters = {
       ...this.userFilters,
-      [filter]: (this.userFilters[filter] || []).filter((v) => v !== value),
+      [garments.currentActiveGarment]: {
+        ...this.userFilters[garments.currentActiveGarment],
+        [filter]: (
+          this.userFilters[garments.currentActiveGarment][filter] || []
+        ).filter((v: string) => v !== value),
+      },
     };
   };
   @action
@@ -68,13 +87,17 @@ class FilterStore implements IFilterStore {
     const userFilters = {
       ...this.userFilters,
     };
-    delete userFilters[filter];
+    delete userFilters[garments.currentActiveGarment][filter];
     this.userFilters = userFilters;
   };
 
   @action
   clearUserFilters = (): void => {
-    this.userFilters = {};
+    this.userFilters = {
+      shirt: {},
+      jacket: {},
+      pants: {},
+    };
   };
 
   @action
@@ -110,7 +133,9 @@ class FilterStore implements IFilterStore {
     this.selectedItems = {};
   };
   isActive = (filterName: string) => (value: string) =>
-    (this.userFilters[filterName] || []).includes(value);
+    (
+      this.userFilters[garments.currentActiveGarment][filterName] || []
+    ).includes(value);
 }
 
 const filterStore = new FilterStore();

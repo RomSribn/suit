@@ -343,12 +343,12 @@ export class OrderStore implements IOrderStore {
             } else {
               if (!subgroup.includes(INITIALS)) {
                 if (subgroup === 'fabric') {
-                  acc.push(subgroupVal.our_code);
+                  acc.push(subgroupVal.our_code + ':' + garment);
                 } else {
                   const value = additionalFabric
                     ? {
                         id: activeElement.our_code,
-                        materials: [additionalFabric],
+                        materials: [additionalFabric + ':' + garment],
                       }
                     : activeElement.our_code;
                   acc.push(value);
@@ -357,10 +357,14 @@ export class OrderStore implements IOrderStore {
             }
           } else {
             if (!subgroup.includes(INITIALS) && subgroupVal) {
-              const value = additionalFabric
-                ? { id: subgroupVal.our_code, materials: [additionalFabric] }
-                : subgroupVal.our_code;
-              acc.push(value);
+              if (subgroup === 'fabric') {
+                acc.push(subgroupVal.our_code + ':' + garment);
+              } else {
+                const value = additionalFabric
+                  ? { id: subgroupVal.our_code, materials: [additionalFabric + ':' + garment] }
+                  : subgroupVal.our_code;
+                acc.push(value);
+              }
             }
           }
           // TODO: Хак из-за того, что виджет не воспринимает цвет через selected.text.color

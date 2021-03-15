@@ -93,9 +93,17 @@ interface Filter {
   values: FilterValue[];
 }
 
-type Filters = Record<string, Filter>;
+type Filters = {
+  shirt?: Filter;
+  pants?: Filter;
+  jacket?: Filter;
+};
 
-type UserFilters = Record<string, string[]>;
+type UserFilters = {
+  shirt: Filter | {};
+  pants: Filter | {};
+  jacket: Filter | {};
+};
 
 interface GalleryStoreItem {
   prevActiveItem?: string | null;
@@ -169,4 +177,26 @@ interface IOurCodesToSubgroup {
     slv: string;
     yke: string;
   };
+}
+
+interface IDummyAssetsId {
+  bak: string;
+  buo: string;
+  cpk: string;
+  mdl: string;
+  pks: string;
+  sle: string;
+  mds: string;
+  bck: string;
+  btc: string;
+  btn: string;
+  clr: string;
+  cfs: string;
+  frt: string;
+  hem: string;
+  irt: string;
+  inc: string;
+  ist: string;
+  slv: string;
+  yke: string;
 }

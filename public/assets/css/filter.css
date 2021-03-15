@@ -6,7 +6,6 @@
   background: #eceeee;
   overflow: hidden;
   margin-right: 1.333rem;
-  padding: 0.9333rem 0 0.7333rem 0;
   -webkit-transition: 0.35s ease;
   -o-transition: 0.35s ease;
   transition: 0.35s ease;
@@ -16,9 +15,11 @@
 }
 .filter__wrap {
   width: 13.6666rem;
-  padding: 0 1.6666rem 0 0;
+  padding: 0 1.6666rem;
+  padding-top: 0.9333rem;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   opacity: 0;
   -webkit-transition: 0.25s ease;
   -o-transition: 0.35s ease;
@@ -27,11 +28,9 @@
 .filter.open .filter__wrap {
   opacity: 1;
 }
-
 .filter__group {
   position: relative;
   margin-bottom: 2.3333rem;
-  padding: 0 1.3333rem;
 }
 .filter__group:last-child {
   margin-bottom: 0;
@@ -40,10 +39,13 @@
   display: flex;
   justify-content: space-between;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
   margin-bottom: 1rem;
   color: #444;
   font-size: 1rem;
+}
+.filter__groupheader .title::first-letter {
+  text-transform: uppercase;
 }
 .filter__groupheader .clear-btn {
   cursor: pointer;
@@ -171,7 +173,7 @@ input:checked + .filter__label-color:before {
   overflow: unset;
   max-height: 98vh;
   transform: translateX(-50%);
-  padding-bottom: 74px;
+  padding-bottom: 130px;
   flex-direction: column;
   margin: 0;
 }
@@ -205,16 +207,13 @@ input:checked + .filter__label-color:before {
     width: 80%;
     margin-right: 0;
   }
-  .filter__wrap {
-    padding: 1.8rem 0.6rem;
-  }
 }
 
 @media only screen and (max-width: 450px) {
   .filter-btn-wrap {
     display: block;
     position: absolute;
-    bottom: 0;
+    bottom: 13.5%;
     left: -10%;
     min-height: 71px;
     width: 120%;

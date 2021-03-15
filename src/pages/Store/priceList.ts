@@ -13,7 +13,7 @@ export const priceList: priceListItem[] = [
         сорочки. Мы запросим образцы тканей у производителя или фабрики, выгрузим в данную форму заказа.`,
       priceBlock: {
         leftInfo: `1 картинка -`,
-        price: 400,
+        price: 365,
         currency: `₽`,
       },
       inputs: [
@@ -53,7 +53,7 @@ export const priceList: priceListItem[] = [
       fileBtnTitle: `скачать пример картинки`,
       priceBlock: {
         leftInfo: `1 картинка -`,
-        price: 700,
+        price: 640,
         currency: `₽`,
       },
       inputs: [

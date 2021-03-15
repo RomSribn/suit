@@ -135,6 +135,7 @@ class FilterComponent extends React.PureComponent<FilterProps> {
     isOpen: false,
     lang: 'ru',
     onClose: () => null,
+    currentActiveGarment: 'shirt',
   };
 
   render() {
@@ -145,19 +146,22 @@ class FilterComponent extends React.PureComponent<FilterProps> {
       filterStore,
       onClose,
       userFilters,
+      currentActiveGarment = '',
     } = this.props;
 
     return (
       <div className={classnames('filter', { open: isOpen })}>
         <div className="filter__wrap">
-          {Object.keys(filters || {}).map((key, index) =>
+          {Object.keys(
+            (filters && filters[currentActiveGarment]) || {},
+          ).map((key, index) =>
             makeFilterGroup(
-              filters[key],
+              filters[currentActiveGarment][key],
               key,
               filterStore!,
               lang,
               filterStore!.removeUserGroupFilter,
-              userFilters!,
+              userFilters![currentActiveGarment]!,
             ),
           )}
         </div>

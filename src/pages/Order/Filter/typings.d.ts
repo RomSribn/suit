@@ -5,6 +5,7 @@ interface _FilterProps {
   userFilters?: UserFilters;
   isOpen?: boolean;
   onClose?: () => void;
+  currentActiveGarment?: string;
 }
 interface DefaultFilterProps {
   filters: Filters;
@@ -12,6 +13,7 @@ interface DefaultFilterProps {
   lang: string;
   onClose?: () => void;
   removeUserGroupFilter?: (value: string) => void;
+  currentActiveGarment: string;
 }
 type FilterProps = _FilterProps & DefaultFilterProps;
 

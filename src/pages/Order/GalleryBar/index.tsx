@@ -150,8 +150,8 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
     return codeInStore === our_code;
   }
 
-  componentDidUpdate(prevProps: P) {
-    if (!_.isEqual(prevProps, this.props)) {
+  componentDidUpdate(prevProps: P, prevState: GalleryItemState) {
+    if (!_.isEqual(prevProps, this.props) && _.isEqual(prevState, this.state) ) {
       const {
         item: { our_code },
         orderStore,

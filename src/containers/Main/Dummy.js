@@ -176,7 +176,8 @@ class Widget extends PureComponent {
               subGroup: codeSubgroup,
             });
             if (defaultValues[garment][0].design[codeSubgroup]) {
-              let our_code = defaultValues[garment][0].design[codeSubgroup].our_code;
+              let our_code =
+                defaultValues[garment][0].design[codeSubgroup].our_code;
               if (codeSubgroup === 'fabric') {
                 our_code += ':' + garment;
               }
@@ -337,16 +338,17 @@ export default class App extends Component {
         if (
           !params.find(
             (param) =>
-              (activeElement.our_code === param) ||
-              (activeElement.our_code + ':' + currentActiveGarment === param) ||
+              activeElement.our_code === param ||
+              activeElement.our_code + ':' + currentActiveGarment === param ||
               (param && activeElement.our_code === param.id) ||
               // Если подразделу (воротник и тд) назначена отдельная ткань,
               // то нужно проверять наличие activeElement в массиве materials)
               (param &&
-                param.materials && (
-                param.materials.includes(activeElement.our_code) ||
-                param.materials.includes(activeElement.our_code + ':' + currentActiveGarment)
-              ))
+                param.materials &&
+                (param.materials.includes(activeElement.our_code) ||
+                  param.materials.includes(
+                    activeElement.our_code + ':' + currentActiveGarment,
+                  ))),
           )
         ) {
           // Добавляем его в к параметрам отображения

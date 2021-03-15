@@ -239,6 +239,18 @@
   stroke-dashoffset: -150%;
 }
 
+@media only screen and (max-width: 450px) {
+  .catalog__form-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .catalog__form-wrap.index-mobile .catalog__item {
+    width: 100%;
+    margin: 0;
+  }
+}
+
 @media only screen and (max-width: 1400px) {
   .catalog__intro-txt:after {
     height: 1px;

@@ -4,7 +4,7 @@ import './styles.demo.styl';
 import { API_ROOT } from '../../config/routes';
 import { currentItems } from '../../stores/garments/galleryStore';
 import { isMobile, listeners } from '../../utils';
-import { ourCodesToSubgroup } from '../../utils/variables';
+import { ourCodesToSubgroup, dummyAssetsId } from '../../utils/variables';
 import { observer, inject } from 'mobx-react';
 import { Redirect } from 'react-router';
 import { toJS } from 'mobx';
@@ -89,6 +89,7 @@ class Widget extends PureComponent {
       assetsPath: `${API_ROOT}/assets/models/${SALON_API_ID}/`,
       salonId: SALON_API_ID,
       useMobilePositions: isMobile(),
+      dummyAssetsId,
       onClickAsset: (...args) => {
         this.props.onClickAsset(...args);
       },
@@ -174,13 +175,16 @@ class Widget extends PureComponent {
               group: 'design',
               subGroup: codeSubgroup,
             });
-            defaultValues[garment][0].design[codeSubgroup] &&
-              !nextAssets.includes(
-                defaultValues[garment][0].design[codeSubgroup].our_code,
-              ) &&
-              nextAssets.push(
-                defaultValues[garment][0].design[codeSubgroup].our_code,
-              );
+            if (defaultValues[garment][0].design[codeSubgroup]) {
+              let our_code =
+                defaultValues[garment][0].design[codeSubgroup].our_code;
+              if (codeSubgroup === 'fabric') {
+                our_code += ':' + garment;
+              }
+              if (!nextAssets.includes(our_code)) {
+                nextAssets.push(our_code);
+              }
+            }
           }
         });
       }
@@ -227,6 +231,7 @@ class Widget extends PureComponent {
 @inject(({ order, garments: { garments } }) => ({
   orderStore: order,
   activeGarments: [...garments.activeGarments],
+  currentActiveGarment: garments.currentActiveGarment,
 }))
 @observer
 export default class App extends Component {
@@ -301,7 +306,7 @@ export default class App extends Component {
     /* eslint-enable */
   };
   render() {
-    const { orderStore } = this.props;
+    const { orderStore, currentActiveGarment } = this.props;
     const { subgroup } = this.state;
     let selected = '';
     const focusableGarment = orderStore.focusableGarment;
@@ -334,12 +339,16 @@ export default class App extends Component {
           !params.find(
             (param) =>
               activeElement.our_code === param ||
+              activeElement.our_code + ':' + currentActiveGarment === param ||
               (param && activeElement.our_code === param.id) ||
               // Если подразделу (воротник и тд) назначена отдельная ткань,
               // то нужно проверять наличие activeElement в массиве materials)
               (param &&
                 param.materials &&
-                param.materials.includes(activeElement.our_code)),
+                (param.materials.includes(activeElement.our_code) ||
+                  param.materials.includes(
+                    activeElement.our_code + ':' + currentActiveGarment,
+                  ))),
           )
         ) {
           // Добавляем его в к параметрам отображения
@@ -359,6 +368,7 @@ export default class App extends Component {
           assets={params}
           onClickAsset={this.handleClickAsset}
           onDummyLoad={this.props.onDummyLoad}
+          currentActiveGarment={this.props.currentActiveGarment}
         />
       </React.Fragment>
     );

@@ -178,3 +178,25 @@ interface IOurCodesToSubgroup {
     yke: string;
   };
 }
+
+interface IDummyAssetsId {
+  bak: string;
+  buo: string;
+  cpk: string;
+  mdl: string;
+  pks: string;
+  sle: string;
+  mds: string;
+  bck: string;
+  btc: string;
+  btn: string;
+  clr: string;
+  cfs: string;
+  frt: string;
+  hem: string;
+  irt: string;
+  inc: string;
+  ist: string;
+  slv: string;
+  yke: string;
+}

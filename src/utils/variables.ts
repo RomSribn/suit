@@ -26,3 +26,25 @@ export const ourCodesToSubgroup: IOurCodesToSubgroup = {
     yke: 'yoke',
   },
 };
+
+export const dummyAssetsId: IDummyAssetsId = {
+  bak: 'jacket',
+  buo: 'jacket',
+  cpk: 'jacket',
+  mdl: 'jacket',
+  pks: 'jacket',
+  sle: 'jacket',
+  mds: 'pants',
+  bck: 'shirt',
+  btc: 'shirt',
+  btn: 'shirt',
+  clr: 'shirt',
+  cfs: 'shirt',
+  frt: 'shirt',
+  hem: 'shirt',
+  irt: 'shirt',
+  inc: 'shirt',
+  ist: 'shirt',
+  slv: 'shirt',
+  yke: 'shirt',
+};

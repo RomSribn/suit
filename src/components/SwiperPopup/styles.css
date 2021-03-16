@@ -240,7 +240,7 @@
   cursor: pointer;
 }
 
-.text-block__button.button.black {
+.swiper-popup-container .text-block__button.button.black {
   background-color: white !important;
   color: black !important;
   width: 100%;

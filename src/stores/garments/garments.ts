@@ -7,6 +7,7 @@ import GarmentStore from './garment';
 
 export const ADD: string = 'ADD_ACTIVE_GARMENT';
 export const REMOVE: string = 'REMOVE_ACTIVE_GARMENT';
+export const activeGarments: string = 'activeGarments';
 //
 // const GARMENTS_ORDER = [
 //     'shirt'
@@ -25,6 +26,18 @@ class GarmentsStore {
   @observable active = '';
   @observable isFetching = false;
   @observable error = {};
+
+  constructor() {
+    const activeGarmentsSaved = localStorage.getItem(activeGarments);
+    if (activeGarmentsSaved) {
+      const parsedActiveGarmentsSaved = JSON.parse(activeGarmentsSaved);
+      this.activeGarments = parsedActiveGarmentsSaved;
+      this.currentActiveGarment = parsedActiveGarmentsSaved[0];
+      return;
+    }
+    this.activeGarments = observable.array(['shirt']);
+    this.currentActiveGarment = 'shirt';
+  }
 
   @action
   fetchGarmentsList = () => {
@@ -61,10 +74,15 @@ class GarmentsStore {
       if (this.activeGarments.findIndex((el) => garment === el) === -1) {
         this.activeGarments.push(garment);
         this.currentActiveGarment = this.activeGarments[0];
+        localStorage.setItem(
+          activeGarments,
+          JSON.stringify(this.activeGarments),
+        );
       }
     } else if (_action === REMOVE) {
       this.activeGarments.remove(garment);
       this.currentActiveGarment = this.activeGarments[0];
+      localStorage.setItem(activeGarments, JSON.stringify(this.activeGarments));
       return;
     } else {
       // tslint:disable-next-line no-console
@@ -91,6 +109,7 @@ class GarmentsStore {
     const garmentsArray = observable.array(garments);
     this.activeGarments = garmentsArray;
     this.currentActiveGarment = garmentsArray[0];
+    localStorage.setItem(activeGarments, JSON.stringify(garments));
   };
 }
 

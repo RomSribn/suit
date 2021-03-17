@@ -65,8 +65,7 @@ class Container extends React.Component<any> {
       if (query.order_id) {
         orderStore
           .fetchInitialOrder(
-            Object.keys(garmentsStore.garmentsList),
-            (garments) => garmentsStore.setChosenGarments(['shirt']),
+            Object.keys(garmentsStore.garmentsList)
           )
           .then(() => {
             orderStore.fetchOrder(query.order_id).then(() => {
@@ -78,8 +77,7 @@ class Container extends React.Component<any> {
           });
       } else {
         orderStore.fetchInitialOrder(
-          Object.keys(garmentsStore.garmentsList),
-          (garments) => garmentsStore.setChosenGarments(['shirt']),
+          Object.keys(garmentsStore.garmentsList)
         );
       }
       return null;

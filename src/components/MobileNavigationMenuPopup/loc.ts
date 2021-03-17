@@ -50,7 +50,7 @@ const makeLocale: MakeLocale<Locale> = {
     forHim: 'для него',
     forHer: 'для нее',
     chat: 'чат',
-    shirt: ' рубашка',
+    shirt: ' сорочка',
     pants: 'брюки',
     jacket: 'пиджак',
   },

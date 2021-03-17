@@ -59,14 +59,14 @@ class Container extends React.Component<any> {
       garmentsStore.fetchGarmentsList();
       return null;
     }
+
     const query = parseQuery(this.props.routingStore.location.search);
     const isOnBase = query.onbase === 'true';
     if (orderStore.isEmptyOrder()) {
       if (query.order_id) {
         orderStore
           .fetchInitialOrder(
-            Object.keys(garmentsStore.garmentsList),
-            (garments) => garmentsStore.setChosenGarments(['shirt']),
+            Object.keys(garmentsStore.garmentsList)
           )
           .then(() => {
             orderStore.fetchOrder(query.order_id).then(() => {
@@ -78,8 +78,7 @@ class Container extends React.Component<any> {
           });
       } else {
         orderStore.fetchInitialOrder(
-          Object.keys(garmentsStore.garmentsList),
-          (garments) => garmentsStore.setChosenGarments(['shirt']),
+          Object.keys(garmentsStore.garmentsList)
         );
       }
       return null;

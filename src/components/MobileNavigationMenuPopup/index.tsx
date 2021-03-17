@@ -13,7 +13,7 @@ const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
     if (garment === 'shirt') {
       return {
         name: {
-          ru: 'Рубашка',
+          ru: 'Сорочка',
           en: garment,
         },
         id: garment,
@@ -42,7 +42,7 @@ const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
 
     return {
       name: {
-        ru: 'Рубашка',
+        ru: 'Сорочка',
         en: garment,
       },
       id: 'shirt',

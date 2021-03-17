@@ -6,6 +6,11 @@ import * as _ from 'lodash';
 import GarmentsStore from './garments/garments';
 
 type CloneOrderObject = (order: Order) => Order;
+const orderStorageKey: string = 'order';
+const defaultExceptionsStorageKey: string = 'defaultExceptions';
+const defaultValuesStorageKey: string = 'defaultValues';
+const defaultsStorageKey: string = 'defaults';
+
 const cloneOrderObject: CloneOrderObject = (order) => {
   // TODO: изменить эту сраную заглушку. нет времени заниматься нормальным переносом значений
   return JSON.parse(JSON.stringify(order));
@@ -143,6 +148,20 @@ export class OrderStore implements IOrderStore {
   @observable error: object | null = null;
   @observable partOfShirtToggle = basisPart;
 
+  constructor() {
+    const orderSaved = localStorage.getItem(orderStorageKey);
+    const defaultsSaved = localStorage.getItem(defaultsStorageKey);
+    if (orderSaved) {
+      this.order = JSON.parse(orderSaved);
+    }
+    if (defaultsSaved) {
+      const defaults = JSON.parse(defaultsSaved);
+      this.defaultValues = defaults[defaultValuesStorageKey];
+      this.defaultExceptions = defaults[defaultExceptionsStorageKey];
+      this.exceptions = defaults[defaultExceptionsStorageKey];
+    }
+  }
+
   isEmptyOrder = () => _.isEmpty(this.order);
 
   @action
@@ -272,7 +291,7 @@ export class OrderStore implements IOrderStore {
     const garment: string = GarmentsStore.currentActiveGarment;
     const newValue = { ...this.hiddenGarments };
     const selectedGarment: string | null = newValue[garment];
-
+    // localStorage.setItem(orderStorageKey, JSON.stringify(this.order));
     if (selectedGarment) {
       newValue[garment] = null;
       const visibleDummyParams = activeGarments.filter(
@@ -361,7 +380,10 @@ export class OrderStore implements IOrderStore {
                 acc.push(subgroupVal.our_code + ':' + garment);
               } else {
                 const value = additionalFabric
-                  ? { id: subgroupVal.our_code, materials: [additionalFabric + ':' + garment] }
+                  ? {
+                      id: subgroupVal.our_code,
+                      materials: [additionalFabric + ':' + garment],
+                    }
                   : subgroupVal.our_code;
                 acc.push(value);
               }
@@ -497,6 +519,12 @@ export class OrderStore implements IOrderStore {
     garments: string[],
     callback?: (...args: any[]) => any, // tslint:disable-line no-any
   ) => {
+    // const orderSaved = localStorage.getItem(orderStorageKey);
+    // if (orderSaved) {
+    //   this.order = JSON.parse(orderSaved);
+    //   this.isFetching = false;
+    //   return new Promise(() => true);
+    // }
     return callApi(
       {
         method: 'GET',
@@ -523,6 +551,11 @@ export class OrderStore implements IOrderStore {
     if (superUserToken) {
       config.headers = { 'super-user-token': superUserToken };
     }
+    // const orderSaved = localStorage.getItem(orderStorageKey);
+    // if (orderSaved) {
+    //   this.order = JSON.parse(orderSaved);
+    //   return new Promise(() => true);
+    // }
 
     return callApi(
       config,
@@ -579,6 +612,8 @@ export class OrderStore implements IOrderStore {
       phone: '',
     };
     const newOrder = cloneOrderObject(order);
+    localStorage.setItem(orderStorageKey, JSON.stringify(newOrder));
+
     if (this.activeElement && this.activeElement.elementInfo) {
       if (this.activeElement.elementInfo.subGroup === 'fabric') {
         if (this.partOfShirtToggle === basisPart) {
@@ -677,8 +712,12 @@ export class OrderStore implements IOrderStore {
     this.setOrder(defaultOrder);
     this.exceptions = nextExceptions;
     this.defaultExceptions = nextExceptions;
-
     this.defaultValues = defaultOrder;
+    const defaults = {
+      [defaultExceptionsStorageKey]: nextExceptions,
+      [defaultValuesStorageKey]: defaultOrder,
+    };
+    localStorage.setItem(defaultsStorageKey, JSON.stringify(defaults));
     if (callback) {
       callback(
         Object.keys(defaultOrder).filter((garment) => garment !== 'manequin'),

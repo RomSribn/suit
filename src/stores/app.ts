@@ -15,7 +15,7 @@ const loc: Translations<Locale> = {
     index: 'главная',
     order: 'заказать',
     garments: 'изделия',
-    shirt: 'рубашка',
+    shirt: 'сорочка',
   },
 };
 

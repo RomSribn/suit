@@ -59,6 +59,7 @@ class Container extends React.Component<any> {
       garmentsStore.fetchGarmentsList();
       return null;
     }
+
     const query = parseQuery(this.props.routingStore.location.search);
     const isOnBase = query.onbase === 'true';
     if (orderStore.isEmptyOrder()) {

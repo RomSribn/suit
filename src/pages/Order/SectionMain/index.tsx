@@ -46,6 +46,21 @@ class MainSection extends React.Component<MainSectionProps> {
       this.props.setIsMenuUncovered(false);
     }
   }
+
+  componentDidMount() {
+    const { setIsMenuUncovered, dummyWasRendered } = this.props;
+    /**
+     * Trigger scrolling up menu block (default: at the bottom);
+     * Component has been mounted a little bit early then Spinner is get out, then a little delay.
+     */
+    if (dummyWasRendered) {
+      setTimeout(() => {
+        if (setIsMenuUncovered) {
+          setIsMenuUncovered(true);
+        }
+      }, 200);
+    }
+  }
   render() {
     const {
       isIndexPage,

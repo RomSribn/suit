@@ -41,7 +41,7 @@ export class App implements IAppStore {
   @observable isSearchBarOpened = false;
   @observable dummyY = 0;
   @observable isGarmentLoaded = true;
-  @observable isMenuUncovered = true;
+  @observable isMenuUncovered = false;
   @observable searchedItemsCount = 1;
   orderPath = observable.array<OrderPathItem>([]);
 

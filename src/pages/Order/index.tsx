@@ -34,6 +34,7 @@ class Order extends React.PureComponent<any> {
           detailsDeep={detailsDeep}
           routes={routes}
           dummyWasRendered={dummyWasRendered}
+          route={location.pathname}
         />
         <Route exact={true} path={routes.index} component={Paralax} />
       </>

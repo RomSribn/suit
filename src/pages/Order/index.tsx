@@ -20,7 +20,7 @@ class Order extends React.PureComponent<any> {
     if (!wasRendered) {
       wasRendered = true;
     }
-    const { location, match } = this.props;
+    const { location, match, dummyWasRendered } = this.props;
     const routes = makeRoutes(match.url);
     const detailsDeep = !/\/order\/details\/.*\/.*/i.test(location.pathname);
     const afterGarmentChoice = /\/order\/.*\/.*/i.test(location.pathname);
@@ -33,6 +33,8 @@ class Order extends React.PureComponent<any> {
           isIndexPage={isIndexPage}
           detailsDeep={detailsDeep}
           routes={routes}
+          dummyWasRendered={dummyWasRendered}
+          route={location.pathname}
         />
         <Route exact={true} path={routes.index} component={Paralax} />
       </>

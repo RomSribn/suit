@@ -18,7 +18,15 @@ import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 
 @inject(
   ({
-    app: { setDummyY, dummyY, isMenuUncovered, setIsMenuUncovered, lang },
+    app: {
+      setDummyY,
+      dummyY,
+      isMenuUncovered,
+      setIsMenuUncovered,
+      isMenuUncoveredInitial,
+      setIsMenuUncoveredInitial,
+      lang,
+    },
     garments: {
       garments: { currentActiveGarment },
     },
@@ -27,6 +35,8 @@ import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
     dummyY,
     isMenuUncovered,
     setIsMenuUncovered,
+    isMenuUncoveredInitial,
+    setIsMenuUncoveredInitial,
     currentActiveGarment,
     lang,
   }),
@@ -37,13 +47,62 @@ class MainSection extends React.Component<MainSectionProps> {
     inititalTouch: 0,
   };
 
-  componentDidUpdate(prevProps: MainSectionProps) {
+  componentWillUpdate(nextProps: MainSectionProps) {
+    const {
+      setIsMenuUncovered,
+      dummyWasRendered,
+      isMenuUncoveredInitial,
+      route,
+    } = nextProps;
+    const isTriggerMenuCoverInitial: boolean =
+      dummyWasRendered &&
+      !isMenuUncoveredInitial &&
+      !!route &&
+      route.includes('order/details');
+    const isInitialOrderDetailsPage: boolean =
+      !!this.props.route && this.props.route.includes('order/details');
     if (
-      prevProps.dummyY !== this.props.dummyY &&
-      this.props.dummyY! > 0 &&
-      this.props.setIsMenuUncovered
+      isTriggerMenuCoverInitial &&
+      setIsMenuUncovered &&
+      !isInitialOrderDetailsPage
     ) {
+      setIsMenuUncovered(false);
+    }
+  }
+
+  componentDidUpdate(prevProps: MainSectionProps) {
+    const {
+      setIsMenuUncovered,
+      dummyWasRendered,
+      isMenuUncoveredInitial,
+      setIsMenuUncoveredInitial,
+      route,
+    } = this.props;
+
+    const isTriggerMenuCoverDown: boolean =
+      prevProps.dummyY !== this.props.dummyY && this.props.dummyY! > 0;
+
+    const isTriggerMenuCoverInitial: boolean =
+      dummyWasRendered &&
+      !isMenuUncoveredInitial &&
+      !!route &&
+      route.includes('order/details');
+
+    if (isTriggerMenuCoverDown && !!this.props.setIsMenuUncovered) {
       this.props.setIsMenuUncovered(false);
+    }
+    /**
+     * Trigger scrolling up menu block (default: at the bottom);
+     * Component has been mounted a little bit early then Spinner is get out, then a little delay.
+     */
+    if (isTriggerMenuCoverInitial) {
+      setTimeout(() => {
+        if (setIsMenuUncovered && setIsMenuUncoveredInitial) {
+          setIsMenuUncovered(true);
+          setIsMenuUncoveredInitial(true);
+        }
+      }, 400);
+      return;
     }
   }
   render() {
@@ -51,6 +110,7 @@ class MainSection extends React.Component<MainSectionProps> {
       isIndexPage,
       detailsDeep,
       isMenuUncovered,
+      isMenuUncoveredInitial,
       setIsMenuUncovered,
       currentActiveGarment,
       lang = 'ru',
@@ -71,7 +131,11 @@ class MainSection extends React.Component<MainSectionProps> {
                   transform: isMobile()
                     ? `translateY(${isMenuUncovered ? 10 : 70}%)`
                     : 'unset',
-                  transition: '0.5s',
+                  transitionDuration:
+                    !isMenuUncoveredInitial && !isMenuUncovered ? '0' : '0.5s',
+                  transitionProperty: 'transform',
+                  transitionTimingFunction: 'ease',
+                  transitionDelay: '0s',
                   justifyContent: 'space-between',
                 }
               : {

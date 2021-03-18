@@ -41,9 +41,10 @@ export class App implements IAppStore {
   @observable isSearchBarOpened = false;
   @observable dummyY = 0;
   @observable isGarmentLoaded = true;
-  @observable isMenuUncovered = true;
+  @observable isMenuUncovered = false;
+  @observable isMenuUncoveredInitial = false;
   @observable searchedItemsCount = 1;
-  orderPath = observable.array<OrderPathItem>([]);
+  @observable orderPath = observable.array<OrderPathItem>([]);
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
@@ -82,8 +83,15 @@ export class App implements IAppStore {
   };
 
   @action
-  setIsMenuUncovered = (isMenuUncovered: boolean) => {
+  setIsMenuUncovered = (isMenuUncovered: TIsMenuUncovered) => {
     this.isMenuUncovered = isMenuUncovered;
+  };
+
+  @action
+  setIsMenuUncoveredInitial = (
+    isMenuUncoveredInitial: TIsMenuUncoveredInitial,
+  ) => {
+    this.isMenuUncoveredInitial = isMenuUncoveredInitial;
   };
 
   @action

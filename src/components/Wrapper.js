@@ -130,7 +130,13 @@ class Wrapper extends Component {
                   this.showSpinner();
                   dummyWasRendered = true;
                 }
-                return <Order {...props} order={this.props.order} />;
+                return (
+                  <Order
+                    {...props}
+                    order={this.props.order}
+                    dummyWasRendered={dummyWasRendered}
+                  />
+                );
               }}
             />
             <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>

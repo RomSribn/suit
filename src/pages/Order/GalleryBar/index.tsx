@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
 interface GalleryItemState extends ImageLoadState {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 interface P {
@@ -67,7 +67,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         error: null,
         success: null,
       },
-      isActive: false,
+      isActive: this.isActive(),
     };
   }
 
@@ -151,13 +151,15 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
   }
 
   componentDidUpdate(prevProps: P, prevState: GalleryItemState) {
-    if (!_.isEqual(prevProps, this.props) && _.isEqual(prevState, this.state) ) {
+    if (
+      !_.isEqual(prevProps, this.props) &&
+      prevState.isActive !== this.isActive()
+    ) {
       const {
         item: { our_code },
         orderStore,
       } = this.props;
       const { focusableGarment, setFocusableGarment } = orderStore!;
-
       const isActive = this.isActive();
       this.setState({ isActive });
       if (isActive && focusableGarment !== our_code) {

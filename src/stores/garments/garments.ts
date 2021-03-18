@@ -41,7 +41,7 @@ class GarmentsStore {
       this.activeGarments = observable.array([defaultGarment]);
     }
     if (currentActiveGarmentSaved) {
-      this.currentActiveGarment = currentActiveGarmentSaved;
+      this.currentActiveGarment = JSON.parse(currentActiveGarmentSaved);
     } else {
       this.currentActiveGarment = defaultGarment;
     }

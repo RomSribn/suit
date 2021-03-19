@@ -34,13 +34,16 @@ class GarmentsStore {
     const currentActiveGarmentSaved = localStorage.getItem(
       currentActiveGarmentStorageKey,
     );
-    if (activeGarmentsSaved) {
+    if (activeGarmentsSaved && JSON.parse(activeGarmentsSaved).length) {
       const parsedActiveGarmentsSaved = JSON.parse(activeGarmentsSaved);
       this.activeGarments = parsedActiveGarmentsSaved;
     } else {
       this.activeGarments = observable.array([defaultGarment]);
     }
-    if (currentActiveGarmentSaved) {
+    if (
+      currentActiveGarmentSaved &&
+      currentActiveGarmentSaved !== 'undefined'
+    ) {
       this.currentActiveGarment = JSON.parse(currentActiveGarmentSaved);
     } else {
       this.currentActiveGarment = defaultGarment;

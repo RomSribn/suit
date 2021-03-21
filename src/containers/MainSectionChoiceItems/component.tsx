@@ -221,7 +221,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
       removeVisitedChoiceItem,
       orderStore,
       activeGarments = [],
-      setSelectedItems
+      setSelectedItems,
     } = this.props;
     const {
       clearException,
@@ -230,7 +230,7 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
       setOrderDummyParams,
       defaultValues,
       activeElement,
-      hiddenGarments
+      hiddenGarments,
     } = orderStore!;
     const elementInfo = activeElement!.elementInfo;
     const parsedActiveGarments = activeGarments!.filter(
@@ -270,21 +270,21 @@ class ChoiceItems extends React.PureComponent<ChoiceItemsProps> {
               key={`custom-input-${item.id}`}
             />
           ) : (
-              <CustomLink
-                lang={lang}
-                basicRoute={basicRoute}
-                item={{
-                  ...item,
-                  linkName:
-                    (lang && loc[lang].garments[item.linkName.toLowerCase()]) ||
-                    item.linkName,
-                }}
-                onClick={this.onClick}
-                clearClick={this.clearClick}
-                key={`custom-link-${item.id}`}
-                visitedChoiceItems={visitedChoiceItems}
-              />
-            ),
+            <CustomLink
+              lang={lang}
+              basicRoute={basicRoute}
+              item={{
+                ...item,
+                linkName:
+                  (lang && loc[lang].garments[item.linkName.toLowerCase()]) ||
+                  item.linkName,
+              }}
+              onClick={this.onClick}
+              clearClick={this.clearClick}
+              key={`custom-link-${item.id}`}
+              visitedChoiceItems={visitedChoiceItems}
+            />
+          ),
         )}
       </ReactCSSTransitionGroup>
     );

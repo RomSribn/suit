@@ -1,17 +1,14 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import * as _ from 'lodash';
-import { services } from '../../../config/routes';
-import { GalleryBar } from '../GalleryBar';
-
-import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
-
-import './styles.styl';
-import { updateOrder } from '../FooterBar/utils';
-import { Button } from '../../../components/Button';
 import { basisPart } from '../ToggleBar';
+import { Button } from '../../../components/Button';
+import { GalleryBar } from '../GalleryBar';
+import { listeners, isLandscapeInitial, isMobile } from '../../../utils';
 import { loc } from './loc';
-// import { observer } from 'mobx-react';
+import { services } from '../../../config/routes';
+import { updateOrder } from '../FooterBar/utils';
+import './styles.styl';
 
 interface GalleryState extends ImageLoadState {
   activeElementCode: string;
@@ -19,7 +16,6 @@ interface GalleryState extends ImageLoadState {
   mouseOverElement: boolean;
 }
 
-// @observer
 class Gallery extends React.PureComponent<GalleryProps, GalleryState> {
   private imageRef: React.RefObject<HTMLDivElement>;
   private galleryBarWrapperRef: React.RefObject<HTMLDivElement>;

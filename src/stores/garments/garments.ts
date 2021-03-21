@@ -44,7 +44,7 @@ class GarmentsStore {
       currentActiveGarmentSaved &&
       currentActiveGarmentSaved !== 'undefined'
     ) {
-      this.currentActiveGarment = JSON.parse(currentActiveGarmentSaved);
+      this.currentActiveGarment = currentActiveGarmentSaved;
     } else {
       this.currentActiveGarment = defaultGarment;
     }
@@ -82,7 +82,7 @@ class GarmentsStore {
         this.currentActiveGarment = this.activeGarments[0];
         localStorage.setItem(
           currentActiveGarmentStorageKey,
-          JSON.stringify(this.activeGarments[0]),
+          this.activeGarments[0],
         );
 
         localStorage.setItem(
@@ -95,7 +95,7 @@ class GarmentsStore {
       this.currentActiveGarment = this.activeGarments[0];
       localStorage.setItem(
         currentActiveGarmentStorageKey,
-        JSON.stringify(this.activeGarments[0]),
+        this.activeGarments[0],
       );
       localStorage.setItem(
         activeGarmentsStorageKey,

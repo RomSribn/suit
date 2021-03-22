@@ -162,11 +162,31 @@ export default ({
       unusualSideEffect: toggleLoginForm,
     },
   ];
+  const hiddenRoleMenuLinks: MenuLink[] = [
+    {
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || []),
+    },
+    {
+      name: 'chat',
+      url: 'javascript:jivo_api.open()',
+      withoutArrow: true,
+      withoutBaseUrl: true,
+    },
+    {
+      name: 'logIn',
+      url: '/login',
+      withoutArrow: true,
+      unusualSideEffect: toggleLoginForm,
+    },
+  ];
 
   const menuItemsByRole = {
     STYLIST: menuList,
     CUSTOMER: customerMenuList,
     ANON: anonMenuList,
+    HIDDEN: hiddenRoleMenuLinks,
   };
 
   const currentRole = role || 'ANON';

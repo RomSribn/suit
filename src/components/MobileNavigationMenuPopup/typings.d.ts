@@ -1,4 +1,5 @@
 declare type TMobileNavigationMenuPopupProps = {
+  isMenuHidden: TIsMenuHidden;
   currentLang: string;
   closeMenu: () => void;
   setLang: (lang: string) => void;

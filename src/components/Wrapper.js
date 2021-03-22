@@ -73,7 +73,7 @@ class Wrapper extends Component {
               sideEffects={{
                 logout: logout.bind(userStore),
               }}
-              role={role}
+              role={app.isMenuHidden ? 'HIDDEN' : role}
               activeGarments={activeGarments}
               currentActiveGarment={currentActiveGarment}
               setCurrentActiveGarment={setCurrentActiveGarment}

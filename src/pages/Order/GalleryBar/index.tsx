@@ -222,6 +222,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
           (img_url_2d_list.length > 1 && img_url_2d_list[1].slice(5)) || id
         }`
       : image;
+
     return (
       <>
         {this.props.app && (
@@ -240,12 +241,12 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             >
               <img
                 src={hoverImg}
-                className="gallery__item--hover-image"
+                className="gallery__item--main-image"
                 alt={`${id}`}
               />
               <img
                 src={image}
-                className="gallery__item--main-image"
+                className="gallery__item--hover-image"
                 alt={`${id}`}
               />
               {this.props.app && this.props.app.changeSearchedItemsCount()}

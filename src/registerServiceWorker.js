@@ -43,8 +43,9 @@ export default function register() {
 
 function registerValidSW(swUrl) {
   // for unsupported browsers
-  const isSWExist = typeof navigator === 'undefined';
+  const isSWExist = typeof navigator !== 'undefined';
   isSWExist &&
+    navigator.serviceWorker &&
     navigator.serviceWorker
       .register(swUrl)
       .then((registration) => {

@@ -60,6 +60,11 @@ class GalleryStore implements GalleryStore {
             : {
                 ...i,
                 img_url_2d: API_ROOT + i.img_url_2d!.replace('/html', ''),
+                elementInfo: {
+                  garment: this.garment,
+                  group: this.subGroup,
+                  subGroup: this.group,
+                },
               };
         }),
     ];

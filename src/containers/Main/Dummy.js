@@ -104,7 +104,7 @@ class Widget extends PureComponent {
         this.widget3d.setCanvasSize(window.innerWidth, window.innerHeight);
       });
 
-      this.widget3d.update(this.props.assets).then(this.handleUpdated);
+      this.widget3d.update(baseDummyElements).then(this.handleUpdated);
     } catch (err) {
       console.log('Ошибка при рендере манекена', err);
     }
@@ -201,10 +201,12 @@ class Widget extends PureComponent {
        * потому здесь какой-то непонятный грязный хак.
        * У меня заканчиваются крылышки и пиво. так что читай todo:
        * @todo Если ты знаешь в чем причина - U R welcome, fix it
+       * 22.03.2021 - возможно, фикс...
        */
-      setTimeout(() => {
-        this.widget3d.update(nextAssets).then(this.handleUpdated);
-      }, 500);
+      // setTimeout(() => {
+      //   this.widget3d.update(nextAssets).then(this.handleUpdated);
+      // }, 500);
+      this.widget3d.update(nextAssets).then(this.handleUpdated);
     }
 
     if (this.props.selected && prevProps.selected !== this.props.selected) {
@@ -322,7 +324,7 @@ export default class App extends Component {
 
     let params = toJS(orderStore.orderDummyParams);
 
-    if (orderStore.isEmptyOrder() || !wasRendered) {
+    if (orderStore.isEmptyOrder()) {
       params = baseDummyElements;
     } else {
       if (!_.isEmpty(initials) && typeof selected !== initials) {
@@ -356,7 +358,6 @@ export default class App extends Component {
         }
       }
     }
-    wasRendered = true;
     return (
       <React.Fragment>
         {subgroup && (

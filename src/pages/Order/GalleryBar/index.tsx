@@ -2,13 +2,13 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { isMobile, isLandscape } from '../../../utils';
 import { PopUp } from '../../../containers/Popup';
-import { SwiperPopup } from '../../../components/SwiperPopup';
 import { SquareSpinner } from './SquareSpinner';
+import { SwiperPopup } from '../../../components/SwiperPopup';
 import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
 interface GalleryItemState extends ImageLoadState {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 interface P {
@@ -67,7 +67,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
         error: null,
         success: null,
       },
-      isActive: false,
+      isActive: this.isActive(),
     };
   }
 
@@ -151,13 +151,13 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
   }
 
   componentDidUpdate(prevProps: P, prevState: GalleryItemState) {
-    if (!_.isEqual(prevProps, this.props) && _.isEqual(prevState, this.state) ) {
+    if (!_.isEqual(prevProps, this.props)) {
       const {
         item: { our_code },
         orderStore,
       } = this.props;
-      const { focusableGarment, setFocusableGarment } = orderStore!;
 
+      const { focusableGarment, setFocusableGarment } = orderStore!;
       const isActive = this.isActive();
       this.setState({ isActive });
       if (isActive && focusableGarment !== our_code) {
@@ -183,6 +183,7 @@ class GalleryItem extends React.Component<P, GalleryItemState> {
             ...this.state.load,
             success: imageUrl,
           },
+          isActive: this.isActive(),
         });
         incremetLoadedCount();
       };

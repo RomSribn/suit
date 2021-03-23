@@ -15,7 +15,7 @@ import './styles.styl';
 
 const baseLink = String(process.env.BASE_SERVICE_LINK);
 
-interface HeaderProps { }
+interface HeaderProps {}
 export const Header = (props: HeaderProps) => {
   const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
   return (
@@ -26,15 +26,15 @@ export const Header = (props: HeaderProps) => {
           src={
             !isRealIndexPage
               ? API_ROOT +
-              process.env.STATIC_IMAGES +
-              'logo/' +
-              process.env.SALON_ID +
-              '.svg'
+                process.env.STATIC_IMAGES +
+                'logo/' +
+                process.env.SALON_ID +
+                '.svg'
               : API_ROOT +
-              process.env.STATIC_IMAGES +
-              'logo/' +
-              process.env.SALON_ID +
-              '_white.svg'
+                process.env.STATIC_IMAGES +
+                'logo/' +
+                process.env.SALON_ID +
+                '_white.svg'
           }
         />
       </a>
@@ -63,8 +63,8 @@ class NavigationItem extends React.Component<NavigationItemProps> {
           <NotificationIcon count={1} />
         </div>
       ) : (
-          ''
-        );
+        ''
+      );
     };
     return (
       <li>
@@ -87,18 +87,18 @@ class NavigationItem extends React.Component<NavigationItemProps> {
             {renderNotificationIcon()}
           </NavLink>
         ) : (
-            <div
-              className={classNames(
-                'main-menu__link ',
-                'link-hidden',
-                `main-menu__link--${linkName}`,
-              )}
-            >
-              <span key={lang}>
-                <span>{loc[lang].navigation[linkName]}</span>
-              </span>
-            </div>
-          )}
+          <div
+            className={classNames(
+              'main-menu__link ',
+              'link-hidden',
+              `main-menu__link--${linkName}`,
+            )}
+          >
+            <span key={lang}>
+              <span>{loc[lang].navigation[linkName]}</span>
+            </span>
+          </div>
+        )}
       </li>
     );
   }
@@ -128,6 +128,7 @@ const makeNavigationLinks: MakeNavigationLinks = (
 };
 
 interface NavigationProps {
+  isMenuHidden: TIsMenuHidden;
   isLogin?: boolean;
   lang: string;
   isOrderPage: boolean;
@@ -158,7 +159,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
   };
 
   render() {
-    const { lang, isLogin, role } = this.props;
+    const { lang, isLogin, role, isMenuHidden } = this.props;
     const stylistNavLinks = Object.keys(loc[lang].navigation);
     const sharedNavLinks: string[] = ['order', 'store'];
     const customerNavLinks: string[] = [
@@ -192,12 +193,13 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
             onMouseLeave={this.mouseLeave}
           >
             <ul>
-              {makeNavigationLinks(
-                navigationLinks,
-                hiddenNavLinks,
-                this.state.showActiveClassName,
-                lang,
-              )}
+              {!isMenuHidden &&
+                makeNavigationLinks(
+                  navigationLinks,
+                  hiddenNavLinks,
+                  this.state.showActiveClassName,
+                  lang,
+                )}
             </ul>
           </nav>
         </div>

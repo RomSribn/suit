@@ -2,6 +2,8 @@ import { observable, action } from 'mobx';
 import axios, { AxiosResponse } from 'axios';
 import { services } from '../config/routes';
 import { setUserInfo, resetUserInfo, getUserInfo } from '../utils/apiUtils';
+import { app } from './app';
+
 type responseUserData = {
   createDate: string;
   token: string;
@@ -48,6 +50,7 @@ class UserClass implements IUserStore {
           };
           setUserInfo(userInfo);
           this.isAuth = true;
+          app.setIsMenuHidden(false);
           return userInfo;
         } else {
           throw new Error('Unathorized');

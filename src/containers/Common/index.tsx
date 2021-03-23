@@ -25,11 +25,9 @@ class Common extends React.Component<CommonProps> {
     const isDetailsPage = this.props.routingStore!.location.pathname.includes(
       routes.details,
     );
-
     const isIndexPage = window.location.pathname === '/order';
     return (
       <div className="application">
-        {/* <Paralax /> */}
         {window.location.pathname !== '/login' && <Navigation />}
         <div className="content">
           <div

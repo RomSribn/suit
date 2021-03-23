@@ -6,6 +6,8 @@ type TIsMenuUncovered = boolean;
 type TSetIsMenuUncovered = (isMenuUncovered: TIsMenuUncovered) => void;
 type TDummyY = number;
 type TSetDummyY = (y: TDummyY) => void;
+type TIsMenuHidden = boolean;
+type TSetIsMenuHidden = (isMenuHidden: TIsMenuHidden) => void;
 
 interface IAppStore {
   addVisitedChoiceItem: (name: string) => void;
@@ -15,6 +17,7 @@ interface IAppStore {
   cutOrderPath: (value: string) => void;
   dummyY: TDummyY;
   isGarmentLoaded: boolean;
+  isMenuHidden: TIsMenuHidden;
   isMenuUncovered: TIsMenuUncovered;
   isMenuUncoveredInitial: TIsMenuUncoveredInitial;
   isSearchBarOpened: boolean;
@@ -28,6 +31,7 @@ interface IAppStore {
   setCurrentSearchValue: (text: string) => void;
   setDummyY: TSetDummyY;
   setIsGarmentLoaded: (isGarmentLoaded: boolean) => void;
+  setIsMenuHidden: TSetIsMenuHidden;
   setIsMenuUncovered: TSetIsMenuUncovered;
   setIsMenuUncoveredInitial: TSetIsMenuUncoveredInitial;
   setLang: (lang: string) => void;

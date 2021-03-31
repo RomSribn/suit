@@ -82,6 +82,7 @@
     "react-svg-inline": "^2.1.0",
     "react-svg-loader": "^2.0.0-alpha.1",
     "sass-loader": "^6.0.6",
+    "screenfull": "^5.1.0",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.20.2",
     "stylus": "^0.54.5",

@@ -12,6 +12,10 @@
         height: 100%;
         padding-bottom: 60px;
 
+    @supports not (display contents)
+        &.gallery--colors
+            padding-bottom 0
+
     &__img
         border 1px solid #eceeee
         display inline-block

@@ -14,6 +14,7 @@ import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
 import { GarmentViewController } from '../GarmentViewController';
+import { setCoverByTouchEnd } from '../../../utils/common';
 import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 
 @inject(
@@ -44,7 +45,7 @@ import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 @observer
 class MainSection extends React.Component<MainSectionProps> {
   state = {
-    inititalTouch: 0,
+    initialTouch: 0,
   };
 
   componentWillUpdate(nextProps: MainSectionProps) {
@@ -116,7 +117,7 @@ class MainSection extends React.Component<MainSectionProps> {
       lang = 'ru',
     } = this.props;
 
-    const { inititalTouch } = this.state;
+    const { initialTouch } = this.state;
 
     // isIndexPage из пропсов работает неправильно.
     const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
@@ -175,16 +176,12 @@ class MainSection extends React.Component<MainSectionProps> {
             )}
             onTouchStart={(event: React.TouchEvent<HTMLInputElement>) => {
               this.setState({
-                inititalTouch: event.touches[0].clientY,
+                initialTouch: event.touches[0].clientY,
               });
             }}
-            onTouchEnd={(event: React.TouchEvent<HTMLInputElement>) => {
-              if (event.changedTouches[0].clientY - inititalTouch < -10) {
-                setIsMenuUncovered!(
-                  !!(event.changedTouches[0].clientY < inititalTouch),
-                );
-              }
-            }}
+            onTouchEnd={(event: React.TouchEvent<HTMLInputElement>) =>
+              setCoverByTouchEnd(event, initialTouch, setIsMenuUncovered!)
+            }
           >
             <Switch>
               <Route

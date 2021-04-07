@@ -15,4 +15,25 @@ function parseQuery(searchQuery: string): { [key: string]: string } {
   }, {});
 }
 
-export { parseQuery };
+/**
+ *
+ * Figure out, if user swiping top->bottom ( down ) or bottom->top ( up )
+ * @param {React.TouchEvent<HTMLInputElement>} event
+ * @param {number} initialTouch
+ * @param {(isCover: boolean) => void} callback
+ */
+const setCoverByTouchEnd = (
+  event: React.TouchEvent<HTMLInputElement>,
+  initialTouch: number,
+  callback: (isCover: boolean) => void,
+) => {
+  if (event.changedTouches[0].clientY - initialTouch < -10) {
+    callback(!!(event.changedTouches[0].clientY < initialTouch));
+  }
+
+  if (event.changedTouches[0].clientY - initialTouch > 10) {
+    callback(!!(event.changedTouches[0].clientY < initialTouch));
+  }
+};
+
+export { parseQuery, setCoverByTouchEnd };

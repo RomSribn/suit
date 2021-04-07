@@ -13,8 +13,6 @@ import { routes as defaultRoutes } from '../../../config/routes';
 import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
-import { GarmentViewController } from '../GarmentViewController';
-import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
 import { MenuCoverButton } from './menuCoverButton';
 import { setCoverByTouchEnd } from '../../../utils/common';
 import './styles.styl';
@@ -28,10 +26,6 @@ import './styles.styl';
       setIsMenuUncovered,
       isMenuUncoveredInitial,
       setIsMenuUncoveredInitial,
-      lang,
-    },
-    garments: {
-      garments: { currentActiveGarment },
     },
   }) => ({
     setDummyY,
@@ -40,8 +34,6 @@ import './styles.styl';
     setIsMenuUncovered,
     isMenuUncoveredInitial,
     setIsMenuUncoveredInitial,
-    currentActiveGarment,
-    lang,
   }),
 )
 @observer
@@ -115,8 +107,6 @@ class MainSection extends React.Component<MainSectionProps> {
       isMenuUncovered,
       isMenuUncoveredInitial,
       setIsMenuUncovered,
-      currentActiveGarment,
-      lang = 'ru',
     } = this.props;
 
     const { initialTouch } = this.state;
@@ -162,14 +152,6 @@ class MainSection extends React.Component<MainSectionProps> {
                 });
               }}
             />
-          )}
-          {!isMenuUncovered && isMobile() && (
-            <div className="above-content">
-              <div className="above-content__garment">
-                <span>{loc[lang][currentActiveGarment]}</span>
-              </div>
-              <GarmentViewController />
-            </div>
           )}
           <Filter />
           {isRealIndexPage && <Demo />}

@@ -4,4 +4,5 @@ interface IGarmentChoiceFormProps {
   setHiddenGarments?: (activeGarments: string[]) => void;
   hiddenGarments?: IHiddenGarments;
   setOrderDummyParams?: (activeGarments: string[]) => void;
+  backgroundColor?: string;
 }

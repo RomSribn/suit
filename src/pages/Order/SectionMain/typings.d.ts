@@ -7,8 +7,6 @@ interface MainSectionProps extends OrderSectionInterface {
   setIsMenuUncovered?: TSetIsMenuUncovered;
   isMenuUncoveredInitial?: TIsMenuUncoveredInitial;
   setIsMenuUncoveredInitial?: TSetIsMenuUncoveredInitial;
-  currentActiveGarment?: string;
-  lang?: string;
   dummyWasRendered: boolean;
   orderPath?: OrderPathItem[];
   route?: string;

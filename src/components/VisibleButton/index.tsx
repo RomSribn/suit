@@ -1,6 +1,9 @@
 import * as React from 'react';
 
-const VisibleButton = ({ isHide }: IVisibleButtonProps) => {
+const VisibleButton = ({
+  isHide,
+  backgroundColor = '#ebeeee',
+}: IVisibleButtonProps) => {
   const [isAnimated, setIsAnimated] = React.useState(false);
 
   const onClick = () => {
@@ -13,7 +16,7 @@ const VisibleButton = ({ isHide }: IVisibleButtonProps) => {
   };
 
   return (
-    <div className="visible-button">
+    <div className="visible-button" style={{ backgroundColor }}>
       <div className="ripple" onAnimationEnd={removeAnimate} />
       <div
         className={`visible-button__toggle ${!isAnimated && 'animated'}`}
@@ -29,7 +32,7 @@ const VisibleButton = ({ isHide }: IVisibleButtonProps) => {
           width="32"
           height="32"
         >
-          <circle cx="16" cy="15" r="2" />
+          <circle cx="16" cy="15" r="2" fill="#000000" />
           <path d="M30 16s-6.268 7-14 7-14-7-14-7 6.268-7 14-7 14 7 14 7zM22.772 10.739a8 8 0 1 1-13.66.189" />
         </svg>
       </div>

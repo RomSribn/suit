@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { setCoverByTouchEnd } from '../../../utils/common';
-import './styles.styl';
+import './style.menuCoverButton.styl';
 
 const MenuCoverButton = ({
   setIsMenuUncovered,

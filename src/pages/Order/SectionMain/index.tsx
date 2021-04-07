@@ -14,8 +14,10 @@ import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
 import { GarmentViewController } from '../GarmentViewController';
-import { setCoverByTouchEnd } from '../../../utils/common';
 import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
+import { MenuCoverButton } from './menuCoverButton';
+import { setCoverByTouchEnd } from '../../../utils/common';
+import './styles.styl';
 
 @inject(
   ({
@@ -148,6 +150,19 @@ class MainSection extends React.Component<MainSectionProps> {
                 }
           }
         >
+          {isMobile() && (
+            <MenuCoverButton
+              setIsMenuUncovered={setIsMenuUncovered!}
+              isMenuUncovered={isMenuUncovered!}
+              initialTouch={initialTouch}
+              onTouchStart={(event: React.TouchEvent<HTMLInputElement>) => {
+                event.preventDefault();
+                this.setState({
+                  initialTouch: event.touches[0].clientY,
+                });
+              }}
+            />
+          )}
           {!isMenuUncovered && isMobile() && (
             <div className="above-content">
               <div className="above-content__garment">

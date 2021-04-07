@@ -14,6 +14,13 @@ interface MainSectionProps extends OrderSectionInterface {
   route?: string;
 }
 
+declare interface IMenuCoverButtonProps {
+  setIsMenuUncovered: TSetIsMenuUncovered;
+  isMenuUncovered: TIsMenuUncovered;
+  onTouchStart: (event: React.TouchEvent<HTMLInputElement>) => void;
+  initialTouch: number;
+}
+
 declare interface TRouteProps {
   match: Match;
 }

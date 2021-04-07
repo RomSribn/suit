@@ -124,7 +124,7 @@ export const priceList: priceListItem[] = [
       fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
         leftInfo: `за изделие от -`,
-        price: 181300,
+        price: 58000,
         currency: `₽`,
       },
       inputs: ['загрузите свои каталоги', 'загрузите доступные мерки'],
@@ -138,7 +138,7 @@ export const priceList: priceListItem[] = [
       fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
         leftInfo: `per garment from -`,
-        price: 2400,
+        price: 770,
         currency: `$`,
       },
       inputs: ['upload your catalogs', 'upload your measurements'],

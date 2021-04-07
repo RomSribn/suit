@@ -123,7 +123,7 @@ export const priceList: priceListItem[] = [
             повторных удаленных заказов. Скачать pdf заказа для клиента.`,
       fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
-        leftInfo: `от -`,
+        leftInfo: `за изделие от -`,
         price: 181300,
         currency: `₽`,
       },
@@ -137,7 +137,7 @@ export const priceList: priceListItem[] = [
                 remote orders. Download example of pdf order for client.`,
       fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
-        leftInfo: `from -`,
+        leftInfo: `per garment from -`,
         price: 2400,
         currency: `$`,
       },

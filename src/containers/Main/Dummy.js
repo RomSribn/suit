@@ -202,11 +202,14 @@ class Widget extends PureComponent {
        * У меня заканчиваются крылышки и пиво. так что читай todo:
        * @todo Если ты знаешь в чем причина - U R welcome, fix it
        * 22.03.2021 - возможно, фикс...
+       * 01.04.21 - удаление SetTimeout, больше не блочит рендеринг виджета,
+       * но влияет на подгрузку какмеры. Видимо, такой "хардкод" разрешает конфликт
+       * первичной подгрузки камеры (сперва прогружается камера, после - материалы).
+       * Задержка увеличина с 500 -> 1000 ms
        */
-      // setTimeout(() => {
-      //   this.widget3d.update(nextAssets).then(this.handleUpdated);
-      // }, 500);
-      this.widget3d.update(nextAssets).then(this.handleUpdated);
+      setTimeout(() => {
+        this.widget3d.update(nextAssets).then(this.handleUpdated);
+      }, 1000);
     }
 
     if (this.props.selected && prevProps.selected !== this.props.selected) {

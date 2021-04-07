@@ -7,6 +7,7 @@ import { Header as Component } from './component';
     userStore: user,
     path: routing.location!.pathname,
     appStore: app,
+    isMenuUncovered: app.isMenuUncovered,
     ...nextProps,
   };
 })
@@ -17,7 +18,7 @@ class Header extends React.Component<HeaderContainerProps> {
   };
 
   render() {
-    const { path, userStore, appStore } = this.props;
+    const { path, userStore, appStore, isMenuUncovered } = this.props;
     return (
       <Component
         lang={appStore!.lang}
@@ -26,6 +27,7 @@ class Header extends React.Component<HeaderContainerProps> {
         path={path}
         isAuth={userStore!.isAuth}
         openMenu={this.openMenu}
+        isMenuUncovered={isMenuUncovered}
       />
     );
   }

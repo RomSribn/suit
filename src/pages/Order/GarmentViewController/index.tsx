@@ -25,16 +25,18 @@ class GarmentViewController extends React.Component<IGarmentChoiceFormProps> {
       activeGarments,
       hiddenGarments,
       currentActiveGarment,
-      // setOrderDummyParams
+      backgroundColor,
     } = this.props;
     return (
       <div
         onClick={() => {
           setHiddenGarments!(activeGarments!);
-          // setOrderDummyParams!(activeGarments!);
         }}
       >
-        <VisibleButton isHide={!!hiddenGarments![currentActiveGarment!]} />
+        <VisibleButton
+          isHide={!!hiddenGarments![currentActiveGarment!]}
+          backgroundColor={backgroundColor}
+        />
       </div>
     );
   }

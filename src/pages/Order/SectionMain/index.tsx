@@ -13,8 +13,9 @@ import { routes as defaultRoutes } from '../../../config/routes';
 import { SubgroupChoice } from '../SubgroupChoice';
 import * as classnames from 'classnames';
 import CrumbRoute from '../../../utils/CrumbRoute';
-import { GarmentViewController } from '../GarmentViewController';
-import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
+import { MenuCoverButton } from './menuCoverButton';
+import { setCoverByTouchEnd } from '../../../utils/common';
+import './styles.styl';
 
 @inject(
   ({
@@ -25,10 +26,6 @@ import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
       setIsMenuUncovered,
       isMenuUncoveredInitial,
       setIsMenuUncoveredInitial,
-      lang,
-    },
-    garments: {
-      garments: { currentActiveGarment },
     },
   }) => ({
     setDummyY,
@@ -37,14 +34,12 @@ import { loc } from '../../../components/MobileNavigationMenuPopup/loc';
     setIsMenuUncovered,
     isMenuUncoveredInitial,
     setIsMenuUncoveredInitial,
-    currentActiveGarment,
-    lang,
   }),
 )
 @observer
 class MainSection extends React.Component<MainSectionProps> {
   state = {
-    inititalTouch: 0,
+    initialTouch: 0,
   };
 
   componentWillUpdate(nextProps: MainSectionProps) {
@@ -112,11 +107,9 @@ class MainSection extends React.Component<MainSectionProps> {
       isMenuUncovered,
       isMenuUncoveredInitial,
       setIsMenuUncovered,
-      currentActiveGarment,
-      lang = 'ru',
     } = this.props;
 
-    const { inititalTouch } = this.state;
+    const { initialTouch } = this.state;
 
     // isIndexPage из пропсов работает неправильно.
     const isRealIndexPage = window.location.pathname === defaultRoutes.mainPage;
@@ -147,13 +140,18 @@ class MainSection extends React.Component<MainSectionProps> {
                 }
           }
         >
-          {!isMenuUncovered && isMobile() && (
-            <div className="above-content">
-              <div className="above-content__garment">
-                <span>{loc[lang][currentActiveGarment]}</span>
-              </div>
-              <GarmentViewController />
-            </div>
+          {isMobile() && (
+            <MenuCoverButton
+              setIsMenuUncovered={setIsMenuUncovered!}
+              isMenuUncovered={isMenuUncovered!}
+              initialTouch={initialTouch}
+              onTouchStart={(event: React.TouchEvent<HTMLInputElement>) => {
+                event.preventDefault();
+                this.setState({
+                  initialTouch: event.touches[0].clientY,
+                });
+              }}
+            />
           )}
           <Filter />
           {isRealIndexPage && <Demo />}
@@ -175,16 +173,12 @@ class MainSection extends React.Component<MainSectionProps> {
             )}
             onTouchStart={(event: React.TouchEvent<HTMLInputElement>) => {
               this.setState({
-                inititalTouch: event.touches[0].clientY,
+                initialTouch: event.touches[0].clientY,
               });
             }}
-            onTouchEnd={(event: React.TouchEvent<HTMLInputElement>) => {
-              if (event.changedTouches[0].clientY - inititalTouch < -10) {
-                setIsMenuUncovered!(
-                  !!(event.changedTouches[0].clientY < inititalTouch),
-                );
-              }
-            }}
+            onTouchEnd={(event: React.TouchEvent<HTMLInputElement>) =>
+              setCoverByTouchEnd(event, initialTouch, setIsMenuUncovered!)
+            }
           >
             <Switch>
               <Route

@@ -14,6 +14,7 @@
         border-radius 0
         white-space nowrap
         height 100%
+        width 100%
 
         &.disabled
             cursor default
@@ -21,7 +22,6 @@
             user-select none
 
         &.black
-            width 13.3333rem
             border 2px solid #000
             font-size 1rem
             font-weight 500
@@ -53,7 +53,6 @@
             display block
             background transparent
             padding .5333rem 0
-            width 13.3333rem
             font-size 1rem
             text-transform uppercase
             text-align left
@@ -99,19 +98,7 @@
                 stroke #b7b7b7
                 stroke-width 3px
 
-
-    @media only screen and (max-width:  1140px)
-        .button
-            &.black
-                width 10.5rem
-            &.white
-                width 10.5rem
     @media only screen and (max-width: 768px) and (max-width: 1024px) and (orientation: portrait) 
-        .button
-            &.black
-                width 8.5rem
-            &.white
-                width 8.5rem
         .swiper-popup-container
             .button
                 &.black
@@ -140,7 +127,8 @@
     @media only screen and (max-width:  450px), only screen and (max-height: 450px)
         .button
             &.black
-                width: calc(100% + 4px);
+                // width: calc(100% + 4px);
+                width 100%
                 margin-left: -2px;
                 font-weight 700
                 text-align center

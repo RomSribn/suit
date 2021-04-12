@@ -330,8 +330,4 @@
   .text-block__price {
     margin-bottom: 10px;
   }
-
-  .text-block__info .button-bar {
-    height: auto;
-  }
 }

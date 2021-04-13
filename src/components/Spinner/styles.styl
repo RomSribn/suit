@@ -21,12 +21,14 @@
         stroke #b7b7b7
         stroke-width 3px
 
-        &--2
+        &--static, &--animated
             stroke #000
             stroke-width 3px
-            stroke-dasharray 55% 100%
+            
+        &--animated
             animation spin 1s infinite
             animation-timing-function linear
+            stroke-dasharray 55% 100%
 
 
 @keyframes spin

@@ -52,12 +52,15 @@ export class App implements IAppStore {
   @observable currentSearchValue = ' ';
   @observable isSearchBarOpened = false;
   @observable dummyY = 0;
+  @observable itemsLoaded = 0;
+  @observable itemsTotal = 0;
   @observable isGarmentLoaded = true;
   @observable isMenuUncovered = false;
   @observable isMenuUncoveredInitial = false;
   @observable searchedItemsCount = 1;
   @observable orderPath = observable.array<OrderPathItem>([]);
   @observable isMenuHidden: TIsMenuHidden = false;
+  @observable isDummyWasRendered = false;
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
@@ -98,6 +101,17 @@ export class App implements IAppStore {
   @action
   setDummyY = (y: number) => {
     this.dummyY = y;
+  };
+
+  @action
+  setIsDummyWasRendered = (isDummyWasRendered: TIsDummyWasRendered) => {
+    this.isDummyWasRendered = isDummyWasRendered;
+  };
+
+  @action
+  setLoadedInfo = ({ itemsLoaded, itemsTotal }: TSetLoadedInfoProps) => {
+    this.itemsLoaded = itemsLoaded;
+    this.itemsTotal = itemsTotal;
   };
 
   @action

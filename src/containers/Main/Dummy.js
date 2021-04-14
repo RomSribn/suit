@@ -14,14 +14,6 @@ const INITIALS = 'initials';
 
 const SALON_API_ID = process.env.SALON_API_ID;
 
-/**
- * Ух бля. Костылеми больше, костылем меньше. Уже абсолютно похуй, крч. Прости меня, будущий Я.
- * Основное назначение этой поебени - при первом рендере рендерить
- * только базовые элементы манекена
- *
- */
-let wasRendered = false;
-
 /** Эти элементы рендерятся при первой отрисовке для снижения трафика */
 const baseDummyElements = [
   'body',
@@ -37,19 +29,28 @@ let demoSectionWidth = 400;
   ({
     order,
     garments: { Subgroups, garments },
-    app: { setDummyY, isMenuUncovered, setIsGarmentLoaded, orderPath },
+    app: {
+      isDummyWasRendered,
+      isMenuUncovered,
+      orderPath,
+      setDummyY,
+      setIsGarmentLoaded,
+      setLoadedInfo,
+    },
     filterStore: { setSelectedItems },
     galleryStore,
   }) => ({
-    setSelectedItems,
-    orderStore: order,
-    group: [...orderPath].pop(),
-    garments,
     galleryStore,
-    SubgroupsStore: new Subgroups('shirt'),
-    setDummyY,
+    garments,
+    group: [...orderPath].pop(),
+    isDummyWasRendered,
     isMenuUncovered,
+    orderStore: order,
+    setDummyY,
     setIsGarmentLoaded,
+    setLoadedInfo,
+    setSelectedItems,
+    SubgroupsStore: new Subgroups('shirt'),
   }),
 )
 class Widget extends PureComponent {
@@ -57,7 +58,7 @@ class Widget extends PureComponent {
     super(props);
     if (document.querySelector('html').offsetWidth <= 450) {
     }
-    demoSectionWidth = 200;
+    this.demoSectionWidth = 200;
   }
   componentWillUnmount = () => {
     listeners.orientationchange.unsubscribe(
@@ -96,6 +97,13 @@ class Widget extends PureComponent {
       onRotate: ({ y }) => {
         const { setDummyY, isMenuUncovered } = this.props;
         isMobile() && isMenuUncovered && setDummyY(y);
+      },
+      onProgress: (url, itemsLoaded, itemsTotal) => {
+        const { setLoadedInfo, isDummyWasRendered } = this.props;
+        if (isDummyWasRendered) {
+          return;
+        }
+        setLoadedInfo({ itemsLoaded, itemsTotal });
       },
     });
     try {
@@ -227,7 +235,7 @@ class Widget extends PureComponent {
       <div
         className="widget3d"
         ref={(node) => (this.widgetContainer = node)}
-        style={{ width: `${demoSectionWidth}%`, height: '100%' }}
+        style={{ width: `${this.demoSectionWidth}%`, height: '100%' }}
       />
     );
   }
@@ -310,6 +318,7 @@ export default class App extends Component {
     }
     /* eslint-enable */
   };
+
   render() {
     const { orderStore, currentActiveGarment } = this.props;
     const { subgroup } = this.state;

@@ -30,6 +30,22 @@
             animation-timing-function linear
             stroke-dasharray 55% 100%
 
+.spinner-linear
+    width 6.6666rem
+    position relative
+    overflow hidden
+
+    .line
+        position absolute
+        top 0 
+        left 0
+        background-color #b7b7b7
+        height 2px
+        width 100%
+
+        &--2
+            background-color #000
+            left -100%
 
 @keyframes spin
     0%   { stroke-dashoffset: 0 }

@@ -8,7 +8,7 @@ class CustomersStore implements ICustomerStore {
   @observable error: Error | null = null;
   @observable storeError: Error | null = null;
   @observable customers = observable.array<User>();
-  @observable selectedStoreId: TSelectedStoreId = 1;
+  @observable selectedStoreId: TSelectedStoreId = 2;
   @observable usersStoreItems: IUsersStoreItems[] = observable.array();
   @observable anonUserInfo: IAnonUserInfo = { name: '', email: '' };
 

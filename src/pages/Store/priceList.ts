@@ -1,44 +1,46 @@
 import { API_ROOT } from '../../config/routes';
 
 export const priceList: priceListItem[] = [
-  {
-    id: 1,
-    videoWebm: `${API_ROOT}/assets/video/add_your_fabric_catalog.webm`,
-    videoMp4: `${API_ROOT}/assets/video/add_your_fabric_catalog.mp4`,
-    file: `/assets/files/pdf-store-example.pdf`,
-    isFileInput: false,
-    ru: {
-      title: `добавить свой каталог тканей`,
-      description: `Укажите, каталог какого производителя добавляете, Выберите для чего предназначена ткань: пиджака, брюк или 
-        сорочки. Мы запросим образцы тканей у производителя или фабрики, выгрузим в данную форму заказа.`,
-      priceBlock: {
-        leftInfo: `1 картинка -`,
-        price: 365,
-        currency: `₽`,
-      },
-      inputs: [
-        'название производителя ткани или фабрики:',
-        'укажите названия каталогов через запятую: каталог 1, каталог 2, ...',
-        'комментарий: ваш комментарий или вопрос',
-      ],
-    },
-    en: {
-      title: `add your fabric catalog`,
-      description: `Write the name of a manufacturer or factory which catalog you are adding. List the 
-                catalog names separated by commas. We will request samples of fabrics from the 
-                manufacturer or factory. We will upload them to this order form.`,
-      priceBlock: {
-        leftInfo: `1 fabric -`,
-        price: 5,
-        currency: `$`,
-      },
-      inputs: [
-        'Name of a manufacturer or factory:',
-        'List the catalog names by commas: catalog 1, catalog 2, ...',
-        'Comment: your comment or a question',
-      ],
-    },
-  },
+  //  temporary hidden
+  // {
+  //   id: 1,
+  //   videoWebm: `${API_ROOT}/assets/video/add_your_fabric_catalog.webm`,
+  //   videoMp4: `${API_ROOT}/assets/video/add_your_fabric_catalog.mp4`,
+  //   file: `/assets/files/pdf-store-example.pdf`,
+  //   isFileInput: false,
+  //   ru: {
+  //     title: `добавить свой каталог тканей`,
+  //     description:
+  //        `Укажите, каталог какого производителя добавляете, Выберите для чего предназначена ткань: пиджака, брюк или
+  //       сорочки. Мы запросим образцы тканей у производителя или фабрики, выгрузим в данную форму заказа.`,
+  //     priceBlock: {
+  //       leftInfo: `1 картинка -`,
+  //       price: 365,
+  //       currency: `₽`,
+  //     },
+  //     inputs: [
+  //       'название производителя ткани или фабрики:',
+  //       'укажите названия каталогов через запятую: каталог 1, каталог 2, ...',
+  //       'комментарий: ваш комментарий или вопрос',
+  //     ],
+  //   },
+  //   en: {
+  //     title: `add your fabric catalog`,
+  //     description: `Write the name of a manufacturer or factory which catalog you are adding. List the
+  //               catalog names separated by commas. We will request samples of fabrics from the
+  //               manufacturer or factory. We will upload them to this order form.`,
+  //     priceBlock: {
+  //       leftInfo: `1 fabric -`,
+  //       price: 5,
+  //       currency: `$`,
+  //     },
+  //     inputs: [
+  //       'Name of a manufacturer or factory:',
+  //       'List the catalog names by commas: catalog 1, catalog 2, ...',
+  //       'Comment: your comment or a question',
+  //     ],
+  //   },
+  // },
   {
     id: 2,
     videoWebm: `${API_ROOT}/assets/video/order_pictures_of_finished_garments.webm`,
@@ -123,8 +125,8 @@ export const priceList: priceListItem[] = [
             повторных удаленных заказов. Скачать pdf заказа для клиента.`,
       fileBtnTitle: `скачать пример pdf заказа для клиента`,
       priceBlock: {
-        leftInfo: `от -`,
-        price: 181300,
+        leftInfo: `за изделие от -`,
+        price: 58000,
         currency: `₽`,
       },
       inputs: ['загрузите свои каталоги', 'загрузите доступные мерки'],
@@ -137,8 +139,8 @@ export const priceList: priceListItem[] = [
                 remote orders. Download example of pdf order for client.`,
       fileBtnTitle: `look at the example of pdf order’s file for the client`,
       priceBlock: {
-        leftInfo: `from -`,
-        price: 2400,
+        leftInfo: `per garment from -`,
+        price: 770,
         currency: `$`,
       },
       inputs: ['upload your catalogs', 'upload your measurements'],

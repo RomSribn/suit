@@ -6,6 +6,7 @@
     padding 10px
     @media only screen and (min-width: 450px) and (min-height: 450px)
         padding 2rem 2rem 55px 2rem
+        height auto
     span.button-bar 
         display block
         position absolute
@@ -13,6 +14,7 @@
         left -10%
         min-height 71px
         width 120%
+        height auto
         background black
         @media only screen and (min-width: 450px) and (min-height: 450px)
             position static
@@ -20,19 +22,26 @@
             bottom 51px
             right 4.5rem
             background transparent
-        button 
+        .approve-button.button.black 
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             width auto
             padding 0 1rem
-            margin-top 1rem
             margin-left: auto;
             color #fff
             background-color transparent
+            line-height 2.4rem
             &.approve-button.black:hover
                 background-color #000
                 border-color #000
                 color #fff
             @media only screen and (min-width: 450px) and (min-height: 450px)
+                position relative
+                left 0
+                transform none
                 background-color #000
+                margin-top 1rem
                 &.approve-button.black:hover
                     background: #eceeee;
                     border-color: #eceeee;

@@ -16,7 +16,7 @@
     background-size cover
     padding 5.25rem
     color white
-
+ 
     @media only screen and (max-width: 1210px), only screen and (max-height: 630px)
       padding 4.25rem
 
@@ -25,23 +25,12 @@
       width 100vw
       padding: 3.2rem 5.25rem
 
-      .button-bar
-        width: 48%;
-
       .button.black
       .button.white
         margin-left: 0;
 
     @media only screen and (max-width: 450px)
       padding: 50% 3.5rem 2.5rem 3.5rem
-
-    @media only screen and (min-width: 450px) and (max-width: 1024px)
-      .button.white,
-      .button.black
-        width 13.3333rem
-
-      .button.white
-        margin-right: 12px; 
 
     & .text
       text-align right
@@ -153,6 +142,11 @@
         margin-top: 1.6rem
         @media only screen and (max-height: 450px)
           position relative
+
+        .button-bar
+            width 48%
+            .button
+              width 100%
 
       label.cb-text
         padding-top 2px

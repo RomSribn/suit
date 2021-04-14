@@ -149,7 +149,7 @@ export const priceList: priceListItem[] = [
   {
     id: 5,
     videoWebm: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
-    videoMp4: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.webm`,
+    videoMp4: `${API_ROOT}/assets/video/add_3d_catalogs_of_your_garments.mp4`,
     file: `/assets/files/pdf-store-example.pdf`,
     isFileInput: true,
     ru: {

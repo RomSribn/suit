@@ -59,19 +59,9 @@ class Pdf extends React.Component<any> {
   componentDidMount() {
     const query = parseQuery(this.props.routingStore.location.search);
     const orderStore = this.props.orderStore;
-    const garmentsStore = this.props.garmentsStore;
 
-    if (orderStore.isEmptyOrder()) {
-      if (query.order_id) {
-        orderStore
-          .fetchInitialOrder(
-            Object.keys(garmentsStore.garmentsList),
-            (garments: string[]) => garmentsStore.setChosenGarments(garments),
-          )
-          .then(() => {
-            orderStore.fetchOrder(query.order_id, query['super-user-token']);
-          });
-      }
+    if (query.order_id) {
+      orderStore.fetchOrder(query.order_id, query['super-user-token']);
     }
   }
 
@@ -83,9 +73,6 @@ class Pdf extends React.Component<any> {
       SubgroupsStore,
       orderInfo,
     } = this.props;
-    if (!orderInfo.orderId) {
-      return null;
-    }
 
     const designSubgroup = _.get(SubgroupsStore, `data.design`, []);
     const designSubgroupItems = [...designSubgroup];
@@ -106,7 +93,7 @@ class Pdf extends React.Component<any> {
       `order.shirt[0].fabric_ref.fabric.title[${lang}]`,
       null,
     );
-    const { customer, orderId, price, date, deliveryDays } = orderInfo;
+    const { customer= '', orderId= '', price= '', date= '', deliveryDays= '' } = orderInfo || {};
     const deliveryDate = moment(date)
       .add(deliveryDays, 'days')
       .format('DD.MM.YYYY');
@@ -115,21 +102,21 @@ class Pdf extends React.Component<any> {
       {
         id: 'name',
         name: loc[lang].name,
-        value: (customer && customer.name) || '',
+        value: (customer && customer.name),
       },
       {
         id: 'orderId',
         name: loc[lang].orderId,
-        value: orderId || '',
+        value: orderId,
       },
       {
         id: 'date',
         name: loc[lang].date,
-        value: deliveryDate || '',
+        value: deliveryDate,
       },
       {
         id: 'price',
-        name: loc[lang].price || '',
+        name: loc[lang].price,
         value: (price && price.ru) || '',
       },
     ];
@@ -152,7 +139,7 @@ class Pdf extends React.Component<any> {
           <Header />
         </div>
         {/* tslint:disable-next-line:no-console */}
-        <DemoSection onDummyLoad={() => console.log('loaded')} />{' '}
+        <DemoSection onDummyLoad={() => console.log('loaded')} />
         <div className="main main--white">
           <InfoRow name={loc[lang].info} />
           <div className="info-block__wrapper">

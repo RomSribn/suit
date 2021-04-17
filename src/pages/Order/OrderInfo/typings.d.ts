@@ -7,4 +7,5 @@ interface OrderInfoProps {
 interface COrderInfoProps {
   order?: IOrderStore;
   lang?: Lang;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
 }

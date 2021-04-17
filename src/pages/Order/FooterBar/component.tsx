@@ -17,10 +17,14 @@ import { OrderInfoMobile } from '../OrderInfo/component';
 import * as moment from 'moment';
 import { inject, observer } from 'mobx-react';
 
-type Props = FooterBarProps & { orderStore: IOrderStore };
+type Props = FooterBarProps & {
+  orderStore: IOrderStore;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
+};
 
-@inject(({ order }) => ({
+@inject(({ order, app: { isBackButtonDisabled } }) => ({
   order,
+  isBackButtonDisabled,
 }))
 @observer
 class FooterBar extends React.Component<COrderInfoProps & Props> {
@@ -44,7 +48,12 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
   };
 
   render() {
-    const { lang, mutuallyExclusivePopup, order } = this.props;
+    const {
+      lang,
+      mutuallyExclusivePopup,
+      order,
+      isBackButtonDisabled,
+    } = this.props;
     const orderInfo = order!.orderInfo;
     const deliveryDate = orderInfo
       ? moment().add(orderInfo.deliveryDays, 'days').format('DD.MM.YYYY')
@@ -62,9 +71,12 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
           <Route
             path={routes.fabric}
             component={() => (
-              // <a href={process.env.BASE_SERVICE_LINK || '#'} target="blank">
               <Link to={'/order'}>
-                <Button theme="white" className="back-button">
+                <Button
+                  theme="white"
+                  className="back-button"
+                  disabled={isBackButtonDisabled}
+                >
                   {loc[lang!].back}
                 </Button>
               </Link>
@@ -84,6 +96,7 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                 <Button
                   theme="white"
                   className="back-button"
+                  disabled={isBackButtonDisabled}
                   onClick={() => {
                     updateOrder({
                       match: props.match,
@@ -111,6 +124,7 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                   <Button
                     theme="white"
                     className="back-button"
+                    disabled={isBackButtonDisabled}
                     onClick={() => {
                       updateOrder({
                         match: props.match,
@@ -136,7 +150,11 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                   props.match.params.garment,
                 )}
               >
-                <Button theme="white" className="back-button">
+                <Button
+                  theme="white"
+                  className="back-button"
+                  disabled={isBackButtonDisabled}
+                >
                   {loc[lang!].back}
                 </Button>
               </Link>

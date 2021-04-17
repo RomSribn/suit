@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classnames from 'classnames';
 import { Swiper } from 'swiper/react';
 import SwiperCore, { Pagination, Thumbs } from 'swiper';
 import 'swiper/swiper-bundle.css';
@@ -12,7 +13,7 @@ SwiperCore.use([Pagination, Thumbs]);
 
 const SwiperPopup = (props: SwiperPopupProps) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState();
-  const { lang, currentActiveGarment } = props;
+  const { lang, currentActiveGarment, isBackButtonDisabled } = props;
   const renderValue = ({ title, itemTitle }: RenderValue) => {
     const locValue =
       props.item &&
@@ -66,7 +67,9 @@ const SwiperPopup = (props: SwiperPopupProps) => {
           </div>
 
           <div className="text-block__breadcrumbs">
-            <a href="/">{loc[lang].order}</a>
+            <a href="/" className={classnames({ isBackButtonDisabled })}>
+              {loc[lang].order}
+            </a>
             <span>/</span>
             <a onClick={props!.closeButton}>
               {MobileNavigationMenuPopupLoc[lang][currentActiveGarment]}

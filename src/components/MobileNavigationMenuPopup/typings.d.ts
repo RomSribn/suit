@@ -9,6 +9,7 @@ declare type TMobileNavigationMenuPopupProps = {
   activeGarments?: string[];
   currentActiveGarment?: string;
   setCurrentActiveGarment?: (garment: string) => void;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
 };
 
 declare type SubmenuItem = {

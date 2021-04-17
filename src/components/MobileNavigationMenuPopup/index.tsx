@@ -60,6 +60,7 @@ export default ({
   toggleLoginForm,
   sideEffects,
   role,
+  isBackButtonDisabled,
 }: TMobileNavigationMenuPopupProps) => {
   const menuList: MenuLink[] = [
     {
@@ -168,6 +169,7 @@ export default ({
       name: 'order',
       url: '/order',
       submenu: getGarmentsSubMenu(activeGarments || []),
+      isHidden: isBackButtonDisabled,
     },
     {
       name: 'chat',

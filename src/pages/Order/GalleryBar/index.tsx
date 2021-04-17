@@ -519,6 +519,7 @@ class GalleryBar extends React.Component<GalleryBarProps, State> {
               currentActiveGarment={currentActiveGarment}
               closeButton={app.toggleSwiperPopup}
               lang={app.lang}
+              isBackButtonDisabled={app.isBackButtonDisabled}
             />
           </PopUp>
         )}

@@ -22,14 +22,13 @@ interface CommonProps {
 @observer
 class Common extends React.Component<CommonProps> {
   render() {
+    const { onDummyLoad } = this.props;
     const isDetailsPage = this.props.routingStore!.location.pathname.includes(
       routes.details,
     );
-
     const isIndexPage = window.location.pathname === '/order';
     return (
       <div className="application">
-        {/* <Paralax /> */}
         {window.location.pathname !== '/login' && <Navigation />}
         <div className="content">
           <div
@@ -44,7 +43,7 @@ class Common extends React.Component<CommonProps> {
             <Header />
             {this.props.children}
           </div>
-          <DemoSection onDummyLoad={this.props.onDummyLoad} />
+          <DemoSection onDummyLoad={onDummyLoad} />
         </div>
       </div>
     );

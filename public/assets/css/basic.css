@@ -151,8 +151,10 @@ a {
 .label {
   display: block;
 }
-input[type='text'] {
-  font-size: max(1em, 16px);
+@media only screen and (max-width: 768px) {
+  input {
+    font-size: max(1em, 16px) !important;
+  }
 }
 
 /*webkit autocomplit input*/

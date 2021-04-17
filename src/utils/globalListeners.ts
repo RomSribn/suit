@@ -3,6 +3,13 @@ import * as _ from 'lodash';
 
 type WindowEvents = keyof WindowEventMap;
 
+declare global {
+  interface Window {
+    // tslint:disable-next-line
+      chrome:any;
+  }
+}
+
 class GlobalListeners {
   private listeners: (undefined | (() => void))[];
   private event: WindowEvents;

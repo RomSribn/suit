@@ -12,6 +12,7 @@ export interface FooterBarProps {
   Subgroups?: any; // tslint:disable-line no-any
   popOrderPathitem?(): void;
   setActiveItem?(item: GalleryStoreItem | null): void;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
 }
 
 export type SaveButtonInject = {

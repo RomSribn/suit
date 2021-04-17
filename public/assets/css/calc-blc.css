@@ -1,56 +1,53 @@
-.calc-blc{
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    -ms-align-items: flex-end;
-    align-items: flex-end;
-    justify-content: flex-start;
+.calc-blc {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  -ms-align-items: flex-end;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 .calc-blc-mobile {
-    color: white;
-    position: relative;
-    cursor: pointer;
-    text-transform: uppercase;
+  color: white;
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 .calc-text-mobile {
-    margin: auto;
-    font-size: 1.7rem;
+  margin: auto;
+  font-size: 1.7rem;
 }
-.calc-blc__col-name{
-    font-size: 1rem;
-    color: #000;
-    line-height: .9;
-    margin-bottom: .5333rem;
+.calc-blc__col-name {
+  font-size: 1rem;
+  color: #000;
+  line-height: 0.9;
+  margin-bottom: 0.5333rem;
 }
-.calc-blc__col--date .calc-blc__col-name{padding-left: 1.0666rem;}
+.calc-blc__col--date .calc-blc__col-name {
+  padding-left: 1.0666rem;
+}
 .calc-blc__slash,
-.calc-blc__col-val{
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: .8;
-    color: #046b71;
+.calc-blc__col-val {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 0.8;
+  color: #046b71;
 }
-.calc-blc__col-val-delivery, .calc-blc__slash {
-    color: black;
+.calc-blc__col-val-delivery,
+.calc-blc__slash {
+  color: black;
 }
 .calc-blc__col-val .calc-blc__col-val__curr {
-    display: inline-block;
+  display: inline-block;
 }
 .calc-blc__col-val__curr:after {
-    content: ' ';
-    white-space: pre;
+  content: ' ';
+  white-space: pre;
 }
-@media only screen and (max-width : 1210px){
-    .calc-blc__col-name{
-        margin-bottom: .5rem;
-    }
-}
-
-@media only screen and (max-height: 450px) {
-    .calc-blc-mobile {
-        margin-bottom: 2rem;
-    }
+@media only screen and (max-width: 1210px) {
+  .calc-blc__col-name {
+    margin-bottom: 0.5rem;
+  }
 }

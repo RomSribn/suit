@@ -42,4 +42,5 @@ interface SwiperPopupProps {
   currentActiveGarment?: string;
   closeButton: () => void;
   lang: string;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
 }

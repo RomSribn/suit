@@ -20,7 +20,7 @@ const translations = {
       shirt: 'shirt',
     },
     ru: {
-      shirt: 'рубашка',
+      shirt: 'сорочка',
     },
   },
   garment: {
@@ -28,7 +28,7 @@ const translations = {
       shirt: 'shirt',
     },
     ru: {
-      shirt: 'рубашка',
+      shirt: 'сорочка',
     },
   },
   group: {

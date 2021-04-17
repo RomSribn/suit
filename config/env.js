@@ -11,7 +11,7 @@ delete require.cache[require.resolve('./paths')];
 const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
+    'The NODE_ENV environment variable is required but was not specified.',
   );
 }
 
@@ -30,7 +30,7 @@ var dotenvFiles = [
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-dotenvFiles.forEach(dotenvFile => {
+dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
     require('dotenv').config({
       path: dotenvFile,
@@ -50,8 +50,8 @@ dotenvFiles.forEach(dotenvFile => {
 const appDirectory = fs.realpathSync(process.cwd());
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
-  .filter(folder => folder && !path.isAbsolute(folder))
-  .map(folder => path.resolve(appDirectory, folder))
+  .filter((folder) => folder && !path.isAbsolute(folder))
+  .map((folder) => path.resolve(appDirectory, folder))
   .join(path.delimiter);
 
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
@@ -60,7 +60,7 @@ const REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
-    .filter(key => REACT_APP.test(key))
+    .filter((key) => REACT_APP.test(key))
     .reduce(
       (env, key) => {
         env[key] = process.env[key];
@@ -88,7 +88,13 @@ function getClientEnvironment(publicUrl) {
         BASE_SERVICE_LINK: serverConfig.env.BASE_SERVICE_LINK,
         SALON_TITLE: serverConfig.env.SALON_TITLE,
         SCRIPTS_FACEBOOK: serverConfig.env.SCRIPTS_FACEBOOK || '',
-      }
+        IS_MENU_HIDDEN_LINK_NAME:
+          serverConfig.env.IS_MENU_HIDDEN_LINK_NAME || '',
+        IS_BACK_BUTTON_DISABLED_NAME:
+          serverConfig.env.IS_BACK_BUTTON_DISABLED_NAME || '',
+        IS_MENU_HIDDEN_LINK: serverConfig.env.IS_MENU_HIDDEN_LINK || '',
+        IS_BACK_BUTTON_DISABLED: serverConfig.env.IS_BACK_BUTTON_DISABLED || '',
+      },
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {
@@ -98,7 +104,7 @@ function getClientEnvironment(publicUrl) {
     }, {}),
   };
 
-  return {raw, stringified};
+  return { raw, stringified };
 }
 
 module.exports = getClientEnvironment;

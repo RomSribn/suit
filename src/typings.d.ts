@@ -126,7 +126,7 @@ interface GalleryStoreItem {
   catalog: { id: number; catalogName: string };
   elementInfo: {
     garment: string;
-    group: 'fitting' | 'design' | 'fabric_ref';
+    group: string;
     subGroup: string;
   };
 }

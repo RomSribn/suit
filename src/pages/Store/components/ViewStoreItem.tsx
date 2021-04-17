@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { StoreItemTitle } from './StoreItemTitle';
 import { Link } from 'react-router-dom';
+import { findDOMNode } from 'react-dom';
 import { CustomFileInput } from '../../../components/FileInput';
 import ReactPlayer from 'react-player';
 import { TextInput } from '../../../components/TextInput';
 import { isMobile } from '../../../utils';
+import * as screenfull from 'screenfull';
+import * as classnames from 'classnames';
 import '../styles/viewStoreItem.styl';
 
 const ViewStoreItem = ({
@@ -30,6 +33,8 @@ const ViewStoreItem = ({
   nameBtn,
   emailBtn,
 }: ViewStoreItemProps) => {
+  const [player, setPlayer] = React.useState<ReactPlayer | null>(null);
+  const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [files, setFiles] = React.useState({ id, droppedFiles: [] });
   const [inputValues, setInputValues] = React.useState<IInputsData>({
     id,
@@ -42,14 +47,21 @@ const ViewStoreItem = ({
   const currentFiles = currentUsersStoreItems
     ? currentUsersStoreItems.files
     : files.id === id
-      ? files.droppedFiles
-      : [];
+    ? files.droppedFiles
+    : [];
   const currentInputValues = currentUsersStoreItems
     ? currentUsersStoreItems.textInputs
     : inputValues.id === id
-      ? inputValues.textInputs
-      : {};
+    ? inputValues.textInputs
+    : {};
 
+  const handleClickFullscreen = () => {
+    if (screenfull.isEnabled && !window.chrome) {
+      // tslint:disable-next-line
+      const playerInDOM: any = findDOMNode(player);
+      screenfull.toggle(playerInDOM);
+    }
+  };
   // tslint:disable-next-line
   const onDrop = (droppedFiles: any) => {
     setFiles({ id, droppedFiles });
@@ -81,25 +93,25 @@ const ViewStoreItem = ({
         {fileBtnTitle}
       </Link>
     ) : (
-        ''
-      );
+      ''
+    );
   };
 
   const renderFileInputs = () => {
     return isFileInput
       ? inputs.map((inputTitle, index) => (
-        <CustomFileInput
-          key={inputTitle + id}
-          title={inputTitle}
-          dropMsg={droppMsg}
-          onDrop={onDrop}
-          files={currentFiles}
-          isShowThumb={inputs.length - 1 === index}
-          handleRemove={removeSpecificFileFromItem!}
-          id={id!}
-          limitOfFiles={7}
-        />
-      ))
+          <CustomFileInput
+            key={inputTitle + id}
+            title={inputTitle}
+            dropMsg={droppMsg}
+            onDrop={onDrop}
+            files={currentFiles}
+            isShowThumb={inputs.length - 1 === index}
+            handleRemove={removeSpecificFileFromItem!}
+            id={id!}
+            limitOfFiles={7}
+          />
+        ))
       : '';
   };
 
@@ -121,8 +133,8 @@ const ViewStoreItem = ({
         })}
       </div>
     ) : (
-        ''
-      );
+      ''
+    );
   };
 
   const renderAnonUserInfoInputs = () => {
@@ -149,19 +161,28 @@ const ViewStoreItem = ({
         />
       </div>
     ) : (
-        ''
-      );
+      ''
+    );
   };
+
+  if (screenfull.isEnabled) {
+    screenfull.on('change', () => {
+      if (screenfull.isEnabled) {
+        setFullscreen(screenfull.isFullscreen);
+      }
+    });
+  }
   return (
-    <div className="view-store-item">
+    <div className="view-store-item" onDoubleClick={handleClickFullscreen}>
       <ReactPlayer
+        ref={(playerRef) => setPlayer(playerRef)}
         width="100%"
         height={isMobile() ? 'auto' : '50%'}
         controls={true}
         playing={true}
         playsinline={true}
         loop={true}
-        className={'react-player'}
+        className={classnames('react-player', { fullscreen })}
         url={[
           { src: videoWebm, type: 'video/webm' },
           { src: videoMp4, type: 'video/mp4' },

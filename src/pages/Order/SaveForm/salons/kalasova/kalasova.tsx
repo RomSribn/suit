@@ -109,6 +109,11 @@ class SaveForm extends React.PureComponent<
     this.setState({ showLoginForm: false });
   };
 
+  backClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    this.props.close!();
+  };
+
   render() {
     const { lang } = this.props;
     const state = this.state;
@@ -139,6 +144,14 @@ class SaveForm extends React.PureComponent<
             </div>
           ))}
           <div className="buttons">
+            <Button
+              theme="white"
+              invertTheme={true}
+              type="button"
+              onClick={this.backClick}
+            >
+              {loc[lang].backText}
+            </Button>
             <Button type="submit" theme="black">
               {loc[lang].sendOrder}
             </Button>

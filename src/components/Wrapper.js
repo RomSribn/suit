@@ -35,7 +35,8 @@ class Wrapper extends Component {
     };
   }
   hideSpinner = () => {
-    dummyWasRendered = true;
+    const { app } = this.props;
+    app.setIsDummyWasRendered(true);
     this.setState({ showSpinner: false });
   };
   showSpinner = () => {
@@ -51,7 +52,14 @@ class Wrapper extends Component {
       currentActiveGarment,
       setCurrentActiveGarment,
     } = this.props;
-    const { lang, showMobileMenu, toggleMobileMenu, setLang } = app;
+    const {
+      lang,
+      showMobileMenu,
+      toggleMobileMenu,
+      setLang,
+      itemsLoaded,
+      itemsTotal,
+    } = app;
     const { logout, isAuth, profile } = userStore;
     const loggedIn = this.props.userStore.isAuth;
     const role = (profile && profile.role) || null;
@@ -63,7 +71,9 @@ class Wrapper extends Component {
     // TODO: Реализовать HOC'и для страниц со спиннерами
     return (
       <React.Fragment key="common wrapper with spinner">
-        {this.state.showSpinner && <Spinner />}
+        {this.state.showSpinner && (
+          <Spinner theme={'linear'} progress={itemsLoaded} total={itemsTotal} />
+        )}
         <Common onDummyLoad={this.hideSpinner}>
           <PopUp open={showMobileMenu}>
             <MobileNavigationMenuPopup
@@ -73,8 +83,9 @@ class Wrapper extends Component {
               sideEffects={{
                 logout: logout.bind(userStore),
               }}
-              role={role}
+              role={app.isMenuHidden ? 'HIDDEN' : role}
               activeGarments={activeGarments}
+              isBackButtonDisabled={app.isBackButtonDisabled}
               currentActiveGarment={currentActiveGarment}
               setCurrentActiveGarment={setCurrentActiveGarment}
             />
@@ -130,7 +141,13 @@ class Wrapper extends Component {
                   this.showSpinner();
                   dummyWasRendered = true;
                 }
-                return <Order {...props} order={this.props.order} />;
+                return (
+                  <Order
+                    {...props}
+                    order={this.props.order}
+                    dummyWasRendered={dummyWasRendered}
+                  />
+                );
               }}
             />
             <CrumbRoute {...getCombinedPathAndTitle('ordersList')}>

@@ -1,4 +1,9 @@
 import { observable, action } from 'mobx';
+import {
+  isMenuHiddenLinkParamsId,
+  isBackButtonDisabledLinkParamsId,
+} from '../config/constants';
+import userStore from './user';
 
 type LocaleTextFields = 'index' | 'order' | 'garments' | 'shirt';
 
@@ -15,7 +20,7 @@ const loc: Translations<Locale> = {
     index: 'главная',
     order: 'заказать',
     garments: 'изделия',
-    shirt: 'рубашка',
+    shirt: 'сорочка',
   },
 };
 
@@ -30,6 +35,27 @@ const makeInitionalOrderPath = (lang: Lang) => [
   },
 ];
 
+const setIsMenuHiddenLinkId = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const isMenuHidden =
+    urlParams.get(isMenuHiddenLinkParamsId) === process.env.IS_MENU_HIDDEN_LINK;
+  if (isMenuHidden) {
+    sessionStorage.setItem(isMenuHiddenLinkParamsId, 'true');
+  }
+};
+
+const setIsBackButtonDisabledLinkId = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const isBackButtonDisabled =
+    urlParams.get(isBackButtonDisabledLinkParamsId) ===
+    process.env.IS_BACK_BUTTON_DISABLED;
+  if (isBackButtonDisabled) {
+    sessionStorage.setItem(isBackButtonDisabledLinkParamsId, 'true');
+  }
+};
+
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
@@ -40,15 +66,30 @@ export class App implements IAppStore {
   @observable currentSearchValue = ' ';
   @observable isSearchBarOpened = false;
   @observable dummyY = 0;
+  @observable itemsLoaded = 0;
+  @observable itemsTotal = 0;
   @observable isGarmentLoaded = true;
-  @observable isMenuUncovered = true;
+  @observable isMenuUncovered = false;
+  @observable isMenuUncoveredInitial = false;
   @observable searchedItemsCount = 1;
-  orderPath = observable.array<OrderPathItem>([]);
+  @observable orderPath = observable.array<OrderPathItem>([]);
+  @observable isMenuHidden: TIsMenuHidden = false;
+  @observable isBackButtonDisabled: TIsBackButtonDisabled = false;
+  @observable isDummyWasRendered = false;
 
   constructor(lang?: Lang) {
     const newLang = lang || 'en';
     this.lang = newLang;
     this.orderPath.push(...makeInitionalOrderPath(newLang));
+    if (userStore.isAuth) {
+      return;
+    }
+    setIsMenuHiddenLinkId();
+    setIsBackButtonDisabledLinkId();
+    this.isMenuHidden = !!sessionStorage.getItem(isMenuHiddenLinkParamsId);
+    this.isBackButtonDisabled = !!sessionStorage.getItem(
+      isBackButtonDisabledLinkParamsId,
+    );
   }
 
   @action
@@ -82,8 +123,26 @@ export class App implements IAppStore {
   };
 
   @action
-  setIsMenuUncovered = (isMenuUncovered: boolean) => {
+  setIsDummyWasRendered = (isDummyWasRendered: TIsDummyWasRendered) => {
+    this.isDummyWasRendered = isDummyWasRendered;
+  };
+
+  @action
+  setLoadedInfo = ({ itemsLoaded, itemsTotal }: TSetLoadedInfoProps) => {
+    this.itemsLoaded = itemsLoaded;
+    this.itemsTotal = itemsTotal;
+  };
+
+  @action
+  setIsMenuUncovered = (isMenuUncovered: TIsMenuUncovered) => {
     this.isMenuUncovered = isMenuUncovered;
+  };
+
+  @action
+  setIsMenuUncoveredInitial = (
+    isMenuUncoveredInitial: TIsMenuUncoveredInitial,
+  ) => {
+    this.isMenuUncoveredInitial = isMenuUncoveredInitial;
   };
 
   @action
@@ -150,6 +209,22 @@ export class App implements IAppStore {
   @action
   setIsGarmentLoaded = (isGarmentLoaded: boolean) => {
     this.isGarmentLoaded = isGarmentLoaded;
+  };
+
+  @action
+  setIsMenuHidden = (isMenuHidden: TIsMenuHidden) => {
+    this.isMenuHidden = isMenuHidden;
+    if (!isMenuHidden) {
+      sessionStorage.removeItem(isMenuHiddenLinkParamsId);
+    }
+  };
+
+  @action
+  setIsBackButtonDisabled = (isBackButtonDisabled: TIsBackButtonDisabled) => {
+    this.isBackButtonDisabled = isBackButtonDisabled;
+    if (!isBackButtonDisabled) {
+      sessionStorage.removeItem(isBackButtonDisabledLinkParamsId);
+    }
   };
 }
 const app = new App('ru');

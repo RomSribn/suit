@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HeaderBar } from './HeaderBar';
 import { HeaderContent } from './HeaderContent';
 import MobileHeader from './MobileHeader';
-// import { HeaderProps } from './typings';
+import { setCoverByTouchEnd } from '../../utils/common';
 import { routes } from '../../config/routes';
 
 import './style.styl';
@@ -14,10 +14,7 @@ const isMobile = () => document.body.offsetWidth <= 700;
 const isLandscape = () =>
   parseInt((window.orientation || 0).toString(), 10) !== 0;
 
-class Header extends React.Component<
-  HeaderProps,
-  { isMobile: boolean; isLandscape: boolean }
-> {
+class Header extends React.Component<HeaderProps, HeaderState> {
   static defaultProps = {
     userName: undefined,
   };
@@ -25,7 +22,7 @@ class Header extends React.Component<
   state = {
     isMobile: isMobile(),
     isLandscape: isLandscape(),
-    // isRealIndexPage: isRealIndexPage(),
+    initialTouch: 0,
   };
 
   listener = () => {
@@ -33,7 +30,6 @@ class Header extends React.Component<
       this.setState({
         isMobile: isMobile(),
         isLandscape: isLandscape(),
-        // isRealIndexPage: isRealIndexPage(),
       });
     }, 300);
   };
@@ -47,13 +43,25 @@ class Header extends React.Component<
   }
 
   render() {
-    const { path, lang, appStore, userStore, isAuth, openMenu } = this.props;
+    const {
+      path,
+      lang,
+      appStore,
+      userStore,
+      isAuth,
+      openMenu,
+      isMenuUncovered,
+    } = this.props;
 
-    const state = this.state;
+    const {
+      isLandscape: isLandscapeState,
+      initialTouch,
+      isMobile: isMobileState,
+    } = this.state;
 
     return (
       <div className="main__header">
-        {!state.isMobile ? (
+        {!isMobileState ? (
           <div className="header-wrapper">
             <HeaderBar lang={lang} userStore={userStore} isAuth={isAuth} />
             <HeaderContent
@@ -78,10 +86,28 @@ class Header extends React.Component<
               path={path!}
               openMenu={openMenu}
               lang={lang}
-              isLandscape={state.isLandscape}
+              isLandscape={isLandscapeState}
               isAuth={isAuth}
             />
             <HeaderBar lang={lang} userStore={userStore} isAuth={isAuth} />
+            {isMenuUncovered && (
+              <div
+                className="widget-overlay"
+                onClick={() => appStore.setIsMenuUncovered(false)}
+                onTouchStart={(event: React.TouchEvent<HTMLInputElement>) => {
+                  this.setState({
+                    initialTouch: event.touches[0].clientY,
+                  });
+                }}
+                onTouchEnd={(event: React.TouchEvent<HTMLInputElement>) =>
+                  setCoverByTouchEnd(
+                    event,
+                    initialTouch,
+                    appStore.setIsMenuUncovered,
+                  )
+                }
+              />
+            )}
           </div>
         )}
       </div>

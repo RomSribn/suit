@@ -18,7 +18,7 @@ const makeLocale: MakeLocale<Locale> = () => ({
     clear: 'очистить',
     noStatus: 'не выбрано',
     garments: {
-      shirt: 'рубашка',
+      shirt: 'сорочка',
     },
   },
 });

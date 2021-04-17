@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { callApi } from '../utils/apiAxios';
 import { order } from './order';
 import garments from './garments/garments';
+import { toJS } from 'mobx';
 import * as _ from 'lodash';
 
 class FilterStore implements IFilterStore {
@@ -109,7 +110,7 @@ class FilterStore implements IFilterStore {
   setSelectedItems = (props: ISetSelectedItemsProps) => {
     const { our_code, garment, group, subGroup } = props;
     const { partOfShirtToggle } = order;
-    const newSelectedItems = { ...this.selectedItems };
+    const newSelectedItems = { ...toJS(this.selectedItems) };
     if (!newSelectedItems[garment]) {
       newSelectedItems[garment] = {};
     }

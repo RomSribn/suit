@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { loc, localesList } from './loc';
 import { NotificationIcon } from '../../components/NotificationIcon';
 import { Switch, Route } from 'react-router';
+import { GarmentViewController } from '../../pages/Order/GarmentViewController';
 import './style.styl';
 
 const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
@@ -13,7 +14,7 @@ const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
     if (garment === 'shirt') {
       return {
         name: {
-          ru: 'Рубашка',
+          ru: 'Сорочка',
           en: garment,
         },
         id: garment,
@@ -42,7 +43,7 @@ const getGarmentsSubMenu = (activeGarments: string[]): SubmenuItem[] =>
 
     return {
       name: {
-        ru: 'Рубашка',
+        ru: 'Сорочка',
         en: garment,
       },
       id: 'shirt',
@@ -59,6 +60,7 @@ export default ({
   toggleLoginForm,
   sideEffects,
   role,
+  isBackButtonDisabled,
 }: TMobileNavigationMenuPopupProps) => {
   const menuList: MenuLink[] = [
     {
@@ -162,11 +164,32 @@ export default ({
       unusualSideEffect: toggleLoginForm,
     },
   ];
+  const hiddenRoleMenuLinks: MenuLink[] = [
+    {
+      name: 'order',
+      url: '/order',
+      submenu: getGarmentsSubMenu(activeGarments || []),
+      isHidden: isBackButtonDisabled,
+    },
+    {
+      name: 'chat',
+      url: 'javascript:jivo_api.open()',
+      withoutArrow: true,
+      withoutBaseUrl: true,
+    },
+    {
+      name: 'logIn',
+      url: '/login',
+      withoutArrow: true,
+      unusualSideEffect: toggleLoginForm,
+    },
+  ];
 
   const menuItemsByRole = {
     STYLIST: menuList,
     CUSTOMER: customerMenuList,
     ANON: anonMenuList,
+    HIDDEN: hiddenRoleMenuLinks,
   };
 
   const currentRole = role || 'ANON';
@@ -278,26 +301,29 @@ export default ({
                               )
                             : `/order/details/${item.id}/fabric_ref/fabric`;
                           return (
-                            <Link
+                            <div
                               className="navigation-item submenu-item"
-                              to={redirectingPath}
                               key={item.id}
-                              onClick={(e) => {
-                                callList([closeMenu]);
-                                setCurrentActiveGarment!(item.id);
-                              }}
                             >
-                              <span>{item.name[currentLang]}</span>
-                              {!isOrder && (
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 448 512"
-                                >
-                                  <path
-                                    fill="currentColor"
-                                    d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
+                              <Link
+                                to={redirectingPath}
+                                className="link"
+                                onClick={(e) => {
+                                  callList([closeMenu]);
+                                  setCurrentActiveGarment!(item.id);
+                                }}
+                              >
+                                <span>{item.name[currentLang]}</span>
+                                {!isOrder && (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 448 512"
+                                  >
+                                    <path
+                                      fill="currentColor"
+                                      d="M296 432h16a8 8 0 008-8V152a8 8 0 00-8-8h-16a8
                                              8 0 00-8 8v272a8 8 0 008 8zm-160 0h16a8 8 0 008-8V152a8
                                               8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8zM440
                                                64H336l-33.6-44.8A48 48 0 00264 0h-80a48 48 0
@@ -308,15 +334,22 @@ export default ({
                                                  64H152zM384 464a16 16 0 01-16 16H80a16 16 0
                                                   01-16-16V96h320zm-168-32h16a8 8 0 008-8V152a8
                                                   8 0 00-8-8h-16a8 8 0 00-8 8v272a8 8 0 008 8z"
-                                  />
-                                </svg>
-                              )}
+                                    />
+                                  </svg>
+                                )}
+                              </Link>
                               {isOrder &&
                                 item.id === currentActiveGarment &&
                                 window.location.pathname.includes(
                                   currentActiveGarment,
-                                ) && <i className={`circle`} />}
-                            </Link>
+                                ) && (
+                                  <div className="view-controller-wrapper">
+                                    <GarmentViewController
+                                      backgroundColor={'none'}
+                                    />
+                                  </div>
+                                )}
+                            </div>
                           );
                         })}
                       </ul>

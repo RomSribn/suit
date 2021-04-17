@@ -20,7 +20,7 @@ class Order extends React.PureComponent<any> {
     if (!wasRendered) {
       wasRendered = true;
     }
-    const { location, match } = this.props;
+    const { location, match, dummyWasRendered } = this.props;
     const routes = makeRoutes(match.url);
     const detailsDeep = !/\/order\/details\/.*\/.*/i.test(location.pathname);
     const afterGarmentChoice = /\/order\/.*\/.*/i.test(location.pathname);
@@ -33,6 +33,8 @@ class Order extends React.PureComponent<any> {
           isIndexPage={isIndexPage}
           detailsDeep={detailsDeep}
           routes={routes}
+          dummyWasRendered={dummyWasRendered}
+          route={location.pathname}
         />
         <Route exact={true} path={routes.index} component={Paralax} />
       </>
@@ -59,14 +61,14 @@ class Container extends React.Component<any> {
       garmentsStore.fetchGarmentsList();
       return null;
     }
+
     const query = parseQuery(this.props.routingStore.location.search);
     const isOnBase = query.onbase === 'true';
     if (orderStore.isEmptyOrder()) {
       if (query.order_id) {
         orderStore
           .fetchInitialOrder(
-            Object.keys(garmentsStore.garmentsList),
-            (garments) => garmentsStore.setChosenGarments(['shirt']),
+            Object.keys(garmentsStore.garmentsList)
           )
           .then(() => {
             orderStore.fetchOrder(query.order_id).then(() => {
@@ -78,8 +80,7 @@ class Container extends React.Component<any> {
           });
       } else {
         orderStore.fetchInitialOrder(
-          Object.keys(garmentsStore.garmentsList),
-          (garments) => garmentsStore.setChosenGarments(['shirt']),
+          Object.keys(garmentsStore.garmentsList)
         );
       }
       return null;

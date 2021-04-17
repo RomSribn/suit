@@ -1,4 +1,5 @@
 declare type TMobileNavigationMenuPopupProps = {
+  isMenuHidden: TIsMenuHidden;
   currentLang: string;
   closeMenu: () => void;
   setLang: (lang: string) => void;
@@ -8,6 +9,7 @@ declare type TMobileNavigationMenuPopupProps = {
   activeGarments?: string[];
   currentActiveGarment?: string;
   setCurrentActiveGarment?: (garment: string) => void;
+  isBackButtonDisabled?: TIsBackButtonDisabled;
 };
 
 declare type SubmenuItem = {

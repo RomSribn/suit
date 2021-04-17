@@ -13,6 +13,14 @@ declare interface HeaderProps {
   path?: string;
   isAuth: boolean;
   openMenu: TOpenMenu;
+  setIsMenuUncovered?: TSetIsMenuUncovered;
+  isMenuUncovered?: TIsMenuUncovered;
+}
+
+declare interface HeaderState {
+  isMobile: boolean;
+  isLandscape: boolean;
+  initialTouch: number;
 }
 
 declare interface HeaderContainerProps extends Partial<HeaderProps> {

@@ -10,6 +10,7 @@ import { FadeIn } from '../../../containers/Transitions';
 import { loc } from './loc';
 import { updateOrder } from './utils';
 import { routes as configRoutes } from '../../../config/routes';
+import * as classnames from 'classnames';
 
 import './styles.styl';
 import { FooterBarProps } from './typings';
@@ -71,7 +72,10 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
           <Route
             path={routes.fabric}
             component={() => (
-              <Link to={'/order'}>
+              <Link
+                to={'/order'}
+                className={classnames({ isBackButtonDisabled })}
+              >
                 <Button
                   theme="white"
                   className="back-button"
@@ -96,7 +100,6 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                 <Button
                   theme="white"
                   className="back-button"
-                  disabled={isBackButtonDisabled}
                   onClick={() => {
                     updateOrder({
                       match: props.match,
@@ -124,7 +127,6 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                   <Button
                     theme="white"
                     className="back-button"
-                    disabled={isBackButtonDisabled}
                     onClick={() => {
                       updateOrder({
                         match: props.match,
@@ -150,11 +152,7 @@ class FooterBar extends React.Component<COrderInfoProps & Props> {
                   props.match.params.garment,
                 )}
               >
-                <Button
-                  theme="white"
-                  className="back-button"
-                  disabled={isBackButtonDisabled}
-                >
+                <Button theme="white" className="back-button">
                   {loc[lang!].back}
                 </Button>
               </Link>

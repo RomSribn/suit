@@ -85,6 +85,7 @@ class Wrapper extends Component {
               }}
               role={app.isMenuHidden ? 'HIDDEN' : role}
               activeGarments={activeGarments}
+              isBackButtonDisabled={app.isBackButtonDisabled}
               currentActiveGarment={currentActiveGarment}
               setCurrentActiveGarment={setCurrentActiveGarment}
             />

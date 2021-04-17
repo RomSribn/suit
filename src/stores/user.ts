@@ -51,6 +51,7 @@ class UserClass implements IUserStore {
           setUserInfo(userInfo);
           this.isAuth = true;
           app.setIsMenuHidden(false);
+          app.setIsBackButtonDisabled(false);
           return userInfo;
         } else {
           throw new Error('Unathorized');

@@ -1,5 +1,8 @@
 import { observable, action } from 'mobx';
-import { isMenuHiddenLinkParamsId } from '../config/constants';
+import {
+  isMenuHiddenLinkParamsId,
+  isBackButtonDisabledLinkParamsId,
+} from '../config/constants';
 import userStore from './user';
 
 type LocaleTextFields = 'index' | 'order' | 'garments' | 'shirt';
@@ -42,6 +45,17 @@ const setIsMenuHiddenLinkId = () => {
   }
 };
 
+const setIsBackButtonDisabledLinkId = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const isBackButtonDisabled =
+    urlParams.get(isBackButtonDisabledLinkParamsId) ===
+    process.env.IS_BACK_BUTTON_DISABLED;
+  if (isBackButtonDisabled) {
+    sessionStorage.setItem(isBackButtonDisabledLinkParamsId, 'true');
+  }
+};
+
 export class App implements IAppStore {
   @observable lang: Lang;
   @observable showMobileMenu = false;
@@ -60,6 +74,7 @@ export class App implements IAppStore {
   @observable searchedItemsCount = 1;
   @observable orderPath = observable.array<OrderPathItem>([]);
   @observable isMenuHidden: TIsMenuHidden = false;
+  @observable isBackButtonDisabled: TIsBackButtonDisabled = false;
   @observable isDummyWasRendered = false;
 
   constructor(lang?: Lang) {
@@ -70,7 +85,11 @@ export class App implements IAppStore {
       return;
     }
     setIsMenuHiddenLinkId();
+    setIsBackButtonDisabledLinkId();
     this.isMenuHidden = !!sessionStorage.getItem(isMenuHiddenLinkParamsId);
+    this.isBackButtonDisabled = !!sessionStorage.getItem(
+      isBackButtonDisabledLinkParamsId,
+    );
   }
 
   @action
@@ -197,6 +216,14 @@ export class App implements IAppStore {
     this.isMenuHidden = isMenuHidden;
     if (!isMenuHidden) {
       sessionStorage.removeItem(isMenuHiddenLinkParamsId);
+    }
+  };
+
+  @action
+  setIsBackButtonDisabled = (isBackButtonDisabled: TIsBackButtonDisabled) => {
+    this.isBackButtonDisabled = isBackButtonDisabled;
+    if (!isBackButtonDisabled) {
+      sessionStorage.removeItem(isBackButtonDisabledLinkParamsId);
     }
   };
 }

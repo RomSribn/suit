@@ -90,7 +90,10 @@ function getClientEnvironment(publicUrl) {
         SCRIPTS_FACEBOOK: serverConfig.env.SCRIPTS_FACEBOOK || '',
         IS_MENU_HIDDEN_LINK_NAME:
           serverConfig.env.IS_MENU_HIDDEN_LINK_NAME || '',
+        IS_BACK_BUTTON_DISABLED_NAME:
+          serverConfig.env.IS_BACK_BUTTON_DISABLED_NAME || '',
         IS_MENU_HIDDEN_LINK: serverConfig.env.IS_MENU_HIDDEN_LINK || '',
+        IS_BACK_BUTTON_DISABLED: serverConfig.env.IS_BACK_BUTTON_DISABLED || '',
       },
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

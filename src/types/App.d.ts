@@ -17,6 +17,7 @@ type TSetLoadedInfo = ({
   itemsTotal,
 }: TSetLoadedInfoProps) => void;
 type TIsMenuHidden = boolean;
+type TIsBackButtonDisabled = boolean;
 type TSetIsMenuHidden = (isMenuHidden: TIsMenuHidden) => void;
 type TIsDummyWasRendered = boolean;
 type TSetIsDummyWasRendered = (isDummyWasRendered: TIsDummyWasRendered) => void;
@@ -28,6 +29,7 @@ interface IAppStore {
   currentSearchValue: string;
   cutOrderPath: (value: string) => void;
   dummyY: TDummyY;
+  isBackButtonDisabled: TIsBackButtonDisabled;
   isDummyWasRendered: TIsDummyWasRendered;
   isGarmentLoaded: boolean;
   isMenuHidden: TIsMenuHidden;

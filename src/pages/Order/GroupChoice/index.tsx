@@ -112,9 +112,13 @@ class GroupChoice extends React.Component<GroupChoiceProps> {
     }
 
     const name = itemFound ? itemFound.title[lang] : '';
-    let matchUrlPathArray = this.props.match.url.split('/');
-    const pathArray = window.location.pathname.split('/');
+    let matchUrlPathArray = this.props.match.url
+      .split('/')
+      .filter((item) => item);
+    const { pathname } = window.location;
+    const pathArray = pathname.split('/').filter((item) => item);
     const lastParametr = pathArray[pathArray.length - 1];
+
     const content = (
       <>
         <span className="custom__content">
